@@ -35,3 +35,11 @@ Route::get('/delete/{id}' ,'AccountController@delete')->name('delete');
 Route::get('/comp_profile' ,'CompanyController@index')->name('comp_profile');
 Route::get('company/create','CompanyController@create')->name('comp_create');
 Route::post('company/store','CompanyController@store')->name('company_store');
+Route::get('/company/view/{id}' ,'CompanyController@view')->name('comp_view');
+
+
+
+//projects route
+
+
+Route::get('/project','ProjectController@index')->name('project');

@@ -33,6 +33,17 @@
                         <td>{{$company->c_email}}</td>
                         <td>{{$company->c_mobile}}</td>
                         <td>{{$company->c_address}}</td>
+
+                        <td>
+                            @php
+                            $accounts = App\Account::where('company_id',$company->id)->get();
+
+                            @endphp
+                            @foreach($accounts as $account)
+                                {{$account->mobile}},
+                                @endforeach
+
+                        </td>
                         <td><img src="{{Storage::url($company->c_img) }}" alt="404" width="100px" ></td>
 
 

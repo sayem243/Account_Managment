@@ -40,10 +40,11 @@
                         Dropdown
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{route('create')}}">Create Account </a>
+                        <a class="dropdown-item" href="{{route('create')}}">Create User Account </a>
                         <a class="dropdown-item" href="#">Log In</a>
                         {{--<div class="dropdown-divider"></div>--}}
                         <a class="dropdown-item" href="{{route('comp_profile')}}">Company Profile</a>
+                        <a class="dropdown-item" href="{{route('comp_create')}}">create com_profile</a>
                     </div>
                 </li>
 
@@ -72,14 +73,14 @@
         <th>Name</th>
         <th>email</th>
         <th>Mobile</th>
-        <th>company Name</th>
+        <th>company Details</th>
             <th>Action</th>
         </tr>
         @php $i=0; @endphp
         @foreach($accounts as $account)
             @php $i++ @endphp
 
-        @php $company = App\Company::find($account->company_id) @endphp
+        {{--@php $company = App\Company::find($account->company_id) @endphp--}}
 
         <tr>
             <td>{{$i}}</td>
@@ -88,7 +89,10 @@
             <td>{{$account->email}}</td>
             <td>{{$account->mobile}}</td>
             <td>{{$account->c_name}}</td>
-            <td>{{$company->name}}</td>
+            <td>  <a href="{{route('comp_view',$account->company_id)}}" class="btn btn-info">Info</a>  </td>
+
+            {{-- company name access  {{$account->company['name']}}--}}
+
             <td> <a href="{{route('edit',$account->id)}}" class="btn btn-success">Edit </a></td>
             <td> <a href="{{route('delete',$account->id)}}" class="btn btn-danger">Delete </a></td>
 

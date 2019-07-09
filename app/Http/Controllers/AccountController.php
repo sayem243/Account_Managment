@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use Illuminate\Http\Request;
 use App\Account;
 
@@ -17,13 +18,17 @@ class AccountController extends Controller
 
 
     public function create(){
-        return view('create');
+        $companies=Company::all();
+        return view('create')->with('companies',$companies);
     }
 
     public function edit($id){
 
         $ac = Account::find($id);
-        return view('edit')->with('user',$ac);
+        $companies=Company::all();
+        return view('edit',['user'=>$ac, 'companies'=>$companies]);
+        //return view('edit')->with('companies' ,$companies);
+       // return view('user','companies', compact('ac', 'companies'));
     }
 
 
@@ -44,6 +49,7 @@ class AccountController extends Controller
         $acc->name=$request->name;
         $acc->email=$request->email;
         $acc->mobile=$request->mobile;
+        $acc->company_id=$request->company_id;
 
 
         $acc->save();
@@ -62,10 +68,11 @@ class AccountController extends Controller
 
         $acc=Account::find($id);
 
+
         $acc->name=$request->name;
         $acc->email=$request->email;
         $acc->mobile=$request->mobile;
-        $acc->c_name=$request->c_name;
+        $acc->company_id=$request->company_id;
 
         $acc->save();
         return redirect()->route('index');

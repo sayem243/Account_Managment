@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-    public function companies(){
+    public function company(){
         return $this->belongsTo('App\Company');
+
     }
 
 

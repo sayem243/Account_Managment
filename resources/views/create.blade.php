@@ -53,12 +53,18 @@
 </div>
 
 
-{{--<div class="form-group">--}}
-    {{--<label class="control-label col-sm-2" for="text">Company Name:</label>--}}
-    {{--<div class="col-sm-10">--}}
-        {{--<input type="text" class="form-control" name="c_name" id="c_name" placeholder="Email">--}}
-    {{--</div>--}}
-{{--</div>--}}
+<div class="form-group">
+    <label class="control-label col-sm-2" for="text">Company Name:</label>
+    <div class="col-sm-10">
+        <select name="company_id">
+            <option value="">Select Company</option>
+            @foreach($companies as $company)
+                <option value="{{$company->id}}">{{$company->name}}</option>
+                @endforeach
+        </select>
+
+    </div>
+</div>
 
 
 

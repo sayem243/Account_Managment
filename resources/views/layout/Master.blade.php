@@ -40,10 +40,11 @@
                         Dropdown
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Create Account </a>
+                        <a class="dropdown-item" href="#">CreateAccount </a>
                         <a class="dropdown-item" href="#">Log In</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route('comp_profile')}}">Company Profile</a>
+                        <a class="dropdown-item" href="{{route('comp_create')}}">create com_profile</a>
                     </div>
                 </li>
 

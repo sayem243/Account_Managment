@@ -57,16 +57,21 @@ class CompanyController extends Controller
             $company->c_img=$request->c_img->store('public/images');
 
 
-
-
         }
-
-
 
         $company->save();
         return redirect()->route('comp_create');
 
 
+    }
+
+    public  function view($id){
+
+        $company=Company::find($id);
+        return view('view')->with('company' ,$company);
+
 
     }
+
+
 }

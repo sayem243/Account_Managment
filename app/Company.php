@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
 
-    public function accounts(){
+    public function account(){
 
-        return $this->hasMany('App\Account','company_id');
+        return $this->hasMany('App\Account');
     
     }
 }
