@@ -13,7 +13,7 @@ class AccountController extends Controller
 
 
         $accounts=Account::all();
-        return view('home')->with('accounts',$accounts);
+        return view('main')->with('accounts',$accounts);
     }
 
 
@@ -27,8 +27,7 @@ class AccountController extends Controller
         $ac = Account::find($id);
         $companies=Company::all();
         return view('edit',['user'=>$ac, 'companies'=>$companies]);
-        //return view('edit')->with('companies' ,$companies);
-       // return view('user','companies', compact('ac', 'companies'));
+
     }
 
 
@@ -57,17 +56,12 @@ class AccountController extends Controller
 
 
 
-
-
     }
-
 
     public function update(Request $request,$id)
     {
 
-
         $acc=Account::find($id);
-
 
         $acc->name=$request->name;
         $acc->email=$request->email;
@@ -87,8 +81,14 @@ class AccountController extends Controller
         $acc=Account::find($id);
         $acc->delete();
 
-
-
     }
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
 
 }

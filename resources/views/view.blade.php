@@ -5,18 +5,6 @@
 
 
 
-    {{--<div class="form-group">--}}
-    {{--<label class="control-label col-sm-2" for="Name">Name:</label>--}}
-    {{--<div class="col-sm-10">--}}
-        {{--{{$company->name}}--}}
-        {{----}}
-    {{--</div>--}}
-    {{--</div>--}}
-
-
-
-
-
 <div class="text-center"><h2>company Details </h2>
 
     <div class="container-fluid">
@@ -50,21 +38,6 @@
 
             </tr>
 
-
-
-                {{--<tr>--}}
-                    {{--<td>{{$i}}</td>--}}
-                    {{--<td>{{$company->id}} </td>--}}
-                    {{--<td>{{$company->name}}</td>--}}
-                    {{--<td>{{$company->c_email}}</td>--}}
-                    {{--<td>{{$company->c_mobile}}</td>--}}
-                    {{--<td>{{$company->c_address}}</td>--}}
-
-
-                    {{--<td><img src="{{Storage::url($company->c_img) }}" alt="404" width="100px" ></td>--}}
-
-
-                {{--</tr>--}}
 
 
 

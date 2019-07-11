@@ -1,6 +1,47 @@
 @extends('layout.Master')
 
+
 @section('content')
+
+    <div class="text-center"><h2> Project Details </h2>
+
+        <div class="table-responsive-lg">
+            <table class= "table table-hover">
+                <tr>
+                    <th>Serial</th>
+
+                    <th>Project   Name</th>
+                    <th>Project Tittle </th>
+
+                    <th>Company Involved</th>
+                </tr>
+                @php $i=0; @endphp
+
+
+                @foreach($projects as $project)
+
+                    @php $i++ @endphp
+
+                    <tr>
+                        <td>{{$i}}</td>
+
+                        <td>{{$project->p_name}} </td>
+                        <td>{{$project->p_title}}</td>
+
+                        <td>{{$project->company['name']}}</td>
+
+                    </tr>
+
+
+
+
+                @endforeach
+
+            </table>
+        </div>
+
+    </div>
+
 
 
 

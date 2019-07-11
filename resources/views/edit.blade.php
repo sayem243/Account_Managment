@@ -41,12 +41,14 @@
 <div class="form-group">
     <label class="control-label col-sm-2" for="text">Company Name:</label>
     <div class="col-sm-10">
+
         <select name="company_id">
             <option value="">Select Company</option>
             @foreach($companies as $company)
                 <option value="{{$company->id}}" {{$company->id==$user->company_id?'selected="selected"':''}}>{{$company->name}}</option>
             @endforeach
         </select>
+
     </div>
 </div>
 
@@ -72,33 +74,6 @@
 
 
 
-
-    {{--<div class="form-group">--}}
-        {{--<label for="name">Name:</label>--}}
-        {{--<input type="text" class="form-control" id="name" name="name">--}}
-    {{--</div>--}}
-
-    {{--<div class="form-group">--}}
-        {{--<label for="email">Email:</label>--}}
-        {{--<input type="email" class="form-control" id="email" name="email">--}}
-    {{--</div>--}}
-
-    {{--<div class="form-group">--}}
-        {{--<label for="email">Mobile:</label>--}}
-        {{--<input type="email" class="form-control" id="mobile" name="mobile">--}}
-    {{--</div>--}}
-
-
-
-    {{--<div class="form-group">--}}
-        {{--<label for="name">Company  Name:</label>--}}
-        {{--<input type="text" class="form-control" id="C_name" name="name">--}}
-    {{--</div>--}}
-
-
-    {{--<div class="form-group">--}}
-        {{--<button style="cursor:pointer" type="submit" class="btn btn-primary">Submit</button>--}}
-    {{--</div>--}}
 </form>
 
     @endsection

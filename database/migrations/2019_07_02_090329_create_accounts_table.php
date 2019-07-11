@@ -22,6 +22,7 @@ class CreateAccountsTable extends Migration
 
             $table->timestamps();
         });
+
         Schema::table('accounts', function($table) {
             $table->foreign('company_id')->references('id')->on('companies');
         });

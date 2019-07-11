@@ -13,10 +13,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link  real="stylesheet" href="{{asset('css/style.css')}}">
 
-
-
 </head>
 <body>
+
 
 <div class="wrapper">
 
@@ -57,17 +56,17 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
 
-            {{--<a href="{{ route('logout') }}"--}}
-            {{--onclick="event.preventDefault();--}}
-            {{--document.getElementById('logout-form').submit();">--}}
-            {{--<button type="button" class="btn btn-outline-warning">Logout</button>--}}
-            {{--</a>--}}
+            {{--LogOut --}}
 
-            {{--<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">--}}
-            {{--{{ csrf_field() }}--}}
-            {{--</form>--}}
+            <a href="{{ route('logout') }}"
+               onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">
+                <button type="button" class="btn btn-outline-warning">Logout</button>
+            </a>
 
-
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
 
 
         </div>
@@ -75,8 +74,50 @@
 
 </div>
 
+<div class="container">
 
-@yield('content')
+
+<div class="table-responsive-md">
+    <table class= "table table-responsive table-hover">
+        <tr>
+        <th>Serial</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>email</th>
+        <th>Mobile</th>
+        <th>company Details</th>
+            <th>Action</th>
+        </tr>
+        @php $i=0; @endphp
+        @foreach($accounts as $account)
+            @php $i++ @endphp
+
+        {{--@php $company = App\Company::find($account->company_id) @endphp--}}
+
+        <tr>
+            <td>{{$i}}</td>
+            <td>{{$account->id}}</td>
+            <td>{{$account->name}}</td>
+            <td>{{$account->email}}</td>
+            <td>{{$account->mobile}}</td>
+
+
+            <td>  <a href="{{route('comp_view',$account->company_id)}}" class="btn btn-info">Info</a>  </td>
+
+            {{--<td>{{$account->company['name']}}</td>--}}
+
+            <td> <a href="{{route('edit',$account->id)}}" class="btn btn-success">Edit </a></td>
+            <td> <a href="{{route('delete',$account->id)}}" class="btn btn-danger">Delete </a></td>
+
+        </tr>
+        @endforeach
+    </table>
+</div>
+
+</div>
+
+
+
 
 {{--CDN javaScript Link--}}
 

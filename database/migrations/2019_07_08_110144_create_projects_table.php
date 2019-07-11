@@ -15,8 +15,23 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('company_id')->unsigned()->nullable();
+
+            $table->string('p_name');
+            $table->string('p_title');
+
             $table->timestamps();
         });
+
+
+        Schema::table('projects', function($table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+
+
+        });
+
+
     }
 
     /**

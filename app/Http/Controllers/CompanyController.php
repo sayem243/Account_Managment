@@ -44,15 +44,6 @@ class CompanyController extends Controller
         if($request->hasFile('c_img')){
 
 
-           // $img=time() .'.'. $c_img->getClientOriginalExtension();
-
-//          $company->c_img = $request->c_img->store('/public/image');
-
-//            $company=$request->file('c_img');
-//            $img = time() . '.' . $company->getClientOriginalExtension();
-//            $location = public_path('images/cImages'  .$img);
-//            Company::make($company)->save($location);
-
 
             $company->c_img=$request->c_img->store('public/images');
 
@@ -71,6 +62,12 @@ class CompanyController extends Controller
         return view('view')->with('company' ,$company);
 
 
+    }
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
 

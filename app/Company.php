@@ -12,6 +12,10 @@ class Company extends Model
         return $this->hasMany('App\Account');
     
     }
+
+    public  function  project(){
+        return $this->hasMany('App\Project');
+    }
 }
 
 
