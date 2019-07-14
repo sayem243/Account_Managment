@@ -15,11 +15,24 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-
-
+            $table->double('d_amount', 8, 2);
+            $table->double('due',8, 2);
+            $table->integer('company_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->string('approval');
 
 
             $table->timestamps();
+        });
+
+
+        Schema::table('payments', function($table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+
+        });
+        Schema::table('payments', function($table) {
+            $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 

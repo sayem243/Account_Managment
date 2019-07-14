@@ -18,7 +18,7 @@ class Company extends Model
     }
 
     public function Payment(){
-        return $this->belongsTo('App\Payment');
+        return $this->hasMany('App\Payment');
 
     }
 

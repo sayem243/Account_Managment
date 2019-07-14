@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    public function account(){
+    public function user(){
 
-        return $this->hasMany('App\Account');
+        return $this->belongsTo('App\User');
 
     }
     public function company(){
 
-        return $this->hasMany('App\Company');
+        return $this->belongsTo('App\Company');
 
     }
 

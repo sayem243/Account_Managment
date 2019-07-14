@@ -20,6 +20,7 @@ class CreateCompaniesTable extends Migration
 
 
             $table->string('name');
+
             $table->string('c_email')->unique();
             $table->string('c_mobile');
             $table->string('c_address');
@@ -27,8 +28,6 @@ class CreateCompaniesTable extends Migration
 
             $table->timestamps();
         });
-
-
 
 
     }

@@ -61,6 +61,13 @@ Route::get('/setting/create','SettingsController@create')->name('setting_create'
 Route::post('/setting/store','SettingsController@store')->name('setting_store');
 
 
+//Payment route
+
+Route::get('/payment','PaymentController@index')->name('payment');
+Route::get('/payment/create','PaymentController@create')->name('payment_create');
+Route::post('/payment/store','PaymentController@store')->name('payment_store');
+
+
 
 Auth::routes();
 
