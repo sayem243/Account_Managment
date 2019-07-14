@@ -24,8 +24,6 @@ class ProjectController extends Controller
         $projects=Project::all();
         return view('project.project_create',['companies'=>$companies,'project'=>$projects]);
 
-        //return view('project.project_create')->with('companys',$company);
-
     }
 
 

@@ -11,5 +11,9 @@ class Account extends Model
 
     }
 
+    public function Payment(){
+        return $this->belongsTo('App\Payment');
+
+    }
 
 }

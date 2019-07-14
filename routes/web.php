@@ -53,13 +53,13 @@ Route::get('/project/create','ProjectController@create')->name('project_create')
 Route::post('/project/store','ProjectController@store')->name('project_store');
 
 
-
-
 //Settings route
+
 
 Route::get('/setting','SettingsController@index')->name('setting');
 Route::get('/setting/create','SettingsController@create')->name('setting_create');
 Route::post('/setting/store','SettingsController@store')->name('setting_store');
+
 
 
 Auth::routes();

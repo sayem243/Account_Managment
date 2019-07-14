@@ -16,6 +16,13 @@ class Company extends Model
     public  function  project(){
         return $this->hasMany('App\Project');
     }
+
+    public function Payment(){
+        return $this->belongsTo('App\Payment');
+
+    }
+
+
 }
 
 

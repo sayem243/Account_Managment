@@ -9,10 +9,13 @@ class SettingsController extends Controller
 {
     public function  index(){
 
-        return view('settings.settings_index');
+        $settings = Settings::all();
+        return view('settings.settings_index')->with('settings',$settings);
     }
 
     public function  create(){
+
+
 
         return view('settings.settings_create');
     }
@@ -28,12 +31,22 @@ class SettingsController extends Controller
 
         ]);
 
+
         $employee =new Settings;
         $employee->empl_type=$request->empl_type;
         $employee->des_id=$request->des_id;
 
         $employee->save();
+
         return redirect()->route('setting');
 
     }
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
 }
