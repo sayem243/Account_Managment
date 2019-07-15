@@ -11,4 +11,10 @@ class Project extends Model
         return $this->belongsTo('App\Company');
 
     }
+
+    public function Payment(){
+        return $this->hasMany('App\Payment');
+
+    }
+
 }

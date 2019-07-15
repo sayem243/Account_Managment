@@ -17,8 +17,11 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->double('d_amount', 8, 2);
             $table->double('due',8, 2);
+
             $table->integer('company_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('project_id')->unsigned()->nullable();
+
             $table->string('approval');
 
 
@@ -34,6 +37,13 @@ class CreatePaymentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
 
         });
+
+        Schema::table('payments', function($table) {
+            $table->foreign('project_id')->references('id')->on('projects');
+
+        });
+
+
     }
 
     /**

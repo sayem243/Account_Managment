@@ -48,6 +48,18 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="project_id">Projects</label>
+            <div class="col-sm-10">
+
+                <select name="project_id">
+                    <option value="">Select User</option>
+                    @foreach($projects as $project)
+                        <option value="{{$project->id}}"> {{$project->p_name}} </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
 
 

@@ -12,10 +12,13 @@
                 <th>serial</th>
                 <th>User Name</th>
                 <th>Company Name </th>
+                <th>Select Project</th>
+
                 <th>Demand  Amount</th>
                 <th>Disbursment Amount</th>
                 <th>Approval </th>
                 <th>Due</th>
+
             </tr>
             </thead>
             <tbody>
@@ -34,6 +37,10 @@
                         {{$payment->company['name']}}
                     </td>
                     <td>
+                        {{$payment->project['p_name'] }}
+                    </td>
+
+                    <td>
                        {{$payment->d_amount}}
                     </td>
 
@@ -41,7 +48,24 @@
                         {{$payment->due}}
                     </td>
 
-                    {{--<td>{{$setting->des_id}}</td>--}}
+                    <td>
+
+                    </td>
+
+                    <td>
+                        @php
+                            $sum=$payment->d_amount-$payment->due;
+
+                        @endphp
+
+                        {{$sum}}
+
+
+
+                    </td>
+
+
+
                 </tr>
 
             @endforeach

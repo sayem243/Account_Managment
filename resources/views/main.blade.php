@@ -40,10 +40,22 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{route('create')}}">Create User Account </a>
-                        <a class="dropdown-item" href="#">Log In</a>
-                        {{--<div class="dropdown-divider"></div>--}}
-                        <a class="dropdown-item" href="{{route('comp_profile')}}">Company Profile</a>
+
                         <a class="dropdown-item" href="{{route('comp_create')}}">create com_profile</a>
+                        <a class="dropdown-item" href="{{route('project_create')}}">Create Projects</a>
+                        <a class="dropdown-item" href="{{route('setting_create')}}">create Setting Table </a>
+                        <a class="dropdown-item" href="{{route('payment_create')}}"> Payment create</a>
+
+                        <div class="dropdown-divider"></div>
+
+
+                        <a class="dropdown-item" href="{{route('project')}}">Projects</a>
+
+                        <a class="dropdown-item" href="{{route('setting')}}">Setting Table</a>
+
+
+                        <a class="dropdown-item" href="{{route('payment')}}">Payment Details</a>
+
                     </div>
                 </li>
 

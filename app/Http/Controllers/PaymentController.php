@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Project;
 use App\User;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Company;
 use App\Account;
+
 
 class PaymentController extends Controller
 {
@@ -22,8 +24,9 @@ class PaymentController extends Controller
 
         $users=User::all();
         $companies=Company::all();
+        $projects=Project::all();
         //return view('payment.payment_index')->with('users',$user);
-        return view('payment.create',['users'=>$users, 'companies'=>$companies]);
+        return view('payment.create',['users'=>$users, 'companies'=>$companies ,'projects'=>$projects ]);
     }
 
     public function store(Request $request)
@@ -36,6 +39,8 @@ class PaymentController extends Controller
         $acc->due=$request->payment_amount;
         $acc->user_id=$request->user_id;
         $acc->company_id=$request->company_id;
+        $acc->project_id=$request->project_id;
+
         $acc->approval='Approved';
 
 
