@@ -9,13 +9,13 @@ class CompanyController extends Controller
 {
     public function create(){
 
-        return view('company');
+        return view('company.company');
     }
 
     public function index(){
 
         $company=Company::all();
-        return view('chome')->with('companys' ,$company);
+        return view('company.chome')->with('companys' ,$company);
     }
 
 
@@ -47,11 +47,10 @@ class CompanyController extends Controller
 
             $company->c_img=$request->c_img->store('public/images');
 
-
         }
 
         $company->save();
-        return redirect()->route('comp_create');
+        return redirect()->route('company.comp_create');
 
 
     }
@@ -59,8 +58,7 @@ class CompanyController extends Controller
     public  function view($id){
 
         $company=Company::find($id);
-        return view('view')->with('company' ,$company);
-
+        return view('company.view')->with('company' ,$company);
 
     }
 

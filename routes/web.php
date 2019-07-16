@@ -68,6 +68,13 @@ Route::get('/payment/create','PaymentController@create')->name('payment_create')
 Route::post('/payment/store','PaymentController@store')->name('payment_store');
 
 
+//Admin route and Template
+
+
+ROute::get('/admin','AdminController@index')->name('admin_index');
+
+
+
 
 Auth::routes();
 

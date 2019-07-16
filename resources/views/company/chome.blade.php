@@ -1,6 +1,6 @@
-@extends('layout.Master')
+@extends('admin.index')
 
-@section('content')
+@section('template')
 
 
 

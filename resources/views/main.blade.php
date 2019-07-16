@@ -52,6 +52,7 @@
                         <a class="dropdown-item" href="{{route('project')}}">Projects</a>
 
                         <a class="dropdown-item" href="{{route('setting')}}">Setting Table</a>
+                        <a class="dropdown-item" href="{{route('comp_profile')}}">Company Profile</a>
 
 
                         <a class="dropdown-item" href="{{route('payment')}}">Payment Details</a>

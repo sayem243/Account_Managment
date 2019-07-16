@@ -1,8 +1,13 @@
-@extends('layout.Master')
+{{--@extends('layout.Master')--}}
 
-@section('content')
+{{--@section('content')--}}
 
 
+@extends('admin.index')
+
+@section('template')
+
+    <div class="container">
 
 
     <div class="text-center"><h2>company profile</h2> </div>
@@ -88,6 +93,8 @@
             </div>
         </div>
 
+    </form>
 
+    </div>
 
         @endsection

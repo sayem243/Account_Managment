@@ -1,6 +1,12 @@
-@extends('layout.Master')
+@extends('admin.index')
 
-@section('content')
+{{--@extends('layout.Master')--}}
+
+
+{{--@section('content')--}}
+
+@section('template')
+
     <div class="container">
         <h2>Settings Table </h2>
         <p>Settings Table define Employee status </p>
@@ -31,3 +37,5 @@
 
 
 @endsection
+
+{{--@endsection--}}

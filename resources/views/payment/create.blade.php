@@ -1,6 +1,17 @@
-@extends('layout.Master')
+{{--@extends('layout.Master')--}}
 
-@section('content')
+{{--@section('content')--}}
+
+@extends('admin.index')
+
+
+
+
+
+
+@section('template')
+
+
 
 
     <form class="form-horizontal" action="{{ route('payment_store')}}" method="post">
@@ -77,4 +88,5 @@
 
 
 
+{{--@endsection--}}
 @endsection

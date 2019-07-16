@@ -1,7 +1,9 @@
-@extends('layout.Master')
-
+{{--@extends('layout.Master')--}}
+@extends('admin.index')
 
 @section('content')
+
+    @section('template')
 
     <div class="text-center"><h2> Project Details </h2>
 
@@ -43,6 +45,6 @@
     </div>
 
 
+    @endsection
 
-
-@endsection
+        {{--@endsection--}}
