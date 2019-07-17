@@ -1,6 +1,15 @@
-@extends('layout.Master')
+{{--@extends('layout.Master')--}}
 
-@section('content')
+{{--@section('content')--}}
+    {{----}}
+
+@extends('admin.index')
+
+@section('template')
+
+
+
+
     <form class="form-horizontal" action="{{ route('setting_store')}}" method="post">
 
         {{csrf_field()}}

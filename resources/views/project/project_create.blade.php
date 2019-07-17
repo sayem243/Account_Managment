@@ -1,11 +1,31 @@
-@extends('layout.Master')
+@extends('admin.index')
+@section('template')
 
-@section('content')
+{{--@extends('layout.Master')--}}
+
+{{--@section('content')--}}
 
 
     <form class="form-horizontal" action="{{ route('project_store')}}" method="post">
 
         {{ csrf_field() }}
+
+
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
+
+
+
 
     <div class="form-group">
         <label class="control-label col-sm-2" for="Name">Project Name:</label>
@@ -44,5 +64,5 @@
 
 
 
-
 @endsection
+{{--@endsection--}}

@@ -31,6 +31,14 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate(request(), [
+            'Demand Ammount' => 'required|number',
+            'Payment Ammount' => 'required|number',
+
+        ]);
+
+
+
 
         $acc=new Payment();
 

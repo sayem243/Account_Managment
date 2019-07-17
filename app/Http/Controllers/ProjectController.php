@@ -29,7 +29,12 @@ class ProjectController extends Controller
 
     public function store(Request $request){
 
-        //var_dump($request);die;
+        $this->validate(request(), [
+            'project Name' => 'required',
+            'project Title ' => 'required',
+
+
+        ]);
 
 
         $project=new Project;

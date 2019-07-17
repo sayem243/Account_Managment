@@ -74,7 +74,7 @@
     <div class="navbar-wrapper">
         <div class="navbar-brand header-logo">
             <a href="index.html">
-                <img class="img-fluid" src="{{asset('assets/images/logo-docs.png')}}" alt="Datta Able Logo" />
+                <img class="img-fluid" src="{{asset('assets/images/logo.png')}}" alt="Datta Able Logo" />
             </a>
             <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
         </div>
@@ -83,7 +83,7 @@
                 <li class="nav-item pcoded-menu-caption">
                     <label>Getting started</label>
                 </li>
-                <li class="nav-item"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Project</span></a></li>
+                 <li class="nav-item"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Project</span></a></li>
                 <li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">company Profile</span></a></li>
                 <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Payment</span></a></li>
                 <li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Settings Table</span></a></li>
@@ -95,6 +95,9 @@
                 <li class="nav-item pcoded-menu-caption">
                     <label>Resources & References</label>
                 </li>
+
+                <li class="nav-item"><a href="{{route('project_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Project Table</span></a></li>
+
                 <li class="nav-item"><a href="{{route('setting_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Setting Table</span></a></li>
                 <li class="nav-item"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Payment Table</span></a></li>
 
@@ -125,13 +128,20 @@
             <li><a href="javascript:" class="full-screen" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize"></i></a></li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            {{--<li>--}}
-                {{----}}
-                {{--<form action="https://codedthemes.support-hub.io" target="_blank">--}}
-                    {{--<button type="submit" class="btn btn-secondary"><i class="far fa-life-ring"></i>Support</button>--}}
-                {{--</form>--}}
-                {{----}}
-            {{--</li>--}}
+<li>
+
+
+
+<form action="https://codedthemes.support-hub.io" target="_blank">
+
+<button type="submit" class="btn btn-secondary"><i class="far fa-life-ring"></i>Support</button>
+
+</form>
+
+
+
+</li>
+
         </ul>
     </div>
 </header>
@@ -462,6 +472,7 @@ Extra References
                                                         </td>
                                                     </tr>
                                                     </tbody>
+
                                                 </table>
                                             </div>
                                         </div>

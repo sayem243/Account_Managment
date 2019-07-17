@@ -1,7 +1,9 @@
-@extends('layout.Master')
+{{--@extends('layout.Master')--}}
 
+{{--@section('content')--}}
 
-@section('content')
+@extends('admin.index')
+@section('template')
 
     <div class="container">
         <h2>Payment Table </h2>
