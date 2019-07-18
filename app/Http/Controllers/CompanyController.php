@@ -50,7 +50,7 @@ class CompanyController extends Controller
         }
 
         $company->save();
-        return redirect()->route('company.comp_create');
+        return redirect()->route('comp_profile');
 
 
     }

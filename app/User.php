@@ -32,4 +32,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Payment');
 
     }
+
+    public function UserType(){
+
+        return $this->hasMany('App\UserType');
+
+
+    }
 }

@@ -21,9 +21,19 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
 
             $table->string('password');
+
+            $table->integer('user_types_id')->unsigned()->nullable();
+
+
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::table('users', function($table) {
+            $table->foreign('user_types_id')->references('id')->on('user_types');
+
+        });
+
     }
 
     /**

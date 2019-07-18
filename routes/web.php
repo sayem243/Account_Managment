@@ -70,11 +70,13 @@ Route::post('/payment/store','PaymentController@store')->name('payment_store');
 
 //Admin route and Template
 
-ROute::get('/admin','AdminController@index')->name('admin_index');
+Route::get('/admin','AdminController@index')->name('admin_index');
 
 
 //UserType
-ROute::get('/usertype','UserTypeController@index')->name('usertype');
+Route::get('/usertype','UserTypeController@index')->name('usertype');
+Route::get('/usertype/create','UserTypeController@create')->name('usertype_create');
+Route::post('/usertype/store','UserTypeController@store')->name('usertype_store');
 
 
 

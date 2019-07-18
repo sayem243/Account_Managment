@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserType extends Model
 {
-    //
+    public function User(){
+        return $this->belongsTo('App\User');
+    }
+
 }

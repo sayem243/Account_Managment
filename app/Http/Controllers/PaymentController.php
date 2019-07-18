@@ -55,16 +55,12 @@ class PaymentController extends Controller
         $acc->save();
         return redirect()->route('payment');
 
-
-
     }
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-
-
 
 
 }

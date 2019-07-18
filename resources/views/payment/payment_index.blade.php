@@ -61,13 +61,7 @@
                         @endphp
 
                         {{$sum}}
-
-
-
                     </td>
-
-
-
                 </tr>
 
             @endforeach
