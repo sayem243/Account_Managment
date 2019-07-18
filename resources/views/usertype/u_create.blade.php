@@ -5,7 +5,7 @@
 <h2>Register</h2>
 
 
-{{--<form method="post" action="/register">--}}
+
 
 <form class="form-horizontal" action="{{ route('account_store')}}" method="post">
 

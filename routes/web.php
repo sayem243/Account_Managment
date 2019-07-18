@@ -70,8 +70,14 @@ Route::post('/payment/store','PaymentController@store')->name('payment_store');
 
 //Admin route and Template
 
-
 ROute::get('/admin','AdminController@index')->name('admin_index');
+
+
+//UserType
+ROute::get('/usertype','UserTypeController@index')->name('usertype');
+
+
+
 
 
 
