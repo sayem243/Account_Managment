@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\UserType;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class UserTypeController extends Controller
 
     public function create(){
 
-        $subtype= UserType::all();
+
 
         return view('usertype.u_create');
     }

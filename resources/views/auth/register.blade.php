@@ -82,7 +82,19 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
-                        
+
+
+                        <select name="user_types_id">
+                            <option value="">Select Subtype </option>
+                            @foreach($usertypes as $usertype)
+                                <option value="{{$usertype->id}}"> {{$usertype->u_title}} </option>
+                            @endforeach
+
+                        </select>
+
+
+
+
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
