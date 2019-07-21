@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\User;
+use App\UserType;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Company;
 use App\Account;
+use PDF;
 
 
 class PaymentController extends Controller
@@ -22,11 +24,13 @@ class PaymentController extends Controller
 
     public function create(){
 
-        $users=User::all();
+        $users=User::where('user_types_id',2)->get();
+
+
         $companies=Company::all();
         $projects=Project::all();
-        //return view('payment.payment_index')->with('users',$user);
-        return view('payment.create',['users'=>$users, 'companies'=>$companies ,'projects'=>$projects ]);
+
+        return view('payment.create',['users'=>$users, 'companies'=>$companies ,'projects'=>$projects  ]);
     }
 
     public function store(Request $request)
@@ -38,10 +42,7 @@ class PaymentController extends Controller
         ]);
 
 
-
-
         $acc=new Payment();
-
 
         $acc->d_amount=$request->demand_amount;
         $acc->due=$request->payment_amount;
@@ -56,6 +57,25 @@ class PaymentController extends Controller
         return redirect()->route('payment');
 
     }
+
+    public function printPDF($id){
+
+
+        $user=Payment::find($id);
+
+
+
+
+        $pdf = PDF::loadView('payment.pdf_view', compact('user',$id));
+        return $pdf->download('payment.pdf');
+
+
+    }
+
+
+
+
+
 
     public function __construct()
     {

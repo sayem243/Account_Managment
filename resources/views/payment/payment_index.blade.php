@@ -5,9 +5,13 @@
 @extends('admin.index')
 @section('template')
 
+    <div class="col-sm-12">
+    <div class="card" id="references">
+        <div class="card-header">
+
     <div class="container">
-        <h2>Payment Table </h2>
-        <p>Payment </p>
+        <h2> Payment  </h2>
+
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -51,7 +55,7 @@
                     </td>
 
                     <td>
-
+                        <a href="{{route('printPDF',$payment->id)}}">Print PDF</a>
                     </td>
 
                     <td>
@@ -71,7 +75,9 @@
         </table>
     </div>
 
-
+        </div>
+    </div>
+    </div>
 
 
 @endsection

@@ -68,6 +68,9 @@ Route::get('/payment','PaymentController@index')->name('payment');
 Route::get('/payment/create','PaymentController@create')->name('payment_create');
 Route::post('/payment/store','PaymentController@store')->name('payment_store');
 
+Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printPDF');
+
+
 
 //Admin route and Template
 
@@ -75,6 +78,7 @@ Route::get('/admin','AdminController@index')->name('admin_index');
 
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 //UserType
+
 Route::get('/usertype','UserTypeController@index')->name('usertype');
 Route::get('/usertype/create','UserTypeController@create')->name('usertype_create');
 Route::post('/usertype/store','UserTypeController@store')->name('usertype_store');
@@ -95,6 +99,7 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
+//pdf controller
 
 
 

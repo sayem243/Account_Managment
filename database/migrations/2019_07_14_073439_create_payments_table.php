@@ -43,6 +43,10 @@ class CreatePaymentsTable extends Migration
 
         });
 
+//        Schema::table('payments', function($table) {
+//            $table->foreign('user_types_id')->references('id')->on('user_types');
+//
+//        });
 
     }
 
