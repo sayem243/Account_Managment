@@ -1,12 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+
 <head>
 
 </head>
 
 <body>
 
+<?php
 
+$timestamp = time();
+//echo($timestamp);
+echo "\n";
+echo(date("F d, Y h:i:s A", $timestamp));
+
+?>
 
 <h1>{{ $user->d_amount}}</h1>
 
@@ -19,6 +26,6 @@
 
 </body>
 
-</body>
+
 
 </html>

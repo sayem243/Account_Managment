@@ -36,8 +36,8 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'Demand Ammount' => 'required|number',
-            'Payment Ammount' => 'required|number',
+            'demand_amount'=> 'digits_between:2,8',
+            'payment_amount'=>'digits_between:2,8',
 
         ]);
 
@@ -84,7 +84,6 @@ class PaymentController extends Controller
     public function update(Request $request,$id){
 
         $payment=Payment::find($id);
-
 
 
         $payment->d_amount=$request->demand_amount;

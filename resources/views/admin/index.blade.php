@@ -102,20 +102,22 @@
 
 
                 <li class="nav-item pcoded-menu-caption">
-                    <label>Resources & References</label>
+                    <label>Create Information</label>
                 </li>
 
                 <li class="nav-item"><a href="{{route('project_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Project Table</span></a></li>
 
                 <li class="nav-item"><a href="{{route('setting_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Setting Table</span></a></li>
                 <li class="nav-item"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Payment Table</span></a></li>
+                <li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create UserType</span></a></li>
 
-                <li class="nav-item"><a href="#plugins" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">Plugins</span></a></li>
+               
+
+                {{--<form id="logout-form" action="{{ route('logout') }}" method="POST" class="nav-link"><span class="pcoded-micon"><i class="fal fa-sign-out-alt"></i>Logout</span>--}}
+                    {{--{{ csrf_field() }}--}}
+                {{--</form>--}}
 
 
-                <li class="nav-item"><a href="#references" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">Extra References</span></a></li>
-                <li class="nav-item"><a href="#faq" class="nav-link"><span class="pcoded-micon"><i class="feather icon-help-circle"></i></span><span class="pcoded-mtext">FAQ</span></a></li>
-                <li class="nav-item"><a href="#cl" class="nav-link"><span class="pcoded-micon"><i class="feather icon-book"></i></span><span class="pcoded-mtext">Change Log</span></a></li>
             </ul>
         </div>
     </div>

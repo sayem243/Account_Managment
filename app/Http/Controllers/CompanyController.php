@@ -32,7 +32,6 @@ class CompanyController extends Controller
 
 
         $company =new Company;
-
         $company->name=$request->name;
         $company->c_email=$request->c_email;
         $company->c_mobile=$request->c_mobile;
@@ -43,10 +42,7 @@ class CompanyController extends Controller
 
         if($request->hasFile('c_img')){
 
-
-
             $company->c_img=$request->c_img->store('public/images');
-
         }
 
         $company->save();
@@ -59,6 +55,50 @@ class CompanyController extends Controller
 
         $company=Company::find($id);
         return view('company.view')->with('company' ,$company);
+    }
+
+    public  function edit($id){
+
+        $company=Company::find($id);
+        return view('company.edite')->with('company',$company);
+
+
+
+    }
+
+
+
+    public  function update(Request $request,$id){
+
+        $company=Company::find($id);
+
+        //$company =new Company;
+        $company->name= $request->name;
+        $company->c_email=$request->c_email;
+        $company->c_mobile=$request->c_mobile;
+        $company->c_address=$request->c_address;
+
+        //image uploder
+
+
+        if($request->hasFile('c_img')){
+
+            $company->c_img=$request->c_img->store('public/images');
+        }
+
+        $company->save();
+        return redirect()->route('comp_profile');
+
+    }
+
+
+    public function delete($id){
+
+        $company=Company::find($id);
+
+        $company->delete();
+
+        return redirect()->route('comp_profile');
 
     }
 

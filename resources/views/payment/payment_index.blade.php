@@ -72,8 +72,8 @@
                                 {{--<a href="{{route('delete',$payment->id)}}" class="btn btn-danger">Delete </a>--}}
 
                                 <div class="btn-group-vertical">
-                                    <a href="{{route('edit',$payment->id)}}" button type="button" class="btn btn-primary" >Edit</button> </a>
-                                    <a href="{{route('delete',$payment->id)}}" button type="button" class="btn btn-primary">Delete</button></a>
+                                    <a href="{{route('payment_edit',$payment->id)}}" button type="button" class="btn btn-primary" >Edit </a>
+                                    <a href="{{route('delete', $payment->id)}}" button type="button" class="btn btn-primary">Delete</a>
 
                                 </div>
 

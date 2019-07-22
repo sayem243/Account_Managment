@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
@@ -21,6 +22,8 @@ class Company extends Model
         return $this->hasMany('App\Payment');
 
     }
+
+    use SoftDeletes;
 
 
 }

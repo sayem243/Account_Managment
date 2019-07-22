@@ -16,7 +16,7 @@
                     @endif
 
                     You are logged in!
-                        <a href="{{route('index')}}" class="btn btn-danger">click  </a>
+                        <a href="{{route('index')}}" class="btn btn-danger">click </a>
 
                 </div>
 
