@@ -6,6 +6,9 @@
 
 @section('template')
 
+    <div class="col-sm-12">
+        <div class="card" id="references">
+            <div class="card-header">
 
 
 
@@ -57,18 +60,24 @@
             </div>
         </div>
 
+
         <div class="form-group">
-            <label class="control-label col-sm-2" for="user_id">User:</label>
+            <label class="control-label col-sm-2" for="user_id">Employee:</label>
             <div class="col-sm-10">
 
                 <select name="user_id">
-                    <option value="">Select User</option>
+                    <option value="">Select Employee</option>
                     @foreach($users as $user)
                         <option value="{{$user->id}}"> {{$user->name}} </option>
                     @endforeach
                 </select>
             </div>
         </div>
+
+
+
+
+
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="project_id">Projects</label>
@@ -96,7 +105,9 @@
 
     </form>
 
-
+            </div>
+        </div>
+    </div>
 
 
 {{--@endsection--}}

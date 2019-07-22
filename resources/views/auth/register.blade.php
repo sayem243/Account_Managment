@@ -57,10 +57,6 @@
                             </div>
                         </div>
 
-
-
-
-
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
@@ -83,6 +79,13 @@
                             </div>
                         </div>
 
+                        <select name="user_types_id">
+                            <option value="">Select Subtype </option>
+                            @foreach($usertypes as $usertype)
+                                <option value="{{$usertype->id}}"> {{$usertype->u_title}} </option>
+                            @endforeach
+
+                        </select>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

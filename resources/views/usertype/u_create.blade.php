@@ -1,10 +1,11 @@
 @extends('layout.Master')
 
 @section('content')
+    <div class="col-sm-12">
+        <div class="card" id="references">
+            <div class="card-header">
 
 <h2 align="center">User Sub Type Form</h2>
-
-
 <form class="form-horizontal" action="{{ route('usertype_store')}}" method="post">
 
     {{ csrf_field() }}
@@ -73,7 +74,9 @@
     </div>
 </div>
 
-
 </form>
 
+            </div>
+        </div>
+    </div>
 @endsection

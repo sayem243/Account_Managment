@@ -20,13 +20,7 @@
 
                 </div>
 
-                {{--template--}}
 
-
-
-
-
-                {{--end template--}}
             </div>
         </div>
     </div>

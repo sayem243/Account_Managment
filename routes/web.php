@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 });
 
+//Auth::routes();
 
 Route::get('/index' ,'AccountController@index')->name('index');
 
@@ -66,24 +67,45 @@ Route::post('/setting/store','SettingsController@store')->name('setting_store');
 Route::get('/payment','PaymentController@index')->name('payment');
 Route::get('/payment/create','PaymentController@create')->name('payment_create');
 Route::post('/payment/store','PaymentController@store')->name('payment_store');
+Route::get('/payment/edit/{id}','PaymentController@edite')->name('payment_edit');
+Route::post('/payment/update/{id}' ,'PaymentController@update')->name('payment_update');
+Route::get('/payment/delete/{id}' ,'PaymentController@delete')->name('delete');
+
+
+Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printPDF');
+
 
 
 //Admin route and Template
 
 Route::get('/admin','AdminController@index')->name('admin_index');
 
-
+Route::post('register', 'Auth\RegisterController@register')->name('register');
 //UserType
+
 Route::get('/usertype','UserTypeController@index')->name('usertype');
 Route::get('/usertype/create','UserTypeController@create')->name('usertype_create');
 Route::post('/usertype/store','UserTypeController@store')->name('usertype_store');
 
 
+// Authentication Routes...
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+// Registration Routes...
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register');
+
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+//pdf controller
 
 
 
-
-
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

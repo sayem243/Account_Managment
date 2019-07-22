@@ -4,7 +4,9 @@
 {{--@extends('layout.Master')--}}
 
 {{--@section('content')--}}
-
+<div class="col-sm-12">
+    <div class="card" id="references">
+        <div class="card-header">
 
     <form class="form-horizontal" action="{{ route('project_store')}}" method="post">
 
@@ -62,7 +64,9 @@
 
     </form>
 
-
+        </div>
+    </div>
+</div>
 
 @endsection
 {{--@endsection--}}

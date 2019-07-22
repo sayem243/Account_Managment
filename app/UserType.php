@@ -10,4 +10,12 @@ class UserType extends Model
         return $this->belongsTo('App\User');
     }
 
+
+//    public function users(){
+//
+//
+//        return $this->hasOne('App\Payment');
+//
+//
+//    }
 }
