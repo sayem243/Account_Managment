@@ -7,7 +7,7 @@
 
 {{--<form method="post" action="/register">--}}
 
-<form class="form-horizontal" action="{{ route('update',$user->id)}}" method="post">
+<form class="form-horizontal" action="{{ route('payment_update',$user->id)}}" method="post" enctype="multipart/form-data">
 
     {{ csrf_field() }}
 
@@ -60,17 +60,6 @@
         <button type="submit" class="btn btn-danger">Submit  </button>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -63,18 +63,51 @@ class PaymentController extends Controller
 
         $user=Payment::find($id);
 
-
-
-
         $pdf = PDF::loadView('payment.pdf_view', compact('user',$id));
         return $pdf->download('payment.pdf');
+
+    }
+
+
+    public function edite($id){
+
+        $payment=Payment::find($id);
+        $companies=Company::all();
+        $user=User::all();
+        $project=Project::all();
+
+        return view('payment.edite',['payment'=>$payment ,'companies'=>$companies ,'users'=>$user ,'projects'=>$project ]);
+
+    }
+
+
+    public function update(Request $request,$id){
+
+        $payment=Payment::find($id);
+
+
+
+        $payment->d_amount=$request->demand_amount;
+        $payment->due=$request->payment_amount;
+        $payment->user_id=$request->user_id;
+        $payment->company_id=$request->company_id;
+        $payment->project_id=$request->project_id;
+
+        $payment->approval='Approved';
+
+
+        $payment->save();
+        return redirect()->route('payment');
 
 
     }
 
 
-
-
+    public function delete($id){
+        $payment=Payment::find($id);
+        $payment->delete();
+        return redirect()->route('payment');
+    }
 
 
     public function __construct()
