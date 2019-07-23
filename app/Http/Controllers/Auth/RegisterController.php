@@ -82,7 +82,8 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $usertypes=UserType::all();
-        return view('auth.register', compact('usertypes'));
+        // return view('auth.register', compact('usertypes'));
+        return view('auth.register')->with('usertypes',$usertypes);
     }
 
 

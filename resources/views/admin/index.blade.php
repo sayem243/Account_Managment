@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Datta Able - HTML Documentation helper file</title>
+    <title>Account Managment Project </title>
     <!--[if lt IE 10]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -83,11 +83,21 @@
                 <li class="nav-item pcoded-menu-caption">
                     <label>Getting started</label>
                 </li>
-                 <li class="nav-item"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Project</span></a></li>
-                <li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">company Profile</span></a></li>
-                <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Payment</span></a></li>
-                <li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Settings Table</span></a></li>
-                <li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">create company profile</span></a></li>
+<li class="nav-item">
+    <a href="{{route('project')}}" class="nav-link active">
+        <span class="pcoded-micon">
+            <i class="feather icon-home"></i>
+        </span>
+        <span class="pcoded-mtext">Project</span>
+    </a>
+</li>
+
+<li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">company Profile</span></a></li>
+
+ <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Payment</span></a></li>
+
+ <li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Settings Table</span></a></li>
+<li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">create company profile</span></a></li>
 
 
 

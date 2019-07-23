@@ -44,7 +44,7 @@
                                 {{--@endforeach--}}
 
 
-                        <td><img src="{{Storage::url($company->c_img) }}" alt="404" width="100px" ></td>
+                        <td><img src="{{Storage::url( $company->c_img ) }}"  width="100px" ></td>
 
 
                         {{----}}

@@ -5,6 +5,15 @@
 @extends('admin.index')
 @section('template')
 
+
+
+
+    
+
+
+
+
+
     <div class="container">
         <h2>Payment Table </h2>
         <p>Payment </p>
