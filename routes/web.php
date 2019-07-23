@@ -10,8 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 
 });
 
@@ -23,7 +24,7 @@ Route::get('/create','AccountController@create')->name('create');
 Route::get('/edit/{id}','AccountController@edit')->name('edit');
 Route::post('account/store','AccountController@store')->name('account_store');
 Route::post('/update/{id}' ,'AccountController@update')->name('update');
-Route::get('/delete/{id}' ,'AccountController@delete')->name('delete');
+Route::get('/delete/{id}','AccountController@delete')->name('delete');
 
 
 //company route

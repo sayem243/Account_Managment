@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\UserType;
+use App\Company;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -35,10 +36,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('guest');
+//    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -71,6 +72,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'username'=> $data['username'],
             'user_types_id'=> $data['user_types_id'],
+            'company_id'=>$data['company_id'],
         ]);
     }
 
@@ -82,7 +84,14 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $usertypes=UserType::all();
-        return view('auth.register', compact('usertypes'));
+        $companies=Company::all();
+        return view('auth.register',['usertypes'=>$usertypes ,'companies'=>$companies]);
+    }
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
 

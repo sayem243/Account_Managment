@@ -87,6 +87,17 @@
 
                         </select>
 
+                        <select name="company_id" multiple>
+                            <option value="">Select Company</option>
+                            @foreach($companies as $company)
+                                <option value="{{$company->id}}"> {{$company->name}} </option>
+                            @endforeach
+                        </select>
+
+
+
+
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

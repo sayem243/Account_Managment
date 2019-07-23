@@ -35,7 +35,7 @@ class AccountController extends Controller
     {
 //        check validation
 
-        $this->validate(request(), [
+        $this->validate(request(),[
             'name' => 'required',
             'email' => 'required|email',
             'mobile' => 'required',
