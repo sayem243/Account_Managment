@@ -19,8 +19,8 @@
 
                     <th>Project   Name</th>
                     <th>Project Tittle </th>
-
                     <th>Company Involved</th>
+                    <th>Actions</th>
                 </tr>
                 @php $i=0; @endphp
 
@@ -36,6 +36,12 @@
                         <td>{{$project->p_title}}</td>
 
                         <td>{{$project->company['name']}}</td>
+                        <td>
+                            <div class="btn-group-vertical">
+                                <a href="{{route('project_edit',$project->id)}}" button type="button" class="btn btn-primary" >Edit </a>
+                                <a href="{{route('project_delete', $project->id)}}" button type="button" class="btn btn-primary">Delete</a>
+                            </div>
+                        </td>
 
                     </tr>
 

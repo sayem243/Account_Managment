@@ -14,8 +14,9 @@ echo "\n";
 echo(date("F d, Y h:i:s A", $timestamp));
 
 ?>
+<h2> Payment Slip</h2>
 
-<h1>{{ $user->d_amount}}</h1>
+<h1> {{ $user->d_amount}}</h1>
 
 <div>
 

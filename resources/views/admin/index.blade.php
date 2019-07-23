@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{asset('/assets/plugins/prism/css/prism.min.css')}}">
     <!-- custom CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <!-- internal CSS -->
     <style>
         .pcoded-navbar .pcoded-inner-navbar>li.active>a,
@@ -73,10 +74,6 @@
 
 <body>
 
-
-
-
-
 <nav class="pcoded-navbar">
     <div class="navbar-wrapper">
         <div class="navbar-brand header-logo">
@@ -90,13 +87,14 @@
                 <li class="nav-item pcoded-menu-caption">
                     <label>Getting started</label>
                 </li>
+                <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Payment</span></a></li>
                  <li class="nav-item"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Project</span></a></li>
-                <li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">company Profile</span></a></li>
-                <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-cc-amex"></i></span><span class="pcoded-mtext">Payment</span></a></li>
+                <li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-building" aria-hidden="true"></i></span><span class="pcoded-mtext">company Profile</span></a></li>
+
                 <li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Settings Table</span></a></li>
                 <li class="nav-item"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">User Type</span></a></li>
 
-                <li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">create company profile</span></a></li>
+                <li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-micon"><img src="assets/images/com.png" width="20px"> </span><span class="pcoded-mtext">create company profile</span></a></li>
 
 
 
@@ -108,8 +106,10 @@
                 <li class="nav-item"><a href="{{route('project_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Project Table</span></a></li>
 
                 <li class="nav-item"><a href="{{route('setting_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Setting Table</span></a></li>
-                <li class="nav-item"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Payment Table</span></a></li>
+                {{--<li class="nav-item"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Payment Table</span></a></li>--}}
+
                 <li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create UserType</span></a></li>
+                <li class="nav-item"><a href="{{route('logout')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">Logout</span></a></li>
 
                
 

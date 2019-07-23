@@ -50,6 +50,43 @@ class ProjectController extends Controller
 
     }
 
+    public function edit($id){
+
+        $project=Project::find($id);
+        $companies=Company::all();
+        return view('project.project_edit',['project'=>$project ,'companies'=>$companies ]);
+
+    }
+
+
+    public function update(Request   $request ,$id){
+
+        $project=Project::find($id);
+        $project->p_name=$request->p_name;
+        $project->p_title=$request->p_title;
+        $project->company_id=$request->company_id;
+
+
+        $project->save();
+
+
+        return redirect()->route('project');
+
+
+    }
+
+    Public function delete($id){
+
+        $project=Project::find($id);
+        $project->delete();
+        return redirect()->route('project');
+
+
+    }
+
+
+
+
 
 
     public function __construct()

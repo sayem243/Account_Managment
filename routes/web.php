@@ -52,7 +52,9 @@ Route::get('/company/delete/{id}' ,'CompanyController@delete')->name('com_delete
 Route::get('/project','ProjectController@index')->name('project');
 Route::get('/project/create','ProjectController@create')->name('project_create');
 Route::post('/project/store','ProjectController@store')->name('project_store');
-
+Route::get('/project/edit/{id}' ,'ProjectController@edit')->name('project_edit');
+Route::post('/project/update/{id}' ,'ProjectController@update')->name('project_update');
+Route::get('/project/delete/{id}' ,'ProjectController@delete')->name('project_delete');
 
 //Settings route
 
