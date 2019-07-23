@@ -3,20 +3,22 @@
 @section('template')
 
 
-
+    <div class="col-sm-12">
+        <div class="card" id="references">
+            <div class="card-header">
 
     <div class="text-center"><h2>company Details </h2>
 
         <div class="table-responsive-md">
             <table class= "table table-responsive table-hover">
                 <tr>
-                    <th>Serial</th>
+                    <th>SL</th>
                     <th>ID</th>
-                    <th>Company  Name</th>
-                    <th>Company email</th>
-                    <th>Company  Mobile Number</th>
-                    <th>Company Address</th>
-                    <th>company Logo</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Number</th>
+                    <th>Address</th>
+                    <th>Logo</th>
                     <th>Action</th>
                 </tr>
                 @php $i=0; @endphp
@@ -34,31 +36,35 @@
                         <td>{{$company->c_mobile}}</td>
                         <td>{{$company->c_address}}</td>
 
-                        
-                            {{--@php--}}
-                            {{--$accounts = App\Account::where('company_id',$company->id)->get();--}}
+                        <td><img src="{{Storage::url($company->c_img) }}" alt="404" width="100px" ></td>
+                        <td>
 
-                            {{--@endphp--}}
-                            {{--@foreach($accounts as $account)--}}
-                                {{--{{$account->mobile}},--}}
-                                {{--@endforeach--}}
+                            <div class="btn-group-vertical">
+                                <a href="{{route('comp_edit',$company->id)}}" button type="button" class="btn btn-primary" >Edit </a>
+                        <a href="{{route('com_delete', $company->id)}}" button type="button" class="btn btn-primary">Delete</a>
 
+                            </div>
 
+<<<<<<< HEAD
                         <td><img src="{{Storage::url( $company->c_img ) }}"  width="100px" ></td>
 
+=======
+                        </td>
+>>>>>>> fa042dbb8211f499eaf4d133a60f47d78ce79afa
 
                         {{----}}
                         {{--<td> <a href="{{route('edit',$company->id)}}" class="btn btn-success">Edit </a></td>--}}
                         {{--<td> <a href="{{route('delete',$company>id)}}" class="btn btn-danger">Delete </a></td>--}}
 
                     </tr>
+
                 @endforeach
             </table>
         </div>
 
     </div>
-
-
+    </div>
+        </div>
     </div>
 
 

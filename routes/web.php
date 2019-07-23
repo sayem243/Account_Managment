@@ -10,10 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
-    return view('welcome');
-
-
+    return view('auth.login');
 
 });
 
@@ -25,7 +24,7 @@ Route::get('/create','AccountController@create')->name('create');
 Route::get('/edit/{id}','AccountController@edit')->name('edit');
 Route::post('account/store','AccountController@store')->name('account_store');
 Route::post('/update/{id}' ,'AccountController@update')->name('update');
-Route::get('/delete/{id}' ,'AccountController@delete')->name('delete');
+Route::get('/delete/{id}','AccountController@delete')->name('delete');
 
 
 //company route
@@ -38,11 +37,13 @@ Route::get('home', [
 ]);
 
 
-
 Route::get('/comp_profile' ,'CompanyController@index')->name('comp_profile');
 Route::get('company/create','CompanyController@create')->name('comp_create');
 Route::post('company/store','CompanyController@store')->name('company_store');
 Route::get('/company/view/{id}' ,'CompanyController@view')->name('comp_view');
+Route::get('/company/edit/{id}' ,'CompanyController@edit')->name('comp_edit');
+Route::post('/company/update/{id}' ,'CompanyController@update')->name('comp_update');
+Route::get('/company/delete/{id}' ,'CompanyController@delete')->name('com_delete');
 
 
 
@@ -52,7 +53,9 @@ Route::get('/company/view/{id}' ,'CompanyController@view')->name('comp_view');
 Route::get('/project','ProjectController@index')->name('project');
 Route::get('/project/create','ProjectController@create')->name('project_create');
 Route::post('/project/store','ProjectController@store')->name('project_store');
-
+Route::get('/project/edit/{id}' ,'ProjectController@edit')->name('project_edit');
+Route::post('/project/update/{id}' ,'ProjectController@update')->name('project_update');
+Route::get('/project/delete/{id}' ,'ProjectController@delete')->name('project_delete');
 
 //Settings route
 
@@ -67,6 +70,13 @@ Route::post('/setting/store','SettingsController@store')->name('setting_store');
 Route::get('/payment','PaymentController@index')->name('payment');
 Route::get('/payment/create','PaymentController@create')->name('payment_create');
 Route::post('/payment/store','PaymentController@store')->name('payment_store');
+Route::get('/payment/edit/{id}','PaymentController@edite')->name('payment_edit');
+Route::post('/payment/update/{id}' ,'PaymentController@update')->name('payment_update');
+Route::get('/payment/delete/{id}' ,'PaymentController@delete')->name('delete');
+
+
+Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printPDF');
+
 
 
 //Admin route and Template
@@ -75,6 +85,7 @@ Route::get('/admin','AdminController@index')->name('admin_index');
 
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 //UserType
+
 Route::get('/usertype','UserTypeController@index')->name('usertype');
 Route::get('/usertype/create','UserTypeController@create')->name('usertype_create');
 Route::post('/usertype/store','UserTypeController@store')->name('usertype_store');
@@ -95,6 +106,7 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
+//pdf controller
 
 
 

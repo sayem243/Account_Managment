@@ -7,6 +7,10 @@
 
 @section('template')
 
+    <div class="col-sm-12">
+        <div class="card" id="references">
+            <div class="card-header">
+
     <div class="container">
 
 
@@ -95,6 +99,10 @@
 
     </form>
 
+    </div>
+
+            </div>
+        </div>
     </div>
 
         @endsection

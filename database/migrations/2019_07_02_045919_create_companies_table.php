@@ -30,7 +30,13 @@ class CreateCompaniesTable extends Migration
         });
 
 
+
+        Schema::table('companies', function (Blueprint $table) {
+            $table->softDeletes();
+        });
+
     }
+
 
     /**
      * Reverse the migrations.

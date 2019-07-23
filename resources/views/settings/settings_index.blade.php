@@ -6,6 +6,9 @@
 {{--@section('content')--}}
 
 @section('template')
+    <div class="col-sm-12">
+        <div class="card" id="references">
+            <div class="card-header">
 
     <div class="container">
         <h2>Settings Table </h2>
@@ -34,7 +37,9 @@
             </tbody>
         </table>
     </div>
-
+            </div>
+        </div>
+    </div>
 
 @endsection
 

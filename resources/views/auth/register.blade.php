@@ -57,10 +57,6 @@
                             </div>
                         </div>
 
-
-
-
-
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
@@ -83,13 +79,19 @@
                             </div>
                         </div>
 
-
                         <select name="user_types_id">
                             <option value="">Select Subtype </option>
                             @foreach($usertypes as $usertype)
                                 <option value="{{$usertype->id}}"> {{$usertype->u_title}} </option>
                             @endforeach
 
+                        </select>
+
+                        <select name="company_id" multiple>
+                            <option value="">Select Company</option>
+                            @foreach($companies as $company)
+                                <option value="{{$company->id}}"> {{$company->name}} </option>
+                            @endforeach
                         </select>
 
 

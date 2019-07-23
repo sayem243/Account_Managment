@@ -3,7 +3,9 @@
 @section('content')
 
 
-
+    <div class="col-sm-12">
+        <div class="card" id="references">
+            <div class="card-header">
 
 <div class="text-center"><h2>company Details </h2>
 
@@ -47,7 +49,9 @@
 </div>
 
 
-
+</div>
+        </div>
+    </div>
 
 
 

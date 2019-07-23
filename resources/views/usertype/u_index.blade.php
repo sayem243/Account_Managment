@@ -1,8 +1,10 @@
-@extends('layout.Master')
+@extends('admin.index')
 
-@section('content')
+@section('template')
 
-
+    <div class="col-sm-12">
+        <div class="card" id="references">
+            <div class="card-header">
 
     <div class="container">
         <h2> User Type </h2>
@@ -39,6 +41,8 @@
         </table>
     </div>
 
-
+            </div>
+        </div>
+    </div>
 
 @endsection

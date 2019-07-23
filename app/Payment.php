@@ -23,6 +23,9 @@ class Payment extends Model
 
     }
 
-
+    public function usertype()
+    {
+        return $this->belongsTo('App\UserType');
+    }
 
 }
