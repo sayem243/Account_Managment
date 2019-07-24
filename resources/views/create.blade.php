@@ -49,7 +49,30 @@
 </div>
 
 
-<div class="form-group">
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="mobile">NID</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" name="nid" id="nid" placeholder="NID Number">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="mobile">Joining Date</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="date" id="date" placeholder="Joining Date">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="Name">Address:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="address" id="addres" placeholder="Address">
+        </div>
+    </div>
+
+
+    <div class="form-group">
     <label class="control-label col-sm-2" for="text">Company Name:</label>
     <div class="col-sm-10">
         <select name="company_id">
@@ -64,8 +87,25 @@
 
 
 
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="project_id">Projects</label>
+        <div class="col-sm-10">
 
-<div class="form-group">
+            <select name="project_id">
+                <option value="">Select User</option>
+                @foreach($projects as $project)
+                    <option value="{{$project->id}}"> {{$project->p_name}} </option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-danger">Submit  </button>
     </div>

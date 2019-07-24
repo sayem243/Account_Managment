@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
 
             $table->integer('user_types_id')->unsigned()->nullable();
 
+//            $table->integer('company_id')->unsigned()->nullable();
+
 
             $table->rememberToken();
             $table->timestamps();
@@ -33,6 +35,11 @@ class CreateUsersTable extends Migration
             $table->foreign('user_types_id')->references('id')->on('user_types');
 
         });
+
+//        Schema::table('users', function($table) {
+//            $table->foreign('company_id')->references('id')->on('companies');
+//
+//        });
 
     }
 
