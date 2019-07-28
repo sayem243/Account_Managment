@@ -84,6 +84,10 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $usertypes=UserType::all();
+
+        // return view('auth.register', compact('usertypes'));
+        //return view('auth.register')->with('usertypes',$usertypes);
+
         $companies=Company::all();
         return view('auth.register',['usertypes'=>$usertypes ,'companies'=>$companies]);
     }
@@ -92,6 +96,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
     }
 
 

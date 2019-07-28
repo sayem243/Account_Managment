@@ -6,6 +6,28 @@
 @section('template')
 <head><link rel="stylesheet" href="{{asset('assets/css/style.css')}}"></head>
 
+<<<<<<< HEAD
+
+
+
+    
+
+
+
+
+
+    <div class="container">
+        <h2>Payment Table </h2>
+        <p>Payment </p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>serial</th>
+                <th>User Name</th>
+                <th>Company Name </th>
+                <th>Select Project</th>
+=======
+>>>>>>> fa042dbb8211f499eaf4d133a60f47d78ce79afa
 
     <div class="card">
         <div class="card-header">

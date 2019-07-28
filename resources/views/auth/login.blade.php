@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +7,8 @@
     <title></title>
 
     <meta charset="utf-8">
+
+
     <!-- Favicon icon -->
     <link rel="icon" href="{{asset('asset(/images/favicon.ico')}}" type="image/x-icon">
     <!-- fontawesome icon -->

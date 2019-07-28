@@ -45,7 +45,12 @@
 
                             </div>
 
+<<<<<<< HEAD
+                        <td><img src="{{Storage::url( $company->c_img ) }}"  width="100px" ></td>
+
+=======
                         </td>
+>>>>>>> fa042dbb8211f499eaf4d133a60f47d78ce79afa
 
                         {{----}}
                         {{--<td> <a href="{{route('edit',$company->id)}}" class="btn btn-success">Edit </a></td>--}}

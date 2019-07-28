@@ -33,6 +33,23 @@
                     <label>Navigation</label>
                 </li>
 
+<li class="nav-item">
+    <a href="{{route('project')}}" class="nav-link active">
+        <span class="pcoded-micon">
+            <i class="feather icon-home"></i>
+        </span>
+        <span class="pcoded-mtext">Project</span>
+    </a>
+</li>
+
+<li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">company Profile</span></a></li>
+
+ <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Payment</span></a></li>
+
+ <li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Settings Table</span></a></li>
+<li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">create company profile</span></a></li>
+
+
                 <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item active">
                     <a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
