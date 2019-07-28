@@ -12,7 +12,7 @@
            Payment
             <div class="btn-group-horizontal" style="text-align: right">
             {{--<a href="{{route('payment_create')}}" button type="button" class="btn btn-primary" >Add payment </a>--}}
-                <a class="btn-floating btn-large waves-effect waves-light red" href="{{route('payment_create')}}"><i class="material-icons">add</i></a>
+                <a class="btn btn-sm  btn-info"  href="{{route('payment_create')}}" class=""><i class="fas fa-sign-out-alt">Add</i></a>
 
             </div>
         </div>
@@ -83,8 +83,8 @@
                                 {{--<a href="{{route('delete',$payment->id)}}" class="btn btn-danger">Delete </a>--}}
 
                                 <div class="btn-group-vertical">
-                                    <a href="{{route('payment_edit',$payment->id)}}" button type="button" class="btn btn-primary" >Edit </a>
-                                    <a href="{{route('delete', $payment->id)}}" button type="button" class="btn btn-primary">Delete</a>
+                                    <a href="{{route('payment_edit',$payment->id)}}" button type="button" class="btn btn-sm  btn-info" >Edit </a>
+                                    <a href="{{route('delete', $payment->id)}}" button type="button" class="btn btn-sm  btn-info">Delete</a>
 
                                 </div>
 

@@ -22,6 +22,12 @@ class Company extends Model
         return $this->hasMany('App\Payment');
 
     }
+    public function userProfile(){
+
+        return $this->hasMany('App\UserProfile');
+
+    }
+
 
     use SoftDeletes;
 

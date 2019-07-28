@@ -164,6 +164,10 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        Spatie\Permission\PermissionServiceProvider::class,
+
+        Collective\Html\HtmlServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -184,7 +188,7 @@ return [
 
         //third party provider
 
-     //   Intervention\Image\ImageServiceProvider::class,
+       Intervention\Image\ImageServiceProvider::class,
 
 
 
@@ -242,6 +246,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
+        'Form' => Collective\Html\FormFacade::class,
+
+        'Html' => Collective\Html\HtmlFacade::class,
 
         //third party
 

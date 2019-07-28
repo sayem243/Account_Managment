@@ -1,6 +1,6 @@
-@extends('layout.Master')
+@extends('admin.index')
 
-@section('content')
+@section('template')
     <div class="col-sm-12">
         <div class="card" id="references">
             <div class="card-header">

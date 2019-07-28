@@ -76,10 +76,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Subtype</label>
+                                    <label for="exampleFormControlSelect1">Employe type</label>
 
                                     <select class="form-control" name="user_types_id">
-                                        <option value="">Select Subtype </option>
+                                        <option value=""> Type </option>
                                         @foreach($usertypes as $usertype)
                                             <option value="{{$usertype->id}}"> {{$usertype->u_title}} </option>
                                         @endforeach
@@ -102,7 +102,7 @@
 
 
                                 <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Example textarea</label>
+                                    <label for="exampleFormControlTextarea1">Role</label>
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
                                 </div>
 

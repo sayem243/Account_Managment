@@ -27,6 +27,16 @@ Route::post('/update/{id}' ,'AccountController@update')->name('update');
 Route::get('/delete/{id}','AccountController@delete')->name('delete');
 
 
+//profile route
+Route::get('/userprofile/create','UserProfileController@create')->name('create');
+Route::get('/userprofile','UserProfileController@index')->name('userprofile');
+Route::get('/userprofile/edit','UserProfileController@index')->name('userprofile');
+Route::post('/userprofile/store','UserProfileController@store')->name('userprofile_store');
+
+Route::get('/userprofile/update','UserProfileController@update')->name('userprofile');
+
+
+
 //company route
 
 
@@ -107,6 +117,14 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 //pdf controller
+
+//spaite
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles','RoleController');
+    Route::resource('users','UserController');
+
+});
 
 
 
