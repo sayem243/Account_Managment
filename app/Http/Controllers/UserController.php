@@ -4,6 +4,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Company;
+use App\UserProfile;
+use App\UserType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -37,7 +40,21 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         return view('users.create',compact('roles'));
     }
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $usertypes=UserType::all();
 
+        // return view('auth.register', compact('usertypes'));
+        //return view('auth.register')->with('usertypes',$usertypes);
+
+        $companies=Company::all();
+        return view('auth.register',['usertypes'=>$usertypes ,'companies'=>$companies]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,23 +64,50 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+//        var_dump('ok');die;
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+//            'password' => 'required|same:confirm-password',
         ]);
 
+        $data = array(
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'username'=> $request->username,
+            'user_types_id'=> $request->user_types_id,
+            'company_id'=>$request->company_id,
+        );
 
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
+        $user = User::create($data);
+
+//        $user->assignRole($request->input('roles'));
+//var_dump($user);die;
+
+        $profile= New UserProfile ;
+
+//        $user->userProfile()->create();
+
+        $profile->fname=$request->fname;
+        $profile->lname=$request->lname;
+        $profile->email=$request->email;
+        $profile->mothername=$request->mothername;
+        $profile->fathername=$request->fathername;
+        $profile->p_address=$request->p_address;
+        $profile->address=$request->address;
+        $profile->company_id=$request->company_id;
 
 
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $profile->joindate=$request->joindate;
+        $profile->nid=$request->nid;
+        $profile->mobile=$request->mobile;
+        $profile->company_id=$request->company_id;
 
 
-        return redirect()->route('users.index')
+        $user->UserProfile()->save($profile);
+
+        return redirect()->route('userprofile')
             ->with('success','User created successfully');
     }
 

@@ -93,7 +93,7 @@ Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printP
 
 Route::get('/admin','AdminController@index')->name('admin_index');
 
-Route::post('register', 'Auth\RegisterController@register')->name('register');
+//Route::post('register', 'Auth\RegisterController@register')->name('register');
 //UserType
 
 Route::get('/usertype','UserTypeController@index')->name('usertype');
@@ -107,8 +107,12 @@ Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 // Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
+//Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+//Route::post('register', 'Auth\RegisterController@register');
+
+// Registration Routes...
+Route::get('register', 'UserController@showRegistrationForm')->name('register');
+Route::post('store', 'UserController@store')->name('store');
 
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');

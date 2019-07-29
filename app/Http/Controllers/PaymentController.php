@@ -17,7 +17,7 @@ class PaymentController extends Controller
     public function index(){
 
         $payments=Payment::all();
-        $companies=Company::all();
+       // $companies=Company::all();
         //return view('payment.payment_index')->with('users',$user);
         return view('payment.payment_index',['payments'=>$payments]);
     }

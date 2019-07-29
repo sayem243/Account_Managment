@@ -62,8 +62,6 @@ class CompanyController extends Controller
         $company=Company::find($id);
         return view('company.edite')->with('company',$company);
 
-
-
     }
 
 

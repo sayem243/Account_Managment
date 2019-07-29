@@ -42,4 +42,11 @@ class User extends Authenticatable
 
 
     }
+    public function UserProfile(){
+
+        return $this->hasOne('App\UserProfile');
+
+    }
+
+
 }

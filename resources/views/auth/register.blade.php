@@ -5,15 +5,18 @@
     <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Basic Componant</h5>
+                    <h5>Log In Componant</h5>
                 </div>
 
-                <div class="card-body">
+                <form class="form-horizontal" method="POST" action="{{ route('store') }}">
+
+                    <div class="card-body">
 
 
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
-                    <div class="row">
+                            {{ csrf_field() }}
+
+
+                        <div class="row">
 
                         <div class="col-md-6">
 
@@ -70,6 +73,7 @@
                         </div>
 
                         <div class="col-md-6">
+
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input type="text" class="form-control" name="name" placeholder="Text">
@@ -107,23 +111,112 @@
                                 </div>
 
 
-                            <button type="submit" class="btn btn-primary">Submit</button>
+
                         </div>
 
                     </div>
 
-                    </form>
+
+
+
+
+
+
+                    <div class="col-md-12">
+
+
+
+
+                        <div class="card-header">
+                            <h5>Profile</h5>
+                        </div>
+
+
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" name="fname" placeholder="First Name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Fathers Name</label>
+                                    <input type="text" class="form-control" name="fathername" placeholder="Fathers Name">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>Mobile Number</label>
+                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Present Address</label>
+                                    <input type="text" class="form-control" name="p_address" placeholder="Present Address">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>NID</label>
+                                    <input type="number" class="form-control" name="nid" placeholder="National ID ">
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" name="lname" placeholder="Last Name">
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label>Mothers Name</label>
+                                    <input type="text" class="form-control" name="mothername" placeholder="Mothers Name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Permanent Address</label>
+                                    <input type="text" class="form-control" name="address" placeholder="Permanent Address">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Joining Date</label>
+                                    <input type="text" class="form-control" name="joindate" placeholder="Joining Date">
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
 
                 </div>
 
+                </form>
             </div>
             <!-- Input group -->
 
         </div>
-
-
-
-
 
 
 

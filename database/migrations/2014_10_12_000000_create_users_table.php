@@ -17,14 +17,15 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-
             $table->string('username')->unique();
-
             $table->string('password');
+
+
+
+
 
             $table->integer('user_types_id')->unsigned()->nullable();
 
-//            $table->integer('company_id')->unsigned()->nullable();
 
 
             $table->rememberToken();
@@ -35,12 +36,6 @@ class CreateUsersTable extends Migration
             $table->foreign('user_types_id')->references('id')->on('user_types');
 
         });
-
-//        Schema::table('users', function($table) {
-//            $table->foreign('company_id')->references('id')->on('companies');
-//
-//        });
-
     }
 
     /**

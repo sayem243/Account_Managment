@@ -16,16 +16,10 @@ class UserProfileController extends Controller
 
         $profile= UserProfile::all();
       //  return view('profile.index')->with('profiles', $profiles);
-
         return view('profile.index',['profiles'=>$profile]);
 
 
     }
-
-
-
-
-
 
 
 
@@ -49,6 +43,9 @@ class UserProfileController extends Controller
         $profile->mothername=$request->mothername;
         $profile->fathername=$request->fathername;
         $profile->p_address=$request->p_address;
+        $profile->address=$request->address;
+
+
         $profile->joindate=$request->joindate;
         $profile->nid=$request->nid;
         $profile->mobile=$request->mobile;

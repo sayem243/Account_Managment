@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,34 +30,17 @@
         </div>
         <div class="navbar-content scroll-div">
             <ul class="nav pcoded-inner-navbar">
-                <li class="nav-item pcoded-menu-caption">
-                    <label>Navigation</label>
-                </li>
 
-<li class="nav-item">
-    <a href="{{route('project')}}" class="nav-link active">
-        <span class="pcoded-micon">
-            <i class="feather icon-home"></i>
-        </span>
-        <span class="pcoded-mtext">Project</span>
-    </a>
-</li>
 
-<li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">company Profile</span></a></li>
-
- <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Payment</span></a></li>
-
- <li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Settings Table</span></a></li>
-<li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">create company profile</span></a></li>
 
 
                 <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item active">
-                    <a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                    <a href="{{route('admin_index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
 
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Payements</span></a>
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fa fa-credit-card" style="color:green"></i></span><span class="pcoded-mtext">Payements</span></a>
                     <ul class="pcoded-submenu">
 
                         <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Payment</span></a></li>
