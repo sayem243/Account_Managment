@@ -10,6 +10,7 @@ use App\Payment;
 use App\Company;
 use App\Account;
 use PDF;
+use DB;
 
 
 class PaymentController extends Controller
@@ -17,14 +18,16 @@ class PaymentController extends Controller
     public function index(){
 
         $payments=Payment::all();
-       // $companies=Company::all();
-        //return view('payment.payment_index')->with('users',$user);
+
         return view('payment.payment_index',['payments'=>$payments]);
     }
 
     public function create(){
 
-        $users=User::where('user_types_id',2)->get();
+       //$users=User::where('user_types_id')->get();
+       $users=User::all();
+
+       // $users=DB::users('user_types_id')->get();
 
 
         $companies=Company::all();

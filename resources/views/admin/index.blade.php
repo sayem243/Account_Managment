@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,16 +20,19 @@
     <div class="navbar-wrapper">
         <div class="navbar-brand header-logo">
             <a href="index.html" class="b-brand">
-                <div class="b-bg">
-                    <i class="feather icon-trending-up"></i>
+                <div class="logo">
+
+                    {{--<i class="feather icon-trending-up"></i>--}}
+
+                    <img src="{{asset('assets/images/ems.png')}}" style="width: 100px" >
+
                 </div>
-                <span class="b-title">Datta Able</span>
+                <span class="b-title"></span>
             </a>
             <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
         </div>
         <div class="navbar-content scroll-div">
             <ul class="nav pcoded-inner-navbar">
-
 
 
 
@@ -55,10 +57,11 @@
                     <ul class="pcoded-submenu">
 
                         <li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-building" aria-hidden="true"></i></span><span class="pcoded-mtext">company Profile</span></a></li>
-                        <li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i> </span><span class="pcoded-mtext">create company profile</span></a></li>
+                        <li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i> </span><span class="pcoded-mtext"> New company</span></a></li>
                     </ul>
 
                 </li>
+
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Projects</span></a>
@@ -101,6 +104,7 @@
         </div>
     </div>
 </nav>
+
 <!-- [ navigation menu ] end -->
 
 <!-- [ Header ] start -->
