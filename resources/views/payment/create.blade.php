@@ -12,7 +12,7 @@
 
 
 
-    <form class="form-horizontal" action="{{ route('payment_store')}}" method="post">
+    <form class="form-horizontal" action="{{ route('payment_store')}}" method="post" enctype="multipart/form-data">
 
         {{ csrf_field() }}
 
@@ -85,7 +85,7 @@
             <label class="control-label col-sm-2" for="project_id">Projects</label>
             <div class="col-sm-10">
 
-                <select class="form-control" name="project_id">
+                <select class="form-control" name="project_id" multiple="form-control">
                     <option value="">Projects</option>
                     @foreach($projects as $project)
                         <option value="{{$project->id}}"> {{$project->p_name}} </option>

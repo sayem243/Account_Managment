@@ -65,7 +65,7 @@
                         </td>
 
                         <td>
-                            <a href="{{route('printPDF',$payment->id)}}">Print PDF</a>
+                            {{--<a href="{{route('printPDF',$payment->id)}}">Print PDF</a>--}}
                         </td>
 
                         <td>
@@ -92,7 +92,7 @@
                                    </li>
 
                                    <li class="dropdown-item">
-                                       <a href="{{route('payment_edit',$payment->id)}}">
+                                       <a href="{{route('delete',$payment->id)}}">
                                            <i class="feather icon-trash-2"></i>
                                            Remove</a>
                                    </li>

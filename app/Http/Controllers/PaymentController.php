@@ -24,7 +24,7 @@ class PaymentController extends Controller
 
     public function create(){
 
-       //$users=User::where('user_types_id')->get();
+       //$users=User::where('user_types_id',2)->get();
        $users=User::all();
 
        // $users=DB::users('user_types_id')->get();
