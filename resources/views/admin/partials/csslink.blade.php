@@ -16,5 +16,13 @@
 <!-- animation css -->
 <link rel="stylesheet" href="{{asset('assets/plugins/animation/css/animate.min.css')}}">
 <!-- vendor css -->
+
 <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+
+<link rel="stylesheet" href="{{asset('multi-select/0.9.12/css/multi-select.css')}}">
+<link rel="stylesheet" href="{{asset('multi-select/0.9.12/css/multi-select.min.css')}}">
+
+
+
+
 <link rel="stylesheet" href="{{asset('css/style.css')}}">

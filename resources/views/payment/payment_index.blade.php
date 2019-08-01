@@ -7,7 +7,7 @@
         <div class="card" id="references">
             <div class="card-header">
 
-                        Payment
+                        <h5>Advance Payment</h5>
             <div class="btn-group-horizontal" style="text-align: right">
 
                 <a class="btn btn-sm  btn-info"  href="{{route('payment_create')}}" class=""><i class="fas fa-sign-out-alt">Add</i></a>
@@ -25,11 +25,12 @@
                     <th>User Name</th>
                     <th>Company </th>
                     <th>Project</th>
-
                     <th>Demand  Amount</th>
                     <th>Paid Amount</th>
                     <th>Approval </th>
                     <th>Due</th>
+                    <th>comments</th>
+                    <th>Amendments</th>
                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                         <i class="feather icon-settings"></i>
 
@@ -76,6 +77,17 @@
 
                             {{$sum}}
                         </td>
+
+
+
+                        <td>{{$payment->comments}}</td>
+
+                        <td> <a href="{{route('amendment_create',$payment->id)}}" class="btn btn-success">Click </a>
+
+                        </td>
+
+
+
                         <td>
                             {{----}}
                             {{--<a href="{{route('edit',$payment->id)}}" class="btn btn-success">Edit </a>--}}

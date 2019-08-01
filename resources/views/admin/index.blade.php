@@ -22,7 +22,7 @@
             <a href="index.html" class="b-brand">
                 <div class="logo">
 
-                    {{--<i class="feather icon-trending-up"></i>--}}
+
 
                     <img src="{{asset('assets/images/ems.png')}}" style="width: 100px" >
 
@@ -47,6 +47,8 @@
 
                         <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Payment</span></a></li>
                         <li class="nav-item"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Add Payment</span></a></li>
+
+                        {{--<li class="nav-item"><a href="{{route('amendment_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Amendment</span></a></li>--}}
 
                     </ul>
 
@@ -170,12 +172,12 @@
 <div class="pcoded-main-container">
     <div class="pcoded-wrapper">
         <div class="pcoded-content">
-            <div class="pcoded-inner-content">
-                <!-- [ breadcrumb ] start -->
 
-                <!-- [ breadcrumb ] end -->
-                <div class="main-body">
-                    <div class="page-wrapper">
+            <div class="pcoded-inner-content">
+
+                {{--<div class="main-body">--}}
+                    {{--<div class="page-wrapper">--}}
+
                         <!-- [ Main Content ] start -->
                         <div class="row">
                             <!--[ daily sales section ] start-->

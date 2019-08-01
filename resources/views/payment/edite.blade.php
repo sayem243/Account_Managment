@@ -1,7 +1,3 @@
-{{--@extends('layout.Master')--}}
-
-{{--@section('content')--}}
-
 @extends('admin.index')
 
 @section('template')
@@ -39,7 +35,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="payment_amount">Payment Amount:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="payment_amount" id="payment_amount" placeholder="project Tittle" value="{{$payment->due}}">
+                            <input type="text" class="form-control" name="payment_amount" id="payment_amount" placeholder="project Tittle" value="">
                         </div>
                     </div>
 
@@ -106,6 +102,5 @@
     </div>
 
 
-    {{--@endsection--}}
 
 @endsection

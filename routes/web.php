@@ -57,6 +57,8 @@ Route::get('/company/delete/{id}' ,'CompanyController@delete')->name('com_delete
 
 
 
+
+
 //projects route
 
 
@@ -86,6 +88,16 @@ Route::get('/payment/delete/{id}' ,'PaymentController@delete')->name('delete');
 
 
 Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printPDF');
+
+//  amendmentPayment
+
+Route::get('/amendment','AmmendmentController@index')->name('amendment');
+Route::get('/amendment/create/{id}','AmmendmentController@create')->name('amendment_create');
+
+Route::post('/amendment/store/{id}','AmmendmentController@store')->name('amendment_store');
+
+
+
 
 
 

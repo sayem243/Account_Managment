@@ -52,6 +52,7 @@ class PaymentController extends Controller
         $acc->user_id=$request->user_id;
         $acc->company_id=$request->company_id;
         $acc->project_id=$request->project_id;
+        $acc->comments=$request->comments;
 
         $acc->approval='Approved';
 
@@ -67,6 +68,7 @@ class PaymentController extends Controller
         $user=Payment::find($id);
 
         $pdf = PDF::loadView('payment.pdf_view', compact('user',$id));
+
         return $pdf->download('payment.pdf');
 
     }

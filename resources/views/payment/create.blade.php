@@ -5,6 +5,15 @@
 @extends('admin.index')
 
 @section('template')
+<head>
+
+    <script src="{{asset('multi-select/0.9.12/js/jquery.multi-select.js')}}"></script>
+    <script src="{{asset('multi-select/0.9.12/js/jquery.multi-select.min.js')}}"></script>
+    <script src="{{asset('http://code.jquery.com/jquery.min.js')}}"></script>
+
+
+
+</head>
 
     <div class="col-sm-12">
         <div class="card" id="references">
@@ -85,13 +94,23 @@
             <label class="control-label col-sm-2" for="project_id">Projects</label>
             <div class="col-sm-10">
 
-                <select class="form-control" name="project_id" multiple="form-control">
+                <select class="form-control" name="project_id" multiple id="langOpt">
                     <option value="">Projects</option>
                     @foreach($projects as $project)
                         <option value="{{$project->id}}"> {{$project->p_name}} </option>
                     @endforeach
                 </select>
             </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="comments">Comments </label>
+            <div class="col-sm-10">
+                <textarea class="form-control" class="form-control"  name="comments" rows="2" id="comments">
+                </textarea>
+
+        </div>
         </div>
 
 
@@ -110,6 +129,24 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+<script>
+    $(document).ready(function(){
+
+        $("select.langOpt").change(function(){
+            var selected = $(".langOpt option:selected").val();
+            alert(" Select  - " + selected);
+        });
+
+    });
+
+</script>
+
+
 
 
 {{--@endsection--}}

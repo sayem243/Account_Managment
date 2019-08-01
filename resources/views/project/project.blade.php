@@ -3,17 +3,15 @@
 
 {{--@section('content')--}}
 
-    @section('template')
-        <div class="col-sm-12">
-            <div class="card" id="references">
-                <div class="card-header">
+@section('template')
+    <div class="col-sm-12">
+        <div class="card" id="references">
+            <div class="card-header">
 
 
-
-    <div class="text-center"><h2> Project Details </h2>
-
-        <div class="table-responsive-lg">
-            <table class= "table table-hover">
+                <div class="text-center"><h2> Project Details </h2>
+                    <div class="table-responsive-lg">
+                        <table class= "table table-hover">
                 <thead class="thead-dark">
                 <tr>
                     <th>Serial</th>
@@ -105,4 +103,4 @@
 
     @endsection
 
-        {{--@endsection--}}
+

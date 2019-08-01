@@ -28,10 +28,12 @@ class Payment extends Model
         return $this->belongsTo('App\UserType');
     }
 
+
     public function ammendment(){
 
-        return $this->hasOne('App\Ammendment');
+        return $this->hasMany('App\Ammendment');
     }
+
 
 
 

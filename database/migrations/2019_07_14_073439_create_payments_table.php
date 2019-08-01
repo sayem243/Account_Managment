@@ -24,6 +24,8 @@ class CreatePaymentsTable extends Migration
             $table->integer('project_id')->unsigned()->nullable();
 
             $table->string('approval');
+            $table->string('comments');
+
 
 
             $table->timestamps();
