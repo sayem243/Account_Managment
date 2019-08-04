@@ -17,15 +17,17 @@ class CreateAmmendmentsTable extends Migration
             $table->increments('id');
 
             $table->string('additional_amount');
-            $table->integer('payments_id')->unsigned()->nullable();
 
+            $table->integer('payment_id')->unsigned()->nullable();
             $table->string('approved');
+
+
 
             $table->timestamps();
         });
 
         Schema::table('ammendments', function($table) {
-            $table->foreign('payments_id')->references('id')->on('payments');
+            $table->foreign('payment_id')->references('id')->on('payments');
 
         });
 

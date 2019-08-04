@@ -99,7 +99,6 @@ class PaymentController extends Controller
 
         $payment->approval='Approved';
 
-
         $payment->save();
         return redirect()->route('payment');
 
