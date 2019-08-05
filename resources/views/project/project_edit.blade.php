@@ -9,7 +9,6 @@
 
                     {{ csrf_field() }}
 
-
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="Name">Project Name:</label>
                         <div class="col-sm-10">
@@ -24,18 +23,17 @@
                             <input type="text" class="form-control" name="p_title" id="p_title" placeholder="project Tittle" value="{{$project->p_title}}">
                         </div>
                     </div>
-
-
-                    <select name="company_id">
-                        <option value="">Select Company</option>
-                        @foreach($companies as $company)
-                            <option value="{{$company->id}}"> {{$company->name}} </option>
-                        @endforeach
-                    </select>
-
-
-
-
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="regestration_id">Companies</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="company_id" multiple="multiple">
+                                <option value="">Select Company</option>
+                                @foreach($companies as $company)
+                                    <option value="{{$company->id}}"> {{$company->name}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-danger">Submit  </button>
@@ -47,13 +45,6 @@
 
             </div>
         </div>
+
     </div>
-
-
-
-
-
-
-
-
 @endsection

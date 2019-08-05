@@ -34,7 +34,7 @@ class Payment extends Model
         return $this->hasMany('App\Ammendment');
     }
 
-
+    protected $dates = ['name_field'];
 
 
 }

@@ -10,10 +10,17 @@
     background-color: #0000cc;
 }
 
+.table .thead-dark th {
+    color: #fff;
+    background-color: #4D636B;
+    border-color: #4D636B;
+    height: 30px;
+    line-height: 30px;
+}
+
 a.btn:hover {
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -o-transform: scale(1.1);
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
 }
 a.btn {
     -webkit-transform: scale(0.8);
@@ -28,13 +35,6 @@ a.btn {
     display: block;
 }
 
-element.style {
-    position: absolute;
-    will-change: transform;
-    top: 0px;
-    left: 0px;
-    transform: translate3d(-126px, 29px, 0px);
-}
 
 .dropdown-menu > li {
     padding-left: 15px;
@@ -43,4 +43,12 @@ element.style {
 
 .btn > i {
     margin-right: 3px;
+}
+
+.table td, .table th {
+    border-top: 1px solid #eaeaea;
+    white-space: nowrap;
+    padding: 1px 5px 0px 5px;
+    vertical-align: middle;
+    margin: 0!important;
 }

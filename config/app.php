@@ -186,6 +186,7 @@ return [
 
 
 
+
         //third party provider
 
        Intervention\Image\ImageServiceProvider::class,

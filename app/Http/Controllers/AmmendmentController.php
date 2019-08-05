@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Payment;
 use App\Project;
 use App\User;
-
+use Illuminate\Support\Facades\DB;
 
 
 class AmmendmentController extends Controller
@@ -19,16 +19,29 @@ class AmmendmentController extends Controller
         $payment=Payment::all();
 
         return view('ammendment.index',['amendments'=>$amendments,'payment'=>$payment ]);
-       // return $amendment->groupBy(groupBy ,'payment_id');
+
+//        $amendments = DB::table('ammendments')
+//            ->select(DB::raw('count(*) as Amendment'))
+//
+//            ->groupBy('Amendment')
+//            ->get();
+
+
 
     }
+
+
+
 
     public function create($id){
 
 
         $payment=Payment::find($id);
 
+
         return view('ammendment.create')->with('payment',$payment);
+
+
     }
 
 
@@ -52,14 +65,11 @@ class AmmendmentController extends Controller
         return redirect()->route('amendment');
 
 
-
-
-
-
-
-
-
-
     }
+
+
+
+
+
 
 }

@@ -1,17 +1,13 @@
-{{--@extends('layout.Master')--}}
-
-{{--@section('content')--}}
 
 @extends('admin.index')
 
 @section('template')
+
 <head>
 
     <script src="{{asset('multi-select/0.9.12/js/jquery.multi-select.js')}}"></script>
     <script src="{{asset('multi-select/0.9.12/js/jquery.multi-select.min.js')}}"></script>
     <script src="{{asset('http://code.jquery.com/jquery.min.js')}}"></script>
-
-
 
 </head>
 

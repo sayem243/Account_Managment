@@ -22,8 +22,6 @@
             <a href="index.html" class="b-brand">
                 <div class="logo">
 
-
-
                     <img src="{{asset('assets/images/ems.png')}}" style="width: 100px" >
 
                 </div>

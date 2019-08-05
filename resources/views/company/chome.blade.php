@@ -4,15 +4,18 @@
 
 
     <div class="col-sm-12">
-        <div class="card" id="references">
-            <div class="card-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                <div class="card-header">
+                    <h5>Company Details </h5>
+                </div>
 
-    <div class="text-center"><h2>Company Details </h2>
 
-        <div class="table-responsive-lg">
-            <table class= "table table-responsive table-hover">
-                <thead class="thead-dark">
-                <tr>
+                <div class="card-body">
+                 <table class= "table table-bordered">
+                  <thead class="thead-dark">
+                  <tr>
                     <th>SL</th>
                     <th>ID</th>
                     <th>Name</th>
@@ -28,13 +31,9 @@
                 </tr>
                 </thead>
                 @php $i=0; @endphp
-
-
                 @foreach($companys as $company)
-
-                    @php $i++ @endphp
-
-                    <tr>
+                 @php $i++ @endphp
+                 <tr>
                         <td>{{$i}}</td>
                         <td>{{$company->id}} </td>
                         <td>{{$company->name}}</td>
@@ -45,16 +44,11 @@
                         <td><img src="{{Storage::url($company->c_img) }}" alt="404" width="100px" ></td>
                         <td>
 
-                            {{--<div class="btn-group-vertical">--}}
-                                {{--<a href="{{route('comp_edit',$company->id)}}" button type="button" class="btn btn-primary" >Edit </a>--}}
-                        {{--<a href="{{route('com_delete', $company->id)}}" button type="button" class="btn btn-primary">Delete</a>--}}
+                   <div class="btn-group card-option">
 
-                            {{--</div>--}}
+                        <a href="javascript:" class="btn btn-notify btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
 
-
-                            <div class="btn-group card-option">
-                                <button type="button" class="btn btn-notify" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
-                                <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
+                       <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
                                     <li class="dropdown-item">
                                         <a href="{{route('comp_edit',$company->id)}}">
                                             <i class="feather icon-edit"></i>
@@ -67,32 +61,27 @@
                                             Remove</a>
                                     </li>
 
-
                                 </ul>
-
 
                             </div>
 
-
-
-
                         </td>
-
-
-
-
-
 
                     </tr>
 
                 @endforeach
+
             </table>
+
+                </div>
+
+
+
+
+
         </div>
+    </div>
 
     </div>
     </div>
-        </div>
-    </div>
-
-
 @endsection

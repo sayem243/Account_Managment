@@ -29,22 +29,18 @@ class ProjectController extends Controller
 
     public function store(Request $request){
 
-        $this->validate(request(), [
-            'p_name' => 'required',
-            'p_title' => 'required',
-
-
-        ]);
+//        $this->validate(request(), [
+//            'p_name' => 'required',
+//            'company_id' => 'required',
+//
+//
+//        ]);
 
 
         $project=new Project;
         $project->p_name=$request->p_name;
-        $project->p_title=$request->p_title;
         $project->company_id=$request->company_id;
-
-
         $project->save();
-
 
         return redirect()->route('project');
 

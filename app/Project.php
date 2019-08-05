@@ -17,6 +17,10 @@ class Project extends Model
 
     }
 
+ /*   protected $casts = [
+        'company_id' => 'array'
+    ];*/
+
 
 
 }
