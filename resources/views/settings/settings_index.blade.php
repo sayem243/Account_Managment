@@ -11,8 +11,8 @@
             <div class="card-header">
 
     <div class="container">
-        <h2>Settings Table </h2>
-        <p>Settings Table define Employee status </p>
+        <h4>Settings Table </h4>
+
         <table class="table table-bordered">
             <thead>
             <tr>

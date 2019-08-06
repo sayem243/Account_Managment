@@ -123,8 +123,8 @@
         <i class="feather icon-more-horizontal"></i>
     </a>
     <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <li><a href="javascript:" class="full-screen" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize"></i></a></li>
+      <ul class="navbar-nav mr-auto">
+        <li><a href="javascript:" class="full-screen" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize"></i></a></li>
 
 
         </ul>

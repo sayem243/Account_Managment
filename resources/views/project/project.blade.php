@@ -9,10 +9,10 @@
                         <h5>Manage Project </h5>
                         <div class="card-header-right">
                             <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                                   <a href="{{route('project_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                                <a href="{{route('project_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                             </div>
-
                         </div>
+
                     </div>
 
                     @if ($errors->any())

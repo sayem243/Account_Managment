@@ -1,62 +1,56 @@
-
 @extends('admin.index')
 
 @section('template')
 
-<head>
+<div class="col-sm-12">
+ <div class="row">
+   <div class="col-sm-12">
+      <div class="card">
+          <div class="card-header">
+              <h5>Add Payment</h5>
+          </div>
 
-    <script src="{{asset('multi-select/0.9.12/js/jquery.multi-select.js')}}"></script>
-    <script src="{{asset('multi-select/0.9.12/js/jquery.multi-select.min.js')}}"></script>
-    <script src="{{asset('http://code.jquery.com/jquery.min.js')}}"></script>
+          @if ($errors->any())
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
 
-</head>
+         <div class="card-block">
+          <div class="card-body">
+              <form class="form-horizontal" action="{{ route('payment_store')}}" method="post" enctype="multipart/form-data">
 
-    <div class="col-sm-12">
-        <div class="card" id="references">
-            <div class="card-header">
+                 {{ csrf_field() }}
 
-
-
-    <form class="form-horizontal" action="{{ route('payment_store')}}" method="post" enctype="multipart/form-data">
-
-        {{ csrf_field() }}
-
-
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+          <div class="row">
+              <div class="col-md-6">
 
 
+                  <div class="form-group">
+                      <label class="col-form-label" for="demand_amount">Demand Amount:<span class="required">*</span></label>
+                      <div class="col-form-label">
+                          <input type="text" class="form-control" name="demand_amount" id="demand_amount" aria-describedby="validationTooltipUsernamePrepend" required="">
+                      </div>
+                  </div>
 
 
 
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="demand_amount">Demand Amount:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="demand_amount" id="demand_amount" placeholder="Demand">
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="payment_amount">Payment Amount:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="payment_amount" id="payment_amount" placeholder="Payment">
+                <div class="form-group">
+                <label class="col-form-label" for="payment_amount">Payment Amount:</label>
+                <div class="col-form-label">
+                <input type="text" class="form-control" name="payment_amount" id="payment_amount" aria-describedby="validationTooltipUsernamePrepend" required="" >
             </div>
         </div>
 
+
+
         <div class="form-group">
-            <label class="control-label col-sm-2" for="company_id">Company:</label>
-            <div class="col-sm-10">
-
-
+            <label class="col-form-label" for="company_id">Company:</label>
+            <div class="col-form-label">
 
                 <select class="form-control" name="company_id">
                     <option value="">Select Company</option>
@@ -69,8 +63,8 @@
 
 
         <div class="form-group">
-            <label class="control-label col-sm-2" for="user_id">Employee:</label>
-            <div class="col-sm-10">
+            <label class="col-form-label" for="user_id">Employee:</label>
+            <div class="col-form-label">
 
                 <select class="form-control" name="user_id">
                     <option value="">Select Employee</option>
@@ -81,17 +75,17 @@
             </div>
         </div>
 
+              </div>
 
 
 
-
+  <div class="col-md-6">
 
         <div class="form-group">
-            <label class="control-label col-sm-2" for="project_id">Projects</label>
-            <div class="col-sm-10">
-
-                <select class="form-control" name="project_id" multiple id="langOpt">
-                    <option value="">Projects</option>
+            <label class="col-form-label" for="project_id">Projects</label>
+            <div class="col-form-label" >
+                <select class="form-control"  name="project_id" multiple id="multiple">
+                    <option value=""></option>
                     @foreach($projects as $project)
                         <option value="{{$project->id}}"> {{$project->p_name}} </option>
                     @endforeach
@@ -101,9 +95,9 @@
 
 
         <div class="form-group">
-            <label class="control-label col-sm-2" for="comments">Comments </label>
-            <div class="col-sm-10">
-                <textarea class="form-control" class="form-control"  name="comments" rows="2" id="comments">
+            <label class="col-form-label" for="comments">Comments </label>
+            <div class="col-form-label">
+                <textarea type="text" class="form-control" rows="8" name="comments" id="comments" aria-describedby="name">
                 </textarea>
 
         </div>
@@ -112,39 +106,44 @@
 
 
 
+</div>
 
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-danger">Submit  </button>
-            </div>
+          </div>
+
+
+                  <div class="separator"></div>
+
+                  <div class="line aligncenter">
+
+                      <div class="form-group row">
+                          <div class="col-sm-3 col-form-label"></div>
+                          <div class="col-sm-6 col-form-label">
+                              <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i> Confirm</button>
+                              <button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>
+                          </div>
+                      </div>
+
+                  </div>
+
+              </form>
+
+
+
         </div>
+         </div>
 
-
-    </form>
-
-            </div>
-        </div>
     </div>
+ </div>
+
+
+
+</div>
+
+
+</div>
 
 
 
 
-
-<script>
-    $(document).ready(function(){
-
-        $("select.langOpt").change(function(){
-            var selected = $(".langOpt option:selected").val();
-            alert(" Select  - " + selected);
-        });
-
-    });
-
-</script>
-
-
-
-
-{{--@endsection--}}
 
 @endsection
