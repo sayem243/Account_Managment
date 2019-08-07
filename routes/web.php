@@ -84,18 +84,20 @@ Route::get('/payment','PaymentController@index')->name('payment');
 Route::get('/payment/create','PaymentController@create')->name('payment_create');
 Route::post('/payment/store','PaymentController@store')->name('payment_store');
 Route::get('/payment/edit/{id}','PaymentController@edite')->name('payment_edit');
-Route::post('/payment/update/{id}' ,'PaymentController@update')->name('payment_update');
-Route::get('/payment/delete/{id}' ,'PaymentController@delete')->name('delete');
+Route::post('/payment/update/{id}','PaymentController@update')->name('payment_update');
+Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
+Route::get('/payment/details/{id}','PaymentController@details')->name('details');
 
 
 Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printPDF');
 
 //  amendmentPayment
 
-Route::get('/amendment','AmmendmentController@index')->name('amendment');
+Route::get('/amendment/','AmmendmentController@index')->name('amendment');
 Route::get('/amendment/create/{id}','AmmendmentController@create')->name('amendment_create');
-
 Route::post('/amendment/store/{id}','AmmendmentController@store')->name('amendment_store');
+
+//Route::get('/amendment/details/{id}','AmmendmentController@index')->name('details');
 
 
 

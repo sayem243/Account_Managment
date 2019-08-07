@@ -120,6 +120,14 @@
                                            Remove</a>
                                    </li>
 
+                                   <li class="dropdown-item">
+                                       <a href="{{route('details',$payment->id)}}">
+                                           <i class="feather icon-eye"></i>
+                                           Details</a>
+                                   </li>
+
+
+
 
                                </ul>
 

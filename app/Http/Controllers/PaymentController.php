@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ammendment;
 use App\Project;
 use App\User;
 use App\UserType;
@@ -101,6 +102,23 @@ class PaymentController extends Controller
 
         $payment->save();
         return redirect()->route('payment');
+
+
+    }
+
+
+    public function details($id){
+
+        $payment=Payment::find($id);
+
+       // $amendments=DB::table('ammendments')->where('payment_id', $id)->get();
+
+        $amendments=Ammendment::where('payment_id',$id)->get();
+
+
+//        var_dump($amendments);die;
+
+        return view('payment.details',['payment'=>$payment, 'ammendments'=>$amendments]);
 
 
     }

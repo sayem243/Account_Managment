@@ -15,60 +15,48 @@ class AmmendmentController extends Controller
 
     public function index(){
 
-        $amendments=Ammendment::all();
-        $payment=Payment::all();
+      $amendments=Ammendment::all();
+     $payment=Payment::all();
+//
+         //$amendments=DB::table('ammendments')->where('payment_id', $id);
+        //$payment=Payment::find($id);
 
         return view('ammendment.index',['amendments'=>$amendments,'payment'=>$payment ]);
 
-//        $amendments = DB::table('ammendments')
-//            ->select(DB::raw('count(*) as Amendment'))
-//
-//            ->groupBy('Amendment')
-//            ->get();
-
-
-
     }
-
-
-
 
     public function create($id){
 
-
         $payment=Payment::find($id);
-
-
         return view('ammendment.create')->with('payment',$payment);
 
-
     }
-
-
     public function store(Request $request ,$id){
 
         $amendment=new Ammendment;
-
        // $payment=Payment::all();
-
         $payment=Payment::find($id);
         $amendment->additional_amount=$request->additional_amount;
-
         $amendment->payment_id=$payment->id;
         //$amendment->payment_id=$payment->id;
-
         $amendment->approved="approved";
-
         $amendment->save();
-
-
         return redirect()->route('amendment');
 
 
     }
 
 
+        public function details($id){
 
+
+            $amendments=Ammendment::find($id);
+//            $payment=Payment::find($id);
+
+            return view('ammendment.details',['amendments'=>$amendments ]);
+
+
+        }
 
 
 

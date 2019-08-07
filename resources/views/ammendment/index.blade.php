@@ -41,7 +41,8 @@
 
                         <td>{{$amendment->payment['d_amount']}} BDT </td>
                         <td>{{$amendment->payment['due']}} BDT </td>
-                        <td>{{$amendment->additional_amount}}</td>
+
+                        <td>{{ $amendment->additional_amount }}</td>
 
                         <td> {{ $sum=$amendment->additional_amount+ $amendment->payment['due'] }} </td>
 
@@ -51,6 +52,7 @@
 
                         </td>
                         <td></td>
+
                     </tr>
 
                     @endforeach
