@@ -19,8 +19,9 @@ class PaymentController extends Controller
     public function index(){
 
         $payments=Payment::all();
+        $amendments=Ammendment::all();
 
-        return view('payment.payment_index',['payments'=>$payments]);
+        return view('payment.payment_index',['payments'=>$payments,'amendments'=>$amendments]);
     }
 
     public function create(){

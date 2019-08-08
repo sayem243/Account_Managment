@@ -29,7 +29,6 @@ class AmmendmentController extends Controller
 
         $payment=Payment::find($id);
         return view('ammendment.create')->with('payment',$payment);
-
     }
     public function store(Request $request ,$id){
 
@@ -47,16 +46,7 @@ class AmmendmentController extends Controller
     }
 
 
-        public function details($id){
 
-
-            $amendments=Ammendment::find($id);
-//            $payment=Payment::find($id);
-
-            return view('ammendment.details',['amendments'=>$amendments ]);
-
-
-        }
 
 
 

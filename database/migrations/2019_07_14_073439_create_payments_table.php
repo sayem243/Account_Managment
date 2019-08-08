@@ -27,7 +27,6 @@ class CreatePaymentsTable extends Migration
             $table->string('comments');
 
 
-
             $table->timestamps();
         });
 

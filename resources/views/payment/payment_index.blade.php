@@ -28,7 +28,7 @@
 
         </div>
           <div class="card-body">
-              <table class="table table-bordered">
+              <table class="table table-striped table-bordered dataTable no-footer">
                 <thead class="thead-dark">
                 <tr>
                     <th>SL</th>
@@ -36,11 +36,12 @@
                     <th>Company </th>
                     <th>Project</th>
                     <th>Demand  Amount</th>
-                    <th>Paid Amount</th>
+                    <th>Initial Paid</th>
                     <th>Approval </th>
                     <th>Due</th>
                     <th>comments</th>
                     <th>Amendments</th>
+
                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                         <i class="feather icon-settings"></i>
 
@@ -90,14 +91,12 @@
                         </td>
 
 
-
                         <td>{{$payment->comments}}</td>
+
 
                         <td> <a href="{{route('amendment_create',$payment->id)}}" class="btn btn-success">Click </a>
 
                         </td>
-
-
 
                         <td>
                             {{----}}

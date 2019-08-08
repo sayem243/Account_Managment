@@ -12,13 +12,12 @@ class Ammendment extends Model
 
     }
 
+    Public function payments(){
+
+        return $this->hasOne('App\Payment');
+
+    }
 
 
-//$amendment = DB::table('ammendments')
-//->select(DB::raw('count(*) as additional_amount, payment_id'))
-//    //->where('status', '<>', 1)
-//->groupBy('additional_amount+payment->id')
-//->get();
-//
 
 }

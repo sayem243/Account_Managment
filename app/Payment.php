@@ -34,7 +34,14 @@ class Payment extends Model
         return $this->hasMany('App\Ammendment');
     }
 
-    protected $dates = ['name_field'];
+    public function ammendments(){
+
+        return $this->belongsTo('App\Ammendment');
+    }
+
+
+
+    //protected $dates = ['name_field'];
 
 
 }

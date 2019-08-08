@@ -37,30 +37,46 @@
                             <tr>
                                 <th>SL</th>
                                 <th>Advance Payment</th>
-                                <th>Amendment</th>
-                                
+                                <th>Amendment List </th>
                             </tr>
                             </thead>
 
                             <tbody>
 
-                            @php $i=0; @endphp
-
+                            @php
+                                $i=0;
+                                $sum=0;
+                            @endphp
                             @foreach($ammendments as $ammendment)
 
-                            @php $i++ @endphp
+
 
                             <tr>
                              <td>{{$i}}</td>
-                             <td>{{$payment->d_amount}}</td>
-                             <td> {{$ammendment->additional_amount}}BDT</td>
 
+                             <td>{{$payment->d_amount}}</td>
+
+                                <td> {{ $ammendment->additional_amount }}BDT </td>
+
+
+
+                            </tr>
+                            @php
+                                $sum += $ammendment->additional_amount;
+                                $i++;
+
+                            @endphp
+                            @endforeach
+
+
+                            <tr>
+                                <td></td>
+
+                                <th colspan="2"> Total Paid Amount={{$sum}}</th>
 
                             </tr>
 
 
-
-                            @endforeach
 
                             </tbody>
 
