@@ -12,8 +12,8 @@
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                             <a href="{{route('payment_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            <a href="{{route('Voucher',$payment->id)}}" class="btn btn-sm  btn-info"><i class="fab fa-amazon-pay"></i>Vocher</a>
                         </div>
-
 
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
@@ -27,36 +27,81 @@
                             </ul>
                         </div>
 
-
                     </div>
-            </div>
+                </div>
+
+                    {{--Advance Payment Information--}}
 
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Company </th>
+                                        <th>Project</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <td>{{$payment->user['name']}} </td>
+                                    <td>{{$payment->company['name']}}</td>
+                                    <td>{{$payment->project['p_name']}}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th>Demand Amount</th>
+                                        <th> Initial Paid </th>
+                                        <th>Total Paid</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <td>{{$payment->d_amount}}</td>
+                                    <td>{{$payment->due}}</td>
+                                    <td>{{$total+$payment->due}}</td>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+
                         <table class="table table-bordered">
                             <thead class="thead-dark">
                             <tr>
                                 <th>SL</th>
-                                <th>Advance Payment</th>
-                                <th>Amendment List </th>
+                                <th>Amount (BDT) </th>
+                                <th>Date</th>
                             </tr>
                             </thead>
 
                             <tbody>
 
                             @php
-                                $i=0;
+                                $i=1;
                                 $sum=0;
                             @endphp
-                            @foreach($ammendments as $ammendment)
-
+                            @foreach($payment->ammendment as $ammendment)
 
 
                             <tr>
                              <td>{{$i}}</td>
+                                {{--<td>{{$payment->user['name']}}</td>--}}
+                                {{--<td>{{$payment->company['name']}}</td>--}}
+                                {{--<td>{{$payment->project['p_name']}}</td>--}}
+                                {{--<td>{{$payment->d_amount}}</td>--}}
+                                <td> {{ $ammendment->additional_amount }} </td>
 
-                             <td>{{$payment->d_amount}}</td>
+                                <td>{{date('d-m-Y', strtotime($ammendment->created_at))}}</td>
 
-                                <td> {{ $ammendment->additional_amount }}BDT </td>
 
 
 
@@ -70,13 +115,8 @@
 
 
                             <tr>
-                                <td></td>
-
-                                <th colspan="2"> Total Paid Amount={{$sum}}</th>
-
+                               <th colspan="6"> Total Amendment  Amount={{$sum}}</th>
                             </tr>
-
-
 
                             </tbody>
 
@@ -85,10 +125,6 @@
 
 
                     </div>
-
-
-
-
 
 
 

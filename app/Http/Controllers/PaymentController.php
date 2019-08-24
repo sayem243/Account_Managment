@@ -19,6 +19,7 @@ class PaymentController extends Controller
     public function index(){
 
         $payments=Payment::all();
+
         $amendments=Ammendment::all();
 
         return view('payment.payment_index',['payments'=>$payments,'amendments'=>$amendments]);
@@ -41,8 +42,8 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'demand_amount'=> 'digits_between:2,8',
-            'payment_amount'=>'digits_between:2,8',
+            'demand_amount'=> 'digits_between:2,10',
+            'payment_amount'=>'digits_between:2,10',
 
         ]);
 
@@ -56,11 +57,12 @@ class PaymentController extends Controller
         $acc->project_id=$request->project_id;
         $acc->comments=$request->comments;
 
-        $acc->approval='Approved';
+       // $acc->approval='Approved';
 
 
         $acc->save();
-        return redirect()->route('payment');
+        return redirect()->route('payment')->with('success', 'Post has been successfully submitted pending for approval');
+
 
     }
 
@@ -78,6 +80,8 @@ class PaymentController extends Controller
 
     public function edite($id){
 
+
+        //$payment = \DB::table('payments')->where('id', $id)->first();
         $payment=Payment::find($id);
         $companies=Company::all();
         $user=User::all();
@@ -92,35 +96,62 @@ class PaymentController extends Controller
 
         $payment=Payment::find($id);
 
-
         $payment->d_amount=$request->demand_amount;
         $payment->due=$request->payment_amount;
         $payment->user_id=$request->user_id;
         $payment->company_id=$request->company_id;
         $payment->project_id=$request->project_id;
 
-        $payment->approval='Approved';
+
 
         $payment->save();
         return redirect()->route('payment');
 
+    }
+
+    public function approved($id){
+
+        $payment=Payment::find($id);
+        $payment->status=1;
+        //$payment->status=2;
+
+            $payment->save();
+            return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
 
     }
+
+
+//    public function danger($id){
+//
+//        $payment=Payment::find($id);
+//        //$payment->status=1;
+//        $payment->status=2;
+//
+//
+//        $payment->save();
+//            return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
+//
+//    }
+
+
+
+
 
 
     public function details($id){
 
         $payment=Payment::find($id);
+        $amendment = $payment->ammendment;
+        $total=$amendment->sum('additional_amount');
+        return view('payment.details',['payment'=>$payment, 'total'=>$total]);
+    }
 
-       // $amendments=DB::table('ammendments')->where('payment_id', $id)->get();
+       public function  Voucher($id){
 
-        $amendments=Ammendment::where('payment_id',$id)->get();
-
-
-//        var_dump($amendments);die;
-
-        return view('payment.details',['payment'=>$payment, 'ammendments'=>$amendments]);
-
+       $payment=Payment::find($id);
+       $amendment = $payment->ammendment;
+       $total=$amendment->sum('additional_amount');
+        return view('voucher.index',['payment'=>$payment, 'total'=>$total]);
 
     }
 
@@ -130,7 +161,6 @@ class PaymentController extends Controller
         $payment->delete();
         return redirect()->route('payment');
     }
-
 
     public function __construct()
     {

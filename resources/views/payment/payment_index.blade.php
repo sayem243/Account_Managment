@@ -37,9 +37,9 @@
                     <th>Project</th>
                     <th>Demand  Amount</th>
                     <th>Initial Paid</th>
-                    <th>Approval </th>
+                    <th>Status </th>
                     <th>Due</th>
-                    <th>comments</th>
+                    <th>Remarks</th>
                     <th>Amendments</th>
 
                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
@@ -77,9 +77,22 @@
                             {{$payment->due}}
                         </td>
 
-                        <td>
+                        <td class="status">
                             {{--<a href="{{route('printPDF',$payment->id)}}">Print PDF</a>--}}
+
+                                @if($payment->status == 0)
+                                    <span class="label label-primary">Pending</span>
+                                @elseif($payment->status == 1)
+                                    <span class="label label-success">Approved</span>
+                                @elseif($payment->status == 2)
+                                    <span class="label label-danger">Rejected</span>
+                                @else
+                                    <span class="label label-info">Postponed</span>
+                                @endif
+
                         </td>
+
+
 
                         <td>
                             @php
@@ -94,7 +107,12 @@
                         <td>{{$payment->comments}}</td>
 
 
-                        <td> <a href="{{route('amendment_create',$payment->id)}}" class="btn btn-success">Click </a>
+                        <td>
+                            <a href="{{route('amendment_create',$payment->id)}}" class="btn btn-sm  btn-info">Add </a>
+                            <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approved </button>
+
+                            <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Rejected </button>
+
 
                         </td>
 
@@ -103,8 +121,7 @@
                             {{--<a href="{{route('edit',$payment->id)}}" class="btn btn-success">Edit </a>--}}
                             {{--<a href="{{route('delete',$payment->id)}}" class="btn btn-danger">Delete </a>--}}
 
-
-                           <div class="btn-group card-option">
+                            <div class="btn-group card-option">
                                <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                                <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
                                    <li class="dropdown-item">
@@ -125,11 +142,14 @@
                                            Details</a>
                                    </li>
 
-
+                                   {{--<li class="dropdown-item">--}}
+                                       {{--<a href="{{route('status',$payment->id)}}">--}}
+                                           {{--<i class="feather icon-eye"></i>--}}
+                                           {{--status</a>--}}
+                                   {{--</li>--}}
 
 
                                </ul>
-
 
                            </div>
 
@@ -148,28 +168,55 @@
 
 
                         </td>
-
-
                     </tr>
 
                 @endforeach
 
-
                 </tbody>
-
             </table>
-
-
         </div>
 
-
-
     </div>
     </div>
 
-
  </div>
-
  </div>
-
 @endsection
+
+
+{{--Ajax --}}
+
+{{--@section('scripts')--}}
+    {{--<script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>--}}
+    {{--<script>--}}
+
+        {{--$('#status').change(function () {--}}
+
+            {{--var st= $('#status').val();--}}
+
+
+            {{--$('#status').html("");--}}
+            {{--var option="";--}}
+            {{--$.get( "http://127.0.0.1:8000/payment/status/check/"+st,--}}
+                {{--function( data ) {--}}
+                {{--data=JSON.parse(data)--}}
+                    {{--data.forEach(function (element) {--}}
+                        {{--console.log(element.status);--}}
+                        {{----}}
+                    {{--})--}}
+
+
+                {{--$('#status').html("<option>1</option>")--}}
+
+            {{--});--}}
+
+            {{--alert(st);--}}
+            {{----}}
+        {{--})--}}
+
+
+    {{--</script>--}}
+
+
+    {{--@endsection--}}
+

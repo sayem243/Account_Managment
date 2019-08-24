@@ -40,7 +40,7 @@ class AmmendmentController extends Controller
         //$amendment->payment_id=$payment->id;
         $amendment->approved="approved";
         $amendment->save();
-        return redirect()->route('amendment');
+        return redirect()->route('details',$payment->id);
 
 
     }

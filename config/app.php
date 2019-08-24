@@ -167,6 +167,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
+        Hootlex\Moderation\ModerationServiceProvider::class,
 
         /*
          * Package Service Providers...

@@ -61,6 +61,25 @@
                                             </div>
                                         </div>
 
+                                        {{--Payment status--}}
+
+                                        {{--<div class="form-group">--}}
+                                            {{--<label class="col-form-label">status</label>--}}
+                                            {{--<div class="col-form-label">--}}
+
+                                                {{--<select name="approve" class="form-control">--}}
+
+                                                    {{--<option value="0" @if($payment->status==0)selected @endif>Pending</option>--}}
+                                                    {{--<option value="1" @if($payment->status==1)selected @endif>Approve</option>--}}
+                                                    {{--<option value="2" @if($payment->status==2)selected @endif>Reject</option>--}}
+                                                    {{--<option value="3" @if($payment->status==3)selected @endif>Postponed</option>--}}
+
+
+                                                {{--</select>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
+
+
 
                                         <div class="form-group">
                                             <label class="col-form-label" for="user_id">Employee:</label>
@@ -97,24 +116,17 @@
                                         <div class="form-group">
                                             <label class="col-form-label" for="comments">Comments </label>
                                             <div class="col-form-label">
-                <textarea type="text" class="form-control" rows="8" name="comments" id="comments" aria-describedby="name">
+                                    <textarea type="text" class="form-control" rows="8" name="comments" id="comments" aria-describedby="name">
                 </textarea>
 
                                             </div>
                                         </div>
 
-
-
-
                                     </div>
-
                                 </div>
 
-
                                 <div class="separator"></div>
-
                                 <div class="line aligncenter">
-
                                     <div class="form-group row">
                                         <div class="col-sm-3 col-form-label"></div>
                                         <div class="col-sm-6 col-form-label">
@@ -127,23 +139,11 @@
 
                             </form>
 
-
-
                         </div>
                     </div>
-
                 </div>
             </div>
-
-
-
         </div>
-
-
     </div>
-
-
-
-
 
 @endsection

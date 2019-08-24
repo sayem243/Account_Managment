@@ -15,15 +15,17 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('d_amount', 8, 2);
-            $table->double('due',8, 2);
+            $table->double('d_amount', 10, 2);
+            $table->double('due',10, 2);
 
             $table->integer('company_id')->unsigned()->nullable();
 
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('project_id')->unsigned()->nullable();
 
-            $table->string('approval');
+
+            $table->smallInteger('status')->default(0);
+            $table->dateTime('moderated_at')->nullable();
             $table->string('comments');
 
 

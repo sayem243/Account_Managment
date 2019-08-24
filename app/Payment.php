@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Hootlex\Moderation\Moderatable;
+
+
 
 class Payment extends Model
 {
+
     public function user(){
 
         return $this->belongsTo('App\User');
@@ -41,7 +45,11 @@ class Payment extends Model
 
 
 
-    //protected $dates = ['name_field'];
+
+      //use Moderatable;
+
+
+
 
 
 }

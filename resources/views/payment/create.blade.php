@@ -1,6 +1,7 @@
 @extends('admin.index')
-
 @section('template')
+
+
 
 <div class="col-sm-12">
  <div class="row">
@@ -22,6 +23,7 @@
 
          <div class="card-block">
           <div class="card-body">
+
               <form class="form-horizontal" action="{{ route('payment_store')}}" method="post" enctype="multipart/form-data">
 
                  {{ csrf_field() }}
@@ -37,9 +39,7 @@
                       </div>
                   </div>
 
-
-
-                <div class="form-group">
+                  <div class="form-group">
                 <label class="col-form-label" for="payment_amount">Payment Amount:</label>
                 <div class="col-form-label">
                 <input type="text" class="form-control" name="payment_amount" id="payment_amount" aria-describedby="validationTooltipUsernamePrepend" required="" >
@@ -106,13 +106,10 @@
 
 
 
-</div>
+    </div>
 
           </div>
-
-
                   <div class="separator"></div>
-
                   <div class="line aligncenter">
 
                       <div class="form-group row">
@@ -141,9 +138,5 @@
 
 
 </div>
-
-
-
-
 
 @endsection

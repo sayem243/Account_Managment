@@ -30,11 +30,9 @@
 
                             <thead class="thead-dark">
                             <tr>
-
                                 <th>Serial</th>
                                 <th>Project Name</th>
                                 <th>Companies</th>
-
                                 <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                                     <i class="feather icon-settings"></i>
 
@@ -72,25 +70,12 @@
                                                         <i class="feather icon-trash-2"></i>
                                                         Remove</a>
                                                 </li>
-
-
                                             </ul>
 
-
                                         </div>
-
-
-
-
-
-
                                     </td>
 
                                 </tr>
-
-
-
-
                             @endforeach
 
                         </table>

@@ -88,6 +88,13 @@ Route::post('/payment/update/{id}','PaymentController@update')->name('payment_up
 Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
 Route::get('/payment/details/{id}','PaymentController@details')->name('details');
 
+Route::post('/payment/status/{id}','PaymentController@approved')->name('approved');
+Route::post('/payment/status/danger/{id}','PaymentController@danger')->name('danger');
+
+
+
+
+
 
 Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printPDF');
 
@@ -146,6 +153,14 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 
+//voucher
+
+Route::get('/Voucher/details/{id}','PaymentController@Voucher')->name('Voucher');
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+
+//Route::get('/home', 'HomeController@index')->name('home');

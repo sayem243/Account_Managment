@@ -12,12 +12,13 @@ class Ammendment extends Model
 
     }
 
+
+
+
     Public function payments(){
 
         return $this->hasOne('App\Payment');
 
     }
-
-
 
 }
