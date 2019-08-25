@@ -161,6 +161,4 @@ Route::get('/Voucher/details/{id}','PaymentController@Voucher')->name('Voucher')
 
 
 
-
-
 //Route::get('/home', 'HomeController@index')->name('home');

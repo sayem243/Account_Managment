@@ -27,6 +27,7 @@
 
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 
+
     {{--<link rel="stylesheet" href="{{asset('multi-select/0.9.12/css/multi-select.css')}}">--}}
     {{--<link rel="stylesheet" href="{{asset('multi-select/0.9.12/css/multi-select.min.css')}}">--}}
 
@@ -38,6 +39,9 @@
             line-height: 1.2;
             border-radius: .2rem;
         }
+
+
+
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
@@ -64,7 +68,8 @@
             </a>
             <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
         </div>
-        <div class="navbar-content scroll-div">
+        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: calc(100vh - 70px);">
+        <div class="navbar-content scroll-div" style="overflow: hidden; width: 100%; height: calc(100vh - 70px);">
             <ul class="nav pcoded-inner-navbar">
 
 
@@ -131,12 +136,9 @@
                     </ul>
                 </li>
 
-
-
-
-
             </ul>
         </div>
+    </div>
     </div>
 </nav>
 <!-- [ navigation menu ] end -->
@@ -301,6 +303,8 @@
                     $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
                     $(element).closest('tr').find('td.status').find('span').html('Approved')
                 }
+
+
             }
         });
     });
@@ -308,15 +312,16 @@
 
 
 
-    jQuery(".danger").click(function(e){
-        var elements = e.target;
-        e.preventDefault();
+
+    jQuery(".danger").click(function(a){
+        var elements = a.target;
+        a.preventDefault();
         var id = jQuery(this).attr('data-id-id');
 
         jQuery.ajax({
             type:'POST',
             dataType : 'json',
-            url:'/payment/status/'+ id,
+            url:'/payment/status/danger/'+ id,
             data:{},
             success:function(data){
                 if(data.status==100){

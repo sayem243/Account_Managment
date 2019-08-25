@@ -41,6 +41,7 @@
                     <th>Due</th>
                     <th>Remarks</th>
                     <th>Amendments</th>
+                    <th>Actions</th>
 
                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                         <i class="feather icon-settings"></i>
@@ -109,10 +110,13 @@
 
                         <td>
                             <a href="{{route('amendment_create',$payment->id)}}" class="btn btn-sm  btn-info">Add </a>
+
+                        </td>
+                        <td>
                             <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approved </button>
 
                             <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Rejected </button>
-
+                            
 
                         </td>
 
@@ -174,6 +178,21 @@
 
                 </tbody>
             </table>
+
+
+
+
+
+              <ul class="pagination justify-content-end">
+                  {{$payments->links('vendor.pagination.bootstrap-4')}}
+              </ul>
+
+
+
+
+
+              
+
         </div>
 
     </div>

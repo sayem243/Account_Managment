@@ -18,7 +18,7 @@ class PaymentController extends Controller
 {
     public function index(){
 
-        $payments=Payment::all();
+        $payments=Payment::orderBy('created_at','ASC')->paginate(6);
 
         $amendments=Ammendment::all();
 
@@ -114,28 +114,17 @@ class PaymentController extends Controller
         $payment=Payment::find($id);
         $payment->status=1;
         //$payment->status=2;
-
-            $payment->save();
-            return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
-
+        $payment->save();
+        return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
     }
 
-
-//    public function danger($id){
-//
-//        $payment=Payment::find($id);
-//        //$payment->status=1;
-//        $payment->status=2;
-//
-//
-//        $payment->save();
-//            return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
-//
-//    }
-
-
-
-
+    public function danger($id){
+        $payment=Payment::find($id);
+        //$payment->status=1;
+        $payment->status=2;
+        $payment->save();
+        return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
+    }
 
 
     public function details($id){
