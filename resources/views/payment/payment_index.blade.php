@@ -116,7 +116,7 @@
                             <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approved </button>
 
                             <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Rejected </button>
-                            
+
 
                         </td>
 

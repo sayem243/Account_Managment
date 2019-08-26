@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Hootlex\Moderation\Moderatable;
+
 
 
 
@@ -46,7 +46,7 @@ class Payment extends Model
 
 
 
-      //use Moderatable;
+
 
 
 

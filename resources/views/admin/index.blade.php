@@ -61,7 +61,7 @@
             <a href="index.html" class="b-brand">
                 <div class="logo">
 
-                    <img src="{{asset('assets/images/ems.png')}}" style="width: 100px" >
+                    {{--<img src="{{asset('assets/images/ems.png')}}" style="width: 100px" >--}}
 
                 </div>
                 <span class="b-title"></span>
@@ -71,13 +71,9 @@
         <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: calc(100vh - 70px);">
         <div class="navbar-content scroll-div" style="overflow: hidden; width: 100%; height: calc(100vh - 70px);">
             <ul class="nav pcoded-inner-navbar">
-
-
-
                 <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item active">
                     <a href="{{route('admin_index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
-
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fa fa-credit-card" style="color:green"></i></span><span class="pcoded-mtext">Payements</span></a>
@@ -89,7 +85,6 @@
                         {{--<li class="nav-item"><a href="{{route('amendment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Amendment</span></a></li>--}}
 
                     </ul>
-
                 </li>
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">

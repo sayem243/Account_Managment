@@ -4,6 +4,22 @@
 
 }
 
+
+
+.pcoded-navbar.navbar-collapsed {
+    width: 80px;
+    height: 100%;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+
+
+
+
+
+
+
 .pcoded-navbar .header-logo{
 
     background-color: #0000cc;
