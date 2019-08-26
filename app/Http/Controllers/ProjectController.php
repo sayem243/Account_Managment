@@ -40,6 +40,7 @@ class ProjectController extends Controller
         $project=new Project;
         $project->p_name=$request->p_name;
         $project->company_id=$request->company_id;
+        $project->address=$request->address;
         $project->save();
 
         return redirect()->route('project');
@@ -59,7 +60,7 @@ class ProjectController extends Controller
 
         $project=Project::find($id);
         $project->p_name=$request->p_name;
-        $project->p_title=$request->p_title;
+        $project->address=$request->address;
         $project->company_id=$request->company_id;
 
 

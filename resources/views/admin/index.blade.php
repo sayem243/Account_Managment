@@ -39,9 +39,6 @@
             line-height: 1.2;
             border-radius: .2rem;
         }
-
-
-
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>

@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('project.project.blade');
         //return redirect()->route('auth.login');
     }
 }
