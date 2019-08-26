@@ -6,12 +6,12 @@
 
 
 
-.pcoded-navbar.navbar-collapsed {
-    width: 80px;
-    height: 100%;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}
+/*.pcoded-navbar.navbar-collapsed {*/
+    /*width: 80px;*/
+    /*height: 100%;*/
+    /*-webkit-transition: all 0.3s ease-in-out;*/
+    /*transition: all 0.3s ease-in-out;*/
+/*}*/
 
 
 
@@ -63,7 +63,7 @@ a.btn {
 .table td, .table th {
     border-top: 1px solid #eaeaea;
     white-space: nowrap;
-    padding: 1px 5px 0px 5px;
+    padding: 1px 2px 0px 4px;
     vertical-align: middle;
     margin: 0!important;
 }
@@ -121,3 +121,11 @@ a.btn {
     display: -webkit-box;
 }
 
+/*body {*/
+    /*font-family: "Open Sans", sans-serif;*/
+    /*font-size: 13.5px;*/
+    /*color: #0c0c0c;*/
+    /*font-weight: 400;*/
+    /*background: #f4f7fa;*/
+    /*position: relative;*/
+/*}*/

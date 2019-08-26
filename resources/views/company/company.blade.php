@@ -79,9 +79,10 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-3 col-form-label"></div>
-                                    <div class="col-sm-6 col-form-label">
+                                    <div class="col-sm-12 col-form-label" align="right">
+
+                                        {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                                         <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i> Save</button>
-                                        <button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>
                                     </div>
                                 </div>
 

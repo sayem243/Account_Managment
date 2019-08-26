@@ -34,10 +34,10 @@
              <thead class="thead-dark">
            <tr>
             <th>SL</th>
-               <th>ID</th>
+               {{--<th>ID</th>--}}
              <th>Name</th>
            <th>Email</th>
-          <th>Number</th>
+          <th>Mobile Number</th>
           <th>Address</th>
 
               <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
@@ -51,7 +51,7 @@
                  @php $i++ @endphp
                  <tr>
                         <td>{{$i}}</td>
-                        <td>{{$company->id}} </td>
+                        {{--<td>{{$company->id}} </td>--}}
                         <td>{{$company->name}}</td>
                         <td>{{$company->c_email}}</td>
                         <td>{{$company->c_mobile}}</td>

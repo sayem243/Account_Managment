@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Datta Able Free Bootstrap 4 Admin Template</title>
+    <title>PUL Group</title>
     <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 11]>
@@ -28,8 +28,6 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 
 
-    {{--<link rel="stylesheet" href="{{asset('multi-select/0.9.12/css/multi-select.css')}}">--}}
-    {{--<link rel="stylesheet" href="{{asset('multi-select/0.9.12/css/multi-select.min.css')}}">--}}
 
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <style>
@@ -52,7 +50,7 @@
 </div>
 <!-- [ Pre-loader ] End -->
 <!-- [ navigation menu ] start -->
-<nav class="pcoded-navbar">
+<nav class="pcoded-navbar navbar-collapsed">
     <div class="navbar-wrapper">
         <div class="navbar-brand header-logo">
             <a href="index.html" class="b-brand">
@@ -65,8 +63,8 @@
             </a>
             <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
         </div>
-        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: calc(100vh - 70px);">
-        <div class="navbar-content scroll-div" style="overflow: hidden; width: 100%; height: calc(100vh - 70px);">
+
+        <div class="navbar-content scroll-div" >
             <ul class="nav pcoded-inner-navbar">
                 <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item active">
                     <a href="{{route('admin_index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
@@ -76,8 +74,8 @@
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fa fa-credit-card" style="color:green"></i></span><span class="pcoded-mtext">Payements</span></a>
                     <ul class="pcoded-submenu">
 
-                        <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Payment</span></a></li>
-                        <li class="nav-item"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Add Payment</span></a></li>
+                        <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-mtext">Advance Payment</span></a></li>
+                        <li class="nav-item"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-mtext">Add Payment</span></a></li>
 
                         {{--<li class="nav-item"><a href="{{route('amendment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Amendment</span></a></li>--}}
 
@@ -85,11 +83,11 @@
                 </li>
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Company </span></a>
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fas fa-building"></i></span><span class="pcoded-mtext">Company </span></a>
                     <ul class="pcoded-submenu">
 
-                        <li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-building" aria-hidden="true"></i></span><span class="pcoded-mtext">company Profile</span></a></li>
-                        <li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i> </span><span class="pcoded-mtext"> New company</span></a></li>
+                        <li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
+                        <li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-mtext"> New company</span></a></li>
                     </ul>
 
                 </li>
@@ -99,8 +97,8 @@
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Projects</span></a>
                     <ul class="pcoded-submenu">
 
-                        <li class="nav-item"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Project</span></a></li>
-                        <li class="nav-item"><a href="{{route('project_create')}}" class="nav-link active"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Project Create</span></a></li>
+                        <li class="nav-item"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
+                        <li class="nav-item"><a href="{{route('project_create')}}" class="nav-link active"><span class="pcoded-mtext">Add New</span></a></li>
 
                     </ul>
 
@@ -110,8 +108,8 @@
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">User Types</span></a>
                     <ul class="pcoded-submenu">
 
-                        <li class="nav-item"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">User Type</span></a></li>
-                        <li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create UserType</span></a></li>
+                        <li class="nav-item"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-mtext">User Type</span></a></li>
+                        <li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-mtext">Add New</span></a></li>
                     </ul>
 
                 </li>
@@ -120,9 +118,9 @@
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>
                     <ul class="pcoded-submenu">
 
-                        <li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-navigation"></i></span><span class="pcoded-mtext">Settings Table</span></a></li>
+                        <li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-mtext">Setting</span></a></li>
 
-                        <li class="nav-item"><a href="{{route('setting_create')}}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-plug"></i></span><span class="pcoded-mtext">create Setting Table</span></a></li>
+                        <li class="nav-item"><a href="{{route('setting_create')}}" class="nav-link"><span class="pcoded-mtext">New Setting</span></a></li>
 
 
                     </ul>
@@ -131,7 +129,7 @@
             </ul>
         </div>
     </div>
-    </div>
+
 </nav>
 <!-- [ navigation menu ] end -->
 
@@ -264,7 +262,7 @@
 <!-- Warning Section Ends -->
 
 <!-- Required Js -->
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{{--<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>--}}
 <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
 <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/js/pcoded.min.js')}}"></script>

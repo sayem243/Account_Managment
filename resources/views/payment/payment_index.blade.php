@@ -38,7 +38,7 @@
                     <th>Demand  Amount</th>
                     <th>Initial Paid</th>
                     <th>Status </th>
-                    <th>Due</th>
+                    {{--<th>Due</th>--}}
                     <th>Remarks</th>
                     <th>Amendments</th>
                     <th>Actions</th>
@@ -95,14 +95,14 @@
 
 
 
-                        <td>
-                            @php
-                                $sum=$payment->d_amount-$payment->due;
+                        {{--<td>--}}
+                            {{--@php--}}
+                                {{--$sum=$payment->d_amount-$payment->due;--}}
 
-                            @endphp
+                            {{--@endphp--}}
 
-                            {{$sum}}
-                        </td>
+                            {{--{{$sum}}--}}
+                        {{--</td>--}}
 
 
                         <td>{{$payment->comments}}</td>

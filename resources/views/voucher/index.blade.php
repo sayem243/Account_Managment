@@ -78,6 +78,14 @@
                                         {{$total+$payment->due}}
                                     </div>
                                 </div>
+
+                                <div class="col-sm row">
+                                    <level>Due :</level>
+                                    <div class="col-sm">
+                                        {{$payment->d_amount-($total+$payment->due)}}
+                                    </div>
+                                </div>
+
                           </div>
                     </div>
 

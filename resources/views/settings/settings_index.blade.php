@@ -1,9 +1,6 @@
 @extends('admin.index')
 
-{{--@extends('layout.Master')--}}
 
-
-{{--@section('content')--}}
 
 @section('template')
     <div class="col-sm-12">
