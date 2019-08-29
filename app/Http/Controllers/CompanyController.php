@@ -18,9 +18,6 @@ class CompanyController extends Controller
         return view('company.chome')->with('companys' ,$company);
     }
 
-
-
-
     public function store(Request $request){
 
         //dd('ok');
@@ -63,7 +60,6 @@ class CompanyController extends Controller
         return view('company.edite')->with('company',$company);
 
     }
-
 
 
     public  function update(Request $request,$id){

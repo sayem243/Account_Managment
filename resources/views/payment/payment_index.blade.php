@@ -33,14 +33,15 @@
                 <tr>
                     <th>SL</th>
                     <th>User Name</th>
-                    <th>Company </th>
-                    <th>Project</th>
+                    <th>Created By</th>
+                    <th>Checked By</th>
+                    <th>Approved By</th>
                     <th>Demand  Amount</th>
                     <th>Initial Paid</th>
+                    <th>Amendment Amount</th>
                     <th>Status </th>
-                    {{--<th>Due</th>--}}
+
                     <th>Remarks</th>
-                    <th>Amendments</th>
                     <th>Actions</th>
 
                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
@@ -60,58 +61,44 @@
                     <tr>
                         <td>{{$i}}</td>
                         <td>
-                            {{$payment->user['name']}}
+                            {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
                         </td>
 
                         <td>
-                            {{$payment->company['name']}}
+
+                            {{$payment->userCreatedBy['name']}}
+                            {{--{{$payment->userCreatedBy->UserProfile['fname'].' '.$payment->userCreatedBy->UserProfile['lname']}}--}}
                         </td>
+
+                         <td></td>
+                        <td></td>
+
                         <td>
-                            {{$payment->project['p_name'] }}
+                            {{$payment->total_demand_amount}}
                         </td>
 
                         <td>
-                            {{$payment->d_amount}}
+                            {{$payment->total_paid_amount}}
                         </td>
 
-                        <td>
-                            {{$payment->due}}
-                        </td>
+                        <td>{{$payment->total_amendment_amount}}</td>
 
                         <td class="status">
                             {{--<a href="{{route('printPDF',$payment->id)}}">Print PDF</a>--}}
 
-                                @if($payment->status == 0)
-                                    <span class="label label-primary">Pending</span>
-                                @elseif($payment->status == 1)
-                                    <span class="label label-success">Approved</span>
+                                @if($payment->status == 1)
+                                    <span class="label label-primary">Created</span>
                                 @elseif($payment->status == 2)
-                                    <span class="label label-danger">Rejected</span>
-                                @else
-                                    <span class="label label-info">Postponed</span>
+                                    <span class="label label-success">Verified</span>
+                                @elseif($payment->status == 3)
+                                    <span class="label label-danger">Approved</span>
+
                                 @endif
 
                         </td>
 
-
-
-                        {{--<td>--}}
-                            {{--@php--}}
-                                {{--$sum=$payment->d_amount-$payment->due;--}}
-
-                            {{--@endphp--}}
-
-                            {{--{{$sum}}--}}
-                        {{--</td>--}}
-
-
                         <td>{{$payment->comments}}</td>
 
-
-                        <td>
-                            <a href="{{route('amendment_create',$payment->id)}}" class="btn btn-sm  btn-info">Add </a>
-
-                        </td>
                         <td>
                             <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approved </button>
 
@@ -146,15 +133,15 @@
                                            Details</a>
                                    </li>
 
-                                   {{--<li class="dropdown-item">--}}
-                                       {{--<a href="{{route('status',$payment->id)}}">--}}
-                                           {{--<i class="feather icon-eye"></i>--}}
-                                           {{--status</a>--}}
-                                   {{--</li>--}}
+                                   <li class="dropdown-item">
+                                       <a href="{{route('amendment_create',$payment->id)}}">
+                                           <i class="feather icon-check-square"></i>
+                                           Amendment
+                                       </a>
 
+                                   </li>
 
                                </ul>
-
                            </div>
 
 
@@ -202,40 +189,4 @@
  </div>
 @endsection
 
-
-{{--Ajax --}}
-
-{{--@section('scripts')--}}
-    {{--<script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>--}}
-    {{--<script>--}}
-
-        {{--$('#status').change(function () {--}}
-
-            {{--var st= $('#status').val();--}}
-
-
-            {{--$('#status').html("");--}}
-            {{--var option="";--}}
-            {{--$.get( "http://127.0.0.1:8000/payment/status/check/"+st,--}}
-                {{--function( data ) {--}}
-                {{--data=JSON.parse(data)--}}
-                    {{--data.forEach(function (element) {--}}
-                        {{--console.log(element.status);--}}
-                        {{----}}
-                    {{--})--}}
-
-
-                {{--$('#status').html("<option>1</option>")--}}
-
-            {{--});--}}
-
-            {{--alert(st);--}}
-            {{----}}
-        {{--})--}}
-
-
-    {{--</script>--}}
-
-
-    {{--@endsection--}}
 

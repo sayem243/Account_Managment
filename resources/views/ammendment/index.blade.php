@@ -13,11 +13,13 @@
                     <thead class="thead-dark">
                     <tr>
                         <th>SL</th>
-                        <th>user Name</th>
-                        <th>Demand Amount</th>
+                        <th>Payment ID</th>
+                        <th>Demand Amount(BDT)</th>
                         <th>Advance Payment</th>
                         <th>Amendment</th>
+                        <th>Project</th>
                         <th>Total Paid Amount</th>
+
                         <th>Due</th>
                         <th>Date</th>
 
@@ -37,18 +39,23 @@
 
                     <tr>
                         <td>{{$i}}</td>
-                        <td> </td>
+                        <td>{{$amendment->payment->id}}</td>
+                        <td>{{$amendment->payment['total_demand_amount']}}  </td>
+                        <td>{{$amendment->payment['total_paid_amount']}} BDT </td>
 
-                        <td>{{$amendment->payment['d_amount']}} BDT </td>
-                        <td>{{$amendment->payment['due']}} BDT </td>
+                        <td>{{ $amendment->amendment_amount }}</td>
+                        <td>{{$amendment->project['p_name']}}</td>
 
-                        <td>{{ $amendment->additional_amount }}</td>
+                        <td> {{ $sum=$amendment->additional_amount+ $amendment->payment['total_paid_amount'] }} </td>
+                        {{--<td>--}}
+                            {{--<a href="public/file/{{$amendment->file}}">--}}
+                                {{--<button type="button" class="btn btn-primary"></button>--}}
+                            {{--</a>--}}
+                        {{--</td>--}}
 
-                        <td> {{ $sum=$amendment->additional_amount+ $amendment->payment['due'] }} </td>
-
-                        <td> {{ $amendment->payment['d_amount'] - $sum }} </td>
+                        <td> {{ $amendment->payment['total_demand_amount'] - $sum }} </td>
                         <td>
-                            {{ \Carbon\Carbon::parse($amendment->from_date)->format('d/m/Y')}}
+                            {{ \Carbon\Carbon::parse($amendment->created_at)->format('d/m/Y')}}
 
                         </td>
                         <td></td>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ammendment;
+use App\Payment_details;
 use App\Project;
 use App\User;
 use App\UserType;
@@ -41,26 +42,35 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate(request(), [
-            'demand_amount'=> 'digits_between:2,10',
-            'payment_amount'=>'digits_between:2,10',
+        $user = auth()->user();
 
-        ]);
+        $demand_amount=$request->demand_amount;
+        $paid_amount=$request->paid_amount;
 
+        $payment=new Payment();
 
-        $acc=new Payment();
+        $payment->user_id=$request->user_id;
+        $payment->comments=$request->comments;
+        $payment->total_demand_amount=array_sum($demand_amount);
+        $payment->total_paid_amount=array_sum($paid_amount);
+        $payment->created_by=$user->id;
+        $payment->save();
+        $projects=$request->project_id;
 
-        $acc->d_amount=$request->demand_amount;
-        $acc->due=$request->payment_amount;
-        $acc->user_id=$request->user_id;
-        $acc->company_id=$request->company_id;
-        $acc->project_id=$request->project_id;
-        $acc->comments=$request->comments;
+        foreach ($projects as $key=>$project){
+            $paymentDetails = new Payment_details();
+            $paymentDetails->project_id=$project;
+            $paymentDetails->demand_amount=$demand_amount[$key];
+            $paymentDetails->paid_amount=$paid_amount[$key];
+            $payment->Payment_details()->save($paymentDetails);
+        }
+
 
        // $acc->approval='Approved';
 
 
-        $acc->save();
+
+
         return redirect()->route('payment')->with('success', 'Post has been successfully submitted pending for approval');
 
 
@@ -127,13 +137,13 @@ class PaymentController extends Controller
     }
 
 
-    public function details($id){
-
-        $payment=Payment::find($id);
-        $amendment = $payment->ammendment;
-        $total=$amendment->sum('additional_amount');
-        return view('payment.details',['payment'=>$payment, 'total'=>$total]);
-    }
+//    public function details($id){
+//
+//        $payment=Payment::find($id);
+//        $amendment = $payment->ammendment;
+//        $total=$amendment->sum('additional_amount');
+//        return view('payment.details',['payment'=>$payment, 'total'=>$total]);
+//    }
 
        public function  Voucher($id){
 

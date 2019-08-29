@@ -59,7 +59,7 @@
 
 
 
-                        <input id="password" type="password" placeholder="password" class="form-control" name="password" required >
+                        <input id="password" type="password" placeholder="Password" class="form-control" name="password" required >
 
                         @if ($errors->has('password'))
                             <span class="help-block">

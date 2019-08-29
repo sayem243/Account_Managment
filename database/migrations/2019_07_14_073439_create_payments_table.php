@@ -15,18 +15,22 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('d_amount', 10, 2);
-            $table->double('due',10, 2);
+            $table->double('total_demand_amount', 10, 2);
+            $table->double('total_paid_amount',10, 2);
+            $table->decimal('total_amendment_amount',10, 2)->default(0);
 
             $table->integer('company_id')->unsigned()->nullable();
 
             $table->integer('user_id')->unsigned()->nullable();
-            $table->integer('project_id')->unsigned()->nullable();
 
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->integer('verified_by')->unsigned()->nullable();
+            $table->integer('approved_by')->unsigned()->nullable();
 
-            $table->smallInteger('status')->default(0);
-            $table->dateTime('moderated_at')->nullable();
-            $table->string('comments');
+            $table->smallInteger('status')->default(1);
+            $table->dateTime('verified_at')->nullable();
+            $table->dateTime('approved_at')->nullable();
+            $table->string('comments')->nullable();
 
 
             $table->timestamps();
@@ -44,14 +48,19 @@ class CreatePaymentsTable extends Migration
         });
 
         Schema::table('payments', function($table) {
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('created_by')->references('id')->on('users');
 
         });
 
-//        Schema::table('payments', function($table) {
-//            $table->foreign('user_types_id')->references('id')->on('user_types');
-//
-//        });
+        Schema::table('payments', function($table) {
+            $table->foreign('verified_by')->references('id')->on('users');
+
+        });
+
+        Schema::table('payments', function($table) {
+            $table->foreign('approved_by')->references('id')->on('users');
+
+        });
 
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Company;
+use Spatie\Permission\Models\Role;
 
 
 
@@ -28,14 +29,6 @@ class ProjectController extends Controller
 
 
     public function store(Request $request){
-
-//        $this->validate(request(), [
-//            'p_name' => 'required',
-//            'company_id' => 'required',
-//
-//
-//        ]);
-
 
         $project=new Project;
         $project->p_name=$request->p_name;

@@ -12,13 +12,11 @@ class Ammendment extends Model
 
     }
 
+    public function project(){
 
-
-
-    Public function payments(){
-
-        return $this->hasOne('App\Payment');
+        return $this->belongsTo('App\Project');
 
     }
+
 
 }

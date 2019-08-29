@@ -30,11 +30,11 @@ Route::get('/delete/{id}','AccountController@delete')->name('delete');
 
 //profile route
 Route::get('/userprofile/create','UserProfileController@create')->name('create');
-Route::get('/userprofile','UserProfileController@index')->name('userprofile');
-Route::get('/userprofile/edit','UserProfileController@index')->name('userprofile');
+Route::get('/userprofile/','UserProfileController@index')->name('userprofile');
+Route::get('/userprofile/edit','UserProfileController@edit')->name('userprofile_edit');
 Route::post('/userprofile/store','UserProfileController@store')->name('userprofile_store');
 
-Route::get('/userprofile/update','UserProfileController@update')->name('userprofile');
+Route::get('/userprofile/update','UserProfileController@update')->name('userprofile_update');
 
 
 
@@ -86,12 +86,10 @@ Route::post('/payment/store','PaymentController@store')->name('payment_store');
 Route::get('/payment/edit/{id}','PaymentController@edite')->name('payment_edit');
 Route::post('/payment/update/{id}','PaymentController@update')->name('payment_update');
 Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
-Route::get('/payment/details/{id}','PaymentController@details')->name('details');
-
 Route::post('/payment/status/{id}','PaymentController@approved')->name('approved');
 Route::post('/payment/status/danger/{id}','PaymentController@danger')->name('danger');
 
-
+Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
 
 
 
@@ -147,8 +145,11 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 //spaite
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles','RoleController');
+    Route::resource('payments','PaymentController');
     Route::resource('users','UserController');
+    Route::resource('projects','ProjectController');
+    Route::resource('companies','CompanyController');
+
 
 });
 
@@ -159,6 +160,11 @@ Route::get('/Voucher/details/{id}','PaymentController@Voucher')->name('Voucher')
 
 
 
+
+//Route::get('/admin/dashboard', function(){
+//    return 'Wellcome Admin!';
+//})->name('admin.dashboard');
+//
 
 
 //Route::get('/home', 'HomeController@index')->name('home');

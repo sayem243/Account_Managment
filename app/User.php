@@ -36,6 +36,12 @@ class User extends Authenticatable
 
     }
 
+    public function paymentCreatedBy(){
+        return $this->hasMany('App\Payment','created_by');
+
+    }
+
+
     public function UserType(){
 
         return $this->hasMany('App\UserType');

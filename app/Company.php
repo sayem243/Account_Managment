@@ -20,8 +20,8 @@ class Company extends Model
 
     public function Payment(){
         return $this->hasMany('App\Payment');
-
     }
+
     public function userProfile(){
 
         return $this->hasMany('App\UserProfile');
@@ -29,7 +29,7 @@ class Company extends Model
     }
 
 
-    use SoftDeletes;
+     use SoftDeletes;
 
 
 }

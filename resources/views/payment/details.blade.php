@@ -63,9 +63,9 @@
                                     </thead>
                                     <tbody>
 
-                                    <td>{{$payment->d_amount}}</td>
-                                    <td>{{$payment->due}}</td>
-                                    <td>{{$total+$payment->due}}</td>
+                                    <td>{{$payment->total_demand_amount}}</td>
+                                    <td>{{$payment->total_paid_amount}}</td>
+                                    {{--<td>{{$total+$payment->due}}</td>--}}
 
                                     </tbody>
                                 </table>

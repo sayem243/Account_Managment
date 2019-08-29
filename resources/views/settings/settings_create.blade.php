@@ -18,7 +18,7 @@
 
         <div class="form-group row">
             <label for="settingType" class="col-sm-2 col-form-label">Option</label>
-            <div class="col-sm-10">
+            <div class="col-sm-6">
               <select class="form-control" name="empl_type" id="empl_type">
 
                   <option value="designation">Designation</option>
@@ -30,7 +30,7 @@
 
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-10">
+            <div class="col-sm-6">
                 <input type="text" class="form-control" name="des_id" id="des_id" placeholder="Enter setting name">
             </div>
         </div>
@@ -38,8 +38,8 @@
 
 
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-outline-success">Submit  </button>
+            <div class="col-sm-offset-2 col-sm-12" align="right">
+                <button type="submit" class="btn btn-primary">Submit  </button>
             </div>
         </div>
 

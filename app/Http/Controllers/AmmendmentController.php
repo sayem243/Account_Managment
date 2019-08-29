@@ -30,16 +30,24 @@ class AmmendmentController extends Controller
         $payment=Payment::find($id);
         return view('ammendment.create')->with('payment',$payment);
     }
+
     public function store(Request $request ,$id){
 
-        $amendment=new Ammendment;
-       // $payment=Payment::all();
         $payment=Payment::find($id);
-        $amendment->additional_amount=$request->additional_amount;
-        $amendment->payment_id=$payment->id;
-        //$amendment->payment_id=$payment->id;
-        $amendment->approved="approved";
-        $amendment->save();
+        $payment->total_amendment_amount = ($payment->total_amendment_amount+array_sum($request->amendment_amount));
+        $payment->save();
+        ///$project=Project::find($id);
+        foreach ($request->project_id as $key=>$project){
+            if($request->amendment_amount[$key]>0){
+                $amendment=new Ammendment;
+                $amendment->amendment_amount=$request->amendment_amount[$key];
+                $amendment->payment_id=$payment->id;
+                $amendment->project_id=$project;
+                $amendment->approved='approved';
+                $amendment->save();
+            }
+        }
+
         return redirect()->route('details',$payment->id);
 
 

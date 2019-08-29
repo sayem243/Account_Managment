@@ -108,6 +108,10 @@
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Role</label>
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+
+                                    {{--<strong>Role:</strong>--}}
+                                    {{--{!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}--}}
+
                                 </div>
 
 
@@ -187,14 +191,14 @@
 
                                 <div class="form-group">
                                     <label>Joining Date</label>
-                                    <input type="text" class="form-control" name="joindate" placeholder="Joining Date">
+                                    <input type="date" class="form-control" name="joindate" placeholder="Joining Date">
                                 </div>
 
 
                             </div>
 
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="col-sm-12 col-form-label" align="right">
+                                <button type="submit" class="btn btn-primary" >Submit</button>
 
                             </div>
 

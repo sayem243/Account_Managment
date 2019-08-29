@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role;
 
 class Project extends Model
 {
@@ -17,10 +18,16 @@ class Project extends Model
 
     }
 
- /*   protected $casts = [
-        'company_id' => 'array'
-    ];*/
+    public function payment_details(){
 
+        return $this->hasMany('App\Payment_details');
+    }
+
+
+    public function amendment(){
+
+        return $this->hasMany('App\Ammendment');
+    }
 
 
 }

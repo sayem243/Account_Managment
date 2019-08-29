@@ -13,21 +13,82 @@
 
                     {{ csrf_field() }}
 
-                    <div class="form-group row">
-            <label for="additional" class="col-sm-2 col-form-label">Additional Amount</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" name="additional_amount" id="additional_amount" placeholder="">
-            </div>
-            </div>
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>SL</th>
+                            <th>Projects</th>
+                            <th>Demand Amount(BDT) </th>
+                            <th>Paid Amount</th>
+                            <th>Amendment</th>
+                        </tr>
+                        </thead>
+
+                            {{ csrf_field() }}
+                            <tbody>
+                            @php
+                                $i=0;
+
+                            @endphp
+
+                            @foreach($payment->Payment_details as $detail )
+                                @php
+                                    $i++ ;
+                                @endphp
+
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td>{{$detail->project['p_name']}}</td>
+                                    <td>{{$detail->demand_amount}}</td>
+                                    <td>{{$detail->paid_amount}}</td>
+                                    <td>
+                                        <input type="hidden" name="project_id[]" value="{{$detail->project['id']}}">
+                                        <input type="text" name="amendment_amount[]" class="form-control">
+                                    </td>
+                                </tr>
+
+                            @endforeach
+
+                            <tr>
+                                <td colspan="10">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-12" align="right">
+                                            <button type="submit" class="btn btn-primary">Save </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            </tbody>
+
+
+
+                    </table>
+
+
+                <div class="form-group row">
+                        <label for="file" class="col-sm-4 col-form-label">File :</label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="file" id="file" placeholder="">
+                        </div>
+                    </div>
+
+
+
+
+
+
+
 
 
 
 
                     <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-danger">Approve  </button>
+                        <div class="col-sm-offset-2 col-sm-12" align="right">
+                            <button type="submit" class="btn btn-primary">Save </button>
                         </div>
                     </div>
+
 
 
 

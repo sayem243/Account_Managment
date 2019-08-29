@@ -15,7 +15,7 @@ class UserProfileController extends Controller
     public function index(){
 
         $profile= UserProfile::all();
-      //  return view('profile.index')->with('profiles', $profiles);
+
         return view('profile.index',['profiles'=>$profile]);
 
 

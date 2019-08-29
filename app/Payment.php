@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 
@@ -26,29 +26,22 @@ class Payment extends Model
         return $this->belongsTo('App\Project');
 
     }
+    public function userCreatedBy(){
 
-    public function usertype()
-    {
+        return $this->belongsTo('App\User','created_by');
+    }
+
+    public function usertype(){
         return $this->belongsTo('App\UserType');
     }
 
-
-    public function ammendment(){
-
+    public function ammendments(){
         return $this->hasMany('App\Ammendment');
     }
 
-    public function ammendments(){
-
-        return $this->belongsTo('App\Ammendment');
+    public function Payment_details(){
+        return $this->hasMany('App\Payment_details');
     }
-
-
-
-
-
-
-
 
 
 

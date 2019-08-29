@@ -4,16 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model
+class Payment_details extends Model
 {
-    public function company(){
-        return $this->belongsTo('App\Company');
-
-    }
-
     public function Payment(){
         return $this->belongsTo('App\Payment');
-
     }
+
+
+    public function project(){
+
+        return $this->belongsTo('App\Project');
+    }
+
+
+
+
 
 }

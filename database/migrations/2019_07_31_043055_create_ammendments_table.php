@@ -16,18 +16,24 @@ class CreateAmmendmentsTable extends Migration
         Schema::create('ammendments', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('additional_amount');
+            $table->decimal('amendment_amount',10, 2);
+            $table->string('file')->nullable();
 
             $table->integer('payment_id')->unsigned()->nullable();
+
+            $table->integer('project_id')->unsigned()->nullable();
             $table->string('approved');
-
-
 
             $table->timestamps();
         });
 
         Schema::table('ammendments', function($table) {
             $table->foreign('payment_id')->references('id')->on('payments');
+
+        });
+
+        Schema::table('ammendments', function($table) {
+            $table->foreign('project_id')->references('id')->on('projects');
 
         });
 
