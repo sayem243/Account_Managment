@@ -11,23 +11,14 @@
                 <form class="form-horizontal" method="POST" action="{{ route('store') }}">
 
                     <div class="card-body">
-
-
                             {{ csrf_field() }}
-
-
                         <div class="row">
-
-                        <div class="col-md-6">
-
-
+                            <div class="col-md-6">
                                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                     <label for="username" class="control-label">UserName</label>
-
-
                                         <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required>
 
-                                        @if ($errors->has('username'))
+                                    @if ($errors->has('username'))
                                             <span class="help-block">
                                                                 <strong>{{ $errors->first('username') }}</strong>
                                                                 </span>
@@ -107,9 +98,10 @@
 
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Role</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                                    <textarea class="form-control"   name="role" id="role" rows="1"></textarea>
 
-                                    {{--<strong>Role:</strong>--}}
+                                    {{--{!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}--}}
+
                                     {{--{!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}--}}
 
                                 </div>
@@ -127,20 +119,12 @@
 
 
                     <div class="col-md-12">
-
-
-
-
                         <div class="card-header">
                             <h5>Profile</h5>
                         </div>
 
-
-
                         <div class="row">
-
                             <div class="col-md-6">
-
                                 <div class="form-group">
                                     <label>First Name</label>
                                     <input type="text" class="form-control" name="fname" placeholder="First Name">

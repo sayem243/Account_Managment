@@ -19,11 +19,11 @@ class PaymentController extends Controller
 {
     public function index(){
 
-        $payments=Payment::orderBy('created_at','ASC')->paginate(6);
+        $payments=Payment::orderBy('created_at','ASC')->paginate(5);
 
         $amendments=Ammendment::all();
 
-        return view('payment.payment_index',['payments'=>$payments,'amendments'=>$amendments]);
+        return view('payment.payment_index',['payments'=>$payments,'amendments'=>$amendments])->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     public function create(){

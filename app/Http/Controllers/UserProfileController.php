@@ -50,6 +50,10 @@ class UserProfileController extends Controller
         $profile->nid=$request->nid;
         $profile->mobile=$request->mobile;
 
+
+        $user = User::create($profile);
+        $user->assignRole($request->input('roles'));
+
         $profile->save();
 
         return redirect()->route('create');

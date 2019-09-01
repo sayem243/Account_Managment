@@ -182,7 +182,8 @@
                     <div class="dropdown-menu dropdown-menu-right profile-notification">
                         <div class="pro-head">
                             <img src="{{asset('assets/images/user/avatar-1.jpg')}}" class="img-radius" alt="User-Profile-Image">
-                            <span>John Doe</span>
+
+                            <span>{{ Auth::user()->name }}</span>
 
                             <a href="{{ route('logout') }}" class="dud-logout" title="Logout"
                                onclick="event.preventDefault();
@@ -196,11 +197,11 @@
                             </a>
 
                         </div>
-                        <ul class="pro-body">
+                        {{--<ul class="pro-body">--}}
 
-                            <li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
+                            {{--<li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>--}}
 
-                        </ul>
+                        {{--</ul>--}}
                     </div>
                 </div>
             </li>

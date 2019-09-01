@@ -166,7 +166,7 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
 
-        Collective\Html\HtmlServiceProvider::class,
+       Collective\Html\HtmlServiceProvider::class,
 
 
         /*
@@ -182,7 +182,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Barryvdh\DomPDF\ServiceProvider::class,
+//        Barryvdh\DomPDF\ServiceProvider::class,
 
 
 
@@ -190,7 +190,7 @@ return [
 
         //third party provider
 
-       Intervention\Image\ImageServiceProvider::class,
+//       Intervention\Image\ImageServiceProvider::class,
 
 
 

@@ -105,6 +105,11 @@ class UserController extends Controller
         $profile->company_id=$request->company_id;
 
 
+        //RoleController
+        $user = User::create($profile);
+        $user->assignRole($request->input('roles'));
+        //end
+
         $user->UserProfile()->save($profile);
 
         return redirect()->route('userprofile')
