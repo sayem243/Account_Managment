@@ -97,7 +97,7 @@
 
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Projects</span></a>
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="far fa-file"></i></span><span class="pcoded-mtext">Projects</span></a>
                     <ul class="pcoded-submenu">
 
                         <li class="nav-item"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
@@ -315,6 +315,28 @@
                 }
 
 
+            }
+        });
+    });
+
+    jQuery("#user_id").click(function(e){
+        var element = e.target;
+        e.preventDefault();
+        var id = jQuery(this).val();
+
+        jQuery.ajax({
+            type:'GET',
+            dataType : 'json',
+            url:'/project/user/'+ id,
+            data:{},
+            success:function(data){
+
+                var dataOption='<option>Select Project</option>';
+                for (var i = 0, len = data.length; i < len; i++) {
+                    dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["name"]+'</option>';
+
+                }
+                jQuery('.user_project_list').html(dataOption);
             }
         });
     });

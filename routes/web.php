@@ -81,7 +81,7 @@ Route::post('/setting/store','SettingsController@store')->name('setting_store');
 //Payment route
 
 Route::get('/payment','PaymentController@index')->name('payment');
-Route::get('/payment/create','PaymentController@create')->name('payment_create');
+Route::get('/payment/create/','PaymentController@create')->name('payment_create');
 Route::post('/payment/store','PaymentController@store')->name('payment_store');
 Route::get('/payment/edit/{id}','PaymentController@edite')->name('payment_edit');
 Route::post('/payment/update/{id}','PaymentController@update')->name('payment_update');
@@ -89,10 +89,10 @@ Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
 Route::post('/payment/status/{id}','PaymentController@approved')->name('approved');
 Route::post('/payment/status/danger/{id}','PaymentController@danger')->name('danger');
 
+Route::get('/project/user/{id}','UserController@projectByUser')->name('user_project');
+
+
 Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
-
-
-
 
 Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printPDF');
 
@@ -103,9 +103,6 @@ Route::get('/amendment/create/{id}','AmmendmentController@create')->name('amendm
 Route::post('/amendment/store/{id}','AmmendmentController@store')->name('amendment_store');
 
 //Route::get('/amendment/details/{id}','AmmendmentController@index')->name('details');
-
-
-
 
 
 
@@ -150,14 +147,19 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('projects','ProjectController');
     Route::resource('companies','CompanyController');
     Route::resource('roles','RoleController');
+    //Rout::resource('')
+
 
 });
 
 //voucher
 
-Route::get('/Voucher/details/{id}','PaymentController@Voucher')->name('Voucher');
+//Route::get('/Voucher/details/{id}','PaymentController@Voucher')->name('Voucher');
 
 
+Route::get('/voucher/create/','VocherController@create')->name('voucher_create');
+Route::post('/voucher/store','VocherController@store')->name('voucher_store');
+Route::get('/voucher/index/','VocherController@index')->name('voucher_index');
 
 
 //Route::get('/admin/dashboard', function(){

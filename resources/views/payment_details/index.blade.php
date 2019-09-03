@@ -35,8 +35,10 @@
                     <div class="card-body">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Payment Id: </label>
-                                {{$payment->id}}
+                                <label for="exampleInputEmail1">Payment ID: </label>
+
+
+                                {{$payment->id }}
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Payment Date: </label>

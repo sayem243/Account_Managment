@@ -7,6 +7,13 @@ use App\Company;
 
 class CompanyController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:comp_profile', ['only' => ['index','create','store']]);
+
+    }
+
+
     public function create(){
 
         return view('company.company');
@@ -97,10 +104,6 @@ class CompanyController extends Controller
     }
 
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
 
 }

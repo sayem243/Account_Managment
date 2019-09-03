@@ -73,6 +73,9 @@ class RegisterController extends Controller
             'username'=> $data['username'],
             'user_types_id'=> $data['user_types_id'],
             'company_id'=>$data['company_id'],
+           // 'role'=>$data['permission']
+
+
         ]);
     }
 

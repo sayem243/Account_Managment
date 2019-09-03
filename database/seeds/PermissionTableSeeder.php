@@ -21,6 +21,11 @@ class PermissionTableSeeder extends Seeder
             'product-list',
             'Payment-create',
             'comp_profile',
+            'users',
+            'projects',
+            'amendments',
+            'userprofiles'
+
 
         ];
 

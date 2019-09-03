@@ -61,6 +61,19 @@
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="user_project">select Project</label>
+                                    <select class="form-control" name="user_projects[]" multiple>
+                                        <option value="">Select Project</option>
+                                        @foreach($projects as $project)
+                                            <option value="{{$project->id}}"> {{$project->p_name}} </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+
+
                         </div>
 
                         <div class="col-md-6">
@@ -100,23 +113,18 @@
                                     <label for="exampleFormControlTextarea1">Role</label>
                                     <textarea class="form-control"   name="role" id="role" rows="1"></textarea>
 
-                                    {{--{!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}--}}
 
-                                    {{--{!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}--}}
+                                    {{--@foreach($permission as $value)--}}
+                                        {{--<label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}--}}
+                                            {{--{{ $value->name }}</label>--}}
+                                        {{--<br/>--}}
+                                    {{--@endforeach--}}
+
+
 
                                 </div>
-
-
-
                         </div>
-
                     </div>
-
-
-
-
-
-
 
                     <div class="col-md-12">
                         <div class="card-header">

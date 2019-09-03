@@ -1,5 +1,4 @@
 @extends('admin.index')
-
 @section('template')
 
     <div class="col-sm-12">
@@ -7,7 +6,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Edit Payment</h5>
+                        <h5>Add Payment</h5>
                     </div>
 
                     @if ($errors->any())
@@ -22,116 +21,71 @@
 
                     <div class="card-block">
                         <div class="card-body">
+
                             <form class="form-horizontal" action="{{ route('payment_update',$payment->id)}}" method="post" enctype="multipart/form-data">
 
                                 {{ csrf_field() }}
 
                                 <div class="row">
                                     <div class="col-md-6">
-
-
                                         <div class="form-group">
-                                            <label class="col-form-label" for="demand_amount">Demand Amount:<span class="required">*</span></label>
-                                            <div class="col-form-label">
-                                                <input type="text" class="form-control" name="demand_amount" id="demand_amount" aria-describedby="validationTooltipUsernamePrepend"  required="" value="{{$payment->d_amount}}">
-                                            </div>
+                                            <label for="exampleInputEmail1">Recived By</label>
+                                            <select class="form-control" name="user_id" id="user_id" required>
+
+                                                <option value="">Select User</option>
+                                                @foreach($users as $user)
+                                                    <option value="{{$user->id}}"> {{$user->name}} </option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
-
-
                                         <div class="form-group">
-                                            <label class="col-form-label" for="payment_amount">Payment Amount:</label>
-                                            <div class="col-form-label">
-                                                <input type="text" class="form-control" name="payment_amount" id="payment_amount" aria-describedby="validationTooltipUsernamePrepend" required="" value="{{$payment->due}}" >
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="form-group">
-                                            <label class="col-form-label" for="company_id">Company:</label>
-                                            <div class="col-form-label">
-
-                                                <select class="form-control" name="company_id">
-                                                    <option value="">Select Company</option>
-                                                    @foreach($companies as $company)
-                                                        <option value="{{$company->id}}"> {{$company->name}} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        {{--Payment status--}}
-
-                                        {{--<div class="form-group">--}}
-                                            {{--<label class="col-form-label">status</label>--}}
-                                            {{--<div class="col-form-label">--}}
-
-                                                {{--<select name="approve" class="form-control">--}}
-
-                                                    {{--<option value="0" @if($payment->status==0)selected @endif>Pending</option>--}}
-                                                    {{--<option value="1" @if($payment->status==1)selected @endif>Approve</option>--}}
-                                                    {{--<option value="2" @if($payment->status==2)selected @endif>Reject</option>--}}
-                                                    {{--<option value="3" @if($payment->status==3)selected @endif>Postponed</option>--}}
-
-
-                                                {{--</select>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-
-
-
-                                        <div class="form-group">
-                                            <label class="col-form-label" for="user_id">Employee:</label>
-                                            <div class="col-form-label">
-
-                                                <select class="form-control" name="user_id">
-                                                    <option value="">Select Employee</option>
-                                                    @foreach($users as $user)
-                                                        <option value="{{$user->id}}"> {{$user->name}} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <label class="col-form-label" for="project_id">Projects</label>
-                                            <div class="col-form-label" >
-                                                <select class="form-control"  name="project_id" multiple id="multiple">
-                                                    <option value=""></option>
-                                                    @foreach($projects as $project)
-                                                        <option value="{{$project->id}}"> {{$project->p_name}} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label class="col-form-label" for="comments">Comments </label>
-                                            <div class="col-form-label">
-                                    <textarea type="text" class="form-control" rows="8" name="comments" id="comments" aria-describedby="name">
-                </textarea>
-
-                                            </div>
+                                            <label for="comments">Comments</label>
+                                            <textarea name="comments" class="form-control"></textarea>
                                         </div>
 
                                     </div>
                                 </div>
 
-                                <div class="separator"></div>
+                                <table class="table table-bordered payment_details_table">
+                                    <thead>
+                                    <tr>
+                                        <th>Project</th>
+                                        <th>Demand</th>
+                                        <td>Paid Amount</td>
+                                        <td>Action</td>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control user_project_list" name="project_id[]" required>
+                                                <option value="">Select Project</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control demand_amount" name="demand_amount[]" id="demand_amount">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control paid_amount" name="paid_amount[]" id="paid_amount">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="delete-row hide">Delete Row</button>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
                                 <div class="line aligncenter">
+
                                     <div class="form-group row">
-                                        <div class="col-sm-3 col-form-label"></div>
-                                        <div class="col-sm-6 col-form-label">
-                                            <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i> Confirm</button>
-                                            <button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>
+                                        <div class="col-sm-3 col-form-label">
+                                            <input type="button" class="btn btn-success add-row" value="Add Row">
+                                        </div>
+                                        <div class="col-sm-12 col-form-label" align="right">
+                                            <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
+                                            {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                                         </div>
                                     </div>
 
@@ -141,9 +95,40 @@
 
                         </div>
                     </div>
+
                 </div>
             </div>
+
+
+
         </div>
+
     </div>
 
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $(".add-row").on('click', function(){
+                var table = $('.payment_details_table');
+                var nrow = table.find('tr:eq(1)').clone();
+                nrow.find('td').find('button').removeClass('hide');
+                table.append(nrow);
+            });
+
+            // Find and remove selected table rows
+            $('body').on('click','.delete-row', function(){
+                $(this).closest("tr").remove();
+            });
+        });
+    </script>
+
+
+
+
+
 @endsection
+
+
+

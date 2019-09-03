@@ -20,12 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
 
-
-
-
-
             $table->integer('user_types_id')->unsigned()->nullable();
-
 
 
             $table->rememberToken();
@@ -36,6 +31,8 @@ class CreateUsersTable extends Migration
             $table->foreign('user_types_id')->references('id')->on('user_types');
 
         });
+
+
     }
 
     /**

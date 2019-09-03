@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 
 
 use App\Company;
+use App\Project;
 use App\UserProfile;
+use App\UserProject;
 use App\UserType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,6 +39,7 @@ class UserController extends Controller
      */
     public function create()
     {
+
         $roles = Role::pluck('name','name')->all();
         return view('users.create',compact('roles'));
     }
@@ -53,7 +56,8 @@ class UserController extends Controller
         //return view('auth.register')->with('usertypes',$usertypes);
 
         $companies=Company::all();
-        return view('auth.register',['usertypes'=>$usertypes ,'companies'=>$companies]);
+        $userProjects=Project::all();
+        return view('auth.register',['usertypes'=>$usertypes ,'companies'=>$companies,'projects'=>$userProjects]);
     }
 
     /**
@@ -82,8 +86,8 @@ class UserController extends Controller
 
         $user = User::create($data);
 
-//        $user->assignRole($request->input('roles'));
-//var_dump($user);die;
+        $user->assignRole($request->input('roles'));
+
 
         $profile= New UserProfile ;
 
@@ -97,23 +101,39 @@ class UserController extends Controller
         $profile->p_address=$request->p_address;
         $profile->address=$request->address;
         $profile->company_id=$request->company_id;
-
-
         $profile->joindate=$request->joindate;
         $profile->nid=$request->nid;
         $profile->mobile=$request->mobile;
         $profile->company_id=$request->company_id;
 
-
-        //RoleController
-        $user = User::create($profile);
-        $user->assignRole($request->input('roles'));
-        //end
-
         $user->UserProfile()->save($profile);
+
+
+        $project = Project::find($request->user_projects);
+        $user->projects()->attach($project);
 
         return redirect()->route('userprofile')
             ->with('success','User created successfully');
+    }
+
+    public function projectByUser($id){
+
+        $user = User::find($id);
+
+        $userProjects = $user->projects;
+//        var_dump($userProjects);die;
+        $data = array();
+        if($userProjects){
+
+            foreach ($userProjects as $userProject){
+                $data[]=array(
+                    'id'=> $userProject->id,
+                    'name'=> $userProject->p_name,
+                );
+            }
+        }
+        return response()->json($data);
+
     }
 
 

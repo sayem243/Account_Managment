@@ -60,11 +60,8 @@
                       <tbody>
                       <tr>
                           <td>
-                              <select class="form-control"  name="project_id[]" required>
+                              <select class="form-control user_project_list" name="project_id[]" required>
                                   <option value="">Select Project</option>
-                                  @foreach($projects as $project)
-                                      <option value="{{$project->id}}"> {{$project->p_name}} </option>
-                                  @endforeach
                               </select>
                           </td>
                           <td>

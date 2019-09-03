@@ -15,16 +15,10 @@ class UserProfileController extends Controller
     public function index(){
 
         $profile= UserProfile::all();
-
         return view('profile.index',['profiles'=>$profile]);
-
-
     }
 
-
-
     public function create(){
-
         $companies=Company::all();
         $projects=Project::all();
         $userprofile=UserProfile::all();
@@ -32,11 +26,8 @@ class UserProfileController extends Controller
 
     }
 
-
     public function store(Request $request){
-
         $profile= New UserProfile ;
-
         $profile->fname=$request->fname;
         $profile->lname=$request->lname;
         $profile->email=$request->email;
