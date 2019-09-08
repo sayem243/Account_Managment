@@ -140,7 +140,7 @@ class PaymentController extends Controller
     public function danger($id){
         $payment=Payment::find($id);
         //$payment->status=1;
-        $payment->status=1;
+        $payment->status=3;
         $payment->save();
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
     }

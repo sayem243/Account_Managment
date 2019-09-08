@@ -15,8 +15,22 @@ class CreateVochersTable extends Migration
     {
         Schema::create('vochers', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->decimal('total_amount');
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->string('file')->nullable();
+            $table->string('voucher_id')->nullable();
+
             $table->timestamps();
         });
+
+        Schema::table('vochers', function($table) {
+            $table->foreign('user_id')->references('id')->on('users');
+
+        });
+
+
+
     }
 
     /**

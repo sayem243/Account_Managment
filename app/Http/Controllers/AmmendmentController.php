@@ -35,8 +35,9 @@ class AmmendmentController extends Controller
 
         $payment=Payment::find($id);
         $payment->total_amendment_amount = ($payment->total_amendment_amount+array_sum($request->amendment_amount));
+
         $payment->save();
-        ///$project=Project::find($id);
+
         foreach ($request->project_id as $key=>$project){
             if($request->amendment_amount[$key]>0){
                 $amendment=new Ammendment;
@@ -44,9 +45,16 @@ class AmmendmentController extends Controller
                 $amendment->payment_id=$payment->id;
                 $amendment->project_id=$project;
                 $amendment->approved='approved';
+
+//                if($request->hasFile('file')){
+//
+//                    $amendment->file=$amendment->file->store('/public/file');
+//                }
                 $amendment->save();
+
             }
         }
+
 
         return redirect()->route('details',$payment->id);
 

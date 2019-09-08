@@ -59,5 +59,12 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Project');
     }
 
+    public function vocher(){
+
+       return $this->hasMany('App\Vocher');
+
+    }
+
+
 
 }

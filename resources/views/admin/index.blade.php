@@ -27,8 +27,6 @@
 
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 
-
-
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <style>
         .hide{
@@ -131,17 +129,24 @@
 
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">User</span></a>
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">User</span></a>
                     <ul class="pcoded-submenu">
-
-
                         <li class="nav-item"><a href="{{route('userprofile')}}" class="nav-link"><span class="pcoded-mtext">User Profile</span></a></li>
                         <li class="nav-item"><a href="{{route('register')}}" class="nav-link"><span class="pcoded-mtext">New User</span></a></li>
+                    </ul>
+                </li>
 
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Voucher</span></a>
+                    <ul class="pcoded-submenu">
+
+                        <li class="nav-item"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Voucher</span></a></li>
+                        <li class="nav-item"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New User</span></a></li>
 
 
                     </ul>
                 </li>
+
 
 
 
@@ -310,8 +315,8 @@
             success:function(data){
                 if(data.status==200){
 
-                    $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
-                    $(element).closest('tr').find('td.status').find('span').html('Approved')
+                    $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
+                    $(element).closest('tr').find('td.status').find('span').html('Verified')
                 }
 
 
@@ -319,28 +324,73 @@
         });
     });
 
-    jQuery("#user_id").click(function(e){
+    jQuery("#user_id").on('change',function(e){
         var element = e.target;
         e.preventDefault();
         var id = jQuery(this).val();
-
         jQuery.ajax({
             type:'GET',
             dataType : 'json',
             url:'/project/user/'+ id,
             data:{},
             success:function(data){
-
                 var dataOption='<option>Select Project</option>';
                 for (var i = 0, len = data.length; i < len; i++) {
                     dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["name"]+'</option>';
-
                 }
                 jQuery('.user_project_list').html(dataOption);
             }
         });
     });
 
+    //voucher ajax
+
+    jQuery("#voucher_user").on('change',function(e){
+        var element = e.target;
+        e.preventDefault();
+        var id = jQuery(this).val();
+        jQuery.ajax({
+            type:'GET',
+            dataType : 'json',
+            url:'/user/payment/'+ id,
+            data:{},
+            success:function(data){
+               // console.log(data);
+                var dataOption='<option>Select Payment</option>';
+                for (var i = 0, len = data.length; i < len; i++) {
+                    dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["id"]+'</option>';
+                }
+                jQuery('.user_payment_list').html(dataOption);
+            }
+        });
+    });
+
+
+//    payment wise voucher project_list
+
+    jQuery("body").on('change','.user_payment_list',function (e) {
+
+        var element =e.target;
+        e.preventDefault();
+        var id = jQuery(this).val();
+        jQuery.ajax({
+            type:'GET',
+            dataType:'json',
+            url:'/user/payment/project/'+id,
+            data:{},
+            success:function (data) {
+                console.log(data);
+                var dataOption='<option>Select Project</option>';
+                for (var i=0, len=data.length; i<len;i++){
+
+                    dataOption +='<option value="'+data[i]["id"]+'">'+data[i]["project"]+'</option>';
+                }
+                jQuery(element).closest('tr').find('.payment_project_list').html(dataOption);
+            }
+
+
+        });
+    });
 
 
 
@@ -358,8 +408,8 @@
             success:function(data){
                 if(data.status==100){
 
-                    $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-danger');
-                    $(elements).closest('tr').find('td.status').find('span').html('Rejected')
+                    $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
+                    $(elements).closest('tr').find('td.status').find('span').html('Approved')
                 }
             }
         });

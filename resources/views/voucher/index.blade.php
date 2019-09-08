@@ -20,116 +20,57 @@
                             </ul>
                         </div>
                         </div>
-
                     </div>
-
                     <div class="card-body">
-                        <div  class="col-sm" align="right">
-                            Date: {{ \Carbon\Carbon::parse($payment->from_date)->format('d/m/Y')}}
-                        </div>
-                        <div class="row">
+                            <table class= "table table-bordered">
 
-
-                        <div class="col-md-6">
-
-                            <div class="col-sm row">
-                            <span>Name :</span>
-                            <div class="col-sm">
-                            {{$payment->user['name']}}
-                            </div>
-                            </div>
-
-                            <div class="col-sm row">
-                            <span >Company :</span>
-                            <div class="col-sm">
-                              {{$payment->company['name']}}
-                            </div>
-                            </div>
-
-                            <div class="col-sm row">
-                                <level >Project :</level>
-                                <div class="col-sm">
-                                  {{$payment->project['p_name']}}
-                                </div>
-                            </div>
-
-                        </div>
-
-                            <div class="col-md-6">
-
-                                <div class="col-sm row">
-                                    <level >Demand Amount :</level>
-                                    <div class="col-sm">
-                                        {{$payment->d_amount}}
-                                    </div>
-                                </div>
-
-                                <div class="col-sm row">
-                                    <level >Initial Paid :</level>
-                                    <div class="col-sm">
-                                        {{$payment->due}}
-                                    </div>
-                                </div>
-
-
-                                <div class="col-sm row">
-                                    <level>Total Paid :</level>
-                                    <div class="col-sm">
-                                        {{$total+$payment->due}}
-                                    </div>
-                                </div>
-
-                                <div class="col-sm row">
-                                    <level>Due :</level>
-                                    <div class="col-sm">
-                                        {{$payment->d_amount-($total+$payment->due)}}
-                                    </div>
-                                </div>
-
-                          </div>
-                    </div>
-
-                        <div class="row">
-                        <div class="col-sm-8">
-                            <h5 align="center"> Amendment List </h5></div>
-                        </div>
-
-
-                        <table class="table table-bordered">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th>SL</th>
-                                <th>Amount (BDT) </th>
-                                <th>Date</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-
-                            @php
-                                $i=1;
-                                $sum=0;
-                            @endphp
-                            @foreach($payment->ammendment as $ammendment)
-
+                                <thead class="thead-dark">
                                 <tr>
-                                    <td>{{$i}}</td>
-                                    <td> {{ $ammendment->additional_amount }} </td>
-                                    <td>{{date('d-m-Y', strtotime($ammendment->created_at))}}</td>
+                                    <th>Serial</th>
+                                    <th>User ID</th>
+                                    <th>Voucher ID</th>
+                                    <th>Total Amount</th>
 
+                                    <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
+                                        <i class="feather icon-settings"></i>
+                                    </th>
                                 </tr>
-                                @php
-                                    $sum += $ammendment->additional_amount;
-                                    $i++;
+                                </thead>
 
-                                @endphp
-                            @endforeach
+                                @php $i=0; @endphp
+                                @foreach($vochers as $vocher)
+                                    @php $i++ @endphp
 
-                            <tr>
-                                <th colspan="6"> Total Amendment  Amount={{$sum}}</th>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    <tr>
+                                        <td>{{$i}}</td>
+                                        <td>{{$vocher->user_id}}</td>
+                                        <td>{{$vocher->voucher_id}}</td>
+                                        <td>{{$vocher->total_amount}}</td>
+
+                                        <td>
+                                            <div class="btn-group card-option">
+                                                <a href="javascript:"  class="btn btn-notify btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                                                <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
+                                                    <li class="dropdown-item">
+                                                        <a href="{{route('voucher_edit',$vocher->id)}}">
+                                                            <i class="feather icon-edit"></i>
+                                                            Edit</a>
+                                                    </li>
+
+                                                    <li class="dropdown-item">
+                                                        <a href="{{route('voucher_delete',$vocher->id)}}">
+                                                            <i class="feather icon-trash-2"></i>
+                                                            Remove</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </table>
                 </div>
             </div>
         </div>

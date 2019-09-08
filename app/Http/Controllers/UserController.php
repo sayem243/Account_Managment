@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Company;
+use App\Payment;
 use App\Project;
 use App\UserProfile;
 use App\UserProject;
@@ -119,7 +120,6 @@ class UserController extends Controller
     public function projectByUser($id){
 
         $user = User::find($id);
-
         $userProjects = $user->projects;
 //        var_dump($userProjects);die;
         $data = array();
@@ -133,7 +133,39 @@ class UserController extends Controller
             }
         }
         return response()->json($data);
+    }
 
+    public function vocherAmount($id){
+
+        $user=User::find($id);
+        $userPayments = $user->Payment;
+        $datas=array();
+        if($userPayments){
+            foreach ($userPayments as $userPayment){
+                $datas[]=array(
+                    'id'=>$userPayment->id,
+                );
+            }
+        }
+        return response()->json($datas);
+    }
+
+    public function voucherProject($id){
+
+        $payment=Payment::find($id);
+        $paymentProjects=$payment->Payment_details;
+
+        $data=array();
+        if($paymentProjects){
+            foreach ($paymentProjects as $paymentProject){
+                $project=Project::find($paymentProject->project_id);
+                $data[]=array(
+                    'id'=> $project->id,
+                    'project'=> $project->p_name,
+                );
+            }
+        }
+        return response()->json($data);
     }
 
 

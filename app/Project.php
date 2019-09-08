@@ -35,4 +35,15 @@ class Project extends Model
         return $this->belongsToMany('App\User');
     }
 
+
+    public function vocher(){
+
+        return $this->hasMany('App\Vocher');
+    }
+
+    public function vocher_details(){
+
+        return $this->hasMany('App\Vocher_details');
+    }
+
 }

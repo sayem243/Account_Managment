@@ -46,7 +46,6 @@
 
               </div>
           </div>
-
                   <table class="table table-bordered payment_details_table">
                       <thead>
                       <tr>

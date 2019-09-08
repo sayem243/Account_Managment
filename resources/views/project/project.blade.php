@@ -37,15 +37,10 @@
                                     <i class="feather icon-settings"></i>
 
                                 </th>
-
-
                             </tr>
                             </thead>
                             @php $i=0; @endphp
-
-
                             @foreach($projects as $project)
-
                                 @php $i++ @endphp
 
                                 <tr>

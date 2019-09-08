@@ -42,7 +42,15 @@ class Payment extends Model
     public function Payment_details(){
         return $this->hasMany('App\Payment_details');
     }
+    public function vocher(){
+        return $this->belongsTo('App\Vocher');
 
+    }
 
+    public function Vocher_details(){
+
+        return $this->hasMany('App\Vocher_details');
+
+    }
 
 }

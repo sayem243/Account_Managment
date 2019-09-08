@@ -89,9 +89,9 @@
                                 @if($payment->status == 1)
                                     <span class="label label-primary">Created</span>
                                 @elseif($payment->status == 2)
-                                    <span class="label label-success">Verified</span>
+                                    <span class="label label-warning">Verified</span>
                                 @elseif($payment->status == 3)
-                                    <span class="label label-danger">Approved</span>
+                                    <span class="label label-success">Approved</span>
 
                                 @endif
 
@@ -100,9 +100,9 @@
                         <td>{{$payment->comments}}</td>
 
                         <td>
-                            <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approved </button>
+                            <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Verified </button>
 
-                            <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Rejected </button>
+                            <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Approved </button>
 
 
                         </td>
@@ -177,8 +177,6 @@
 
               {{--{!! $payments->links() !!}--}}
 
-
-              
 
         </div>
 

@@ -23,6 +23,7 @@ class ProjectController extends Controller
 
         $companies=Company::all();
         $projects=Project::all();
+
         return view('project.project_create',['companies'=>$companies,'project'=>$projects]);
 
     }
@@ -71,12 +72,7 @@ class ProjectController extends Controller
         $project->delete();
         return redirect()->route('project');
 
-
     }
-
-
-
-
 
 
     public function __construct()

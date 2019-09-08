@@ -89,11 +89,16 @@ Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
 Route::post('/payment/status/{id}','PaymentController@approved')->name('approved');
 Route::post('/payment/status/danger/{id}','PaymentController@danger')->name('danger');
 
+//Ajax route
+
 Route::get('/project/user/{id}','UserController@projectByUser')->name('user_project');
+Route::get('/user/payment/{id}','UserController@vocherAmount')->name('vocher_amount');
+Route::get('/user/payment/project/{id}','UserController@voucherProject')->name('voucher_project');
+
+
 
 
 Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
-
 Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printPDF');
 
 //  amendmentPayment
@@ -160,6 +165,14 @@ Route::group(['middleware' => ['auth']], function() {
 Route::get('/voucher/create/','VocherController@create')->name('voucher_create');
 Route::post('/voucher/store','VocherController@store')->name('voucher_store');
 Route::get('/voucher/index/','VocherController@index')->name('voucher_index');
+Route::get('/voucher/edit/{id}' ,'VocherController@edit')->name('voucher_edit');
+Route::post('/voucher/update/{id}' ,'VocherController@update')->name('voucher_update');
+
+Route::get('/voucher/delete/{id}' ,'VocherController@delete')->name('voucher_delete');
+
+//voucher index
+
+
 
 
 //Route::get('/admin/dashboard', function(){

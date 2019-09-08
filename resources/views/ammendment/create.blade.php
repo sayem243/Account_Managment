@@ -49,15 +49,15 @@
 
                             @endforeach
 
-                            <tr>
-                                <td colspan="10">
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-12" align="right">
-                                            <button type="submit" class="btn btn-primary">Save </button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            {{--<tr>--}}
+                                {{--<td colspan="10">--}}
+                                    {{--<div class="form-group">--}}
+                                        {{--<div class="col-sm-offset-2 col-sm-12" align="right">--}}
+                                            {{--<button type="submit" class="btn btn-primary">Save </button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
+                            {{--</tr>--}}
 
                             </tbody>
 

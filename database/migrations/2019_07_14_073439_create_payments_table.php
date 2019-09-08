@@ -33,6 +33,7 @@ class CreatePaymentsTable extends Migration
             $table->string('comments')->nullable();
 
 
+
             $table->timestamps();
         });
 
