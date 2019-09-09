@@ -19,10 +19,10 @@ class VocherController extends Controller
         $projects=Project::all();
         $users=User::all();
         //$paid_amounts = PaymentDetailsController::with('payment_id')->where('project_id', 1)->get();
-        $paid_amounts=Payment_details::Where('project_id','payment_id')->get();
+//        $paid_amounts=Payment_details::Where('project_id','payment_id')->get();
 
 
-     return  view('voucher.create',['payments'=>$payments,'projects'=>$projects,'users'=>$users,'paid_amounts'=>$paid_amounts]);
+     return  view('voucher.create',['payments'=>$payments,'projects'=>$projects,'users'=>$users]);
     }
 
 
