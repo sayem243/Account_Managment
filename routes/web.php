@@ -170,7 +170,9 @@ Route::post('/voucher/update/{id}' ,'VocherController@update')->name('voucher_up
 
 Route::get('/voucher/delete/{id}' ,'VocherController@delete')->name('voucher_delete');
 
-//voucher index
+//voucher details
+
+Route::get('voucher/details/{id}','VocherDetailsController@index')->name('voucherDetails_index');
 
 
 
@@ -179,6 +181,5 @@ Route::get('/voucher/delete/{id}' ,'VocherController@delete')->name('voucher_del
 //    return 'Wellcome Admin!';
 //})->name('admin.dashboard');
 //
-
 
 //Route::get('/home', 'HomeController@index')->name('home');

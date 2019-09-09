@@ -46,6 +46,7 @@
                                     <tr>
                                         <th>Payment ID</th>
                                         <th>Project</th>
+
                                         <th>Amount </th>
                                         <td>Action</td>
 
@@ -67,8 +68,11 @@
                                             <select class="form-control payment_project_list" name="project_id[]" required>
                                                 <option value="">Select Project</option>
                                             </select>
-
                                         </td>
+
+                                       
+
+
                                         <td>
                                             <input type="text" class="form-control demand_amount" name="amount[]" id="amount">
                                         </td>

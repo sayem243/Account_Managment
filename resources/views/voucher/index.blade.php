@@ -27,7 +27,8 @@
                                 <thead class="thead-dark">
                                 <tr>
                                     <th>Serial</th>
-                                    <th>User ID</th>
+                                    <th>User Name</th>
+
                                     <th>Voucher ID</th>
                                     <th>Total Amount</th>
 
@@ -43,7 +44,7 @@
 
                                     <tr>
                                         <td>{{$i}}</td>
-                                        <td>{{$vocher->user_id}}</td>
+                                        <td>{{$vocher->user['name']}}</td>
                                         <td>{{$vocher->voucher_id}}</td>
                                         <td>{{$vocher->total_amount}}</td>
 
@@ -52,16 +53,11 @@
                                                 <a href="javascript:"  class="btn btn-notify btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                                                 <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
                                                     <li class="dropdown-item">
-                                                        <a href="{{route('voucher_edit',$vocher->id)}}">
-                                                            <i class="feather icon-edit"></i>
-                                                            Edit</a>
+                                                        <a href="{{route('voucherDetails_index',$vocher->id)}}">
+                                                            <i class="feather icon-eye"></i>
+                                                            Details</a>
                                                     </li>
 
-                                                    <li class="dropdown-item">
-                                                        <a href="{{route('voucher_delete',$vocher->id)}}">
-                                                            <i class="feather icon-trash-2"></i>
-                                                            Remove</a>
-                                                    </li>
 
                                                 </ul>
 

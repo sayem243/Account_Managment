@@ -137,19 +137,15 @@
                 </li>
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Voucher</span></a>
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Voucher</span></a>
                     <ul class="pcoded-submenu">
 
                         <li class="nav-item"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Voucher</span></a></li>
-                        <li class="nav-item"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New User</span></a></li>
+                        <li class="nav-item"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New Voucher</span></a></li>
 
 
                     </ul>
                 </li>
-
-
-
-
             </ul>
         </div>
     </div>

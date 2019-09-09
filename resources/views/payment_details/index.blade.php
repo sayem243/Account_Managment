@@ -33,11 +33,11 @@
                     {{--Advance Payment Information--}}
 
                     <div class="card-body">
+                        <div class="row">
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Payment ID: </label>
-
-
                                 {{$payment->id }}
                             </div>
                             <div class="form-group">
@@ -45,8 +45,26 @@
                                 {{date('d-m-Y',strtotime($payment->created_at))}}
                             </div>
                         </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">User Name: </label>
+                                    {{$payment->user['name'] }}
 
-                        <table class="table table-bordered">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Mobile Number: </label>
+                                    {{$payment->user->userProfile['mobile'] }}
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h4 align="center">Advance Payment Details</h4>
+                        </div>
+
+                        <table class="table table-striped">
                             <thead class="thead-dark">
                             <tr>
                                 <th>SL</th>
@@ -86,10 +104,50 @@
 
                         </table>
 
-                    </div>
+                        <div class="col-md-12">
+                            <h4 align="center">Amendment Details</h4>
+                        </div>
+
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>SL</th>
+                                <th>Projects</th>
+                                <th>Amendment Amount</th>
+                                <th>Date</th>
+
+                            </tr>
+                            </thead>
+
+
+                            <tbody>
+                            @php
+                                $i=0;
+
+                            @endphp
+
+                            @foreach($payment->ammendments as $detail )
+                                @php
+                                    $i++ ;
+                                @endphp
+
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td>{{$detail->project['p_name']}}</td>
+                                    <td>{{$detail->amendment_amount}}</td>
+                                   <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
+                                </tr>
+
+                            @endforeach
+
+                            </tbody>
+
+                        </table>
 
 
 
+
+             </div>
         </div>
     </div>
 

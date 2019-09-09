@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Payment;
+use App\Payment_details;
 use App\Project;
 use App\User;
 use App\Vocher;
@@ -17,7 +18,11 @@ class VocherController extends Controller
         $payments=Payment::all();
         $projects=Project::all();
         $users=User::all();
-        return  view('voucher.create',['payments'=>$payments,'projects'=>$projects,'users'=>$users]);
+        //$paid_amounts = PaymentDetailsController::with('payment_id')->where('project_id', 1)->get();
+        $paid_amounts=Payment_details::Where('project_id','payment_id')->get();
+
+
+     return  view('voucher.create',['payments'=>$payments,'projects'=>$projects,'users'=>$users,'paid_amounts'=>$paid_amounts]);
     }
 
 

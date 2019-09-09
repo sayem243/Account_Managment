@@ -38,14 +38,21 @@
                           @endforeach
                       </select>
                   </div>
+              </div>
 
+              <div class="col-md-6">
                   <div class="form-group">
                       <label for="comments">Comments</label>
-                      <textarea name="comments" class="form-control"></textarea>
+                      <textarea name="comments" rows="3.5" class="form-control"></textarea>
                   </div>
-
               </div>
           </div>
+
+
+                  <div class="col-md-12">
+                      <h5 align="center" class="text-primary mb-1">Advance Payment</h5>
+                  </div>
+
                   <table class="table table-bordered payment_details_table">
                       <thead>
                       <tr>
@@ -53,10 +60,12 @@
                           <th>Demand</th>
                           <td>Paid Amount</td>
                           <td>Action</td>
-
                       </tr>
                       </thead>
                       <tbody>
+                      <div class="col-sm-12 col-form-label" align="right">
+                          <input type="button" class="btn btn-success add-row" value="Add Row">
+                      </div>
                       <tr>
                           <td>
                               <select class="form-control user_project_list" name="project_id[]" required>
@@ -70,26 +79,21 @@
                               <input type="text" class="form-control paid_amount" name="paid_amount[]" id="paid_amount">
                           </td>
                           <td>
-                              <button type="button" class="delete-row hide">Delete Row</button>
+                              <button type="button" class="btn-danger hide">Delete</button>
                           </td>
                       </tr>
 
                       </tbody>
                   </table>
-                  <div class="line aligncenter">
 
+                  <div class="line aligncenter">
                       <div class="form-group row">
-                          <div class="col-sm-3 col-form-label">
-                              <input type="button" class="btn btn-success add-row" value="Add Row">
-                          </div>
                           <div class="col-sm-12 col-form-label" align="right">
                               <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
                               {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                           </div>
                       </div>
-
                   </div>
-
               </form>
 
         </div>
@@ -117,7 +121,7 @@
         });
 
         // Find and remove selected table rows
-        $('body').on('click','.delete-row', function(){
+        $('body').on('click','.btn-danger', function(){
            $(this).closest("tr").remove();
         });
     });
