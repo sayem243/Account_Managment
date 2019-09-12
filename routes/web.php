@@ -94,7 +94,7 @@ Route::post('/payment/status/danger/{id}','PaymentController@danger')->name('dan
 Route::get('/project/user/{id}','UserController@projectByUser')->name('user_project');
 Route::get('/user/payment/{id}','UserController@vocherAmount')->name('vocher_amount');
 Route::get('/user/payment/project/{id}','UserController@voucherProject')->name('voucher_project');
-
+Route::get('/user/payment/paid/{payment}/{project}','UserController@paidAmount')->name('paid_amount');
 
 
 

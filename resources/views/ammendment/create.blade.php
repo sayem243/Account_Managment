@@ -66,21 +66,12 @@
                     </table>
 
 
-                <div class="form-group row">
+                        <div class="form-group row">
                         <label for="file" class="col-sm-4 col-form-label">File :</label>
                         <div class="col-sm-8">
                             <input type="file" class="form-control" name="file" id="file" placeholder="">
                         </div>
-                    </div>
-
-
-
-
-
-
-
-
-
+                        </div>
 
 
                     <div class="form-group">

@@ -7,7 +7,26 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Voucher Entry </h5>
+
+                    <div class="card-header-right">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
+                            <a href="{{route('voucher_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                        </div>
+
+                        <div class="btn-group card-option">
+                            <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end">
+                                <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
+                                <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
+                                <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+
+                            </ul>
+                        </div>
                     </div>
+                    </div>
+
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -30,11 +49,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="user_id" class="">User Name</label>
-                                            <select class="form-control" name="user_id" id="voucher_user" required>
+
+                                            <select class="form-control" name="user_id" id="voucher_user" required input id="myInput" type="text" placeholder="Search..">
+
 
                                                 <option value="">Select User</option>
                                                 @foreach($users as $user)
                                                     <option value="{{$user->id}}"> {{$user->name}} </option>
+
+
                                                 @endforeach
                                             </select>
                                         </div>
@@ -46,7 +69,7 @@
                                     <tr>
                                         <th>Payment ID</th>
                                         <th>Project</th>
-
+                                        <th>Total Paid Amount</th>
                                         <th>Amount </th>
                                         <td>Action</td>
 
@@ -70,15 +93,17 @@
                                             </select>
                                         </td>
 
+                                        <td class="paid">
 
+                                        </td>
 
 
                                         <td>
-                                            <input type="text" class="form-control demand_amount" name="amount[]" id="amount">
+                                            <input type="text" class="form-control demand_amount" name="amount[]" id="amount" required>
                                         </td>
 
                                         <td>
-                                            <button type="button" class="delete-row hide">Delete Row</button>
+                                            <button type="button" class="btn btn-danger hide">Delete Row</button>
                                         </td>
                                     </tr>
 
@@ -87,8 +112,18 @@
                                 <div class="line aligncenter">
 
                                     <div class="form-group row">
+                                        <label for="file" class="col-sm-2 col-form-label">File :</label>
+                                        <div class="col-sm-10">
+                                            <input type="file" class="form-control" name="file" id="file" placeholder="">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group row">
 
                                         <div class="col-sm-12 col-form-label" align="right">
+
                                             <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
                                             {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                                         </div>
@@ -123,10 +158,21 @@
             });
 
             // Find and remove selected table rows
-            $('body').on('click','.delete-row', function(){
+            $('body').on('click','.btn', function(){
                 $(this).closest("tr").remove();
             });
         });
+
+
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
     </script>
 
 

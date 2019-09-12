@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 class UserProfileController extends Controller
 {
 
+    function __construct()
+    {
+        $this->middleware('permission:userprofiles', ['only' => ['index','create','store']]);
+    }
+
 
     public function index(){
 
@@ -52,8 +57,13 @@ class UserProfileController extends Controller
 
     }
 
+    public function edit($id){
+        $userprofile= UserProfile::find($id);
+        return view('profile.edit',['$userprofiles'=>$userprofile] );
 
 
+
+    }
 
 
 }

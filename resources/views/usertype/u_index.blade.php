@@ -7,7 +7,7 @@
             <div class="card-header">
 
     <div class="container">
-        <h2> User Type </h2>
+        <h2> Setting Table </h2>
         <p>  </p>
         <table class="table table-bordered">
             <thead>

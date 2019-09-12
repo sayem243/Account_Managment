@@ -22,14 +22,14 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-//    function __construct()
-//    {
-//        $this->middleware('permission:Payment-create', ['only' => ['index','create','store']]);
-//    }
-//
+    function __construct()
+    {
+        $this->middleware('permission:Payment-create', ['only' => ['index','create','store']]);
+    }
+
     public function index(){
 
-        $payments=Payment::orderBy('created_at','ASC')->paginate(25);
+        $payments=Payment::orderBy('created_at','DSC')->paginate(25);
 
         $amendments=Ammendment::all();
 
@@ -74,13 +74,21 @@ class PaymentController extends Controller
             $paymentDetails->paid_amount=$paid_amount[$key];
             $payment->Payment_details()->save($paymentDetails);
         }
-
+             $this->GeneratePaymentId($payment);
        // $acc->approval='Approved';
-
         return redirect()->route('payment')->with('success', 'Post has been successfully submitted pending for approval');
 
-
     }
+
+    private function GeneratePaymentId(Payment $payment){
+        $datetime = new \DateTime("now");
+        $sequentialId = sprintf("%s%s",$datetime->format('my'), str_pad($payment->id,4, '0', STR_PAD_LEFT));
+
+        $payment->payment_id=$sequentialId;
+        $payment->save();
+    }
+
+
 
     public function printPDF($id){
 
@@ -125,8 +133,15 @@ class PaymentController extends Controller
             $paymentDetails->paid_amount=$paid_amount[$key];
             $payment->Payment_details()->save($paymentDetails);
         }
+
+
         return redirect()->route('payment');
     }
+
+
+
+
+
 
     public function approved($id){
 
@@ -169,6 +184,7 @@ class PaymentController extends Controller
         $payment->delete();
         return redirect()->route('payment');
     }
+
 
 
 }

@@ -38,6 +38,11 @@
             line-height: 1.2;
             border-radius: .2rem;
         }
+
+        .pcoded-header{
+            z-index: 1028;
+            position: relative;
+        }
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
@@ -84,6 +89,17 @@
                 </li>
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Voucher</span></a>
+                    <ul class="pcoded-submenu">
+
+                        <li class="nav-item"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Voucher</span></a></li>
+                        <li class="nav-item"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New Voucher</span></a></li>
+
+
+                    </ul>
+                </li>
+
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fas fa-building"></i></span><span class="pcoded-mtext">Company </span></a>
                     <ul class="pcoded-submenu">
 
@@ -106,46 +122,37 @@
                 </li>
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">User Types</span></a>
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>
                     <ul class="pcoded-submenu">
 
-                        <li class="nav-item"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-mtext">User Type</span></a></li>
+                        <li class="nav-item"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-mtext">Setting</span></a></li>
                         <li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-mtext">Add New</span></a></li>
                     </ul>
 
                 </li>
 
+                {{--<li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">--}}
+                    {{--<a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>--}}
+                    {{--<ul class="pcoded-submenu">--}}
+
+                        {{--<li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-mtext">Setting</span></a></li>--}}
+
+                        {{--<li class="nav-item"><a href="{{route('setting_create')}}" class="nav-link"><span class="pcoded-mtext">New Setting</span></a></li>--}}
+
+
+                    {{--</ul>--}}
+                {{--</li>--}}
+
+
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>
-                    <ul class="pcoded-submenu">
-
-                        <li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-mtext">Setting</span></a></li>
-
-                        <li class="nav-item"><a href="{{route('setting_create')}}" class="nav-link"><span class="pcoded-mtext">New Setting</span></a></li>
-
-
-                    </ul>
-                </li>
-
-
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">User</span></a>
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">User</span></a>
                     <ul class="pcoded-submenu">
                         <li class="nav-item"><a href="{{route('userprofile')}}" class="nav-link"><span class="pcoded-mtext">User Profile</span></a></li>
                         <li class="nav-item"><a href="{{route('register')}}" class="nav-link"><span class="pcoded-mtext">New User</span></a></li>
                     </ul>
                 </li>
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Voucher</span></a>
-                    <ul class="pcoded-submenu">
 
-                        <li class="nav-item"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Voucher</span></a></li>
-                        <li class="nav-item"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New Voucher</span></a></li>
-
-
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>
@@ -354,7 +361,7 @@
                // console.log(data);
                 var dataOption='<option>Select Payment</option>';
                 for (var i = 0, len = data.length; i < len; i++) {
-                    dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["id"]+'</option>';
+                    dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["payment_id"]+'</option>';
                 }
                 jQuery('.user_payment_list').html(dataOption);
             }
@@ -384,8 +391,27 @@
                 jQuery(element).closest('tr').find('.payment_project_list').html(dataOption);
             }
 
-
         });
+    });
+
+    // Paid
+
+    jQuery("body").on('change','.payment_project_list',function (e) {
+         var element =e.target;
+         e.preventDefault();
+         var payment_id =jQuery(this).closest('tr').find('.user_payment_list').val();
+         var project_id =jQuery(this).val();
+         jQuery.ajax({
+            type:'GET',
+             dataType:'json',
+             url:'/user/payment/paid/'+payment_id+'/'+project_id,
+             data:{},
+             success:function (data) {
+
+                 jQuery(element).closest('tr').find('.paid').html(data.total_amount);
+             }
+         });
+
     });
 
 

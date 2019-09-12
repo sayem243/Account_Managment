@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Payment;
+use App\Payment_details;
 use App\Project;
 use App\UserProfile;
 use App\UserProject;
@@ -144,6 +145,7 @@ class UserController extends Controller
             foreach ($userPayments as $userPayment){
                 $datas[]=array(
                     'id'=>$userPayment->id,
+                    'payment_id'=>$userPayment->payment_id,
                 );
             }
         }
@@ -167,6 +169,54 @@ class UserController extends Controller
         }
         return response()->json($data);
     }
+
+//paid
+    public function paidAmount($payment, $project){
+
+        $total_amount=0;
+
+        $paymentDetails = DB::table('payment_details')
+            ->where([
+                ['payment_id', '=', $payment],
+                ['project_id', '=', $project],
+            ])
+            ->get();
+        $data=array();
+        if($paymentDetails){
+            $amount=0;
+            foreach ($paymentDetails as $paymentDetail){
+
+//                var_dump($PaidAmount->id);die;
+                $amount+=$paymentDetail->paid_amount;
+            }
+            $data['amount']=$amount;
+        }
+
+        $amendmentDetails=DB::table('ammendments')->where([
+            ['payment_id','=',$payment],
+            ['project_id','=',$project],
+        ])->get();
+
+        $value=array();
+        $datas=array();
+        if($amendmentDetails){
+            $tk=0;
+            foreach ($amendmentDetails as $amendmentDetail){
+
+                $tk+=$amendmentDetail->amendment_amount;
+            }
+            $value['tk']=$tk;
+        }
+
+        $datas['total_amount']=$data['amount']+$value['tk'];
+
+
+        return response()->json($datas);
+    }
+
+
+
+
 
 
     /**

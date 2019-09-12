@@ -19,17 +19,20 @@ class CreatePaymentDetailsTable extends Migration
 
             $table->double('demand_amount', 10, 2);
             $table->double('paid_amount',10, 2);
-
             $table->integer('payment_id')->unsigned()->nullable();
-
+            $table->integer('project_id')->unsigned()->nullable();
 
         });
 
 
         Schema::table('payment_details', function($table) {
             $table->foreign('payment_id')->references('id')->on('payments');
-
         });
+
+        Schema::table('payment_details', function($table) {
+            $table->foreign('project_id')->references('id')->on('projects');
+        });
+
 
 
     }

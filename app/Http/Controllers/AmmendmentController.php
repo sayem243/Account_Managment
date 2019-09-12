@@ -46,10 +46,10 @@ class AmmendmentController extends Controller
                 $amendment->project_id=$project;
                 $amendment->approved='approved';
 
-//                if($request->hasFile('file')){
-//
-//                    $amendment->file=$amendment->file->store('/public/file');
-//                }
+                if($request->hasFile('file')){
+
+                    $amendment->file=$request->file->store('/public/file');
+                }
                 $amendment->save();
 
             }

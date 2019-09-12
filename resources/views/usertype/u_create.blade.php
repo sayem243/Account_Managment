@@ -6,7 +6,7 @@
             <div class="col-sm-12">
         <div class="card" >
             <div class="card-header">
-            <h5 align="center">User Sub Type Form</h5>
+            <h5 align="center">Setting Table</h5>
             </div>
             <div class="card-block">
             <div class="card-body">

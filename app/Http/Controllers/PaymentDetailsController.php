@@ -15,8 +15,13 @@ class PaymentDetailsController extends Controller
         $payment=Payment::find($id);
         $projects=Project::find($id);
 
-        return view('payment_details.index',['payment'=>$payment,'projects'=>$projects]);
+
+        return view('payment_details.index',['payment'=>$payment,'projects'=>$projects,]);
 
     }
+
+
+
+
 
 }

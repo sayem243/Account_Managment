@@ -8,6 +8,10 @@
                     <div class="card-header">
                         <h5>Voucher</h5>
                         <div class="card-header-right">
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
+                                <a href="{{route('voucher_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            </div>
+
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
                                 <i class="fas fa-ellipsis-v"></i>

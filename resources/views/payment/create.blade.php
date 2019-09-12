@@ -19,7 +19,7 @@
               </div>
           @endif
 
-         <div class="card-block">
+
           <div class="card-body">
 
               <form class="form-horizontal" action="{{ route('payment_store')}}" method="post" enctype="multipart/form-data">
@@ -79,7 +79,7 @@
                               <input type="text" class="form-control paid_amount" name="paid_amount[]" id="paid_amount">
                           </td>
                           <td>
-                              <button type="button" class="btn-danger hide">Delete</button>
+                              <button type="button" class="btn btn-danger hide">Delete</button>
                           </td>
                       </tr>
 
@@ -106,7 +106,7 @@
 
 </div>
 
-</div>
+
 
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -121,7 +121,7 @@
         });
 
         // Find and remove selected table rows
-        $('body').on('click','.btn-danger', function(){
+        $('body').on('click','.btn', function(){
            $(this).closest("tr").remove();
         });
     });

@@ -31,9 +31,9 @@ class CreatePaymentsTable extends Migration
             $table->dateTime('verified_at')->nullable();
             $table->dateTime('approved_at')->nullable();
             $table->string('comments')->nullable();
+            $table->string('payment_id')->nullable();
 
-
-
+            $table->boolean('enable')->default(1);
             $table->timestamps();
         });
 

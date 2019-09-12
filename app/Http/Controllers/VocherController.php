@@ -18,11 +18,12 @@ class VocherController extends Controller
         $payments=Payment::all();
         $projects=Project::all();
         $users=User::all();
+        $details=Payment_details::all();
         //$paid_amounts = PaymentDetailsController::with('payment_id')->where('project_id', 1)->get();
 //        $paid_amounts=Payment_details::Where('project_id','payment_id')->get();
 
 
-     return  view('voucher.create',['payments'=>$payments,'projects'=>$projects,'users'=>$users]);
+     return  view('voucher.create',['payments'=>$payments,'projects'=>$projects,'users'=>$users ]);
     }
 
 
@@ -34,6 +35,10 @@ class VocherController extends Controller
         $vocher->total_amount=array_sum($amount);
       //  $vocher->payment_id=$request->payment_id;
         $vocher->user_id=$request->user_id;
+
+        if($request->hasFile('file')){
+            $vocher->file=$request->file->store('/public/voucher');
+        }
         $vocher->save();
         $projects=$request->project_id;
         $payments=$request->payment_id;
@@ -49,9 +54,6 @@ class VocherController extends Controller
         $this->GenerateVocherId($vocher);
 
 
-        if($request->hasFile('file')){
-           $vocher->file=$vocher->file->store('/public/file');
-         }
 
        // $vocher->save();
        return redirect()->route('voucher_create');
@@ -63,7 +65,6 @@ class VocherController extends Controller
 //        $generateCertificate = "V-{$sequentialId}";
         $vocher->voucher_id=$sequentialId;
         $vocher->save();
-
     }
 
 

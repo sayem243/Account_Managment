@@ -12,6 +12,7 @@
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                             <a href="{{route('payment_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Approved </button>
                             {{--<a href="{{route('Voucher',$payment->id)}}" class="btn btn-sm  btn-info"><i class="fab fa-amazon-pay"></i>Vocher</a>--}}
                         </div>
 
@@ -38,7 +39,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Payment ID: </label>
-                                {{$payment->id }}
+                                {{$payment->payment_id }}
+
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Payment Date: </label>
@@ -55,8 +57,13 @@
                                 <div class="form-group">
                                     <label for="">Mobile Number: </label>
                                     {{$payment->user->userProfile['mobile'] }}
-
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="">NID: </label>
+                                    {{$payment->user->userProfile['nid'] }}
+                                </div>
+
                             </div>
                         </div>
 
@@ -71,6 +78,7 @@
                                 <th>Projects</th>
                                 <th>Demand Amount(BDT) </th>
                                 <th>Paid Amount</th>
+                                <th>Date</th>
 
                             </tr>
                             </thead>
@@ -92,6 +100,7 @@
                                 <td>{{$detail->project['p_name']}}</td>
                                 <td>{{$detail->demand_amount}}</td>
                                 <td>{{$detail->paid_amount}}</td>
+                                <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
                                 {{--<td>--}}
                                     {{--<input type="hidden" name="project_id[]" value="{{$detail->project['id']}}">--}}
                                     {{--<input type="text" name="amendment_amount[]" class="form-control">--}}
