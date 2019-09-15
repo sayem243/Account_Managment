@@ -53,7 +53,7 @@ class VocherController extends Controller
 
             $this->GenerateVocherId($vocher);
 
-            $this->GenerateVocherId($vocherDetails);
+           
 
        // $vocher->save();
        return redirect()->route('voucher_create');
