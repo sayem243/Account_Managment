@@ -24,7 +24,8 @@ class PermissionTableSeeder extends Seeder
             'users',
             'projects',
             'amendments',
-            'userprofiles'
+            'userprofiles',
+
 
 
         ];

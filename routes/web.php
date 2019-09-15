@@ -99,7 +99,8 @@ Route::get('/user/payment/paid/{payment}/{project}','UserController@paidAmount')
 
 
 Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
-Route::get('/payment/print-pdf/{id}','PaymentController@printPDF')->name('printPDF');
+Route::get('/payment/print-pdf/{id}','PaymentDetailsController@printPDF')->name('printPDF');
+
 
 //  amendmentPayment
 
@@ -185,3 +186,7 @@ Route::get('voucher/details/{id}','VocherDetailsController@index')->name('vouche
 //
 
 //Route::get('/home', 'HomeController@index')->name('home');
+
+//Route::get('view-document/{id}', 'PaymentDetailsController@view');
+
+Route::get('/generate-pdf','PaymentDetailsController@generatePDF');

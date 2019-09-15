@@ -21,9 +21,14 @@
                                 <i class="fas fa-ellipsis-v"></i>
                             </button>
                             <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end">
+
+                                {{--<li><a href="{{action('PaymentDetailsController@printPDF', $user->id)}}">PDF</a> </li>--}}
+
                                 <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
                                 <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                                <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                               <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                               <li class="dropdown-item reload-card"><a href="{{route('printPDF',$payment->id)}}"><i class="far fa-file-pdf"></i> PDF</a></li>
+
 
                             </ul>
                         </div>
