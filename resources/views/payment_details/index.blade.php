@@ -40,17 +40,21 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Payment ID: </label>
                                 {{$payment->payment_id }}
-
                             </div>
+
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Payment Date: </label>
                                 {{date('d-m-Y',strtotime($payment->created_at))}}
                             </div>
+
+
+
                         </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">User Name: </label>
-                                    {{$payment->user['name'] }}
+                                    {{--{{$payment->user['name'] }}--}}
+                                    {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
 
                                 </div>
 

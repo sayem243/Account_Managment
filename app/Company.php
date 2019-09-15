@@ -29,6 +29,7 @@ class Company extends Model
     }
 
 
+
      use SoftDeletes;
 
 

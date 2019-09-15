@@ -44,7 +44,7 @@
 
                             <tr>
                                 <td>{{$i}}</td>
-                                <td>{{$detail->payment_id}}</td>
+                                <td>{{$detail->payment->payment_id}}</td>
                                 <td>{{$detail->project['p_name']}}</td>
                                 <td>{{$detail->amount}}</td>
 

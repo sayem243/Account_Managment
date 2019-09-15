@@ -70,7 +70,7 @@
                             {{--{{$payment->userCreatedBy->UserProfile['fname'].' '.$payment->userCreatedBy->UserProfile['lname']}}--}}
                         </td>
 
-                        <td></td>
+                        <td> {{$payment->userCreatedBy['name']}}</td>
                         <td></td>
 
                         <td>

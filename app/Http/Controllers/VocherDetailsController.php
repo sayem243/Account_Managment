@@ -10,7 +10,7 @@ class VocherDetailsController extends Controller
 {
     public function index($id){
         $details=Vocher::find($id);
-       // return view('voucher_details.index')->with('details',$details);
+
 
         return view('voucher_details.index',['details'=>$details]);
     }
