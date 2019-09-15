@@ -151,6 +151,9 @@
                         <li class="nav-item"><a href="{{route('register')}}" class="nav-link"><span class="pcoded-mtext">New User</span></a></li>
                     </ul>
                 </li>
+                    {{--roles--}}
+
+               
 
 
             </ul>

@@ -157,6 +157,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 });
 
+
+
 //voucher
 
 //Route::get('/Voucher/details/{id}','PaymentController@Voucher')->name('Voucher');
