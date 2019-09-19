@@ -18,9 +18,11 @@ class CreatePaymentDetailsTable extends Migration
             $table->timestamps();
 
             $table->double('demand_amount', 10, 2);
-            $table->double('paid_amount',10, 2);
+            $table->double('paid_amount',10, 2)->nullable();
             $table->integer('payment_id')->unsigned()->nullable();
             $table->integer('project_id')->unsigned()->nullable();
+
+            $table->string('filenames')->nullable();
 
         });
 
@@ -32,6 +34,8 @@ class CreatePaymentDetailsTable extends Migration
         Schema::table('payment_details', function($table) {
             $table->foreign('project_id')->references('id')->on('projects');
         });
+
+
 
 
 

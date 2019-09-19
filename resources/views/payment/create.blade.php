@@ -59,6 +59,7 @@
                           <th>Project</th>
                           <th>Demand</th>
                           <td>Paid Amount</td>
+                          <td>File</td>
                           <td>Action</td>
                       </tr>
                       </thead>
@@ -78,6 +79,11 @@
                           <td>
                               <input type="text" class="form-control paid_amount" name="paid_amount[]" id="paid_amount">
                           </td>
+
+                          <td>
+                              <input type="file" class="form-control" name="filenames[]" id="filenames" placeholder="">
+                          </td>
+
                           <td>
                               <button type="button" class="btn btn-danger hide">Delete</button>
                           </td>

@@ -20,6 +20,7 @@ class CreateVocherDetailsTable extends Migration
             $table->integer('vocher_id')->unsigned()->nullable();
             $table->integer('payment_id')->unsigned()->nullable();
             $table->integer('project_id')->unsigned()->nullable();
+            $table->integer('payment_details_id')->unsigned()->nullable();
             $table->timestamps();
         });
 
@@ -27,7 +28,6 @@ class CreateVocherDetailsTable extends Migration
             $table->foreign('payment_id')->references('id')->on('payments');
 
         });
-
 
         Schema::table('vocher_details', function($table) {
             $table->foreign('project_id')->references('id')->on('projects');
@@ -39,6 +39,9 @@ class CreateVocherDetailsTable extends Migration
 
         });
 
+        Schema::table('vocher_details', function($table) {
+            $table->foreign('payment_details_id')->references('id')->on('payment_details');
+        });
 
     }
 

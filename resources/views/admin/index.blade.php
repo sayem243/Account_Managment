@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>PUL Group</title>
+    <title>PUL Group @yield('title') </title>
     <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 11]>
@@ -17,6 +17,9 @@
     <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, datta able, datta able bootstrap admin template, free admin theme, free dashboard template"/>
     <meta name="author" content="CodedThemes"/>
 
+    {{--select2 css--}}
+
+
     <!-- Favicon icon -->
     <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon">
     <!-- fontawesome icon -->
@@ -24,6 +27,9 @@
     <!-- animation css -->
     <link rel="stylesheet" href="{{asset('assets/plugins/animation/css/animate.min.css')}}">
     <!-- vendor css -->
+
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 
@@ -341,13 +347,15 @@
             data:{},
             success:function(data){
                 var dataOption='<option>Select Project</option>';
+
                 for (var i = 0, len = data.length; i < len; i++) {
                     dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["name"]+'</option>';
                 }
                 jQuery('.user_project_list').html(dataOption);
+
             }
         });
-    });
+    }).change();
 
     //voucher ajax
 
@@ -369,7 +377,7 @@
                 jQuery('.user_payment_list').html(dataOption);
             }
         });
-    });
+    }).change();
 
 
 //    payment wise voucher project_list
@@ -395,7 +403,7 @@
             }
 
         });
-    });
+    }).change();
 
     // Paid
 
@@ -441,7 +449,49 @@
     });
 
 
+    jQuery(".voucher-approve").click(function(e){
+        var element = e.target;
+        e.preventDefault();
+        var id = jQuery(this).attr('data-id');
 
+        jQuery.ajax({
+            type:'POST',
+            dataType : 'json',
+            url:'/voucher/approved/'+ id,
+            data:{},
+            success:function(data){
+                if(data.status==200){
+
+                    $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
+                    $(element).closest('tr').find('td.status').find('span').html('Verified')
+                }
+
+
+            }
+        });
+    });
+
+
+
+    jQuery(".voucher-approve").click(function(a){
+        var elements = a.target;
+        a.preventDefault();
+        var id = jQuery(this).attr('data-id-id');
+
+        jQuery.ajax({
+            type:'POST',
+            dataType : 'json',
+            url:'/voucher/approved/'+ id,
+            data:{},
+            success:function(data){
+                if(data.status==200){
+
+                    $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
+                    $(elements).closest('tr').find('td.status').find('span').html('Approved')
+                }
+            }
+        });
+    });
 
 
 

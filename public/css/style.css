@@ -98,35 +98,5 @@ a.btn {
 }
 
 
-.navbar-collapse{
-    z-index: 1028;
-    position: relative;
 
-    display: -webkit-box;
-}
 
-/*body {*/
-    /*font-family: "Open Sans", sans-serif;*/
-    /*font-size: 13.5px;*/
-    /*color: #0c0c0c;*/
-    /*font-weight: 400;*/
-    /*background: #f4f7fa;*/
-    /*position: relative;*/
-/*}*/
-
-.pcoded-header {
-    z-index: 1028;
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    min-height: 70px;
-    padding: 0;
-    top: 0;
-
-    color: #3f4d67;
-    width: calc(100% - 264px);
-    margin-left: 264px;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}

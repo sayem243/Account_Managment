@@ -15,7 +15,6 @@ class Vocher extends Model
     public function project(){
 
         return $this->belongsTo('App\Project');
-
     }
 
     Public function user(){
@@ -23,11 +22,17 @@ class Vocher extends Model
         return $this->belongsTo('App\User');
     }
 
-
     public function Vocher_details(){
 
         return $this->hasMany('App\Vocher_details');
-
     }
+
+    //
+//    public function payments(){
+//
+//        return $this->belongsTo('App\Vocher');
+//    }
+
+
 
 }

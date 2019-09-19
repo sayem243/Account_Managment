@@ -16,8 +16,8 @@ class Payment_details extends Model
         return $this->belongsTo('App\Project');
     }
 
-
-
-
+  public function voucher_details(){
+        return $this->hasMany('App\Vocher_details');
+  }
 
 }

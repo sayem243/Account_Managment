@@ -9,6 +9,7 @@ use App\User;
 use App\Vocher;
 use App\Vocher_details;
 use Illuminate\Http\Request;
+use DB;
 
 class VocherController extends Controller
 {
@@ -33,8 +34,8 @@ class VocherController extends Controller
 
         $vocher=new Vocher();
         $vocher->total_amount=array_sum($amount);
-      //  $vocher->payment_id=$request->payment_id;
         $vocher->user_id=$request->user_id;
+       // $vocher->payment_id=$request->payment_id;
 
         if($request->hasFile('file')){
             $vocher->file=$request->file->store('/public/voucher');
@@ -42,18 +43,19 @@ class VocherController extends Controller
         $vocher->save();
         $projects=$request->project_id;
         $payments=$request->payment_id;
+        $payment_details=$request->payment_details_id;
 
         foreach ($payments as $key=>$payment){
             $vocherDetails = new Vocher_details();
             $vocherDetails->project_id = $projects[$key];
             $vocherDetails->payment_id = $payment;
+            //
+//            $vocherDetails->payment_details_id=$payment_details[$key];
+            //
             $vocherDetails->amount = $amount[$key];
             $vocher->Vocher_details()->save($vocherDetails);
         }
-
             $this->GenerateVocherId($vocher);
-
-
 
        // $vocher->save();
        return redirect()->route('voucher_create');
@@ -74,6 +76,40 @@ class VocherController extends Controller
         return  view('voucher.index',['vochers'=>$vochers]);
     }
 
+    public static function paidAmountByPaymentAndProject($payment, $project){
+        $paymentDetails = DB::table('payment_details')
+            ->where([
+                ['payment_id', '=', $payment],
+                ['project_id', '=', $project],
+            ])
+            ->get();
+        $data=array();
+        if($paymentDetails){
+            $amount=0;
+            foreach ($paymentDetails as $paymentDetail){
+
+                $amount+=$paymentDetail->paid_amount;
+            }
+           $data['amount']=$amount;
+        }
+
+        $amendmentDetails=DB::table('ammendments')->where([
+            ['payment_id','=',$payment],
+            ['project_id','=',$project],
+        ])->get();
+
+        $value=array();
+        if($amendmentDetails){
+            $tk=0;
+            foreach ($amendmentDetails as $amendmentDetail){
+
+                $tk+=$amendmentDetail->amendment_amount;
+            }
+            $value['tk']=$tk;
+        }
+
+        return  $amount+$value['tk'];
+    }
     public function edit ($id){
 
         $vochers=Vocher::find($id);
@@ -101,6 +137,14 @@ class VocherController extends Controller
         $vocher=Vocher::find($id);
         $vocher->delete();
         return redirect()->route('voucher_index');
+    }
+
+    public function approved($id){
+        $voucher=Vocher::find($id);
+        $voucher->status=2;
+        //$payment->status=2;
+        $voucher->save();
+        return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
     }
 
 

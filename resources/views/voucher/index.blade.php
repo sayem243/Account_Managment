@@ -1,5 +1,7 @@
 @extends('admin.index')
+@section('title','-Voucher')
 @section('template')
+
 
     <div class="col-sm-12">
         <div class="row">
@@ -30,11 +32,17 @@
 
                                 <thead class="thead-dark">
                                 <tr>
-                                    <th>Serial</th>
-                                    <th>User Name</th>
-
+                                    <th>SL</th>
+                                    <th>Payment ID</th>
+                                    <th>Employe Name</th>
+                                    <th>Company</th>
                                     <th>Voucher ID</th>
-                                    <th>Total Amount</th>
+                                    <th>Paid Amount</th>
+                                    <th>Amount</th>
+                                    <th>Balance</th>
+                                    <th>status</th>
+                                    <th>Actions</th>
+                                    <th>Date</th>
 
                                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                                         <i class="feather icon-settings"></i>
@@ -48,9 +56,35 @@
 
                                     <tr>
                                         <td>{{$i}}</td>
+                                        <td>  @foreach($vocher->Vocher_details as $vocher_detail)
+                                                  {{$vocher_detail->payment->payment_id}},
+                                                @endforeach
+                                        </td>
                                         <td>{{$vocher->user['name']}}</td>
+                                        <td>{{$vocher->user->userprofile->company['name']}}</td>
                                         <td>{{$vocher->voucher_id}}</td>
+                                        <td>
+                                            <?php $total = 0;?>
+                                            @foreach($vocher->Vocher_details as $vocher_detail)
+                                                <?php
+                                                $total+= App\Http\Controllers\VocherController::paidAmountByPaymentAndProject($vocher_detail->payment_id, $vocher_detail->project_id); ?>
+                                            @endforeach
+                                            <?php echo $total;?>
+                                            </td>
+
                                         <td>{{$vocher->total_amount}}</td>
+                                        <td>{{$total-$vocher->total_amount}}</td>
+
+                                        <td class="status">
+                                            @if($vocher->status == 1)
+                                                <span class="label label-primary">Created</span>
+                                            @elseif($vocher->status == 2)
+                                                <span class="label label-success">Approved</span>
+                                            @endif
+                                        </td>
+                                        <td> <button data-id-id="{{$vocher->id}}" type="button" class="btn btn-sm  btn-primary voucher-approve">Approved</button></td>
+
+                                        <td>{{ date('d-m-Y',strtotime($vocher->created_at))}}</td>
 
                                         <td>
                                             <div class="btn-group card-option">
@@ -80,3 +114,7 @@
 
 
 @endsection
+
+
+
+

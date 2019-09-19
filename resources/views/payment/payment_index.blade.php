@@ -33,13 +33,18 @@
                 <thead class="thead-dark">
                 <tr>
                     <th>SL</th>
-                    <th>User Name</th>
+                    <th>Date</th>
+                    <th>Invoice ID</th>
+                    <th>Employe Name</th>
+                    <th>Company</th>
                     <th>Created By</th>
-                    <th>Checked By</th>
-                    <th>Approved By</th>
-                    <th>Demand  Amount</th>
-                    <th>Initial Paid</th>
-                    <th>Amendment Amount</th>
+
+                    {{--<th>Checked By</th>--}}
+                    {{--<th>Approved By</th>--}}
+
+                    <th>Demand(BDT)</th>
+                    <th>Paid(BDT)</th>
+                    <th>Amendment</th>
                     <th>Status </th>
 
                     <th>Remarks</th>
@@ -61,9 +66,14 @@
 
                     <tr>
                         <td>{{$i}}</td>
+                        <td>{{ date('d-m-Y', strtotime($payment->created_at))}}</td>
+
+                        <td>{{$payment->payment_id}} </td>
                         <td>
                             {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
                         </td>
+
+                        <td>{{$payment->user->UserProfile->company['name']}}</td>
 
                         <td>
 
@@ -71,8 +81,9 @@
                             {{--{{$payment->userCreatedBy->UserProfile['fname'].' '.$payment->userCreatedBy->UserProfile['lname']}}--}}
                         </td>
 
-                        <td> {{$payment->userCreatedBy['name']}}</td>
-                        <td></td>
+                        {{--<td> {{$payment->userCreatedBy['name']}}</td>--}}
+
+                        {{--<td>{{$payment->approvedBy['name']}}</td>--}}
 
                         <td>
                             {{$payment->total_demand_amount}}
@@ -100,14 +111,14 @@
 
                         <td>{{$payment->comments}}</td>
 
+                            <td>
+                                @if($payment->status==1)
+                                <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Verified </button>
+                                @endif
+                            </td>
+
+
                         <td>
-                            <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Verified </button>
-
-                        </td>
-
-                        <td>
-
-
                             <div class="btn-group card-option">
                                <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                                <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
@@ -125,10 +136,6 @@
                                        </li>
 
                                    @endif
-
-
-
-
                                    <li class="dropdown-item">
                                        <a href="{{route('details',$payment->id)}}">
                                            <i class="feather icon-eye"></i>
@@ -140,9 +147,7 @@
                                            <i class="feather icon-check-square"></i>
                                            Amendment
                                        </a>
-
                                    </li>
-
                                </ul>
                            </div>
 

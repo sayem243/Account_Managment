@@ -168,8 +168,10 @@ Route::group(['middleware' => ['auth']], function() {
 Route::get('/voucher/create/','VocherController@create')->name('voucher_create');
 Route::post('/voucher/store','VocherController@store')->name('voucher_store');
 Route::get('/voucher/index/','VocherController@index')->name('voucher_index');
-Route::get('/voucher/edit/{id}' ,'VocherController@edit')->name('voucher_edit');
-Route::post('/voucher/update/{id}' ,'VocherController@update')->name('voucher_update');
+Route::get('/voucher/edit/{id}','VocherController@edit')->name('voucher_edit');
+Route::post('/voucher/update/{id}','VocherController@update')->name('voucher_update');
+
+Route::Post('voucher/approved/{id}','VocherController@approved')->name('voucher_approved');
 
 Route::get('/voucher/delete/{id}' ,'VocherController@delete')->name('voucher_delete');
 

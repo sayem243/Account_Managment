@@ -1,6 +1,5 @@
 @extends('admin.index')
 @section('template')
-
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
@@ -8,6 +7,7 @@
                     <div class="card-header">
                         <h5>Voucher Details</h5>
                         <div class="card-header-right">
+
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
                                     <i class="fas fa-ellipsis-v"></i>
@@ -29,8 +29,9 @@
                         <tr>
                             <th>Serial</th>
                             <th>Payment ID</th>
-                            <th>Project ID</th>
+                            <th>Project</th>
                             <th>Amount</th>
+                            <th>Date</th>
 
                             <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                                 <i class="feather icon-settings"></i>
@@ -46,7 +47,12 @@
                                 <td>{{$i}}</td>
                                 <td>{{$detail->payment->payment_id}}</td>
                                 <td>{{$detail->project['p_name']}}</td>
+                                {{--<td>{{$detail}}</td>--}}
+
+                                {{--<td>{{$detail->payment_details->demand_amount}}</td>--}}
                                 <td>{{$detail->amount}}</td>
+                                <td>{{date('d-m-y',strtotime($detail->created_at))}}</td>
+
 
                                 <td>
                                     <div class="btn-group card-option">
@@ -72,12 +78,15 @@
                             </tr>
                         @endforeach
 
+
                     </table>
+
+
                 </div>
             </div>
         </div>
     </div>
-
+    </div>
 
 
 

@@ -64,18 +64,35 @@ class PaymentController extends Controller
         $payment->total_demand_amount=array_sum($demand_amount);
         $payment->total_paid_amount=array_sum($paid_amount);
         $payment->created_by=$user->id;
+
+//        if($request->hasFile('filenames')){
+//            foreach($request->file('filenames') as $file){
+//                $file->filename=$request->filename->store('/public/file');
+//
+//                //$file->filenames=$request->file->store('/public/file');
+//            }
+//        }
+       // var_dump($request->filenames);die;
+
         $payment->save();
         $projects=$request->project_id;
-
         foreach ($projects as $key=>$project){
             $paymentDetails = new Payment_details();
             $paymentDetails->project_id=$project;
             $paymentDetails->demand_amount=$demand_amount[$key];
             $paymentDetails->paid_amount=$paid_amount[$key];
+
+//            if($request->hasFile('filenames')){
+//
+//
+//                $paymentDetails->filenames=$request->filenames->store('/public/file');
+//            }
+
+
             $payment->Payment_details()->save($paymentDetails);
         }
              $this->GeneratePaymentId($payment);
-       // $acc->approval='Approved';
+
         return redirect()->route('payment')->with('success', 'Post has been successfully submitted pending for approval');
 
     }
@@ -105,8 +122,9 @@ class PaymentController extends Controller
         $companies=Company::all();
         $user=User::all();
         $project=Project::all();
+        $paymentDetails=Payment_details::all();
 
-        return view('payment.edite',['payment'=>$payment ,'companies'=>$companies ,'users'=>$user,'project'=>$project]);
+        return view('payment.edite',['payment'=>$payment ,'companies'=>$companies ,'users'=>$user,'project'=>$project ,'paymentDetails'=>$paymentDetails]);
 
     }
 
@@ -127,13 +145,15 @@ class PaymentController extends Controller
         $projects=$request->project_id;
 
         foreach ($projects as $key=>$project){
+
             $paymentDetails = new Payment_details();
             $paymentDetails->project_id=$project;
             $paymentDetails->demand_amount=$demand_amount[$key];
             $paymentDetails->paid_amount=$paid_amount[$key];
             $payment->Payment_details()->save($paymentDetails);
-        }
 
+        }
+        $this->GeneratePaymentId($payment);
 
         return redirect()->route('payment');
     }
@@ -144,7 +164,6 @@ class PaymentController extends Controller
 
 
     public function approved($id){
-
         $payment=Payment::find($id);
         $payment->status=2;
         //$payment->status=2;

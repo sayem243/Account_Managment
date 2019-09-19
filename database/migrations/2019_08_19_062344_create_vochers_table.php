@@ -19,7 +19,9 @@ class CreateVochersTable extends Migration
             $table->decimal('total_amount');
             $table->integer('user_id')->unsigned()->nullable();
             $table->string('file')->nullable();
+            $table->smallInteger('status')->default(1);
             $table->string('voucher_id')->nullable();
+            $table->integer('payment_id')->unsigned()->nullable();
 
             $table->timestamps();
         });
@@ -29,7 +31,10 @@ class CreateVochersTable extends Migration
 
         });
 
+        Schema::table('vochers', function($table) {
+            $table->foreign('payment_id')->references('id')->on('payments');
 
+        });
 
     }
 

@@ -8,6 +8,20 @@
             </div>
 
           <div class="card-body">
+              <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Employe Name: </label>
+                      {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
+                  </div>
+                  <div class="form-group">
+                      <label for="nid"> Advance Payment ID: </label>
+                      {{$payment->payment_id }}
+
+                  </div>
+
+              </div>
+              </div>
 
                 <form class="form-horizontal" action="{{ route('amendment_store',$payment->id)}}" method="post" enctype="multipart/form-data">
 
@@ -18,8 +32,8 @@
                         <tr>
                             <th>SL</th>
                             <th>Projects</th>
-                            <th>Demand Amount(BDT) </th>
-                            <th>Paid Amount</th>
+                            <th>Demand(BDT) </th>
+                            <th>Paid(BDT)</th>
                             <th>Amendment</th>
                         </tr>
                         </thead>

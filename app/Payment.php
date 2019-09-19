@@ -13,22 +13,25 @@ class Payment extends Model
     public function user(){
 
         return $this->belongsTo('App\User');
-
     }
     public function company(){
 
         return $this->belongsTo('App\Company');
-
     }
 
     public function project(){
 
         return $this->belongsTo('App\Project');
-
     }
+
     public function userCreatedBy(){
 
         return $this->belongsTo('App\User','created_by');
+    }
+
+    public function approvedBy(){
+
+        return $this->belongsTo('App\User','approved_by');
     }
 
     public function usertype(){
@@ -44,13 +47,17 @@ class Payment extends Model
     }
     public function vocher(){
         return $this->belongsTo('App\Vocher');
-
     }
 
     public function Vocher_details(){
 
         return $this->hasMany('App\Vocher_details');
-
     }
+
+    //
+
+//    public function voucher(){
+//        return $this->hasMany('App\Payment');
+//    }
 
 }

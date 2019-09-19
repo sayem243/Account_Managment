@@ -41,6 +41,10 @@ class User extends Authenticatable
 
     }
 
+    public function paymentApprovedBy(){
+        return $this->hasMany('App\Payment','approved_by');
+    }
+
 
     public function UserType(){
 

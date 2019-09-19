@@ -51,13 +51,16 @@
                                 <label for="exampleInputEmail1">Payment Date: </label>
                                 {{date('d-m-Y',strtotime($payment->created_at))}}
                             </div>
-
+                            <div class="form-group">
+                                <label for="">Company: </label>
+                                {{$payment->user->userProfile->company['name']}}
+                            </div>
 
 
                         </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">User Name: </label>
+                                    <label for="">Employe Name: </label>
                                     {{--{{$payment->user['name'] }}--}}
                                     {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
 
@@ -72,7 +75,6 @@
                                     <label for="">NID: </label>
                                     {{$payment->user->userProfile['nid'] }}
                                 </div>
-
                             </div>
                         </div>
 
@@ -155,16 +157,9 @@
                                     <td>{{$detail->amendment_amount}}</td>
                                    <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
                                 </tr>
-
                             @endforeach
-
                             </tbody>
-
                         </table>
-
-
-
-
              </div>
         </div>
     </div>
