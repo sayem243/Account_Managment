@@ -30,7 +30,7 @@
               <div class="col-md-6">
                   <div class="form-group">
                       <label for="exampleInputEmail1">Recived By</label>
-                      <select class="form-control" name="user_id" id="user_id" required>
+                      <select class="form-control js-example-basic-single" name="user_id" id="user_id" required>
 
                           <option value="">Select User</option>
                           @foreach($users as $user)
@@ -115,6 +115,9 @@
 
 
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
@@ -131,6 +134,12 @@
            $(this).closest("tr").remove();
         });
     });
+
+    $(document).ready(function(){
+        $('.js-example-basic-single').select2();
+    });
+
+
 </script>
 
 

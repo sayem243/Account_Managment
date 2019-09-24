@@ -65,31 +65,30 @@ class PaymentController extends Controller
         $payment->total_paid_amount=array_sum($paid_amount);
         $payment->created_by=$user->id;
 
-//        if($request->hasFile('filenames')){
-//            foreach($request->file('filenames') as $file){
-//                $file->filename=$request->filename->store('/public/file');
-//
-//                //$file->filenames=$request->file->store('/public/file');
-//            }
-//        }
-       // var_dump($request->filenames);die;
-
         $payment->save();
         $projects=$request->project_id;
         foreach ($projects as $key=>$project){
-            $paymentDetails = new Payment_details();
-            $paymentDetails->project_id=$project;
-            $paymentDetails->demand_amount=$demand_amount[$key];
-            $paymentDetails->paid_amount=$paid_amount[$key];
+            if($project>0){
+                $paymentDetails = new Payment_details();
+                $paymentDetails->project_id=$project;
+                $paymentDetails->demand_amount=$demand_amount[$key];
+                $paymentDetails->paid_amount=$paid_amount[$key];
+                $payment->Payment_details()->save($paymentDetails);
 
-//            if($request->hasFile('filenames')){
-//
-//
-//                $paymentDetails->filenames=$request->filenames->store('/public/file');
-//            }
+//                if($request->hasfile('filenames'))
+//                {
+//                    foreach($request->file('filenames') as $file)
+//                    {
+//                        $name=$file->getClientOriginalName();
+//                        $file->move(public_path().'/files/', $name);
+//                        $data[] = $name;
+//                    }
+//                }
+//                $file= new Payment_details();
+//                $file->filenames=json_encode($data);
+//                $file->save();
 
-
-            $payment->Payment_details()->save($paymentDetails);
+            }
         }
              $this->GeneratePaymentId($payment);
 
@@ -135,29 +134,42 @@ class PaymentController extends Controller
         $user = auth()->user();
         $demand_amount=$request->demand_amount;
         $paid_amount=$request->paid_amount;
-      //  $payment=new Payment();
+        $exit_demand_amount=$request->exit_demand_amount;
+        $exit_paid_amount=$request->exit_paid_amount;
+
         $payment->user_id=$request->user_id;
         $payment->comments=$request->comments;
-        $payment->total_demand_amount=array_sum($demand_amount);
-        $payment->total_paid_amount=array_sum($paid_amount);
+
+        $payment->total_demand_amount=(array_sum($demand_amount)+array_sum($request->exit_demand_amount));
+        $payment->total_paid_amount=(array_sum($paid_amount)+array_sum($request->exit_paid_amount));
+
         $payment->created_by=$user->id;
         $payment->save();
         $projects=$request->project_id;
-
-        foreach ($projects as $key=>$project){
-
-            $paymentDetails = new Payment_details();
-            $paymentDetails->project_id=$project;
-            $paymentDetails->demand_amount=$demand_amount[$key];
-            $paymentDetails->paid_amount=$paid_amount[$key];
-            $payment->Payment_details()->save($paymentDetails);
-
+        $exit_payment_details=$request->exit_payment_detail;
+        if($projects){
+            foreach ($projects as $key=>$project){
+                if($project>0){
+                    $paymentDetails = new Payment_details();
+                    $paymentDetails->project_id=$project;
+                    $paymentDetails->demand_amount=$demand_amount[$key];
+                    $paymentDetails->paid_amount=$paid_amount[$key];
+                    $payment->Payment_details()->save($paymentDetails);
+                }
+            }
         }
-        $this->GeneratePaymentId($payment);
 
+        if($exit_payment_details){
+            foreach ($exit_payment_details as $key=>$detail){
+                $paymentDetails = Payment_details::find($detail);
+                $paymentDetails->project_id =$request->exit_project_id[$key];
+                $paymentDetails->demand_amount=$exit_demand_amount[$key];
+                $paymentDetails->paid_amount=$exit_paid_amount[$key];
+                $payment->Payment_details()->save($paymentDetails);
+            }
+        }
         return redirect()->route('payment');
     }
-
 
 
 
@@ -197,13 +209,11 @@ class PaymentController extends Controller
 
     }
 
-
     public function delete($id){
         $payment=Payment::find($id);
         $payment->delete();
         return redirect()->route('payment');
     }
-
 
 
 }

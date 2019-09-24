@@ -71,18 +71,19 @@
                                         <td>
                                             <input type="hidden" name="exit_payment_detail[]" value="{{$detail->id}}">
 
-                                            <input type="hidden" class="exit_project_id" value="{{$detail->project->id}}">
-
-                                            <select class="form-control user_project_list" name="exit_project_id[]" required>
-                                                <option value=""></option>
+                                            <select class="form-control exit_user_project_list" name="exit_project_id[]" required>
+                                                <option value="">Select Project</option>
+                                                @foreach($payment->user->projects as $project)
+                                                    <option value="{{$project->id}}" {{ $project->id==$detail->project->id?'selected="selected"':'' }}>{{$project->p_name}}</option>
+                                                @endforeach
 
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control demand_amount" name="exit_demand_amount[]" id="demand_amount" >
+                                            <input type="text" class="form-control demand_amount" name="exit_demand_amount[]" id="demand_amount" value="{{$detail->demand_amount}}" >
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control paid_amount" name="exit_paid_amount[]" id="paid_amount">
+                                            <input type="text" class="form-control paid_amount" name="exit_paid_amount[]" id="paid_amount"  value="{{$detail->paid_amount}}" >
                                         </td>
 
                                         <td>

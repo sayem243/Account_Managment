@@ -41,9 +41,9 @@ class Project extends Model
         return $this->hasMany('App\Vocher');
     }
 
-    public function vocher_details(){
-
-        return $this->hasMany('App\Vocher_details');
-    }
+//    public function vocher_details(){
+//
+//        return $this->hasMany('App\Vocher_details');
+//    }
 
 }

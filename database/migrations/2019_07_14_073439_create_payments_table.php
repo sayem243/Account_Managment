@@ -38,6 +38,7 @@ class CreatePaymentsTable extends Migration
         });
 
 
+
         Schema::table('payments', function($table) {
             $table->foreign('company_id')->references('id')->on('companies');
 

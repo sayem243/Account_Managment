@@ -96,6 +96,16 @@
                                                             Details</a>
                                                     </li>
 
+                                                    <li class="dropdown-item">
+                                                        <a href="{{route('voucher_edit',$vocher->id)}}">
+                                                            <i class="feather icon-eye"></i>
+                                                            Edit</a>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <a href="{{route('voucher_delete',$vocher->id)}}">
+                                                            <i class="feather icon-trash"></i>
+                                                            Delete</a>
+                                                    </li>
 
                                                 </ul>
 

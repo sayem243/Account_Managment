@@ -1,8 +1,6 @@
 @extends('admin.index')
 @section('template')
 
-
-
     <div class="col-sm-12">
         <div class="card" id="references">
             <div class="card-header">
@@ -16,8 +14,9 @@
                         <th>Payment ID</th>
                         <th>Demand Amount(BDT)</th>
                         <th>Advance Payment</th>
-                        <th>Amendment</th>
                         <th>Project</th>
+                        <th>Amendment</th>
+                        <th>status</th>
                         <th>Total Paid Amount</th>
 
                         <th>Due</th>
@@ -39,19 +38,15 @@
 
                     <tr>
                         <td>{{$i}}</td>
-                        <td>{{$amendment->payment->id}}</td>
-                        <td>{{$amendment->payment['total_demand_amount']}}  </td>
-                        <td>{{$amendment->payment['total_paid_amount']}} BDT </td>
-
-                        <td>{{ $amendment->amendment_amount }}</td>
+                        <td>{{$amendment->payment->payment_id}}</td>
+                        <td>{{$amendment->payment->total_demand_amount}}  </td>
+                        <td>{{$amendment->payment->total_paid_amount}} BDT </td>
                         <td>{{$amendment->project['p_name']}}</td>
+                        <td>{{ $amendment->amendment_amount }}</td>
+                        <td></td>
 
-                        <td> {{ $sum=$amendment->additional_amount+ $amendment->payment['total_paid_amount'] }} </td>
-                        {{--<td>--}}
-                            {{--<a href="public/file/{{$amendment->file}}">--}}
-                                {{--<button type="button" class="btn btn-primary"></button>--}}
-                            {{--</a>--}}
-                        {{--</td>--}}
+                        <td> {{ $sum=$amendment->amendment_amount+ $amendment->payment->total_paid_amount }} </td>
+
 
                         <td> {{ $amendment->payment['total_demand_amount'] - $sum }} </td>
                         <td>

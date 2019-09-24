@@ -73,7 +73,7 @@
                             {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
                         </td>
 
-                        <td>{{$payment->user->UserProfile->company['name']}}</td>
+                        <td>{{$payment->user->UserProfile?$payment->user->UserProfile->company['name']:''}}</td>
 
                         <td>
 

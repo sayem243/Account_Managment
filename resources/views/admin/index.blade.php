@@ -44,11 +44,21 @@
             line-height: 1.2;
             border-radius: .2rem;
         }
-
         .pcoded-header{
             z-index: 1028;
             position: relative;
         }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+            font-size: 14px;
+            color: #323437;
+            font-weight: 400;
+            background: #f4f7fa;
+            position: relative;
+        }
+
+
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
@@ -346,7 +356,7 @@
             url:'/project/user/'+ id,
             data:{},
             success:function(data){
-                var dataOption='<option>Select Project</option>';
+                var dataOption='<option value="0">Select Project</option>';
 
                 for (var i = 0, len = data.length; i < len; i++) {
                     dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["name"]+'</option>';
@@ -369,8 +379,8 @@
             url:'/user/payment/'+ id,
             data:{},
             success:function(data){
-               // console.log(data);
-                var dataOption='<option>Select Payment</option>';
+                console.log(data);
+                var dataOption='<option value="0">Select Payment</option>';
                 for (var i = 0, len = data.length; i < len; i++) {
                     dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["payment_id"]+'</option>';
                 }
@@ -387,6 +397,11 @@
         var element =e.target;
         e.preventDefault();
         var id = jQuery(this).val();
+        if(id<=0){
+            var dataOption='<option value="0">Select Project</option>';
+            jQuery(element).closest('tr').find('.payment_project_list').html(dataOption);
+            return false;
+        }
         jQuery.ajax({
             type:'GET',
             dataType:'json',
@@ -394,9 +409,8 @@
             data:{},
             success:function (data) {
                 console.log(data);
-                var dataOption='<option>Select Project</option>';
+                var dataOption='<option value="0">Select Project</option>';
                 for (var i=0, len=data.length; i<len;i++){
-
                     dataOption +='<option value="'+data[i]["id"]+'">'+data[i]["project"]+'</option>';
                 }
                 jQuery(element).closest('tr').find('.payment_project_list').html(dataOption);
@@ -419,7 +433,8 @@
              data:{},
              success:function (data) {
 
-                 jQuery(element).closest('tr').find('.paid').html(data.total_amount);
+
+                jQuery(element).closest('tr').find('.paid').html(data.total_amount);
              }
          });
 

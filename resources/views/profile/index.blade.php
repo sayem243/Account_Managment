@@ -1,5 +1,4 @@
 @extends('admin.index')
-
 @section('template')
 
     <div class="card">
@@ -16,7 +15,7 @@
                     {{--<th>Name</th>--}}
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Email Name</th>
+                    <th>Email</th>
                     <th>Mobile Number</th>
                     <th>Father Name</th>
                     <th>Mother Name</th>
@@ -54,16 +53,8 @@
                         <td> {{ $profile->address}} </td>
                         <td> {{ $profile->company['name'] }} </td>
                         <td> {{ $profile->nid }} </td>
-
-
-
                     </tr>
-
-
-
                     @endforeach
-
-
                 </tbody>
 
 

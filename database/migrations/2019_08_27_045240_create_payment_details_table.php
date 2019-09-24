@@ -21,8 +21,8 @@ class CreatePaymentDetailsTable extends Migration
             $table->double('paid_amount',10, 2)->nullable();
             $table->integer('payment_id')->unsigned()->nullable();
             $table->integer('project_id')->unsigned()->nullable();
-
             $table->string('filenames')->nullable();
+
 
         });
 

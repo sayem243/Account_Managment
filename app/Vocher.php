@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Vocher extends Model
 {
 
@@ -32,6 +33,7 @@ class Vocher extends Model
 //
 //        return $this->belongsTo('App\Vocher');
 //    }
+
 
 
 

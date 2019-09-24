@@ -135,7 +135,7 @@ class UserController extends Controller
         }
         return response()->json($data);
     }
-
+//voucher payment id
     public function vocherAmount($id){
 
         $user=User::find($id);
@@ -213,9 +213,6 @@ class UserController extends Controller
 
         return response()->json($datas);
     }
-
-
-
 
 
 
