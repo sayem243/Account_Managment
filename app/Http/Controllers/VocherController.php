@@ -29,9 +29,7 @@ class VocherController extends Controller
 
 
     public function store(Request $request){
-
         $amount=$request->amount;
-
         $vocher=new Vocher();
         $vocher->total_amount=array_sum($amount);
         $vocher->user_id=$request->user_id;
@@ -171,7 +169,6 @@ class VocherController extends Controller
     public function approved($id){
         $voucher=Vocher::find($id);
         $voucher->status=2;
-        //$payment->status=2;
         $voucher->save();
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
     }

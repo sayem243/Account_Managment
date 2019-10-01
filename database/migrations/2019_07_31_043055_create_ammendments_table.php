@@ -18,10 +18,9 @@ class CreateAmmendmentsTable extends Migration
 
             $table->decimal('amendment_amount',10, 2);
             $table->string('file')->nullable();
-
             $table->integer('payment_id')->unsigned()->nullable();
-
             $table->integer('project_id')->unsigned()->nullable();
+            $table->smallInteger('status')->default(1);
             $table->string('approved');
 
             $table->timestamps();

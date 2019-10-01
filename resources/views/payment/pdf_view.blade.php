@@ -106,35 +106,23 @@
 
                             </tr>
                             </thead>
-
-
                             <tbody>
                             @php
                                 $i=0;
-
                             @endphp
-
                             @foreach($payment->ammendments as $detail )
                                 @php
                                     $i++ ;
                                 @endphp
-
                                 <tr>
                                     <td>{{$i}}</td>
                                     <td>{{$detail->project['p_name']}}</td>
                                     <td>{{$detail->amendment_amount}}</td>
                                     <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
                                 </tr>
-
                             @endforeach
-
                             </tbody>
-
                         </table>
-
-
-
-
                     </div>
                 </div>
             </div>

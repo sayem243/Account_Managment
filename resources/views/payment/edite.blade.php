@@ -64,7 +64,7 @@
                                 </thead>
                                 <tbody>
                                 <div class="col-sm-12 col-form-label" align="right">
-                                    <input type="button" class="btn btn-success add-row" value="Add Row">
+                                    <input type="button" class="btn btn-info add-row" value="Add Row">
                                 </div>
                                 @foreach($payment->Payment_details as $detail)
                                     <tr>
@@ -137,13 +137,7 @@
 
             </div>
         </div>
-
-
-
     </div>
-
-
-
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
@@ -163,11 +157,6 @@
         });
     </script>
 
-
-
-
-
 @endsection
-
 
 

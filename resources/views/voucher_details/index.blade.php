@@ -16,15 +16,53 @@
                                     <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
                                     <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
                                     <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-
+                                    <li class="dropdown-item reload-card"><a target="_blank" href="{{route('voucher_printPDF',$details->id)}}"><i class="far fa-file-pdf"></i>PDF</a></li>
+                                    <li class="dropdown-item reload-card"><a target="_blank" href="{{route('print',$details->id)}}"><i class="fa fa-print"></i>Print</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <div class="card-body">
-                    <table class= "table table-bordered">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Payment Date: </label>
+                                    {{date('d-m-Y',strtotime($details->created_at))}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Company: </label>
+                                    {{$details->user->userProfile->company['name']}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="">NID: </label>
+                                    {{$details->user->userProfile['nid'] }}
+                                </div>
 
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Employe Name: </label>
+                                    {{--{{$payment->user['name'] }}--}}
+                                    {{$details->user->UserProfile['fname'].' '.$details->user->UserProfile['lname']}}
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Mobile Number: </label>
+                                    {{$details->user->userProfile['mobile'] }}
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h4 align="center"><em>Voucher Details </em>  </h4>
+                        </div>
+
+                        <table class= "table table-bordered" id="voucher">
                         <thead class="thead-dark">
                         <tr>
                             <th>Serial</th>

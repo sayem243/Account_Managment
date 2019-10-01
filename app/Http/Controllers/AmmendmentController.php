@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\DB;
 class AmmendmentController extends Controller
 {
 
-    public function index(){
+        public function index(){
 
-      $amendments=Ammendment::all();
-     $payment=Payment::all();
+        $amendments=Ammendment::all();
+        $payments=Payment::all();
+
 //
          //$amendments=DB::table('ammendments')->where('payment_id', $id);
         //$payment=Payment::find($id);
-
-        return view('ammendment.index',['amendments'=>$amendments,'payment'=>$payment ]);
+        return view('ammendment.index',['amendments'=>$amendments,'payments'=>$payments]);
 
     }
 
@@ -51,19 +51,8 @@ class AmmendmentController extends Controller
                     $amendment->file=$request->file->store('/public/file');
                 }
                 $amendment->save();
-
             }
         }
-
-
         return redirect()->route('details',$payment->id);
-
-
     }
-
-
-
-
-
-
 }

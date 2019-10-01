@@ -59,11 +59,9 @@ class UserProfileController extends Controller
 
     public function edit($id){
         $userprofile= UserProfile::find($id);
-        return view('profile.edit',['$userprofiles'=>$userprofile] );
+        return view('profile.edit',['userprofiles'=>$userprofile] );
 
 
 
     }
-
-
 }

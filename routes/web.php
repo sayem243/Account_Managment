@@ -19,13 +19,13 @@ Route::get('/', function () {
 
 //Auth::routes();
 
-Route::get('/index' ,'AccountController@index')->name('index');
-
-Route::get('/create','AccountController@create')->name('create');
-Route::get('/edit/{id}','AccountController@edit')->name('edit');
-Route::post('account/store','AccountController@store')->name('account_store');
-Route::post('/update/{id}' ,'AccountController@update')->name('update');
-Route::get('/delete/{id}','AccountController@delete')->name('delete');
+//Route::get('/index' ,'AccountController@index')->name('index');
+//
+//Route::get('/create','AccountController@create')->name('create');
+//Route::get('/edit/{id}','AccountController@edit')->name('edit');
+//Route::post('account/store','AccountController@store')->name('account_store');
+//Route::post('/update/{id}' ,'AccountController@update')->name('update');
+//Route::get('/delete/{id}','AccountController@delete')->name('delete');
 
 
 //profile route
@@ -55,9 +55,6 @@ Route::get('/company/view/{id}' ,'CompanyController@view')->name('comp_view');
 Route::get('/company/edit/{id}' ,'CompanyController@edit')->name('comp_edit');
 Route::post('/company/update/{id}' ,'CompanyController@update')->name('comp_update');
 Route::get('/company/delete/{id}' ,'CompanyController@delete')->name('com_delete');
-
-
-
 
 
 //projects route
@@ -101,12 +98,16 @@ Route::get('/user/payment/paid/{payment}/{project}','UserController@paidAmount')
 Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
 Route::get('/payment/print-pdf/{id}','PaymentDetailsController@printPDF')->name('printPDF');
 
+Route::post('/amendment/approved/{id}','PaymentDetailsController@approved')->name('amendment_approved');
+
 
 //  amendmentPayment
 
 Route::get('/amendment/','AmmendmentController@index')->name('amendment');
 Route::get('/amendment/create/{id}','AmmendmentController@create')->name('amendment_create');
 Route::post('/amendment/store/{id}','AmmendmentController@store')->name('amendment_store');
+
+
 
 //Route::get('/amendment/details/{id}','AmmendmentController@index')->name('details');
 
@@ -136,6 +137,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 // Registration Routes...
 Route::get('register', 'UserController@showRegistrationForm')->name('register');
 Route::post('store', 'UserController@store')->name('store');
+Route::get('delete/{id}','UserController@delete')->name('User_delete');
 
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -178,17 +180,8 @@ Route::get('/voucher/delete/{id}' ,'VocherController@delete')->name('voucher_del
 //voucher details
 
 Route::get('voucher/details/{id}','VocherDetailsController@index')->name('voucherDetails_index');
+Route::get('/voucher/details/print-pdf/{id}','VocherDetailsController@printPDF')->name('voucher_printPDF');
+Route::get('voucher/details/print/{id}','VocherDetailsController@prnpriview')->name('print');
 
-
-
-
-//Route::get('/admin/dashboard', function(){
-//    return 'Wellcome Admin!';
-//})->name('admin.dashboard');
-//
-
-//Route::get('/home', 'HomeController@index')->name('home');
-
-//Route::get('view-document/{id}', 'PaymentDetailsController@view');
 
 Route::get('/generate-pdf','PaymentDetailsController@generatePDF');

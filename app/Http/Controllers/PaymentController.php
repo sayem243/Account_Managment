@@ -53,12 +53,9 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-
         $demand_amount=$request->demand_amount;
         $paid_amount=$request->paid_amount;
-
         $payment=new Payment();
-
         $payment->user_id=$request->user_id;
         $payment->comments=$request->comments;
         $payment->total_demand_amount=array_sum($demand_amount);
@@ -67,6 +64,7 @@ class PaymentController extends Controller
 
         $payment->save();
         $projects=$request->project_id;
+        $file=$request->filenames;
         foreach ($projects as $key=>$project){
             if($project>0){
                 $paymentDetails = new Payment_details();
@@ -75,18 +73,19 @@ class PaymentController extends Controller
                 $paymentDetails->paid_amount=$paid_amount[$key];
                 $payment->Payment_details()->save($paymentDetails);
 
-//                if($request->hasfile('filenames'))
-//                {
-//                    foreach($request->file('filenames') as $file)
-//                    {
-//                        $name=$file->getClientOriginalName();
-//                        $file->move(public_path().'/files/', $name);
-//                        $data[] = $name;
-//                    }
-//                }
+                if($request->hasfile('filenames'))
+                {
+                    foreach($request->file('filenames') as $file)
+                    {
+                        $name=$file->getClientOriginalName();
+                        $file->move(public_path().'/files/', $name);
+                        $data[] = $name;
+                        
+                    }
+                }
 //                $file= new Payment_details();
-//                $file->filenames=json_encode($data);
-//                $file->save();
+                $file->filenames=json_encode($data);
+                $file->Payment_details()->save();
 
             }
         }
@@ -158,7 +157,6 @@ class PaymentController extends Controller
                 }
             }
         }
-
         if($exit_payment_details){
             foreach ($exit_payment_details as $key=>$detail){
                 $paymentDetails = Payment_details::find($detail);
@@ -170,10 +168,6 @@ class PaymentController extends Controller
         }
         return redirect()->route('payment');
     }
-
-
-
-
 
     public function approved($id){
         $payment=Payment::find($id);
@@ -191,7 +185,6 @@ class PaymentController extends Controller
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
     }
 
-
 //    public function details($id){
 //
 //        $payment=Payment::find($id);
@@ -205,8 +198,7 @@ class PaymentController extends Controller
        $payment=Payment::find($id);
        $amendment = $payment->ammendment;
        $total=$amendment->sum('additional_amount');
-        return view('voucher.index',['payment'=>$payment, 'total'=>$total]);
-
+        return view('voucher.index',['payment'=>$payment,'total'=>$total]);
     }
 
     public function delete($id){
@@ -214,6 +206,4 @@ class PaymentController extends Controller
         $payment->delete();
         return redirect()->route('payment');
     }
-
-
 }

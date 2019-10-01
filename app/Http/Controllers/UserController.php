@@ -70,7 +70,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-//        var_dump('ok');die;
+
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -109,14 +109,15 @@ class UserController extends Controller
         $profile->company_id=$request->company_id;
 
         $user->UserProfile()->save($profile);
-
-
         $project = Project::find($request->user_projects);
         $user->projects()->attach($project);
 
         return redirect()->route('userprofile')
             ->with('success','User created successfully');
     }
+
+
+
 
     public function projectByUser($id){
 
@@ -261,28 +262,19 @@ class UserController extends Controller
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
-
-
         $input = $request->all();
         if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
         }else{
             $input = array_except($input,array('password'));
         }
-
-
         $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
-
-
         $user->assignRole($request->input('roles'));
-
-
         return redirect()->route('users.index')
             ->with('success','User updated successfully');
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -295,5 +287,12 @@ class UserController extends Controller
         User::find($id)->delete();
         return redirect()->route('users.index')
             ->with('success','User deleted successfully');
+    }
+    //users delete method
+
+    public function delete($id){
+        $user=UserProfile::find($id);
+        $user->delete();
+        return redirect()->route('register');
     }
 }

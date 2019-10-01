@@ -1,12 +1,11 @@
 @extends('admin.index')
 
 @section('template')
-
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-            <div class="card-header">
+                <div class="card-header">
                 <h5> Payment Details </h5>
 
                     <div class="card-header-right">
@@ -21,8 +20,6 @@
                                 <i class="fas fa-ellipsis-v"></i>
                             </button>
                             <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end">
-
-                                {{--<li><a href="{{action('PaymentDetailsController@printPDF', $user->id)}}">PDF</a> </li>--}}
 
                                 <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
                                 <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
@@ -128,43 +125,50 @@
                             <h4 align="center">Amendment Details</h4>
                         </div>
 
-                        <table class="table table-striped">
+                        <table class="table table-striped table-bordered dataTable no-footer">
                             <thead class="thead-dark">
                             <tr>
                                 <th>SL</th>
                                 <th>Projects</th>
                                 <th>Amendment Amount</th>
+                                <th>status</th>
+                                <th>Action</th>
                                 <th>Date</th>
-
                             </tr>
                             </thead>
-
-
                             <tbody>
                             @php
                                 $i=0;
-
                             @endphp
-
                             @foreach($payment->ammendments as $detail )
                                 @php
                                     $i++ ;
                                 @endphp
-
                                 <tr>
                                     <td>{{$i}}</td>
                                     <td>{{$detail->project['p_name']}}</td>
                                     <td>{{$detail->amendment_amount}}</td>
-                                   <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
+                                    <td class="status">
+                                        @if($detail->status == 1)
+                                            <span class="label label-primary">Created</span>
+                                        @elseif($detail->status == 2)
+                                            <span class="label label-success">Approved</span>
+
+                                        @endif
+                                    </td>
+
+                               <td><button data-id="{{$detail->id}}" type="button" class="btn btn-sm  btn-primary amendment_approved">Approved</button></td>
+
+                                    <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-             </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    </div>
-    </div>
 
 @endsection

@@ -336,12 +336,9 @@
             data:{},
             success:function(data){
                 if(data.status==200){
-
                     $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
                     $(element).closest('tr').find('td.status').find('span').html('Verified')
                 }
-
-
             }
         });
     });
@@ -440,14 +437,10 @@
 
     });
 
-
-
-
     jQuery(".danger").click(function(a){
         var elements = a.target;
         a.preventDefault();
         var id = jQuery(this).attr('data-id-id');
-
         jQuery.ajax({
             type:'POST',
             dataType : 'json',
@@ -459,29 +452,6 @@
                     $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
                     $(elements).closest('tr').find('td.status').find('span').html('Approved')
                 }
-            }
-        });
-    });
-
-
-    jQuery(".voucher-approve").click(function(e){
-        var element = e.target;
-        e.preventDefault();
-        var id = jQuery(this).attr('data-id');
-
-        jQuery.ajax({
-            type:'POST',
-            dataType : 'json',
-            url:'/voucher/approved/'+ id,
-            data:{},
-            success:function(data){
-                if(data.status==200){
-
-                    $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
-                    $(element).closest('tr').find('td.status').find('span').html('Verified')
-                }
-
-
             }
         });
     });
@@ -508,7 +478,25 @@
         });
     });
 
+//amendment approve
 
+    jQuery(".amendment_approved").click(function(a){
+        var elements = a.target;
+        a.preventDefault();
+        var id = jQuery(this).attr('data-id');
+        jQuery.ajax({
+            type:'POST',
+            dataType : 'json',
+            url:'/amendment/approved/'+ id,
+            data:{},
+            success:function(data){
+                if(data.status==200){
+                    $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
+                    $(elements).closest('tr').find('td.status').find('span').html('Approved')
+                }
+            }
+        });
+    });
 
 </script>
 </body>

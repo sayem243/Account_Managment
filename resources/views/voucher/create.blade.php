@@ -75,7 +75,7 @@
                                     </thead>
                                     <tbody>
                                     <div class="col-sm-12 col-form-label" align="right">
-                                        <input type="button" class="btn btn-success add-row" value="Add Row">
+                                        <input type="button" class="btn btn-info add-row" value="Add Row">
                                     </div>
 
                                     <tr>
@@ -101,7 +101,7 @@
                                         </td>
 
                                         <td>
-                                            <button type="button" class="btn btn-danger hide">Delete Row</button>
+                                            <button type="button" class="btn btn-danger hide">Delete </button>
                                         </td>
                                     </tr>
 

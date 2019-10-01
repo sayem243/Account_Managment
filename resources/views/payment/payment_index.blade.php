@@ -151,8 +151,6 @@
                                </ul>
                            </div>
 
-
-
                             {{----}}
                             {{--<div class="btn-group-vertical">--}}
                                 {{--<a href="{{route('payment_edit',$payment->id)}}" button type="button" class="btn btn-sm  btn-info" >Edit </a>--}}
@@ -173,9 +171,7 @@
                   {{$payments->links('vendor.pagination.bootstrap-4')}}
               </ul>
 
-
               {{--{!! $payments->links() !!}--}}
-
 
         </div>
 
