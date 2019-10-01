@@ -69,6 +69,7 @@
                                         <th>Project</th>
                                         <th>Total Paid Amount</th>
                                         <th>Amount </th>
+                                        <th>File</th>
                                         <td>Action</td>
 
                                     </tr>
@@ -98,6 +99,10 @@
 
                                         <td>
                                             <input type="text" class="form-control demand_amount" name="amount[]" id="amount" required>
+                                        </td>
+                                        <td>
+
+                                            <input type="file" class="form-control" name="filenames[]" id="filenames" placeholder="">
                                         </td>
 
                                         <td>
@@ -149,7 +154,9 @@
 
     {{--<script src="{{asset('assets/plugins/select2/js/select2.full.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/js/select2.js')}}"></script>--}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+
+    {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />--}}
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 
     <script type="text/javascript">

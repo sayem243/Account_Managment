@@ -335,10 +335,14 @@
             url:'/payment/status/'+ id,
             data:{},
             success:function(data){
+                alert("Are you sure ?");
                 if(data.status==200){
                     $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
                     $(element).closest('tr').find('td.status').find('span').html('Verified')
                 }
+                $("button").click(function(){
+                    $("div").load("demo_ajax_load.txt");
+                });
             }
         });
     });

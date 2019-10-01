@@ -47,7 +47,7 @@
                     <th>Amendment</th>
                     <th>Status </th>
 
-                    <th>Remarks</th>
+                    {{--<th>Remarks</th>--}}
                     <th>Actions</th>
 
                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
@@ -109,7 +109,7 @@
 
                         </td>
 
-                        <td>{{$payment->comments}}</td>
+                            {{--<td>{{$payment->comments}}</td>--}}
 
                             <td>
                                 @if($payment->status==1)

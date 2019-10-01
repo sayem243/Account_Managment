@@ -62,15 +62,29 @@ class PaymentController extends Controller
         $payment->total_paid_amount=array_sum($paid_amount);
         $payment->created_by=$user->id;
 
+        $file = $request->files->get('filenames');
+
+
+
         $payment->save();
         $projects=$request->project_id;
        // $file=$request->filenames;
-        foreach ($projects as $key=>$project){
+        foreach ($projects as $key => $project){
             if($project>0){
                 $paymentDetails = new Payment_details();
                 $paymentDetails->project_id=$project;
                 $paymentDetails->demand_amount=$demand_amount[$key];
                 $paymentDetails->paid_amount=$paid_amount[$key];
+                $paymentDetails->paid_amount=$paid_amount[$key];
+
+                if ($file[$key]->getClientOriginalName()) {
+
+                    $filename = $file[$key]->getClientOriginalName();
+                    $modifyFilename = time() . "_" . $filename;
+                    $paymentDetails->filenames = $modifyFilename;
+                    $file[$key]->move(public_path() . '/files/', $modifyFilename);
+                }
+
                 $payment->Payment_details()->save($paymentDetails);
 
 //                if($request->hasfile('filenames'))
@@ -86,8 +100,10 @@ class PaymentController extends Controller
 //                $file->filenames=json_encode($data);
 //                $file->Payment_details()->save();
 
+
             }
         }
+
              $this->GeneratePaymentId($payment);
 
         return redirect()->route('payment')->with('success', 'Post has been successfully submitted pending for approval');

@@ -11,8 +11,13 @@
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                             <a href="{{route('payment_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            @if($payment->status==1)
                             <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Approved </button>
-                            {{--<a href="{{route('Voucher',$payment->id)}}" class="btn btn-sm  btn-info"><i class="fab fa-amazon-pay"></i>Vocher</a>--}}
+                                {{--<a href="{{route('Voucher',$payment->id)}}" class="btn btn-sm  btn-info"><i class="fab fa-amazon-pay"></i>Vocher</a>--}}
+                                @elseif($payment->status==2)
+                                <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Approved </button>
+                            @endif
+
                         </div>
 
                         <div class="btn-group card-option">
@@ -70,11 +75,27 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">NID: </label>
-                                    {{$payment->user->userProfile['nid'] }}
+                                    @if($payment->status==3)
+
+                                    <label for="">Approved By: </label>
+                                    {{$payment->userCreatedBy['name']}}
+                                    @endif
+
                                 </div>
+
+
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Remarks :</label>
+                                {{$payment->comments}}
+                            </div>
+                            </div>
+                        </div>
+
 
                         <div class="col-md-12">
                             <h4 align="center">Advance Payment Details</h4>
@@ -87,6 +108,7 @@
                                 <th>Projects</th>
                                 <th>Demand Amount(BDT) </th>
                                 <th>Paid Amount</th>
+                                <th> File </th>
                                 <th>Date</th>
 
                             </tr>
@@ -109,6 +131,10 @@
                                 <td>{{$detail->project['p_name']}}</td>
                                 <td>{{$detail->demand_amount}}</td>
                                 <td>{{$detail->paid_amount}}</td>
+                                <td> </td>
+
+                                {{--<td>{{$detail->filenames}}</td>--}}
+
                                 <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
                                 {{--<td>--}}
                                     {{--<input type="hidden" name="project_id[]" value="{{$detail->project['id']}}">--}}
@@ -121,6 +147,7 @@
                             </tbody>
 
                         </table>
+
 
                         <div class="col-md-12">
                             <h4 align="center">Amendment Details</h4>
