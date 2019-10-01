@@ -25,6 +25,7 @@
                                 <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
                                <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
                                <li class="dropdown-item reload-card"><a href="{{route('printPDF',$payment->id)}}"><i class="far fa-file-pdf"></i> PDF</a></li>
+                               <li class="dropdown-item reload-card"><a href="{{route('details_delete',$payment->id)}}"><i class="feather icon-trash-2"></i> Delete</a></li>
 
 
                             </ul>

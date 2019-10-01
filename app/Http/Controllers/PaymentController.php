@@ -64,7 +64,7 @@ class PaymentController extends Controller
 
         $payment->save();
         $projects=$request->project_id;
-        $file=$request->filenames;
+       // $file=$request->filenames;
         foreach ($projects as $key=>$project){
             if($project>0){
                 $paymentDetails = new Payment_details();
@@ -73,19 +73,18 @@ class PaymentController extends Controller
                 $paymentDetails->paid_amount=$paid_amount[$key];
                 $payment->Payment_details()->save($paymentDetails);
 
-                if($request->hasfile('filenames'))
-                {
-                    foreach($request->file('filenames') as $file)
-                    {
-                        $name=$file->getClientOriginalName();
-                        $file->move(public_path().'/files/', $name);
-                        $data[] = $name;
-                        
-                    }
-                }
+//                if($request->hasfile('filenames'))
+//                {
+//                    foreach($request->file('filenames') as $file)
+//                    {
+//                        $name=$file->getClientOriginalName();
+//                        $file->move(public_path().'/files/', $name);
+//                        $data[] = $name;
+//                    }
+//                }
 //                $file= new Payment_details();
-                $file->filenames=json_encode($data);
-                $file->Payment_details()->save();
+//                $file->filenames=json_encode($data);
+//                $file->Payment_details()->save();
 
             }
         }

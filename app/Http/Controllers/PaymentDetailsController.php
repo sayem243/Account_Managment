@@ -31,4 +31,11 @@ class PaymentDetailsController extends Controller
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
     }
 
+    public function delete($id){
+        $payment=Payment_details::find($id);
+        $payment->delete();
+        return redirect()->route('payment');
+    }
+
+
 }

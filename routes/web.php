@@ -96,6 +96,7 @@ Route::get('/user/payment/paid/{payment}/{project}','UserController@paidAmount')
 
 
 Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
+Route::get('/payment/details/delete/{id}','PaymentDetailsController@delete')->name('details_delete');
 Route::get('/payment/print-pdf/{id}','PaymentDetailsController@printPDF')->name('printPDF');
 
 Route::post('/amendment/approved/{id}','PaymentDetailsController@approved')->name('amendment_approved');
