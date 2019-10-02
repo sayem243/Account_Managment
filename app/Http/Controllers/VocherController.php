@@ -35,18 +35,34 @@ class VocherController extends Controller
         $vocher->user_id=$request->user_id;
        // $vocher->payment_id=$request->payment_id;
 
-        if($request->hasFile('file')){
-            $vocher->file=$request->file->store('/public/voucher');
-        }
+//        if($request->hasFile('file')){
+//            $vocher->file=$request->file->store('/public/voucher');
+//        }
+
+        $vocher->comments=$request->comments;
+
         $vocher->save();
         $projects=$request->project_id;
         $payments=$request->payment_id;
+
+        $file=$request->files->get('filenames');
+
         foreach ($payments as $key=>$payment){
             if($payment>0){
                 $vocherDetails = new Vocher_details();
                 $vocherDetails->project_id = $projects[$key];
                 $vocherDetails->payment_id = $payment;
                 $vocherDetails->amount = $amount[$key];
+
+                if($request->hasFile('filenames')){
+                if($file[$key]->getClientOriginalName()){
+                    $filename = $file[$key]->getClientOriginalName();
+                    $modifyFilename=time() . "_" .$filename;
+                    $vocherDetails->filenames=$modifyFilename;
+                    $file[$key]->move(public_path() . '/files/',$modifyFilename);
+                }
+                }
+
                 $vocher->Vocher_details()->save($vocherDetails);
             }
 
@@ -123,6 +139,7 @@ class VocherController extends Controller
         $amount=$request->amount;
         $vocher->total_amount=array_sum($amount)+array_sum($request->exit_amount);
         $vocher->user_id=$request->user_id;
+        $vocher->comments=$request->comments;
         $exit_amount=$request->exit_amount;
 
         if($request->hasFile('file')){

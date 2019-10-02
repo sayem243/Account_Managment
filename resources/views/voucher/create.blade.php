@@ -61,6 +61,14 @@
                                         </div>
 
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="comments">Comments</label>
+                                            <textarea name="comments" rows="3.5" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <table class="table table-bordered voucher">
                                     <thead>
@@ -68,7 +76,7 @@
                                         <th>Payment ID</th>
                                         <th>Project</th>
                                         <th>Total Paid Amount</th>
-                                        <th>Amount </th>
+                                        <th>Received Amount</th>
                                         <th>File</th>
                                         <td>Action</td>
 
@@ -114,12 +122,12 @@
                                 </table>
                                 <div class="line aligncenter">
 
-                                    <div class="form-group row">
-                                        <label for="file" class="col-sm-2 col-form-label">File :</label>
-                                        <div class="col-sm-10">
-                                            <input type="file" class="form-control" name="file" id="file" placeholder="">
-                                        </div>
-                                    </div>
+                                    {{--<div class="form-group row">--}}
+                                        {{--<label for="file" class="col-sm-2 col-form-label">File :</label>--}}
+                                        {{--<div class="col-sm-10">--}}
+                                            {{--<input type="file" class="form-control" name="file" id="file" placeholder="">--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
 
 
 

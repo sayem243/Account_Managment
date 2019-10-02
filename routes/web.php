@@ -86,6 +86,7 @@ Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
 Route::post('/payment/status/{id}','PaymentController@approved')->name('approved');
 Route::post('/payment/status/danger/{id}','PaymentController@danger')->name('danger');
 
+
 //Ajax route
 
 Route::get('/project/user/{id}','UserController@projectByUser')->name('user_project');
@@ -98,6 +99,7 @@ Route::get('/user/payment/paid/{payment}/{project}','UserController@paidAmount')
 Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
 Route::get('/payment/details/delete/{id}','PaymentDetailsController@delete')->name('details_delete');
 Route::get('/payment/print-pdf/{id}','PaymentDetailsController@printPDF')->name('printPDF');
+
 
 Route::post('/amendment/approved/{id}','PaymentDetailsController@approved')->name('amendment_approved');
 

@@ -21,6 +21,7 @@ class CreateVocherDetailsTable extends Migration
             $table->integer('payment_id')->unsigned()->nullable();
             $table->integer('project_id')->unsigned()->nullable();
             $table->integer('payment_details_id')->unsigned()->nullable();
+            $table->string('filenames')->nullable();
             $table->timestamps();
         });
 

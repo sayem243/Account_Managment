@@ -445,16 +445,25 @@
         var elements = a.target;
         a.preventDefault();
         var id = jQuery(this).attr('data-id-id');
+
+        var text;
+        var r=confirm("Press a button!");
+
         jQuery.ajax({
             type:'POST',
             dataType : 'json',
             url:'/payment/status/danger/'+ id,
             data:{},
             success:function(data){
-                if(data.status==100){
-
-                    $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
-                    $(elements).closest('tr').find('td.status').find('span').html('Approved')
+                if(data.status==100) {
+                    if (r == true) {
+                        txt = "Your pressed OK!";
+                        $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
+                        $(elements).closest('tr').find('td.status').find('span').html('Approved')
+                    }
+                    else {
+                        txt = "You pressed Cancel!";
+                    }
                 }
             }
         });

@@ -63,9 +63,6 @@ class PaymentController extends Controller
         $payment->created_by=$user->id;
 
         $file = $request->files->get('filenames');
-
-
-
         $payment->save();
         $projects=$request->project_id;
        // $file=$request->filenames;
@@ -77,15 +74,15 @@ class PaymentController extends Controller
                 $paymentDetails->paid_amount=$paid_amount[$key];
                 $paymentDetails->paid_amount=$paid_amount[$key];
 
-                if ($file[$key]->getClientOriginalName()) {
-
-                    $filename = $file[$key]->getClientOriginalName();
-                    $modifyFilename = time() . "_" . $filename;
-                    $paymentDetails->filenames = $modifyFilename;
-                    $file[$key]->move(public_path() . '/files/', $modifyFilename);
+                if($request->hasFile('filenames')){
+                   if ($file[$key]->getClientOriginalName()) {
+                       $filename = $file[$key]->getClientOriginalName();
+                       $modifyFilename = time() . "_" . $filename;
+                       $paymentDetails->filenames = $modifyFilename;
+                       $file[$key]->move(public_path() . '/files/', $modifyFilename);
+                   }
                 }
-
-                $payment->Payment_details()->save($paymentDetails);
+                   $payment->Payment_details()->save($paymentDetails);
 
 //                if($request->hasfile('filenames'))
 //                {

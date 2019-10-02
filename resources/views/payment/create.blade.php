@@ -57,10 +57,10 @@
                       <thead>
                       <tr>
                           <th>Project</th>
-                          <th>Demand</th>
-                          <td>Paid Amount</td>
-                          <td>File</td>
-                          <td>Action</td>
+                          <th>Demand Amount</th>
+                          <th>Paid Amount</th>
+                          <th>File</th>
+                          <th>Action</th>
                       </tr>
                       </thead>
                       <tbody>

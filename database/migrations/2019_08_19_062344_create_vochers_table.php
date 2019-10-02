@@ -18,6 +18,7 @@ class CreateVochersTable extends Migration
 
             $table->decimal('total_amount');
             $table->integer('user_id')->unsigned()->nullable();
+            $table->string('comments')->nullable();
             $table->string('file')->nullable();
             $table->smallInteger('status')->default(1);
             $table->string('voucher_id')->nullable();

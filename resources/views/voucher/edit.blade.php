@@ -58,8 +58,15 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="comments">Comments</label>
+                                            <textarea name="comments" rows="3.5" class="form-control" value="{{$vochers->comments}}"></textarea>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                                 <table class="table table-bordered voucher">
                                     <thead>
@@ -74,7 +81,7 @@
                                     </thead>
                                     <tbody>
                                     <div class="col-sm-12 col-form-label" align="right">
-                                        <input type="button" class="btn btn-success add-row" value="Add Row">
+                                        <input type="button" class="btn btn-info add-row" value="Add Row">
                                     </div>
 
                                     @foreach($vochers->Vocher_details as $detail )
@@ -127,10 +134,6 @@
                                         </td>
 
                                         <td class="paid"> </td>
-                                        @php
-
-
-                                       @endphp
 
                                         <td>
                                             <input type="text" class="form-control demand_amount" name="amount[]" id="amount" required>
@@ -173,7 +176,7 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+    {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 
     <script type="text/javascript">

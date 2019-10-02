@@ -37,8 +37,8 @@
                                     <th>Employe Name</th>
                                     <th>Company</th>
                                     <th>Voucher ID</th>
-                                    <th>Paid Amount</th>
-                                    <th>Amount</th>
+                                    <th>Advance Paid</th>
+                                    <th>Received</th>
                                     <th>Balance</th>
                                     <th>status</th>
                                     <th>Actions</th>
@@ -90,13 +90,14 @@
                                             <div class="btn-group card-option">
                                                 <a href="javascript:"  class="btn btn-notify btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                                                 <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
-                                                    @if($vocher->status==1)
+                                                    @if($vocher->status==2)
 
                                                     <li class="dropdown-item">
                                                         <a href="{{route('voucherDetails_index',$vocher->id)}}">
                                                             <i class="feather icon-eye"></i>
                                                             Details</a>
                                                     </li>
+                                                     @elseif($vocher->status==1)
                                                         <li class="dropdown-item">
                                                             <a href="{{route('voucher_edit',$vocher->id)}}">
                                                                 <i class="feather icon-eye"></i>
@@ -109,13 +110,8 @@
                                                                 <i class="feather icon-trash"></i>
                                                                 Delete</a>
                                                         </li>
-                                                    @endif
-                                                        <li class="dropdown-item">
-                                                            <a href="{{route('voucherDetails_index',$vocher->id)}}">
-                                                                <i class="feather icon-eye"></i>
-                                                                Details</a>
-                                                        </li>
 
+                                                    @endif
 
 
 

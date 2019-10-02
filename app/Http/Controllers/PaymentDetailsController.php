@@ -17,11 +17,11 @@ class PaymentDetailsController extends Controller
         return view('payment_details.index',['payment'=>$payment]);
     }
 
+
     public function printPDF($id){
         $payment=Payment::find($id);
         $pdf = PDF::loadView('payment.pdf_view', compact('payment'));
         return $pdf->stream('invoice.pdf',array("Attachment" => false));
-
     }
 
     public function approved($id){

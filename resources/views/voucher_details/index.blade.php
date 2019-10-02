@@ -7,6 +7,7 @@
                     <div class="card-header">
                         <h5>Voucher Details</h5>
                         <div class="card-header-right">
+                            <button data-id-id="{{$details->id}}" type="button" class="btn btn-sm  btn-primary voucher-approve">Approved</button>
 
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
@@ -27,36 +28,45 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Payment Date: </label>
-                                    {{date('d-m-Y',strtotime($details->created_at))}}
+                                    <label for="">Employe Name: </label>
+                                    {{$details->user->UserProfile['fname'].' '.$details->user->UserProfile['lname']}}
+
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="">Voucher ID: </label>
+                                    {{$details->voucher_id }}
+                                </div>
+
                                 <div class="form-group">
                                     <label for="">Company: </label>
                                     {{$details->user->userProfile->company['name']}}
                                 </div>
-                                <div class="form-group">
-                                    <label for="">NID: </label>
-                                    {{$details->user->userProfile['nid'] }}
-                                </div>
+
 
 
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Employe Name: </label>
-                                    {{--{{$payment->user['name'] }}--}}
-                                    {{$details->user->UserProfile['fname'].' '.$details->user->UserProfile['lname']}}
-
+                                    <label for="exampleInputEmail1">Payment Date: </label>
+                                    {{date('d-m-Y',strtotime($details->created_at))}}
                                 </div>
 
                                 <div class="form-group">
                                     <label for="">Mobile Number: </label>
                                     {{$details->user->userProfile['mobile'] }}
                                 </div>
-
-
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for=""><b>Remarks :</b></label>
+                                    {{$details->comments}}
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="col-md-12">
                             <h4 align="center"><em>Voucher Details </em>  </h4>
@@ -68,7 +78,8 @@
                             <th>Serial</th>
                             <th>Payment ID</th>
                             <th>Project</th>
-                            <th>Amount</th>
+                            <th>Received(BDT)</th>
+                            <th>Files</th>
                             <th>Date</th>
 
                             <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
@@ -89,6 +100,8 @@
 
                                 {{--<td>{{$detail->payment_details->demand_amount}}</td>--}}
                                 <td>{{$detail->amount}}</td>
+                                <td><a href="{{asset('files/' .$detail->filenames)}}" download>Download</a> </td>
+
                                 <td>{{date('d-m-y',strtotime($detail->created_at))}}</td>
 
 

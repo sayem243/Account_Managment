@@ -13,6 +13,7 @@
                             <a href="{{route('payment_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                             @if($payment->status==1)
                             <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Approved </button>
+                            <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-warning approved">Verified </button>
                                 {{--<a href="{{route('Voucher',$payment->id)}}" class="btn btn-sm  btn-info"><i class="fab fa-amazon-pay"></i>Vocher</a>--}}
                                 @elseif($payment->status==2)
                                 <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Approved </button>
@@ -46,9 +47,13 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Payment ID: </label>
-                                {{$payment->payment_id }}
+                                <label for="">Employe Name: </label>
+                                {{--{{$payment->user['name'] }}--}}
+                                {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
                             </div>
+
+
+
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Payment Date: </label>
@@ -63,11 +68,10 @@
                         </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Employe Name: </label>
-                                    {{--{{$payment->user['name'] }}--}}
-                                    {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
-
+                                    <label for="exampleInputEmail1">Payment ID: </label>
+                                    {{$payment->payment_id }}
                                 </div>
+
 
                                 <div class="form-group">
                                     <label for="">Mobile Number: </label>
@@ -101,7 +105,7 @@
                             <h4 align="center">Advance Payment Details</h4>
                         </div>
 
-                        <table class="table table-striped">
+                        <table class="table table-striped ">
                             <thead class="thead-dark">
                             <tr>
                                 <th>SL</th>
@@ -131,7 +135,7 @@
                                 <td>{{$detail->project['p_name']}}</td>
                                 <td>{{$detail->demand_amount}}</td>
                                 <td>{{$detail->paid_amount}}</td>
-                                <td> </td>
+                                <td><a href="{{asset('files/'.$detail->filenames)}}" download>Download</a> </td>
 
                                 {{--<td>{{$detail->filenames}}</td>--}}
 

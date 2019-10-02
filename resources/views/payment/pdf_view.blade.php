@@ -26,17 +26,17 @@
                                     {{date('d-m-Y',strtotime($payment->created_at))}}
                                 </div>
 
-
-
+                                <div class="form-group">
+                                    <label for="">Company: </label>
+                                    {{$payment->user->userProfile->company['name']}}
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">User Name: </label>
                                     {{--{{$payment->user['name'] }}--}}
                                     {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
-
                                 </div>
-
                                 <div class="form-group">
                                     <label for="">Mobile Number: </label>
                                     {{$payment->user->userProfile['mobile'] }}
@@ -49,6 +49,15 @@
 
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Remarks :</label>
+                                    {{$payment->comments}}
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="col-md-12">
                             <h4 align="center">Advance Payment Details</h4>
