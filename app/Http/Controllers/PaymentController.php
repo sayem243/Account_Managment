@@ -180,18 +180,25 @@ class PaymentController extends Controller
         }
         return redirect()->route('payment');
     }
-
-    public function approved($id){
+    //verify
+    public function verify($id){
+        $user = auth()->user();
         $payment=Payment::find($id);
         $payment->status=2;
+        $payment->verified_by=$user->id;
+        $payment->verified_at= new \DateTime();
         //$payment->status=2;
         $payment->save();
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
     }
 
-    public function danger($id){
+    //approved by
+    public function approve($id){
+        $user = auth()->user();
         $payment=Payment::find($id);
         //$payment->status=1;
+        $payment->approved_by=$user->id;
+        $payment->approved_at= new \DateTime();
         $payment->status=3;
         $payment->save();
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);

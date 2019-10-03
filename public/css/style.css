@@ -1,7 +1,6 @@
 
 .navbar{
     background-color: #0000cc;
-
 }
 
 .pcoded-navbar .header-logo{
@@ -71,7 +70,7 @@ a.btn {
 .btn{
 
     border-radius: 0.25rem;
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 3px;
     margin-right: 10px;
     -webkit-transition: all 0.3s ease-in-out;

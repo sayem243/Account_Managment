@@ -116,9 +116,6 @@ class UserController extends Controller
             ->with('success','User created successfully');
     }
 
-
-
-
     public function projectByUser($id){
 
         $user = User::find($id);

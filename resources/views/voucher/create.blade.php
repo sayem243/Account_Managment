@@ -108,9 +108,9 @@
                                         <td>
                                             <input type="text" class="form-control demand_amount" name="amount[]" id="amount" required>
                                         </td>
-                                        <td>
 
-                                            <input type="file" class="form-control" name="filenames[]" id="filenames" placeholder="">
+                                        <td>
+                                          <input type="file" class="form-control" name="filenames[]" id="filenames" placeholder="">
                                         </td>
 
                                         <td>

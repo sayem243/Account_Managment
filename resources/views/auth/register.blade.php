@@ -198,14 +198,6 @@
 
                     </div>
 
-
-
-
-
-
-
-
-
                 </div>
 
                 </form>
@@ -213,9 +205,5 @@
             <!-- Input group -->
 
         </div>
-
-
-
-
 
 @endsection

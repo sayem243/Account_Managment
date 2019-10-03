@@ -70,6 +70,7 @@
                                                 $total+= App\Http\Controllers\VocherController::paidAmountByPaymentAndProject($vocher_detail->payment_id, $vocher_detail->project_id); ?>
                                             @endforeach
                                             <?php echo $total;?>
+
                                             </td>
 
                                         <td>{{$vocher->total_amount}}</td>
@@ -82,7 +83,11 @@
                                                 <span class="label label-success">Approved</span>
                                             @endif
                                         </td>
-                                        <td> <button data-id-id="{{$vocher->id}}" type="button" class="btn btn-sm  btn-primary voucher-approve">Approved</button></td>
+                                        <td>
+                                            @if($vocher->status==1)
+                                            <button data-id-id="{{$vocher->id}}" type="button" class="btn btn-sm  btn-primary voucher-approve">Approved</button>
+                                                @endif
+                                        </td>
 
                                         <td>{{ date('d-m-Y',strtotime($vocher->created_at))}}</td>
 
@@ -99,17 +104,23 @@
                                                     </li>
                                                      @elseif($vocher->status==1)
                                                         <li class="dropdown-item">
-                                                            <a href="{{route('voucher_edit',$vocher->id)}}">
+                                                            <a href="{{route('voucherDetails_index',$vocher->id)}}">
                                                                 <i class="feather icon-eye"></i>
-                                                                Edit</a>
+                                                                Details</a>
                                                         </li>
 
+                                                        <li class="dropdown-item">
+                                                            <a href="{{route('voucher_edit',$vocher->id)}}">
+                                                                <i class="feather icon-edit"></i>
+                                                                Edit</a>
+                                                        </li>
 
                                                         <li class="dropdown-item">
                                                             <a href="{{route('voucher_delete',$vocher->id)}}">
                                                                 <i class="feather icon-trash"></i>
                                                                 Delete</a>
                                                         </li>
+
 
                                                     @endif
 

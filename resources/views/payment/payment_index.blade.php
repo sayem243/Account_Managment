@@ -113,9 +113,9 @@
 
                             <td>
                                 @if($payment->status==1)
-                                <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Verified </button>
+                                <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary verify">Verify </button>
                                @elseif($payment->status==2)
-                                    <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Approved </button>
+                                    <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approve </button>
                                 @endif
                             </td>
 

@@ -9,7 +9,7 @@
                         <h5>Profile</h5>
                         <div class="card-header-right">
                             <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                                <a href="{{route('payment_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                                <a href="{{route('register')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                             </div>
 
                             <div class="btn-group card-option">
@@ -36,7 +36,7 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
-                                <th>Mobile Number</th>
+                                <th>Mobile</th>
                                 <th>Father Name</th>
                                 <th>Mother Name</th>
                                 <th>Joining Date</th>
@@ -65,7 +65,7 @@
                                     <td> {{ $profile->mobile }}</td>
                                     <td> {{ $profile->fathername }}</td>
                                     <td> {{ $profile->mothername }}</td>
-                                    <td> {{$profile->joindate}}</td>
+                                    <td>{{$profile->joindate}}</td>
                                     <td> {{ $profile->p_address }}</td>
                                     <td> {{ $profile->address}} </td>
                                     <td> {{ $profile->company['name'] }} </td>

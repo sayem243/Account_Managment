@@ -38,10 +38,10 @@
                         </div>
                     @endif
 
-                    <div class="card-block">
+
                         <div class="card-body">
 
-                            <form class="form-horizontal" action="{{ route('voucher_update',$vochers->id)}}" method="post" enctype="multipart/form-data">
+                            <form class="form-horizontal" novalidate="novalidate" action="{{ route('voucher_update',$vochers->id)}}" method="post" enctype="multipart/form-data">
 
                                 {{ csrf_field() }}
 
@@ -75,7 +75,8 @@
                                         <th>Project</th>
                                         <th>Total Paid Amount</th>
                                         <th>Amount </th>
-                                        <td>Action</td>
+                                        <th>File</th>
+                                        <th>Action</th>
 
                                     </tr>
                                     </thead>
@@ -83,7 +84,6 @@
                                     <div class="col-sm-12 col-form-label" align="right">
                                         <input type="button" class="btn btn-info add-row" value="Add Row">
                                     </div>
-
                                     @foreach($vochers->Vocher_details as $detail )
 
                                         <tr>
@@ -107,26 +107,33 @@
 
                                             <td class="paid">
 
+                                                <?php $total = 0;?>
+                                                @foreach($vochers->Vocher_details as $vocher_detail)
+                                                    <?php
+                                                    $total+= App\Http\Controllers\VocherController::paidAmountByPaymentAndProject($vocher_detail->payment_id, $vocher_detail->project_id); ?>
+                                                @endforeach
+                                                <?php echo $total;?>
+
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control exit_demand_amount" name="exit_amount[]" id="amount" required value="{{$detail->amount}}">
                                             </td>
+                                            <td>
+                                                <input type="file" class="form-control" name="filenames[]" id="filenames" placeholder="" value="{{$detail->filenames}}">
+                                            </td>
 
                                             <td>
-                                                <button type="button" class="btn btn-danger hide">Delete Row</button>
+                                                <button type="button" class="btn btn-danger hide">Delete </button>
                                             </td>
                                         </tr>
-
                                         @endforeach
 
                                     <tr>
-
                                         <td>
                                             <select class="form-control user_payment_list" name="payment_id[]" required>
                                                 <option value=""></option>
                                             </select>
                                         </td>
-
                                         <td>
                                             <select class="form-control payment_project_list" name="project_id[]" required>
                                                 <option value=0> Select Project</option>
@@ -139,8 +146,10 @@
                                             <input type="text" class="form-control demand_amount" name="amount[]" id="amount" required>
                                         </td>
 
+                                        <td>  <input type="file" class="form-control" name="filenames[]" id="filenames" placeholder=""></td>
+
                                         <td>
-                                            <button type="button" class="btn btn-danger hide">Delete Row</button>
+                                            <button type="button" class="btn btn-danger hide">Delete</button>
                                         </td>
                                     </tr>
 
@@ -169,7 +178,7 @@
                             </form>
 
                         </div>
-                    </div>
+
 
                 </div>
             </div>

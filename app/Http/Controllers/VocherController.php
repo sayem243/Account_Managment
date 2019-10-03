@@ -13,7 +13,6 @@ use DB;
 
 class VocherController extends Controller
 {
-
     public function create(){
 
         $payments=Payment::all();
@@ -26,7 +25,6 @@ class VocherController extends Controller
 
      return  view('voucher.create',['payments'=>$payments,'projects'=>$projects,'users'=>$users ]);
     }
-
 
     public function store(Request $request){
         $amount=$request->amount;
@@ -142,13 +140,14 @@ class VocherController extends Controller
         $vocher->comments=$request->comments;
         $exit_amount=$request->exit_amount;
 
-        if($request->hasFile('file')){
-          $vocher->file=$request->file->store('/public/voucher');
-        }
+//        if($request->hasFile('file')){
+//          $vocher->file=$request->file->store('/public/voucher');
+//        }
         $vocher->save();
         $projects=$request->project_id;
         $payments=$request->payment_id;
         $exit_payment_details=$request->exit_payment_detail;
+        $file=$request->files->get('filenames');
 
         if($payments){
             foreach ($payments as $key=>$payment){
@@ -157,24 +156,42 @@ class VocherController extends Controller
                     $vocherDetails->project_id = $projects[$key];
                     $vocherDetails->payment_id = $payment[$key];
                     $vocherDetails->amount = $amount[$key];
+
+                    if($request->hasFile('filenames')){
+                        if($file[$key]->getClientOriginalName()){
+                            $filename = $file[$key]->getClientOriginalName();
+                            $modifyFilename=time() . "_" .$filename;
+                            $vocherDetails->filenames=$modifyFilename;
+                            $file[$key]->move(public_path() . '/files/',$modifyFilename);
+                        }
+                    }
+
                     $vocher->Vocher_details()->save($vocherDetails);
                 }
                 }
             }
-             if($exit_payment_details){
-                foreach ($exit_payment_details as $key=>$detail){
-                    $vocherDetails=Vocher_details::find($detail);
-                    $vocherDetails->project_id=$request->exit_project_id[$key];
-                    $vocherDetails->payment_id=$request->exit_payment_id[$key];
-                    $vocherDetails->amount=$exit_amount[$key];
+        if($exit_payment_details){
+            foreach ($exit_payment_details as $key=>$detail){
+              $vocherDetails=Vocher_details::find($detail);
+
+              $vocherDetails->project_id=$request->exit_project_id[$key];
+              $vocherDetails->payment_id=$request->exit_payment_id[$key];
+              $vocherDetails->amount=$exit_amount[$key];
+
+                    if($request->hasFile('filenames')){
+                        if($file[$key]->getClientOriginalName()){
+                            $filename=$file[$key]->getClientOriginalName();
+                            $modifyFilename=time() ."_".$filename;
+                            $vocherDetails->filenames=$modifyFilename;
+                            $file[$key]->move(public_path() . '/files/',$modifyFilename);
+                        }
+                    }
                     $vocher->Vocher_details()->save($vocherDetails);
                 }
              }
 
         $this->GenerateVocherId($vocher);
-
         return redirect()->route('voucher_index');
-
     }
 
     public function  delete($id){
@@ -182,7 +199,6 @@ class VocherController extends Controller
         $vocher->delete();
         return redirect()->route('voucher_index');
     }
-
     public function approved($id){
         $voucher=Vocher::find($id);
         $voucher->status=2;

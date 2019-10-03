@@ -32,7 +32,6 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <style>
         .hide{
@@ -58,8 +57,9 @@
             position: relative;
         }
 
-
     </style>
+
+
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
@@ -324,27 +324,27 @@
         }
     });
 
-    jQuery(".approved").click(function(e){
+    jQuery(".verify").click(function(e){
         var element = e.target;
         e.preventDefault();
         var id = jQuery(this).attr('data-id');
+        if (confirm("Are you sure ?")) {
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/payment/status/' + id,
+                data: {},
+                success: function (data) {
 
-        jQuery.ajax({
-            type:'POST',
-            dataType : 'json',
-            url:'/payment/status/'+ id,
-            data:{},
-            success:function(data){
-                alert("Are you sure ?");
-                if(data.status==200){
-                    $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
-                    $(element).closest('tr').find('td.status').find('span').html('Verified')
+                    if (data.status == 200) {
+                        $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
+                        $(element).closest('tr').find('td.status').find('span').html('Verified');
+
+                        location.reload(true);
+                    }
                 }
-                $("button").click(function(){
-                    $("div").load("demo_ajax_load.txt");
-                });
-            }
-        });
+            });
+        }
     });
 
     jQuery("#user_id").on('change',function(e){
@@ -363,6 +363,7 @@
                     dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["name"]+'</option>';
                 }
                 jQuery('.user_project_list').html(dataOption);
+
 
             }
         });
@@ -441,34 +442,30 @@
 
     });
 
-    jQuery(".danger").click(function(a){
+    jQuery(".approved").click(function(a){
         var elements = a.target;
         a.preventDefault();
         var id = jQuery(this).attr('data-id-id');
+        if(confirm("Do You want to Approve ?")) {
 
-        var text;
-        var r=confirm("Press a button!");
-
-        jQuery.ajax({
-            type:'POST',
-            dataType : 'json',
-            url:'/payment/status/danger/'+ id,
-            data:{},
-            success:function(data){
-                if(data.status==100) {
-                    if (r == true) {
-                        txt = "Your pressed OK!";
-                        $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
-                        $(elements).closest('tr').find('td.status').find('span').html('Approved')
-                    }
-                    else {
-                        txt = "You pressed Cancel!";
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/payment/status/danger/' + id,
+                data: {},
+                success: function (data) {
+                    if (data.status == 100) {
+                         {
+                            $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
+                            $(elements).closest('tr').find('td.status').find('span').html('Approved')
+                             location.reload(true);
+                        }
                     }
                 }
-            }
-        });
-    });
 
+            });
+        }
+    });
 
 
     jQuery(".voucher-approve").click(function(a){

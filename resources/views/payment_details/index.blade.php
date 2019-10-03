@@ -82,7 +82,7 @@
                                     @if($payment->status==3)
 
                                     <label for="">Approved By: </label>
-                                    {{$payment->userCreatedBy['name']}}
+                                        {{$payment->approvedBy['name']}}
                                     @endif
 
                                 </div>
@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-md-12">
                             <div class="form-group">
-                                <label for="">Remarks :</label>
+                                <label for=""><b>Remarks : </b></label>
                                 {{$payment->comments}}
                             </div>
                             </div>
