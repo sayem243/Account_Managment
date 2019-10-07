@@ -25,6 +25,8 @@ class PermissionTableSeeder extends Seeder
             'projects',
             'amendments',
             'userprofiles',
+            'approve',
+            'verify',
 
 
 

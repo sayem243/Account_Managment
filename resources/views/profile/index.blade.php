@@ -32,9 +32,9 @@
                             <tr>
                                 <th>SL</th>
 
-                                {{--<th>Name</th>--}}
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Name</th>
+                                {{--<th>First Name</th>--}}
+                                {{--<th>Last Name</th>--}}
                                 <th>Email</th>
                                 <th>Mobile</th>
                                 <th>Father Name</th>
@@ -53,23 +53,26 @@
                             <tbody>
                             @php $i=0; @endphp
 
-                            @foreach( $profiles as $profile )
+                            @foreach( $users as $user )
                                 @php $i++ @endphp
 
                                 <tr>
                                     <td>{{$i}}</td>
-                                    {{--<td> {{ $profile->user['name']}}</td>--}}
-                                    <td> {{ $profile->fname }}</td>
-                                    <td> {{ $profile->lname }}</td>
-                                    <td> {{ $profile->email }}</td>
-                                    <td> {{ $profile->mobile }}</td>
-                                    <td> {{ $profile->fathername }}</td>
-                                    <td> {{ $profile->mothername }}</td>
-                                    <td>{{$profile->joindate}}</td>
-                                    <td> {{ $profile->p_address }}</td>
-                                    <td> {{ $profile->address}} </td>
-                                    <td> {{ $profile->company['name'] }} </td>
-                                    <td> {{ $profile->nid }} </td>
+                                    <td> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname']}}</td>
+                                    <td> {{ $user->email }}</td>
+                                    <td> {{ $user->UserProfile['mobile'] }}</td>
+                                    <td> {{ $user->UserProfile['fathername'] }}</td>
+                                    <td> {{ $user->UserProfile['mothername'] }}</td>
+                                    <td> {{ $user->UserProfile['joindate']}}</td>
+                                    <td> {{ $user->UserProfile['p_address'] }}</td>
+                                    <td> {{ $user->UserProfile['address']}} </td>
+
+
+
+                                    <?php $company = \App\Company::find($user->UserProfile['company_id']);?>
+                                    <td> {{ $company['name'] }} </td>
+
+                                    <td> {{ $user->UserProfile['nid'] }} </td>
                                     <td>
                                         <div class="btn-group card-option">
                                             <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
@@ -78,9 +81,15 @@
 
 
                                                 <li class="dropdown-item">
-                                                    <a href="{{route('User_delete',$profile->id)}}">
+                                                    <a href="{{route('User_delete',$user->id)}}">
                                                         <i class="feather icon-trash-2"></i>
                                                         Remove</a>
+                                                </li>
+
+                                                <li class="dropdown-item">
+                                                    <a href="{{route('userprofileEdit',$user->id)}}">
+                                                        <i class="feather icon-edit"></i>
+                                                        Edit</a>
                                                 </li>
 
                                             </ul>

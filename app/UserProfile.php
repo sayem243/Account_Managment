@@ -18,6 +18,4 @@ class UserProfile extends Model
     }
 
 
-
-
 }

@@ -6,8 +6,7 @@
         <div class="card-header">
              <h5>Log In Componant</h5></div>
 
-
-            <form class="form-horizontal" method="POST" action="{{ route('store') }}">
+            <form class="form-horizontal" method="POST" action="{{ route('userprofileUpdate',$user->id) }}">
 
                 <div class="card-body">
                     {{ csrf_field() }}
@@ -15,12 +14,12 @@
                         <div class="col-md-6">
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                 <label for="username" class="control-label">UserName</label>
-                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required>
+                                <input id="username" type="text" class="form-control" name="username" value="{{$user->username}}"  required>
 
                                 @if ($errors->has('username'))
                                     <span class="help-block">
-                                                                <strong>{{ $errors->first('username') }}</strong>
-                                                                </span>
+                               <strong>{{ $errors->first('username') }}</strong>
+                               </span>
                                 @endif
 
                             </div>
@@ -30,12 +29,12 @@
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="control-label">E-Mail Address</label>
 
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control" name="email" value="{{$user->email}}" required >
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('email') }}</strong>
-                                                             </span>
+                                  <strong>{{ $errors->first('email') }}</strong>
+                                      </span>
                                 @endif
 
                             </div>
@@ -45,7 +44,7 @@
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password" class="control-label">Password</label>
 
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password" value="{{$user->password}}" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -57,19 +56,19 @@
                             <div class="form-group">
                                 <label for="password-confirm" class="control-label">Confirm Password</label>
 
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  required>
                             </div>
 
                             <div class="form-group">
                                 <label for="user_project">select Project</label>
-                                <select class="form-control" name="user_projects[]" multiple>
+                                <select class="form-control" name="user_projects[]" multiple >
                                     <option value="">Select Project</option>
                                     @foreach($projects as $project)
                                         <option value="{{$project->id}}"> {{$project->p_name}} </option>
                                     @endforeach
                                 </select>
-
                             </div>
+
 
 
 
@@ -79,7 +78,7 @@
 
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="Text">
+                                <input type="text" class="form-control" name="name" placeholder="Text" value="{{$user->name}}" >
                             </div>
 
                             <div class="form-group">
@@ -96,7 +95,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">select company</label>
+                                <label for="exampleFormControlSelect1">Select company</label>
                                 <select class="form-control" name="company_id" multiple>
                                     <option value="">Select Company</option>
                                     @foreach($companies as $company)
@@ -110,16 +109,7 @@
 
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Role</label>
-                                <textarea class="form-control"   name="role" id="role" rows="1"></textarea>
-
-
-                                {{--@foreach($permission as $value)--}}
-                                {{--<label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}--}}
-                                {{--{{ $value->name }}</label>--}}
-                                {{--<br/>--}}
-                                {{--@endforeach--}}
-
-
+                                <textarea class="form-control"  name="role" id="role" rows="1"></textarea>
 
                             </div>
                         </div>
@@ -134,28 +124,28 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control" name="fname" placeholder="First Name">
+                                    <input type="text" class="form-control" name="fname" placeholder="First Name" value="{{$user->UserProfile->fname}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Fathers Name</label>
-                                    <input type="text" class="form-control" name="fathername" placeholder="Fathers Name">
+                                    <input type="text" class="form-control" name="fathername" placeholder="Fathers Name" value="{{$user->UserProfile->fathername}}" >
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Mobile Number</label>
-                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number">
+                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number" value="{{$user->UserProfile->mobile}}" >
                                 </div>
 
                                 <div class="form-group">
                                     <label>Present Address</label>
-                                    <input type="text" class="form-control" name="p_address" placeholder="Present Address">
+                                    <input type="text" class="form-control" name="p_address" placeholder="Present Address" value="{{$user->UserProfile->p_address}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>NID</label>
-                                    <input type="number" class="form-control" name="nid" placeholder="National ID ">
+                                    <input type="number" class="form-control" name="nid" placeholder="National ID" value="{{$user->UserProfile->nid}}">
                                 </div>
 
                             </div>
@@ -165,24 +155,24 @@
 
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input type="text" class="form-control" name="lname" placeholder="Last Name">
+                                    <input type="text" class="form-control" name="lname" placeholder="Last Name" value="{{$user->UserProfile->lname}}" >
                                 </div>
 
 
 
                                 <div class="form-group">
                                     <label>Mothers Name</label>
-                                    <input type="text" class="form-control" name="mothername" placeholder="Mothers Name">
+                                    <input type="text" class="form-control" name="mothername" placeholder="Mothers Name" value="{{$user->UserProfile->mothername}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Permanent Address</label>
-                                    <input type="text" class="form-control" name="address" placeholder="Permanent Address">
+                                    <input type="text" class="form-control" name="address" placeholder="Permanent Address"  value="{{$user->UserProfile->address}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Joining Date</label>
-                                    <input type="date" class="form-control" name="joindate" placeholder="Joining Date">
+                                    <input type="date" class="form-control" name="joindate" placeholder="Joining Date" value="{{$user->UserProfile->joindate}}">
                                 </div>
 
 

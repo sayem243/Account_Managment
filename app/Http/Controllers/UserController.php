@@ -62,6 +62,18 @@ class UserController extends Controller
         return view('auth.register',['usertypes'=>$usertypes ,'companies'=>$companies,'projects'=>$userProjects]);
     }
 
+    public function userprofileEdit($id){
+
+        $user=User::find($id);
+
+        $projects=Project::all();
+        $usertypes=UserType::all();
+        $companies=Company::all();
+
+        return view('auth.edit',['user'=>$user,'projects'=>$projects,'usertypes'=>$usertypes,'companies'=>$companies]);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -87,10 +99,7 @@ class UserController extends Controller
         );
 
         $user = User::create($data);
-
         $user->assignRole($request->input('roles'));
-
-
         $profile= New UserProfile ;
 
 //        $user->userProfile()->create();
@@ -114,6 +123,63 @@ class UserController extends Controller
 
         return redirect()->route('userprofile')
             ->with('success','User created successfully');
+    }
+
+    public function userprofileUpdate(Request $request,$id){
+
+        $user=User::find($id);
+//
+//        $data = array(
+//            'name' => $request->name,
+//            'email' => $request->email,
+//            'password' =>  $request->password,
+//            'username'=> $request->username,
+//            'user_types_id'=> $request->user_types_id,
+//            'company_id'=>$request->company_id,
+//        );
+//
+        //$user->save($data);
+
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->password=$request->password;
+        $user->username=$request->username;
+        $user->user_types_id=$request->user_types_id;
+      // $user->company_id=$request->company_id;
+
+       // $user->User()->save($data);
+         $user->save();
+
+
+
+//        $profile=UserProfile::find($id);
+//
+//
+//        $profile->fname=$request->fname;
+//        $profile->lname=$request->lname;
+//        $profile->email=$request->email;
+//        $profile->mothername=$request->mothername;
+//        $profile->fathername=$request->fathername;
+//        $profile->p_address=$request->p_address;
+//        $profile->address=$request->address;
+//        $profile->company_id=$request->company_id;
+//        $profile->joindate=$request->joindate;
+//        $profile->nid=$request->nid;
+//        $profile->mobile=$request->mobile;
+//        $profile->company_id=$request->company_id;
+//
+//        $profile->save();
+//        //$profile->UserProfile()->save($profile);
+//
+//        //$user->UserProfile()->save($profile);
+//
+//
+//
+//        $project = Project::find($request->user_projects);
+//        $user->projects()->attach($project);
+        return redirect()->route('userprofile')
+            ->with('success','User Update successfully');
+
     }
 
     public function projectByUser($id){

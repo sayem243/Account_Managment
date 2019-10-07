@@ -29,7 +29,7 @@ Route::get('/', function () {
 
 
 //profile route
-Route::get('/userprofile/create','UserProfileController@create')->name('create');
+//Route::get('/userprofile/create','UserProfileController@create')->name('create');
 Route::get('/userprofile/','UserProfileController@index')->name('userprofile');
 Route::get('/userprofile/edit','UserProfileController@edit')->name('userprofile_edit');
 Route::post('/userprofile/store','UserProfileController@store')->name('userprofile_store');
@@ -140,6 +140,8 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 // Registration Routes...
 Route::get('register', 'UserController@showRegistrationForm')->name('register');
 Route::post('store', 'UserController@store')->name('store');
+Route::get('/register/edit/{id}','UserController@userprofileEdit')->name('userprofileEdit');
+Route::post('/register/update{id}','UserController@userprofileUpdate')->name('userprofileUpdate');
 Route::get('delete/{id}','UserController@delete')->name('User_delete');
 
 // Password Reset Routes...
@@ -160,15 +162,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles','RoleController');
     //Rout::resource('')
 
-
 });
-
-
 
 //voucher
 
 //Route::get('/Voucher/details/{id}','PaymentController@Voucher')->name('Voucher');
-
 
 Route::get('/voucher/create/','VocherController@create')->name('voucher_create');
 Route::post('/voucher/store','VocherController@store')->name('voucher_store');

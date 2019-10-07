@@ -105,7 +105,7 @@
                             <h4 align="center">Advance Payment Details</h4>
                         </div>
 
-                        <table class="table table-striped ">
+                        <table class="table table-striped table-bordered dataTable no-footer ">
                             <thead class="thead-dark">
                             <tr>
                                 <th>SL</th>
