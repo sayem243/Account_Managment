@@ -335,7 +335,6 @@
                 url: '/payment/status/' + id,
                 data: {},
                 success: function (data) {
-
                     if (data.status == 200) {
                         $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
                         $(element).closest('tr').find('td.status').find('span').html('Verified');
@@ -451,7 +450,7 @@
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '/payment/status/danger/' + id,
+                url: '/payment/status/approve/' + id,
                 data: {},
                 success: function (data) {
                     if (data.status == 100) {
@@ -472,20 +471,22 @@
         var elements = a.target;
         a.preventDefault();
         var id = jQuery(this).attr('data-id-id');
+        if(confirm("Do You want to Approve ?")) {
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/voucher/approved/' + id,
+                data: {},
+                success: function (data) {
+                    if (data.status == 200) {
+                        $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
+                        $(elements).closest('tr').find('td.status').find('span').html('Approved')
+                        locations.reload(true);
+                    }
 
-        jQuery.ajax({
-            type:'POST',
-            dataType : 'json',
-            url:'/voucher/approved/'+ id,
-            data:{},
-            success:function(data){
-                if(data.status==200){
-
-                    $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
-                    $(elements).closest('tr').find('td.status').find('span').html('Approved')
                 }
-            }
-        });
+            });
+        }
     });
 
 //amendment approve
@@ -494,18 +495,21 @@
         var elements = a.target;
         a.preventDefault();
         var id = jQuery(this).attr('data-id');
-        jQuery.ajax({
-            type:'POST',
-            dataType : 'json',
-            url:'/amendment/approved/'+ id,
-            data:{},
-            success:function(data){
-                if(data.status==200){
-                    $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
-                    $(elements).closest('tr').find('td.status').find('span').html('Approved')
+        if(confirm("Do You want to Approve ?")) {
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/amendment/approved/' + id,
+                data: {},
+                success: function (data) {
+                    if (data.status == 200) {
+                        $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
+                        $(elements).closest('tr').find('td.status').find('span').html('Approved')
+                        location.reload(true);
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
 </script>

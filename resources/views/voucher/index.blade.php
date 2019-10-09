@@ -33,6 +33,7 @@
                                 <thead class="thead-dark">
                                 <tr>
                                     <th>SL</th>
+                                    <th>Date</th>
                                     <th>Payment ID</th>
                                     <th>Employe Name</th>
                                     <th>Company</th>
@@ -42,7 +43,7 @@
                                     <th>Balance</th>
                                     <th>status</th>
                                     <th>Actions</th>
-                                    <th>Date</th>
+
 
                                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                                         <i class="feather icon-settings"></i>
@@ -56,6 +57,9 @@
 
                                     <tr>
                                         <td>{{$i}}</td>
+
+                                        <td>{{ date('d-m-Y',strtotime($vocher->created_at))}}</td>
+
                                         <td>  @foreach($vocher->Vocher_details as $vocher_detail)
                                                   {{$vocher_detail->payment->payment_id}},
                                                 @endforeach
@@ -85,11 +89,11 @@
                                         </td>
                                         <td>
                                             @if($vocher->status==1)
-                                            <button data-id-id="{{$vocher->id}}" type="button" class="btn btn-sm  btn-primary voucher-approve">Approved</button>
+                                            <button data-id-id="{{$vocher->id}}" type="button" class="btn btn-sm  btn-primary voucher-approve">Approve</button>
                                                 @endif
                                         </td>
 
-                                        <td>{{ date('d-m-Y',strtotime($vocher->created_at))}}</td>
+
 
                                         <td>
                                             <div class="btn-group card-option">
@@ -121,19 +125,18 @@
                                                                 Delete</a>
                                                         </li>
 
-
                                                     @endif
 
-
-
                                                 </ul>
-
                                             </div>
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </table>
+
+                        <ul class="pagination justify-content-end">
+                            {{$vochers->links('vendor.pagination.bootstrap-4')}}
+                        </ul>
                 </div>
             </div>
         </div>

@@ -82,7 +82,7 @@ class VocherController extends Controller
 
     Public function index(){
 
-      $vochers=Vocher::all();
+      $vochers=Vocher::orderBy('created_at','DSC')->paginate(25);
         return  view('voucher.index',['vochers'=>$vochers]);
     }
 

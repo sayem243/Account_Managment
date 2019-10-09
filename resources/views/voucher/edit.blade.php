@@ -157,8 +157,8 @@
                                 </table>
                                 <div class="line aligncenter">
 
-                                    <div class="form-group row">
-                                        <label for="file" class="col-sm-2 col-form-label">File :</label>
+                                    <div class="form-group row"> <label for="file" class="col-sm-2 col-form-label">File :</label>
+
                                         <div class="col-sm-10">
                                             <input type="file" class="form-control" name="file" id="file" placeholder="">
                                         </div>
@@ -166,9 +166,8 @@
 
 
                                     <div class="form-group row">
-                                        <div class="col-sm-12 col-form-label" align="right">
-
-                                            <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
+                                      <div class="col-sm-12 col-form-label" align="right">
+                                          <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
                                             {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                                         </div>
                                     </div>

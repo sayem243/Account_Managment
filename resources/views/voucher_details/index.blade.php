@@ -100,7 +100,14 @@
 
                                 {{--<td>{{$detail->payment_details->demand_amount}}</td>--}}
                                 <td>{{$detail->amount}}</td>
-                                <td><a href="{{asset('files/' .$detail->filenames)}}" download>Download</a> </td>
+
+                                <td>
+                                    @if($detail->filenames)
+                                    <a href="{{asset('files/' .$detail->filenames)}}" download>Download</a>
+
+                                    @endif
+
+                                </td>
 
                                 <td>{{date('d-m-y',strtotime($detail->created_at))}}</td>
 

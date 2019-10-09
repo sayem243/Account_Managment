@@ -112,8 +112,8 @@
                             <tr>
                                 <th>SL</th>
                                 <th>Projects</th>
-                                <th>Demand Amount(BDT) </th>
-                                <th>Paid Amount</th>
+                                <th>Demand (BDT) </th>
+                                <th>Paid (BDT)</th>
                                 <th> File </th>
                                 <th>Date</th>
 
@@ -137,7 +137,14 @@
                                 <td>{{$detail->project['p_name']}}</td>
                                 <td>{{$detail->demand_amount}}</td>
                                 <td>{{$detail->paid_amount}}</td>
-                                <td><a href="{{asset('files/'.$detail->filenames)}}" download>Download</a> </td>
+
+                                <td>
+                                    @if($detail->filenames)
+                                    <a href="{{asset('files/'.$detail->filenames)}}" download>Download</a>
+
+                                    @endif
+
+                                </td>
 
                                 {{--<td>{{$detail->filenames}}</td>--}}
 

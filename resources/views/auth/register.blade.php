@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="user_project">select Project</label>
+                                    <label for="user_project">Select Project</label>
                                     <select class="form-control" name="user_projects[]" multiple>
                                         <option value="">Select Project</option>
                                         @foreach($projects as $project)
@@ -97,8 +97,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect1">select company</label>
-                                    <select class="form-control" name="company_id" multiple>
+                                    <label for="exampleFormControlSelect1">Select company</label>
+                                    <select class="form-control" name="company_id">
                                         <option value="">Select Company</option>
                                         @foreach($companies as $company)
                                             <option value="{{$company->id}}"> {{$company->name}} </option>
@@ -109,20 +109,17 @@
 
 
 
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Role</label>
-                                    <textarea class="form-control"   name="role" id="role" rows="1"></textarea>
+                                {{--<div class="form-group">--}}
+                                    {{--<label for="exampleFormControlTextarea1">Role</label>--}}
+                                    {{--<textarea class="form-control"   name="role" id="role" rows="1"></textarea>--}}
 
 
                                     {{--@foreach($permission as $value)--}}
                                         {{--<label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}--}}
                                             {{--{{ $value->name }}</label>--}}
-                                        {{--<br/>--}}
-                                    {{--@endforeach--}}
+                                        {{--<br/>--}}{{----}}{{--@endforeach--}}
 
-
-
-                                </div>
+                                {{--</div>--}}
                         </div>
                     </div>
 
@@ -143,15 +140,14 @@
                                     <input type="text" class="form-control" name="fathername" placeholder="Fathers Name">
                                 </div>
 
+                                <div class="form-group">
+                                    <label>Present Address</label>
+                                    <input type="text" class="form-control" name="p_address" placeholder="Present Address">
+                                </div>
 
                                 <div class="form-group">
                                     <label>Mobile Number</label>
                                     <input type="number" class="form-control" name="mobile" placeholder="Mobile Number">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Present Address</label>
-                                    <input type="text" class="form-control" name="p_address" placeholder="Present Address">
                                 </div>
 
                                 <div class="form-group">
@@ -168,8 +164,6 @@
                                     <label>Last Name</label>
                                     <input type="text" class="form-control" name="lname" placeholder="Last Name">
                                 </div>
-
-
 
                                 <div class="form-group">
                                     <label>Mothers Name</label>

@@ -107,11 +107,6 @@
 
 
 
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Role</label>
-                                <textarea class="form-control"  name="role" id="role" rows="1"></textarea>
-
-                            </div>
                         </div>
                     </div>
 
@@ -133,15 +128,18 @@
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label>Mobile Number</label>
-                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number" value="{{$user->UserProfile->mobile}}" >
-                                </div>
 
                                 <div class="form-group">
                                     <label>Present Address</label>
                                     <input type="text" class="form-control" name="p_address" placeholder="Present Address" value="{{$user->UserProfile->p_address}}">
                                 </div>
+
+                                <div class="form-group">
+                                    <label>Mobile Number</label>
+                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number" value="{{$user->UserProfile->mobile}}" >
+                                </div>
+
+
 
                                 <div class="form-group">
                                     <label>NID</label>

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
            // $table->boolean('enable')->nullabele();
 
+
             $table->integer('user_types_id')->unsigned()->nullable();
 
 

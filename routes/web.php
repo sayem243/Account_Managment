@@ -31,15 +31,13 @@ Route::get('/', function () {
 //profile route
 //Route::get('/userprofile/create','UserProfileController@create')->name('create');
 Route::get('/userprofile/','UserProfileController@index')->name('userprofile');
+ROute::get('/userprofile/show/{id}','UserProfileController@show')->name('userprofile_show');
 Route::get('/userprofile/edit','UserProfileController@edit')->name('userprofile_edit');
 Route::post('/userprofile/store','UserProfileController@store')->name('userprofile_store');
 
 Route::get('/userprofile/update','UserProfileController@update')->name('userprofile_update');
 
-
-
 //company route
-
 
 
 Route::get('home', [
@@ -84,7 +82,7 @@ Route::get('/payment/edit/{id}','PaymentController@edite')->name('payment_edit')
 Route::post('/payment/update/{id}','PaymentController@update')->name('payment_update');
 Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
 Route::post('/payment/status/{id}','PaymentController@verify')->name('verify');
-Route::post('/payment/status/danger/{id}','PaymentController@approve')->name('danger');
+Route::post('/payment/status/approve/{id}','PaymentController@approve')->name('danger');
 
 
 //Ajax route
