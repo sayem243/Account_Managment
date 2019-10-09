@@ -12,11 +12,11 @@
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                             <a href="{{route('payment_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                             @if($payment->status==1)
-                            <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Approved </button>
-                            <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-warning approved">Verified </button>
+                            <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approved </button>
+                            <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-warning verify">Verified </button>
                                 {{--<a href="{{route('Voucher',$payment->id)}}" class="btn btn-sm  btn-info"><i class="fab fa-amazon-pay"></i>Vocher</a>--}}
                                 @elseif($payment->status==2)
-                                <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary danger">Approved </button>
+                                <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approved </button>
                             @endif
 
                         </div>
@@ -51,9 +51,6 @@
                                 {{--{{$payment->user['name'] }}--}}
                                 {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
                             </div>
-
-
-
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Payment Date: </label>
@@ -163,7 +160,7 @@
                         </div>
 
                         <table class="table table-striped table-bordered dataTable no-footer">
-                            <thead class="thead-dark">
+                            <thead class="thead-dark" >
                             <tr>
                                 <th>SL</th>
                                 <th>Projects</th>
