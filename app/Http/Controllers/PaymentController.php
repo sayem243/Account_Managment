@@ -73,7 +73,7 @@ class PaymentController extends Controller
                 $paymentDetails->project_id=$project;
                 $paymentDetails->demand_amount=$demand_amount[$key];
                 $paymentDetails->paid_amount=$paid_amount[$key];
-                $paymentDetails->paid_amount=$paid_amount[$key];
+                //$paymentDetails->paid_amount=$paid_amount[$key];
 
                 if($request->hasFile('filenames')){
                    if ($file[$key]->getClientOriginalName()) {
@@ -148,7 +148,6 @@ class PaymentController extends Controller
         $paid_amount=$request->paid_amount;
         $exit_demand_amount=$request->exit_demand_amount;
         $exit_paid_amount=$request->exit_paid_amount;
-
         $payment->user_id=$request->user_id;
         $payment->comments=$request->comments;
 

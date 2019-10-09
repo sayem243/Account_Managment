@@ -34,6 +34,10 @@ class Payment extends Model
         return $this->belongsTo('App\User','approved_by');
     }
 
+    public function verifiedBy(){
+        return $this->belongsTo('App\User','verified_by');
+    }
+
     public function usertype(){
         return $this->belongsTo('App\UserType');
     }

@@ -32,19 +32,32 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+
                                 <div class="form-group">
                                     <label for="">User Name: </label>
                                     {{--{{$payment->user['name'] }}--}}
                                     {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
                                 </div>
+
                                 <div class="form-group">
                                     <label for="">Mobile Number: </label>
                                     {{$payment->user->userProfile['mobile'] }}
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">NID: </label>
-                                    {{$payment->user->userProfile['nid'] }}
+
+                                    <label for="">Verified By:</label>
+                                    {{$payment->verifiedBy['name']}}
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    @if($payment->status==3)
+                                        <label for="">Approved By: </label>
+                                        {{$payment->approvedBy['name']}}
+                                    @endif
+
                                 </div>
 
                             </div>
@@ -52,8 +65,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="">Remarks :</label>
-                                    {{$payment->comments}}
+                                    <label for=""><b>Remarks :</b></label>
+                                    <b>{{$payment->comments}}</b>
                                 </div>
                             </div>
                         </div>
@@ -75,18 +88,14 @@
                             </tr>
                             </thead>
 
-
                             <tbody>
                             @php
                                 $i=0;
-
                             @endphp
-
                             @foreach($payment->Payment_details as $detail )
                                 @php
                                     $i++ ;
                                 @endphp
-
                                 <tr>
                                     <td>{{$i}}</td>
                                     <td>{{$detail->project['p_name']}}</td>

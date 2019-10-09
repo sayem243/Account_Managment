@@ -63,9 +63,8 @@
                                 <label for="">Company: </label>
                                 {{$payment->user->userProfile->company['name']}}
                             </div>
-
-
                         </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Payment ID: </label>
@@ -79,12 +78,18 @@
                                 </div>
 
                                 <div class="form-group">
+
+                                    <label for="">Verified By:</label>
+                                        {{$payment->verifiedBy['name']}}
+                                </div>
+
+
+                                <div class="form-group">
                                     @if($payment->status==3)
 
                                     <label for="">Approved By: </label>
                                         {{$payment->approvedBy['name']}}
                                     @endif
-
                                 </div>
 
 

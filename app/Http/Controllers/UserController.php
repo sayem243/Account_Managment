@@ -142,41 +142,38 @@ class UserController extends Controller
 
         $user->name=$request->name;
         $user->email=$request->email;
-        $user->password=$request->password;
+        $user->password=bcrypt($request->password);
         $user->username=$request->username;
         $user->user_types_id=$request->user_types_id;
       // $user->company_id=$request->company_id;
 
        // $user->User()->save($data);
-         $user->save();
+//        $user->save();
 
+//        $profile=UserProfile::find($user->UserProfile);
 
+        $user->UserProfile->fname=$request->fname;
+        $user->UserProfile->lname=$request->lname;
+        $user->UserProfile->email=$request->email;
+        $user->UserProfile->mothername=$request->mothername;
+        $user->UserProfile->fathername=$request->fathername;
+        $user->UserProfile->p_address=$request->p_address;
+        $user->UserProfile->address=$request->address;
+        $user->UserProfile->company_id=$request->company_id;
+        $user->UserProfile->joindate=$request->joindate;
+        $user->UserProfile->nid=$request->nid;
+        $user->UserProfile->mobile=$request->mobile;
+        $user->UserProfile->company_id=$request->company_id;
 
-//        $profile=UserProfile::find($id);
-//
-//
-//        $profile->fname=$request->fname;
-//        $profile->lname=$request->lname;
-//        $profile->email=$request->email;
-//        $profile->mothername=$request->mothername;
-//        $profile->fathername=$request->fathername;
-//        $profile->p_address=$request->p_address;
-//        $profile->address=$request->address;
-//        $profile->company_id=$request->company_id;
-//        $profile->joindate=$request->joindate;
-//        $profile->nid=$request->nid;
-//        $profile->mobile=$request->mobile;
-//        $profile->company_id=$request->company_id;
-//
-//        $profile->save();
-//        //$profile->UserProfile()->save($profile);
-//
-//        //$user->UserProfile()->save($profile);
-//
-//
-//
-//        $project = Project::find($request->user_projects);
-//        $user->projects()->attach($project);
+       // $profile->save();
+
+        $user->push();
+
+        //$user->UserProfile()->save();
+
+        $project = Project::find($request->user_projects);
+        $user->projects()->attach($project);
+
         return redirect()->route('userprofile')
             ->with('success','User Update successfully');
 
