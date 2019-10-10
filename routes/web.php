@@ -182,5 +182,7 @@ Route::get('voucher/details/{id}','VocherDetailsController@index')->name('vouche
 Route::get('/voucher/details/print-pdf/{id}','VocherDetailsController@printPDF')->name('voucher_printPDF');
 Route::get('voucher/details/print/{id}','VocherDetailsController@prnpriview')->name('print');
 
+Route::get('/reports/details','ReportController@index')->name('report_index');
+
 
 Route::get('/generate-pdf','PaymentDetailsController@generatePDF');

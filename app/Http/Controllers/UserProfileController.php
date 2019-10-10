@@ -53,14 +53,13 @@ class UserProfileController extends Controller
     }
 
     public function show($id){
-        $users=UserProfile::find($id);
+        $users=User::find($id);
         return view('profile.show',['users'=>$users]);
     }
-
+    //asas
     public function edit($id){
         $userprofile= UserProfile::find($id);
         return view('profile.edit',['userprofiles'=>$userprofile] );
-
 
     }
 }

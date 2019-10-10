@@ -1,10 +1,9 @@
 @extends('admin.index')
 @section('title','Voucher Entry')
 @section('template')
-
-    <div class="col-sm-12">
-        <div class="row">
-            <div class="col-sm-12">
+ <div class="col-sm-12">
+      <div class="row">
+          <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <h5>Voucher Entry </h5>
@@ -71,14 +70,14 @@
 
                                 </div>
                                 <table class="table table-bordered voucher">
-                                    <thead>
+                                    <thead class="thead-dark">
                                     <tr>
                                         <th>Payment ID</th>
                                         <th>Project</th>
                                         <th>Total Paid Amount</th>
                                         <th>Received Amount</th>
                                         <th>File</th>
-                                        <td>Action</td>
+                                        <th>Action</th>
 
                                     </tr>
                                     </thead>

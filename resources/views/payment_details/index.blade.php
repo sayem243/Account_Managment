@@ -131,7 +131,6 @@
                                 @php
                                     $i++ ;
                                 @endphp
-
                             <tr>
                                 <td>{{$i}}</td>
                                 <td>{{$detail->project['p_name']}}</td>

@@ -33,17 +33,19 @@
                                 <th>SL</th>
 
                                 <th>Name</th>
+                                <th>Company</th>
                                 {{--<th>First Name</th>--}}
                                 {{--<th>Last Name</th>--}}
-                                <th>Email</th>
                                 <th>Mobile</th>
-                                <th>Father Name</th>
-                                <th>Mother Name</th>
-                                <th>Joining Date</th>
-                                <th>Present Address</th>
-                                <th>Permanent Address</th>
-                                <th>Company</th>
-                                <th>NID</th>
+                                <th>Email</th>
+
+                                {{--<th>Father Name</th>--}}
+                                {{--<th>Mother Name</th>--}}
+                                {{--<th>Joining Date</th>--}}
+                                {{--<th>Present Address</th>--}}
+                                {{--<th>Permanent Address</th>--}}
+
+                                {{--<th>NID</th>--}}
                                 <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                                     <i class="feather icon-settings"></i>
 
@@ -59,20 +61,22 @@
                                 <tr>
                                     <td>{{$i}}</td>
                                     <td> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname']}}</td>
-                                    <td> {{ $user->email }}</td>
-                                    <td> {{ $user->UserProfile['mobile'] }}</td>
-                                    <td> {{ $user->UserProfile['fathername'] }}</td>
-                                    <td> {{ $user->UserProfile['mothername'] }}</td>
-                                    <td> {{ $user->UserProfile['joindate']}}</td>
-                                    <td> {{ $user->UserProfile['p_address'] }}</td>
-                                    <td> {{ $user->UserProfile['address']}} </td>
-
-
 
                                     <?php $company = \App\Company::find($user->UserProfile['company_id']);?>
                                     <td> {{ $company['name'] }} </td>
+                                    {{--<td> {{$user->UserProfile->company['name']}}</td>--}}
 
-                                    <td> {{ $user->UserProfile['nid'] }} </td>
+                                    <td> {{ $user->UserProfile['mobile'] }}</td>
+
+                                    <td> {{ $user->email }}</td>
+
+                                    {{--<td> {{ $user->UserProfile['fathername'] }}</td>--}}
+                                    {{--<td> {{ $user->UserProfile['mothername'] }}</td>--}}
+                                    {{--<td> {{ $user->UserProfile['joindate']}}</td>--}}
+                                    {{--<td> {{ $user->UserProfile['p_address'] }}</td>--}}
+                                    {{--<td> {{ $user->UserProfile['address']}} </td>--}}
+                                    {{--<td> {{ $user->UserProfile['nid'] }} </td>--}}
+                                    
                                     <td>
                                         <div class="btn-group card-option">
                                             <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
