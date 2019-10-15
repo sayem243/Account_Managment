@@ -11,17 +11,20 @@ use PDF;
 
 class PaymentDetailsController extends Controller
 {
-
     Public function index($id){
         $payment=Payment::find($id);
         return view('payment_details.index',['payment'=>$payment]);
     }
 
-
-    public function printPDF($id){
+    public function paymentPDF($id){
         $payment=Payment::find($id);
         $pdf = PDF::loadView('payment.pdf_view', compact('payment'));
-        return $pdf->stream('invoice.pdf',array("Attachment" => false));
+        return $pdf->stream("invoice.pdf",array("Attachment" => false));
+     }
+
+    public function printpdf($id){
+        $payment=Payment::find($id);
+        return view('payment.payment-print',compact('payment'));
     }
 
     public function approved($id){
@@ -36,6 +39,5 @@ class PaymentDetailsController extends Controller
         $payment->delete();
         return redirect()->route('payment');
     }
-
 
 }

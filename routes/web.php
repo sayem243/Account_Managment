@@ -96,7 +96,9 @@ Route::get('/user/payment/paid/{payment}/{project}','UserController@paidAmount')
 
 Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
 Route::get('/payment/details/delete/{id}','PaymentDetailsController@delete')->name('details_delete');
-Route::get('/payment/print-pdf/{id}','PaymentDetailsController@printPDF')->name('printPDF');
+Route::get('/payment/print-pdf/{id}','PaymentDetailsController@paymentPDF')->name('printPDF');
+
+Route::get('/payment/print/{id}','PaymentDetailsController@printpdf')->name('payment_print');
 
 
 Route::post('/amendment/approved/{id}','PaymentDetailsController@approved')->name('amendment_approved');
@@ -182,7 +184,9 @@ Route::get('voucher/details/{id}','VocherDetailsController@index')->name('vouche
 Route::get('/voucher/details/print-pdf/{id}','VocherDetailsController@printPDF')->name('voucher_printPDF');
 Route::get('voucher/details/print/{id}','VocherDetailsController@prnpriview')->name('print');
 
-Route::get('/reports/details','ReportController@index')->name('report_index');
+//Reports
+
+Route::get('/reports/details/','ReportController@index')->name('report_index');
 
 
 Route::get('/generate-pdf','PaymentDetailsController@generatePDF');

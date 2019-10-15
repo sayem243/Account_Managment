@@ -7,10 +7,6 @@
                     <div class="card-header">
                         <h5>Reports</h5>
                         <div class="card-header-right">
-                            <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                                <a href="{{route('register')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
-                            </div>
-
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
                                     <i class="fas fa-ellipsis-v"></i>
@@ -25,33 +21,47 @@
                         </div>
                     </div>
                     <div class="card-body">
-
                         <div class="row">
                          <div class="col-md-6">
                              <div class="form-group">
                                  <label for="">Select Date: </label>
+                                 <?php
+
+                                 ?>
+
                                    <input type="date" class="">
                              </div>
                          </div>
-                     </div>
-
+                      </div>
                         <table class="table table-striped table-bordered dataTable no-footer">
                             <thead class="thead-dark">
-
-                            @foreach($projects as $project )
-
-                                <th>{{$project->p_name}}</th>
-
-
-
-                            @endforeach
+                                <tr>
+                                    @foreach($projects as $project )
+                                        <th>{{$project->id}}-{{$project->p_name}}</th>
+                                    @endforeach
+                                </tr>
                             </thead>
-
                             <tbody>
-                            @foreach($payments as $payment)
-                             <td>{{$payment->total_paid_amount}}</td>
-                            @endforeach
 
+
+                            <tr>
+                                @foreach($projects as $project )
+                                    <td style="vertical-align: text-top">
+                                    @if(array_key_exists($project->id, $paymentDetails))
+                                        <table class="table table-bordered">
+                                            @foreach($paymentDetails[$project->id] as $paymentDetail)
+                                            <tr>
+                                                <td>
+                                                     {{$paymentDetail}}
+                                                </td>
+                                            </tr>
+                                            @endforeach
+
+                                        </table>
+                                    @endif
+                                    </td>
+                                @endforeach
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -61,7 +71,6 @@
             </div>
         </div>
     </div>
-
 
 
 

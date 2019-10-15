@@ -1,3 +1,7 @@
 *
+
 !public/
+
+storage/app/public/file
+
 !.gitignore

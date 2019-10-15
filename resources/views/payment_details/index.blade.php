@@ -30,7 +30,10 @@
                                 <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
                                 <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
                                <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-                               <li class="dropdown-item reload-card"><a href="{{route('printPDF',$payment->id)}}"><i class="far fa-file-pdf"></i> PDF</a></li>
+                               <li class="dropdown-item reload-card"><a target="_blank" href="{{route('printPDF',$payment->id)}}"><i class="far fa-file-pdf"></i> PDF</a></li>
+                               <li class="dropdown-item reload-card"><a target="_blank" href="{{route('payment_print',$payment->id)}}"><i class="fa fa-print"></i> Print</a></li>
+
+
                                <li class="dropdown-item reload-card"><a href="{{route('details_delete',$payment->id)}}"><i class="feather icon-trash-2"></i> Delete</a></li>
 
 
@@ -171,6 +174,7 @@
                                 <th>SL</th>
                                 <th>Projects</th>
                                 <th>Amendment Amount</th>
+                                <th>File</th>
                                 <th>status</th>
                                 <th>Action</th>
                                 <th>Date</th>
@@ -188,6 +192,14 @@
                                     <td>{{$i}}</td>
                                     <td>{{$detail->project['p_name']}}</td>
                                     <td>{{$detail->amendment_amount}}</td>
+
+                                    <td>
+                                        @if($detail->file)
+                                          <a href="{{Storage::url($detail->file)}}" download>Download</a>
+                                              @endif
+                                    </td>
+
+
                                     <td class="status">
                                         @if($detail->status == 1)
                                             <span class="label label-primary">Created</span>

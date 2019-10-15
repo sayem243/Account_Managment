@@ -54,7 +54,7 @@
                   </div>
 
                   <table class="table table-bordered payment_details_table">
-                      <thead>
+                      <thead class="thead-dark">
                       <tr>
                           <th>Project</th>
                           <th>Demand Amount</th>

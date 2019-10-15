@@ -12,8 +12,6 @@ class VocherDetailsController extends Controller
 {
     public function index($id){
         $details=Vocher::find($id);
-
-
         return view('voucher_details.index',['details'=>$details]);
     }
 
@@ -21,7 +19,6 @@ class VocherDetailsController extends Controller
         $details=Vocher::find($id);
 
         $pdf=PDF::loadView('voucher_details.voucher-pdf',compact('details'));
-
         return $pdf->stream("voucher.pdf", array("Attachment" => false));
     }
 

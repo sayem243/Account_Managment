@@ -38,6 +38,7 @@ class AmmendmentController extends Controller
 
         $payment->save();
 
+
         foreach ($request->project_id as $key=>$project){
             if($request->amendment_amount[$key]>0){
                 $amendment=new Ammendment;
@@ -47,9 +48,9 @@ class AmmendmentController extends Controller
                 $amendment->approved='approved';
 
                 if($request->hasFile('file')){
-
                     $amendment->file=$request->file->store('/public/file');
                 }
+
                 $amendment->save();
             }
         }

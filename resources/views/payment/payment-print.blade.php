@@ -14,63 +14,62 @@
 
                     <div class="card-body">
                         <div class="row">
-                         <table cellpadding="3" width="100%" class="">
-                             <tr>
-                                 <td>
-                                     <label for="">Employe Name: </label>
-                                     {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
-                                 </td>
-                                 <td>
-                                     <label for="exampleInputEmail1">Payment ID: </label>
-                                     {{$payment->payment_id }}
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <td> <label for="exampleInputEmail1">Payment Date: </label>
-                                     {{date('d-m-Y',strtotime($payment->created_at))}}
-                                 </td>
-                                 <td>
-                                     <label for="">Mobile Number: </label>
-                                     {{$payment->user->userProfile['mobile'] }}
-                                 </td>
-                             </tr>
 
-                             <tr>
-                                 <td>
-                                     @if($payment->status==3)
-                                         <label for="">Approved By: </label>
-                                         {{$payment->approvedBy['name']}}
-                                     @endif
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Payment ID: </label>
+                                    {{$payment->payment_id }}
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Payment Date: </label>
+                                    {{date('d-m-Y',strtotime($payment->created_at))}}
+                                </div>
 
-                                 </td>
-                                 <td>
+                                <div class="form-group">
+                                    <label for="">Company: </label>
+                                    {{$payment->user->userProfile->company['name']}}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
 
-                                     <label for="">Verified By:</label>
-                                     {{$payment->verifiedBy['name']}}
+                                <div class="form-group">
+                                    <label for="">User Name: </label>
+                                    {{--{{$payment->user['name'] }}--}}
+                                    {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
+                                </div>
 
-                                 </td>
-                             </tr>
-                             <tr>
+                                <div class="form-group">
+                                    <label for="">Mobile Number: </label>
+                                    {{$payment->user->userProfile['mobile'] }}
+                                </div>
 
-                                 <td>
-                                     <label for="">Company: </label>
-                                     {{$payment->user->userProfile->company['name']}}
+                                <div class="form-group">
+
+                                    <label for="">Verified By:</label>
+                                    {{$payment->verifiedBy['name']}}
+
+                                </div>
 
 
-                                 </td>
-                             </tr>
+                                <div class="form-group">
+                                    @if($payment->status==3)
+                                        <label for="">Approved By: </label>
+                                        {{$payment->approvedBy['name']}}
+                                    @endif
 
-                             <tr>
-                                 <td>
-                                     <label for=""><b>Remarks :</b></label>
-                                     <b>{{$payment->comments}}</b>
-                                 </td>
-                             </tr>
+                                </div>
 
-                         </table>
+                            </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for=""><b>Remarks :</b></label>
+                                    <b>{{$payment->comments}}</b>
+                                </div>
+                            </div>
+                        </div>
 
 
                         <div class="col-md-12">
@@ -82,8 +81,8 @@
                             <tr>
                                 <th>SL</th>
                                 <th>Projects</th>
-                                <th>Demand (BDT) </th>
-                                <th>Paid (BDT)</th>
+                                <th>Demand Amount(BDT) </th>
+                                <th>Paid Amount</th>
                                 <th>Date</th>
 
                             </tr>
@@ -120,7 +119,7 @@
                             <tr>
                                 <th>SL</th>
                                 <th>Projects</th>
-                                <th>Amendment (BDT)</th>
+                                <th>Amendment Amount</th>
                                 <th>Date</th>
 
                             </tr>
@@ -148,5 +147,13 @@
 
         </div>
     </div>
+
+
+
+
+ <script type="text/javascript">
+        window.print();
+ </script>
+
 
 @endsection
