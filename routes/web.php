@@ -187,6 +187,9 @@ Route::get('voucher/details/print/{id}','VocherDetailsController@prnpriview')->n
 //Reports
 
 Route::get('/reports/details/','ReportController@index')->name('report_index');
+Route::get('/reports/details/{date_time}','ReportController@reportDate')->name('report_date');
 
 
+
+Route::get('/reports/details/reports/','ReportController@report')->name('report_try');
 Route::get('/generate-pdf','PaymentDetailsController@generatePDF');

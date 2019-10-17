@@ -22,39 +22,38 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                         <div class="col-md-6">
-                             <div class="form-group">
-                                 <label for="date">Select Date: </label>
-                                   <input type="date" class="datepicker">
-                             </div>
-                         </div>
-                      </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Select Date: </label>
+                                    <?php
+
+                                    ?>
+
+                                    <input type="date" class="">
+                                </div>
+                            </div>
+                        </div>
                         <table class="table table-striped table-bordered dataTable no-footer">
                             <thead class="thead-dark">
-                                <tr>
-                                    @foreach($projects as $project )
-                                        <th>{{$project->p_name}}</th>
-
-                                    @endforeach
-                                </tr>
+                            <tr>
+                                @foreach($projects as $project )
+                                    <th>{{$project->p_name}}</th>
+                                @endforeach
+                            </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 @foreach($projects as $project )
                                     <td style="vertical-align: text-top">
-                                    @if(array_key_exists($project->id, $paymentDetails))
-                                        <table class="table table-bordered">
-                                            @foreach($paymentDetails[$project->id] as $paymentDetail)
-                                            <tr>
-                                                <td>
-                                                    {{$paymentDetail}}
-                                                </td>
-                                            </tr>
+                                      <table class="table table-bordered">
+                                       @foreach($paymentDetails as $paymentDetail)
+                                        <tr>
+                                        <td>
+                                       {{date('d-m-y',strtotime($paymentDetail->created_at))}}-{{$paymentDetail->paid_amount}}
+                                         </td>
+                                        </tr>
                                             @endforeach
-
-                                        </table>
-                                    @endif
-
+                                         </table>
                                     </td>
                                 @endforeach
                             </tr>
@@ -67,5 +66,7 @@
             </div>
         </div>
     </div>
+
+
 
 @endsection

@@ -172,6 +172,7 @@
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Reports</span></a>
                     <ul class="pcoded-submenu">
                         <li class="nav-item"><a href="{{route('report_index')}}" class="nav-link"><span class="pcoded-mtext">Report </span></a></li>
+                        <li class="nav-item"><a href="{{route('report_try')}}" class="nav-link"><span class="pcoded-mtext">Test </span></a></li>
 
                     </ul>
                 </li>
@@ -512,13 +513,33 @@
                 success: function (data) {
                     if (data.status == 200) {
                         $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
-                        $(elements).closest('tr').find('td.status').find('span').html('Approved')
+                        $(elements).closest('tr').find('td.status').find('span').html('Approved');
                         location.reload(true);
                     }
                 }
             });
         }
     });
+
+    // Report Date Filtering
+
+    jQuery(".datepicker").click(function (a) {
+        var elements =a.target;
+        a.preventDefault();
+        var id = jQuery(this).val();
+        jQuery.ajax({
+             type: 'GET',
+            dataType:'json',
+            url:'/reports/details/'+ date_time ,
+            data:{},
+            success:function (data){
+
+//                 jQuery(elements).closest('label').find('datepicker')
+
+            }
+        })
+
+    })
 
 </script>
 </body>
