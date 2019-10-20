@@ -8,6 +8,7 @@ use App\Project;
 use Illuminate\Http\Request;
 use Monolog\Formatter\ScalarFormatter;
 
+
 class ReportController extends Controller
 {
     public function index(){
@@ -32,26 +33,23 @@ class ReportController extends Controller
     }
 
 
-    public function report(){
+    public function reportDate(){
 
-        $projects=Project::all();
+
+        $projects= Project::all();
         $paymentDetails=Payment_details::all();
         $details = array();
+        $date=Payment_details::all();
 
-        return view('reports.try',['projects'=>$projects,'paymentDetails'=>$paymentDetails]);
+
+        foreach ($paymentDetails as $detail){
+            $details[$detail->project->id][]  = $detail->paid_amount;
+
+        }
+
+        return view('reports.try',['projects'=>$projects,'paymentDetails'=>$details ,'dates'=>$date]);
     }
 
-    public function reportDate($date){
-//
-//        $report= Payment_details::find($date);
-//        $details= DB::table('payment_details')
-//            ->select(DB::raw('paid_amount','created_at'))
-//            ->where('paid_amount')
-//            ->get();
 
-
-        $details=DB::table('payment_details')
-                    ->select('created_at','paid_amount')->where('');
-    }
 
 }

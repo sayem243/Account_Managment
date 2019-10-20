@@ -1,5 +1,9 @@
 @extends('admin.index')
 @section('template')
+
+
+
+
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
@@ -22,22 +26,22 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Select Date: </label>
-                                    <?php
 
-                                    ?>
-
-                                    <input type="date" class="">
+                            <div class="col-md-5">
+                                <div class="input-group input-daterange">
+                                    <input type="text" name="from_date" id="from_date" readonly class="form-control" />
+                                    <div class="input-group-addon">to</div>
+                                    <input type="text"  name="to_date" id="to_date" readonly class="form-control" />
                                 </div>
                             </div>
+
                         </div>
                         <table class="table table-striped table-bordered dataTable no-footer">
                             <thead class="thead-dark">
                             <tr>
                                 @foreach($projects as $project )
                                     <th>{{$project->p_name}}</th>
+
                                 @endforeach
                             </tr>
                             </thead>
@@ -45,15 +49,19 @@
                             <tr>
                                 @foreach($projects as $project )
                                     <td style="vertical-align: text-top">
-                                      <table class="table table-bordered">
-                                       @foreach($paymentDetails as $paymentDetail)
-                                        <tr>
-                                        <td>
-                                       {{date('d-m-y',strtotime($paymentDetail->created_at))}}-{{$paymentDetail->paid_amount}}
-                                         </td>
-                                        </tr>
-                                            @endforeach
-                                         </table>
+                                        @if(array_key_exists($project->id, $paymentDetails))
+                                            <table class="table table-bordered">
+                                                @foreach($paymentDetails[$project->id] as $paymentDetail)
+                                                    <tr>
+                                                        <td>
+                                                            {{$paymentDetail}}
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+
+                                            </table>
+                                        @endif
+
                                     </td>
                                 @endforeach
                             </tr>
@@ -67,6 +75,10 @@
         </div>
     </div>
 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 
+    <script type="text/javascript">
 
+    </script>
 @endsection

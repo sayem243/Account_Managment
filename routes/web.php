@@ -187,9 +187,14 @@ Route::get('voucher/details/print/{id}','VocherDetailsController@prnpriview')->n
 //Reports
 
 Route::get('/reports/details/','ReportController@index')->name('report_index');
-Route::get('/reports/details/{date_time}','ReportController@reportDate')->name('report_date');
 
 
 
-Route::get('/reports/details/reports/','ReportController@report')->name('report_try');
+Route::get('/daterange', 'DateRangeController@index');
+Route::post('/daterange/fetch_data', 'DateRangeController@fetch_data')->name('daterange.fetch_data');
+
+
+//testing for date filtering
+
+Route::get('/reports/details/reports/','ReportController@reportDate')->name('report_try');
 Route::get('/generate-pdf','PaymentDetailsController@generatePDF');

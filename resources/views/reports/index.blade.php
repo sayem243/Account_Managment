@@ -25,7 +25,7 @@
                          <div class="col-md-6">
                              <div class="form-group">
                                  <label for="date">Select Date: </label>
-                                   <input type="date" class="datepicker">
+                                   <input type="date">
                              </div>
                          </div>
                       </div>

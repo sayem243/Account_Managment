@@ -31,6 +31,12 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 
+    {{--//datepicker--}}
+
+
+
+    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />--}}
+
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <style>
@@ -318,6 +324,7 @@
 <!-- Warning Section Ends -->
 
 <!-- Required Js -->
+
 {{--<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>--}}
 <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
 <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -325,6 +332,8 @@
 {{--add jquery--}}
 {{--<script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>--}}
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 
 <script type="text/javascript">
     $.ajaxSetup({
@@ -523,23 +532,6 @@
 
     // Report Date Filtering
 
-    jQuery(".datepicker").click(function (a) {
-        var elements =a.target;
-        a.preventDefault();
-        var id = jQuery(this).val();
-        jQuery.ajax({
-             type: 'GET',
-            dataType:'json',
-            url:'/reports/details/'+ date_time ,
-            data:{},
-            success:function (data){
-
-//                 jQuery(elements).closest('label').find('datepicker')
-
-            }
-        })
-
-    })
 
 </script>
 </body>
