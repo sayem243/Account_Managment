@@ -1,9 +1,6 @@
 @extends('admin.index')
 @section('template')
 
-
-
-
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
@@ -78,7 +75,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 
-    <script type="text/javascript">
 
-    </script>
 @endsection

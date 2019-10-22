@@ -191,7 +191,7 @@ Route::get('/reports/details/','ReportController@index')->name('report_index');
 
 
 Route::get('/daterange', 'DateRangeController@index');
-Route::post('/daterange/fetch_data', 'DateRangeController@fetch_data')->name('daterange.fetch_data');
+Route::Post('/daterange/fetch_data', 'DateRangeController@fetch_data')->name('daterange.fetch_data');
 
 
 //testing for date filtering
