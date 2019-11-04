@@ -183,6 +183,7 @@ Route::get('/voucher/delete/{id}' ,'VocherController@delete')->name('voucher_del
 Route::get('voucher/details/{id}','VocherDetailsController@index')->name('voucherDetails_index');
 Route::get('/voucher/details/print-pdf/{id}','VocherDetailsController@printPDF')->name('voucher_printPDF');
 Route::get('voucher/details/print/{id}','VocherDetailsController@prnpriview')->name('print');
+Route::get('/voucher/details/delete/{id}','VocherDetailsController@delete')->name('voucherDetails_delete');
 
 //Reports
 

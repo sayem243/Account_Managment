@@ -5,12 +5,12 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
-
 </head>
 <body>
-<br />
+<br/>
+
 <div class="container box">
-    <h3 align="center"></h3><br />
+    <h3 align="center"></h3><br/>
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
@@ -85,8 +85,7 @@
         });
 
         var _token = $('input[name="_token"]').val();
-
-
+        
         function payment_details_filter_by_date(from_date , to_date )
         {
             if (from_date==''){
@@ -104,21 +103,18 @@
                 {
                     $('tbody').html(data);
                 }
-            })
+            });
         }
+
 
         $('#filter').click(function(){
             var from_date = $('#from_date').val();
             var to_date = $('#to_date').val();
             if(from_date != '' &&  to_date != '')
             {
+
                 payment_details_filter_by_date(from_date, to_date);
             }
-
-            else if(from_date != ''  || from_date != '' ){
-                fetch_data_value(from_date);
-            }
-
             else
             {
                 alert('Both Date is required');
@@ -126,42 +122,7 @@
         });
 
 
-//editing
-
-        {{--function payment_details_filter_by_date(from_date  )--}}
-        {{--{--}}
-            {{--if (from_date==''){--}}
-                {{--return false;--}}
-            {{--}--}}
-
-            {{--$.ajax({--}}
-                {{--url:"{{ route('daterange.fetch_data') }}",--}}
-                {{--method:"POST",--}}
-                {{--data:{from_date:from_date,  _token:_token},--}}
-                {{--dataType:"html",--}}
-                {{--success:function(data)--}}
-                {{--{--}}
-                    {{--$('tbody').html(data);--}}
-                {{--}--}}
-            {{--})--}}
-        {{--}--}}
-
-
-        $('#filter').click(function(){
-            var from_date = $('#from_date').val();
-            //var from_date = $('#from_date').val();
-            if(from_date != '' &&  from_date != '')
-            {
-                fetch_data_value(from_date);
-            }
-            else
-            {
-                alert('Both Date is required');
-            }
-        });
-
-
-
+        
         $('#refresh').click(function(){
             $('#from_date').val('');
             $('#to_date').val('');

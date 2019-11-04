@@ -38,13 +38,16 @@ class DateRangeController extends Controller
         {
             if($request->from_date != '' && $request->to_date != '')
             {
+                $formDate = date('Y-m-d', strtotime($request->from_date));
+                $toDate = date('Y-m-d', strtotime($request->to_date));
                 $data = DB::table('payment_details')
-                    ->whereBetween('created_at', array($request->from_date, $request->to_date))
+                    ->whereBetween('created_at', array($formDate.' 00:00:00', $toDate.' 23:59:59'))
                     ->get();
             }
+
             else
             {
-                $data = DB::table('payment_details')->orderBy('created_at', 'desc')->get();
+                $data = DB::table('payment_details')->orderBy('created_at', 'ASC')->get();
             }
             $paymentDetails=array();
             foreach ($data as $value){
@@ -70,55 +73,6 @@ class DateRangeController extends Controller
         }
     }
 
-
-
-
-
-
-
-
-
-//edit
-
-    function fetch_data_value(Request $request)
-    {
-        if($request->ajax())
-        {
-            if($request->from_date != '' && $request->to_date != '')
-            {
-                $data = DB::table('payment_details')
-                    ->whereBetween('created_at', array($request->from_date, $request->to_date))
-                    ->get();
-            }
-            else
-            {
-                $data = DB::table('payment_details')->orderBy('created_at', 'desc')->get();
-            }
-            $paymentDetails=array();
-            foreach ($data as $value){
-                $paymentDetails[$value->project_id][]= $value->paid_amount;
-            }
-            $projects= Project::all();
-
-            $html = '<tr>';
-            foreach ($projects as $project){
-                $html.='<td>';
-                if(array_key_exists($project->id, $paymentDetails)){
-                    $html.='<table class="table table-bordered payment_report">';
-                    foreach($paymentDetails[$project->id] as $paymentDetail){
-                        $html.='<tr><td>'.$paymentDetail.'</td></tr>';
-                    }
-                    $html.='</table>';
-                }
-                $html.='</td>';
-
-            }
-            $html.='</tr>';
-            echo $html;
-
-
-        }
-    }
 
 
 

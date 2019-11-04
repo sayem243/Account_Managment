@@ -7,7 +7,9 @@
                     <div class="card-header">
                         <h5>Voucher Details</h5>
                         <div class="card-header-right">
+                            @if($details->status==1)
                             <button data-id-id="{{$details->id}}" type="button" class="btn btn-sm  btn-primary voucher-approve">Approved</button>
+                            @endif
 
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
@@ -19,6 +21,8 @@
                                     <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
                                     <li class="dropdown-item reload-card"><a target="_blank" href="{{route('voucher_printPDF',$details->id)}}"><i class="far fa-file-pdf"></i>PDF</a></li>
                                     <li class="dropdown-item reload-card"><a target="_blank" href="{{route('print',$details->id)}}"><i class="fa fa-print"></i>Print</a></li>
+                                    {{--<li class="dropdown-item reload-card"><a href="{{route('voucherDetails_delete',$details->id)}}"><i class="feather icon-trash-2"></i> Delete</a></li>--}}
+
                                 </ul>
                             </div>
                         </div>
@@ -112,8 +116,9 @@
 
                                 <td>{{date('d-m-y',strtotime($detail->created_at))}}</td>
 
-
                                 <td>
+                                    @if($details->status==1)
+
                                     <div class="btn-group card-option">
                                         <a href="javascript:"class="btn btn-notify btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                                         <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
@@ -124,17 +129,21 @@
                                             </li>
 
                                             <li class="dropdown-item">
-                                                <a href="{{route('voucher_delete',$detail->id)}}">
+                                                <a href="{{route('voucherDetails_delete',$detail->id)}}">
                                                     <i class="feather icon-trash-2"></i>
                                                     Remove</a>
                                             </li>
-
                                         </ul>
-
                                     </div>
+                                        @endif
+
                                 </td>
 
+
                             </tr>
+
+
+
                         @endforeach
 
 

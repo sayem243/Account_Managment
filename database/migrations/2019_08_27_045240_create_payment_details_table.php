@@ -23,20 +23,16 @@ class CreatePaymentDetailsTable extends Migration
             $table->integer('project_id')->unsigned()->nullable();
             $table->string('filenames')->nullable();
 
-
         });
 
 
         Schema::table('payment_details', function($table) {
-            $table->foreign('payment_id')->references('id')->on('payments');
+            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');;
         });
 
         Schema::table('payment_details', function($table) {
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
-
-
-
 
 
     }

@@ -30,5 +30,19 @@ class VocherDetailsController extends Controller
     }
 
 
+
+    public function delete($id){
+
+        $voucher = Vocher_details::where('id',$id )->first();
+        if($voucher != null){
+            $voucher->delete();
+            return redirect()->route('voucher_index')->with(['message'=>'Succesfully Deleted !']);
+        }
+        return redirect()->route('voucher_index')->with(['message'=> 'succesfully Deleted!!!!!!!']);
+}
+
+
+
+
 }
 

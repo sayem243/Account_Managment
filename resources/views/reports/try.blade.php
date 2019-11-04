@@ -1,12 +1,21 @@
 @extends('admin.index')
 @section('template')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
+<style>
+    .custom-select, .form-control {
+        background: #f4f7fa;
+        padding: 3px 0px;
+        font-size: 13px;
+    }
 
-    <div class="col-sm-12">
+</style>
+
+ <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Reports</h5>
+                        <h5>Advance Payment  Reports</h5>
                         <div class="card-header-right">
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
@@ -21,24 +30,40 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
 
-                            <div class="col-md-5">
-                                <div class="input-group input-daterange">
-                                    <input type="text" name="from_date" id="from_date" readonly class="form-control" />
-                                    <div class="input-group-addon">to</div>
-                                    <input type="text"  name="to_date" id="to_date" readonly class="form-control" />
+
+
+                    <div class="container box">
+                        <h3 align="center"></h3><br/>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    {{--<div class="col-md-3">Date Range<b><span id="total_records"></span></b></div>--}}
+                                    <div class="col-md-5">
+                                        <div class="input-group input-daterange">
+                                            <input type="text" name="from_date" id="from_date" readonly class="form-control" placeholder="From Date" />
+                                            <div class="input-group-addon">To</div>
+                                            <input type="text"  name="to_date" id="to_date" readonly class="form-control" placeholder="To Date" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" name="filter" id="filter" class="btn btn-info btn-sm">Search</button>
+                                        <button type="button" name="refresh" id="refresh" class="btn btn-warning btn-sm">Refresh</button>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
+                    </div>
+
+
+
+                    <div class="card-body">
                         <table class="table table-striped table-bordered dataTable no-footer">
                             <thead class="thead-dark">
                             <tr>
                                 @foreach($projects as $project )
                                     <th>{{$project->p_name}}</th>
-
                                 @endforeach
                             </tr>
                             </thead>
@@ -58,7 +83,6 @@
 
                                             </table>
                                         @endif
-
                                     </td>
                                 @endforeach
                             </tr>
@@ -72,8 +96,71 @@
         </div>
     </div>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+ <script type="text/javascript">
+
+    $(document).ready(function(){
+
+        var date = new Date();
+
+        $('.input-daterange').datepicker({
+            todayBtn: 'linked',
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+
+        var _token = $('input[name="_token"]').val();
 
 
+        function payment_details_filter_by_date(from_date , to_date )
+        {
+            if (from_date==''){
+                return false;
+            }
+            if (to_date==''){
+                return false;
+            }
+            $.ajax({
+                url:"{{ route('daterange.fetch_data') }}",
+                method:"POST",
+                data:{from_date:from_date, to_date: to_date, _token:_token},
+                dataType:"html",
+                success:function(data)
+                {
+                    $('tbody').html(data);
+                }
+            })
+        }
+
+        $('#filter').click(function(){
+            var from_date = $('#from_date').val();
+            var to_date = $('#to_date').val();
+            if(from_date != '' &&  to_date != '')
+            {
+                payment_details_filter_by_date(from_date, to_date);
+            }
+
+
+
+            else
+            {
+                alert('Both Date is required');
+            }
+        });
+
+
+        $('#refresh').click(function(){
+            $('#from_date').val('');
+            $('#to_date').val('');
+            payment_details_filter_by_date();
+        });
+
+
+    });
+
+
+
+</script>
 @endsection

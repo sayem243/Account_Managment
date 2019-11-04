@@ -5,45 +5,55 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Voucher Details</h5>
+                        {{--<h5>Voucher Details</h5>--}}
+                        <div class="img-container"> <img src="{{asset('assets/images/PUL.png')}}" width="100px" > </div><style>
+                            .img-container{
+                                text-align: center;
+                            }
+                        </style>
 
                     </div>
 
                     <div class="card-body">
                         <div class="row">
+                            <table cellpadding="4" width="100%" class="">
+                                <tr>
+                                    <td>
+                                        <label for="">Employe Name: </label>
+                                        {{$details->user->UserProfile['fname'].' '.$details->user->UserProfile['lname']}}
+                                    </td>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Payment Date: </label>
-                                    {{date('d-m-Y',strtotime($details->created_at))}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Company: </label>
-                                    {{$details->user->userProfile->company['name']}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="">NID: </label>
-                                    {{$details->user->userProfile['nid'] }}
-                                </div>
+                                    <td>
+                                        <label for="exampleInputEmail1">Payment Date: </label>
+                                        {{date('d-m-Y',strtotime($details->created_at))}}
+                                    </td>
 
-
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Employe Name: </label>
-                                    {{$details->user['name'] }}
-                                    {{$details->user->UserProfile['fname'].' '.$details->user->UserProfile['lname']}}
-
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="">Mobile Number: </label>
-                                    {{$details->user->userProfile['mobile'] }}
-                                </div>
-
-
-                            </div>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="">Company: </label>
+                                        {{$details->user->userProfile->company['name']}}
+                                    </td>
+                                    <td>
+                                        <label for="">Mobile Number: </label>
+                                        {{$details->user->userProfile['mobile'] }}
+                                    </td>
+                                </tr>
+                                {{--<tr>--}}
+                                {{--<td colspan="2">--}}
+                                {{--<label for="">NID: </label>--}}
+                                {{--{{$details->user->userProfile['nid'] }}--}}
+                                {{--</td>--}}
+                                {{--</tr>--}}
+                                <tr>
+                                    <td colspan="2">
+                                        <label for=""><b>Remarks :</b></label>
+                                        {{$details->comments}}
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
+
 
                         <div class="col-md-12">
                             <h4 align="center"><em>Voucher Details </em>  </h4>
@@ -83,11 +93,9 @@
         </div>
     </div>
 
+
     <script type="text/javascript">
        window.print();
     </script>
-
-
-
 
 @endsection

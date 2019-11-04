@@ -18,7 +18,7 @@ class VocherController extends Controller
         $payments=Payment::all();
         $projects=Project::all();
         $users=User::all();
-        $details=Payment_details::all();
+       // $details=Payment_details::all();
         //$paid_amounts = PaymentDetailsController::with('payment_id')->where('project_id', 1)->get();
 //        $paid_amounts=Payment_details::Where('project_id','payment_id')->get();
 
@@ -67,7 +67,7 @@ class VocherController extends Controller
         }
             $this->GenerateVocherId($vocher);
 
-       // $vocher->save();
+
        return redirect()->route('voucher_create');
     }
 
@@ -199,6 +199,9 @@ class VocherController extends Controller
         $vocher->delete();
         return redirect()->route('voucher_index');
     }
+
+
+
     public function approved($id){
         $voucher=Vocher::find($id);
         $voucher->status=2;

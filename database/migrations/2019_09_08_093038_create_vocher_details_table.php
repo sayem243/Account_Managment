@@ -26,23 +26,24 @@ class CreateVocherDetailsTable extends Migration
         });
 
         Schema::table('vocher_details', function($table) {
-            $table->foreign('payment_id')->references('id')->on('payments');
+            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
 
         });
 
         Schema::table('vocher_details', function($table) {
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 
         });
 
         Schema::table('vocher_details', function($table) {
-            $table->foreign('vocher_id')->references('id')->on('vochers');
+            $table->foreign('vocher_id')->references('id')->on('vochers')->onDelete('cascade');
 
         });
 
         Schema::table('vocher_details', function($table) {
             $table->foreign('payment_details_id')->references('id')->on('payment_details');
         });
+
 
     }
 

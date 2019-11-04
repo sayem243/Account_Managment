@@ -111,6 +111,8 @@
 
                         </table>
 
+
+
                         <div class="col-md-12">
                             <h4 align="center">Amendment Details</h4>
                         </div>
@@ -142,6 +144,8 @@
                             @endforeach
                             </tbody>
                         </table>
+
+
                     </div>
                 </div>
             </div>

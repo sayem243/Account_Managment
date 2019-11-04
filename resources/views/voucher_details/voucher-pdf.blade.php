@@ -6,6 +6,11 @@
                 <div class="card">
                     <div class="card-header">
                         {{--<h5>Voucher Details</h5>--}}
+                        <div class="img-container"> <img src="{{asset('assets/images/PUL.png')}}" width="100px" > </div><style>
+                            .img-container{
+                                text-align: center;
+                            }
+                        </style>
 
                     </div>
 
@@ -34,12 +39,12 @@
                                         {{$details->user->userProfile['mobile'] }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <label for="">NID: </label>
-                                        {{$details->user->userProfile['nid'] }}
-                                    </td>
-                                </tr>
+                                {{--<tr>--}}
+                                    {{--<td colspan="2">--}}
+                                        {{--<label for="">NID: </label>--}}
+                                        {{--{{$details->user->userProfile['nid'] }}--}}
+                                    {{--</td>--}}
+                                {{--</tr>--}}
                                 <tr>
                                     <td colspan="2">
                                         <label for=""><b>Remarks :</b></label>
