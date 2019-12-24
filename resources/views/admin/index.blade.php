@@ -380,8 +380,6 @@
                     dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["name"]+'</option>';
                 }
                 jQuery('.user_project_list').html(dataOption);
-
-
             }
         });
     }).change();

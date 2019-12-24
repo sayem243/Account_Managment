@@ -18,14 +18,11 @@ class CreateProjectsTable extends Migration
             $table->integer('company_id')->unsigned()->nullable();
             $table->string('p_name');
             $table->string('address');
-
             $table->timestamps();
         });
 
-
-        Schema::table('projects', function($table) {
+            Schema::table('projects', function($table) {
             $table->foreign('company_id')->references('id')->on('companies');
-
 
         });
 

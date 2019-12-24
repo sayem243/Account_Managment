@@ -18,7 +18,7 @@ class CreateUserProfilesTable extends Migration
             $table->string('fname');
             $table->string('lname');
             $table->string('email');
-      ;
+
             $table->string('mothername');
             $table->string('fathername');
 

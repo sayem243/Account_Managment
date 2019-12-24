@@ -25,7 +25,6 @@ class Company extends Model
     public function userProfile(){
 
         return $this->hasMany('App\UserProfile');
-
     }
 
 

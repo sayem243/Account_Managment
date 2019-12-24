@@ -1,6 +1,7 @@
 @extends('admin.index-pdf')
 
 @section('template')
+    {{--<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>--}}
 
     <div class="col-sm-12">
         <div class="row">

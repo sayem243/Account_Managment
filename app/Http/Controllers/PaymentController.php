@@ -75,6 +75,8 @@ class PaymentController extends Controller
                 $paymentDetails->paid_amount=$paid_amount[$key];
                 //$paymentDetails->paid_amount=$paid_amount[$key];
 
+                /*multiple file upload*/
+
                 if($request->hasFile('filenames')){
                    if ($file[$key]->getClientOriginalName()) {
                        $filename = $file[$key]->getClientOriginalName();
