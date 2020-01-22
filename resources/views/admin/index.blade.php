@@ -450,7 +450,6 @@
              data:{},
              success:function (data) {
 
-
                 jQuery(element).closest('tr').find('.paid').html(data.total_amount);
              }
          });

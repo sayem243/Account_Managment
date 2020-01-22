@@ -47,20 +47,17 @@
                   </div>
               </div>
           </div>
-
-
-                  <div class="col-md-12">
-                      <h5 align="center" class="text-primary mb-1">Advance Payment</h5>
-                  </div>
-
-                  <table class="table table-bordered payment_details_table">
-                      <thead class="thead-dark">
-                      <tr>
-                          <th>Project</th>
-                          <th>Demand Amount</th>
-                          <th>Paid Amount</th>
-                          <th>File</th>
-                          <th>Action</th>
+            <div class="col-md-12">
+              <h5 align="center" class="text-primary mb-1">Advance Payment</h5>
+            </div>
+               <table class="table table-bordered payment_details_table">
+                   <thead class="thead-dark">
+                    <tr>
+                        <th>Project</th>
+                        <th>Demand Amount</th>
+                        <th>Paid Amount</th>
+                        <th>File</th>
+                        <th>Action</th>
                       </tr>
                       </thead>
                       <tbody>

@@ -46,10 +46,8 @@
                                     <td>{{$i}}</td>
 
                                     <td>{{$project->p_name}} </td>
-                                    <td>{{$project->company['name']}}</td>
+                                    <td>{{ $project->company['name']}}</td>
                                     <td>
-
-
                                         <div class="btn-group card-option">
                                             <a href="javascript:"  class="btn btn-notify btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                                             <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">

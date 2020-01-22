@@ -10,7 +10,6 @@ class Project extends Model
     public function company(){
 
         return $this->belongsTo('App\Company');
-
     }
 
     public function Payment(){
@@ -23,12 +22,10 @@ class Project extends Model
         return $this->hasMany('App\Payment_details');
     }
 
-
     public function amendment(){
 
         return $this->hasMany('App\Ammendment');
     }
-
 
     public  function users(){
 
