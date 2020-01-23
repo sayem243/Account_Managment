@@ -80,7 +80,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Blood Group :</label>
+                                    <label for="">Nick Name :</label>
                                     {{$users->name}}
                                 </div>
 

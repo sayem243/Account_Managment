@@ -79,7 +79,7 @@
                         <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label>Name</label>
+                                    <label>Nick Name</label>
                                     <input type="text" class="form-control" name="name" placeholder="Text">
                                 </div>
 
