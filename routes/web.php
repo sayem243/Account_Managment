@@ -27,7 +27,6 @@ Route::get('/', function () {
 //Route::post('/update/{id}' ,'AccountController@update')->name('update');
 //Route::get('/delete/{id}','AccountController@delete')->name('delete');
 
-
 //profile route
 //Route::get('/userprofile/create','UserProfileController@create')->name('create');
 Route::get('/userprofile/','UserProfileController@index')->name('userprofile');
@@ -46,13 +45,13 @@ Route::get('home', [
 ]);
 
 
-Route::get('/comp_profile' ,'CompanyController@index')->name('comp_profile');
+Route::get('/comp_profile','CompanyController@index')->name('comp_profile');
 Route::get('company/create','CompanyController@create')->name('comp_create');
 Route::post('company/store','CompanyController@store')->name('company_store');
-Route::get('/company/view/{id}' ,'CompanyController@view')->name('comp_view');
-Route::get('/company/edit/{id}' ,'CompanyController@edit')->name('comp_edit');
-Route::post('/company/update/{id}' ,'CompanyController@update')->name('comp_update');
-Route::get('/company/delete/{id}' ,'CompanyController@delete')->name('com_delete');
+Route::get('/company/view/{id}','CompanyController@view')->name('comp_view');
+Route::get('/company/edit/{id}','CompanyController@edit')->name('comp_edit');
+Route::post('/company/update/{id}','CompanyController@update')->name('comp_update');
+Route::get('/company/delete/{id}','CompanyController@delete')->name('com_delete');
 
 
 //projects route
@@ -157,6 +156,13 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('payments','PaymentController');
     Route::resource('users','UserController');
+    Route::resource('verify','PaymentController@verify');
+    Route::resource('approve','PaymentController@approve');
+    Route::resource('vocher','VocherController');
+    Route::resource('vocher','VocherController@approved');
+
+
+   // Route::resource('register','UserController');
     Route::resource('projects','ProjectController');
     Route::resource('companies','CompanyController');
     Route::resource('roles','RoleController');

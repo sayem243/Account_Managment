@@ -13,6 +13,16 @@ use DB;
 
 class VocherController extends Controller
 {
+    function __construct()
+    {
+        //$this->middleware('permission:Payment-create', ['only' => ['index','create','store','approve','verify']]);
+        $this->middleware('permission:vocher', ['only' => ['approved']]);
+        $this->middleware('permission:Voucher', ['only' => ['create']]);
+
+
+    }
+
+
     public function create(){
 
         $payments=Payment::all();

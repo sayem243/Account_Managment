@@ -111,14 +111,25 @@
 
                             {{--<td>{{$payment->comments}}</td>--}}
 
-                            <td>
-                                @if($payment->status==1)
+                        <td>
+                        @if( (Auth::user()->id ==7 and $payment->status==1) or (Auth::user()->id ==1 and $payment->status==1) )
+                           <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary verify">Verify </button>
+
+                        @elseif(Auth::user()->id ==1 and $payment->status==1)
+                                <button data-id-id="{{$payment->id}}"type="button" class="btn btn-sm  btn-primary approved">Approve </button>
+
+                            @endif
+
+                        </td>
+
+
+                        {{--   <td>
+                            @if($payment->status==1 )
                                 <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary verify">Verify </button>
-                               @elseif($payment->status==2)
+                               @elseif($payment->status==2 )
                                     <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approve </button>
                                 @endif
-                            </td>
-
+                            </td>--}}
 
                         <td>
                             <div class="btn-group card-option">

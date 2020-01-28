@@ -1,8 +1,6 @@
 @extends('admin.index')
 @section('title','-Voucher')
 @section('template')
-
-
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
@@ -28,8 +26,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                            <table class= "table table-bordered">
-
+                        <table class="table table-striped table-bordered dataTable no-footer">
                                 <thead class="thead-dark">
                                 <tr>
                                     <th>SL</th>
@@ -51,6 +48,7 @@
                                 </tr>
                                 </thead>
 
+                                <tbody>
                                 @php $i=0; @endphp
                                 @foreach($vochers as $vocher)
                                     @php $i++ @endphp
@@ -88,12 +86,10 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($vocher->status==1)
+                                            @if($vocher->status==1 )
                                             <button data-id-id="{{$vocher->id}}" type="button" class="btn btn-sm  btn-primary voucher-approve">Approve</button>
                                                 @endif
                                         </td>
-
-
 
                                         <td>
                                             <div class="btn-group card-option">
@@ -132,6 +128,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                </tbody>
                             </table>
 
                         <ul class="pagination justify-content-end">

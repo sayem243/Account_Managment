@@ -25,16 +25,21 @@ class PaymentController extends Controller
     function __construct()
     {
         $this->middleware('permission:Payment-create', ['only' => ['index','create','store','approve','verify']]);
-//        $this->middleware('permission:Payment-approve', ['only' => ['approve']]);
+        $this->middleware('permission:verify', ['only' => ['verify']]);
+        $this->middleware('permission:approve', ['only' => ['approve']]);
+        
+
     }
+
 
     public function index(){
 
         $payments=Payment::orderBy('created_at','DSC')->paginate(25);
+        $users=User::all();
 
         $amendments=Ammendment::all();
 
-        return view('payment.payment_index',['payments'=>$payments,'amendments'=>$amendments])->with('i', (request()->input('page', 1) - 1) * 25);
+        return view('payment.payment_index',['payments'=>$payments,'amendments'=>$amendments,'users'=>$users])->with('i', (request()->input('page', 1) - 1) * 25);
     }
 
     public function create(){
