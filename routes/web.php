@@ -158,6 +158,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users','UserController');
     Route::resource('verify','PaymentController@verify');
     Route::resource('approve','PaymentController@approve');
+    Route::resource('payment-index','PaymentController@index');
+
     Route::resource('vocher','VocherController');
     Route::resource('vocher','VocherController@approved');
 

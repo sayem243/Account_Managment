@@ -24,10 +24,12 @@ class PaymentController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:Payment-create', ['only' => ['index','create','store','approve','verify']]);
+        $this->middleware('permission:Payment-create', ['only' => ['create','store','approve','verify']]);
+        //$this->middleware('permission:index', ['only' => ['index']]);
         $this->middleware('permission:verify', ['only' => ['verify']]);
         $this->middleware('permission:approve', ['only' => ['approve']]);
-        
+        $this->middleware('permission:payment-index', ['only' => ['index']]);
+
 
     }
 
