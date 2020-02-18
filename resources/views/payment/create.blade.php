@@ -23,9 +23,7 @@
           <div class="card-body">
 
               <form class="form-horizontal" action="{{ route('payment_store')}}" method="post" enctype="multipart/form-data">
-
                  {{ csrf_field() }}
-
           <div class="row">
               <div class="col-md-6">
                   <div class="form-group">
@@ -103,8 +101,6 @@
 
     </div>
  </div>
-
-
 
 </div>
 

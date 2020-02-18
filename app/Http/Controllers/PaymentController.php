@@ -226,7 +226,7 @@ class PaymentController extends Controller
        $payment=Payment::find($id);
        $amendment = $payment->ammendment;
        $total=$amendment->sum('additional_amount');
-        return view('voucher.index',['payment'=>$payment,'total'=>$total]);
+       return view('voucher.index',['payment'=>$payment,'total'=>$total]);
     }
 
     public function delete($id){

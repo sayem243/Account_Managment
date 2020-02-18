@@ -104,7 +104,9 @@
                                     <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
                                 </tr>
 
+
                             @endforeach
+
 
                             </tbody>
 
@@ -153,6 +155,12 @@
 
  <script type="text/javascript">
         window.print();
+
+        // in words
+
+
+
+
  </script>
 
 

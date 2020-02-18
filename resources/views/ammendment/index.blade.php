@@ -49,7 +49,7 @@
                                 @php $i++ @endphp
                                 <tr>
                                     <td>{{$i}}</td>
-                                    <td>{{$amendment->payment->payment_id}}</td>
+                                    <td>{{$amendment->payment->payment_id }}</td>
                                     <td>{{$amendment->project['p_name']}}</td>
 
                                     <td>{{$amendment->payment->total_demand_amount}}  </td>

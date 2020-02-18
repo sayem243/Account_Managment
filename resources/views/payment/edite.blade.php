@@ -53,13 +53,13 @@
                             </div>
 
                             <table class="table table-bordered payment_details_table">
-                                <thead>
+                                <thead class="thead-dark">
                                 <tr>
                                     <th>Project</th>
                                     <th>Demand</th>
-                                    <td>Paid Amount</td>
-                                    <td>File</td>
-                                    <td>Action</td>
+                                    <th>Paid Amount</th>
+                                    <th>File</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>

@@ -13,7 +13,8 @@ class PaymentDetailsController extends Controller
 {
     Public function index($id){
         $payment=Payment::find($id);
-        return view('payment_details.index',['payment'=>$payment]);
+        $amendment=Ammendment::find($id);
+        return view('payment_details.index',['payment'=>$payment,'amendment'=>$amendment]);
     }
 
     public function paymentPDF($id){

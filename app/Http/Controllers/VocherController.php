@@ -16,8 +16,8 @@ class VocherController extends Controller
     function __construct()
     {
         //$this->middleware('permission:Payment-create', ['only' => ['index','create','store','approve','verify']]);
-        $this->middleware('permission:vocher', ['only' => ['approved']]);
-        $this->middleware('permission:Voucher', ['only' => ['create']]);
+        $this->middleware('permission:voucher_approved', ['only' => ['approved']]);
+        $this->middleware('permission:voucher_create', ['only' => ['create']]);
 
 
     }

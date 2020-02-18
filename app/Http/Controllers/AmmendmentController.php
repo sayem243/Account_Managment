@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Ammendment;
+use App\Payment_details;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Project;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 
 class AmmendmentController extends Controller
 {
 
         public function index(){
-
         $amendments=Ammendment::all();
         $payments=Payment::all();
-
 //
          //$amendments=DB::table('ammendments')->where('payment_id', $id);
         //$payment=Payment::find($id);
@@ -30,6 +30,8 @@ class AmmendmentController extends Controller
         $payment=Payment::find($id);
         return view('ammendment.create')->with('payment',$payment);
     }
+
+
 
     public function store(Request $request ,$id){
 
@@ -56,4 +58,15 @@ class AmmendmentController extends Controller
         }
         return redirect()->route('details',$payment->id);
     }
+
+    public function amendmentPDF($id){
+
+        $payment=Payment::find($id);
+        $pdf = PDF::loadView('ammendment.pdf_view', compact('payment'));
+        return $pdf->stream("invoice1.pdf",array("Attachment" => false));
+
+    }
+
+
+
 }

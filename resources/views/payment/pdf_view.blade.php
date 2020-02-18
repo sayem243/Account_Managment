@@ -8,6 +8,11 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
+                        <div class="img-container"> <img src="{{asset('assets/images/PUL.png')}}" width="100px" > </div><style>
+                            .img-container{
+                                text-align: center;
+                            }
+                        </style>
                         <h1 align="center"> Payment Details </h1>
                     </div>
 
@@ -108,11 +113,11 @@
 
                             @endforeach
 
+
+                            <tr><b> Total Paid : {{$payment->total_paid_amount}} BDT  </b> </tr>
                             </tbody>
 
                         </table>
-
-
 
                         <div class="col-md-12">
                             <h4 align="center">Amendment Details</h4>
@@ -143,6 +148,8 @@
                                     <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
                                 </tr>
                             @endforeach
+
+                            <tr><b> Total Paid : {{$payment->total_amendment_amount}} BDT  </b> </tr>
                             </tbody>
                         </table>
 

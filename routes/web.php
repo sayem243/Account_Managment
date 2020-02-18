@@ -96,10 +96,7 @@ Route::get('/user/payment/paid/{payment}/{project}','UserController@paidAmount')
 Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
 Route::get('/payment/details/delete/{id}','PaymentDetailsController@delete')->name('details_delete');
 Route::get('/payment/print-pdf/{id}','PaymentDetailsController@paymentPDF')->name('printPDF');
-
 Route::get('/payment/print/{id}','PaymentDetailsController@printpdf')->name('payment_print');
-
-
 Route::post('/amendment/approved/{id}','PaymentDetailsController@approved')->name('amendment_approved');
 
 
@@ -108,8 +105,9 @@ Route::post('/amendment/approved/{id}','PaymentDetailsController@approved')->nam
 Route::get('/amendment/','AmmendmentController@index')->name('amendment');
 Route::get('/amendment/create/{id}','AmmendmentController@create')->name('amendment_create');
 Route::post('/amendment/store/{id}','AmmendmentController@store')->name('amendment_store');
+Route::get('/amendment/print-pdf/{id}','AmmendmentController@amendmentPDF')->name('amendment_printPDF');
 
-
+//Route::get('/amendment/edit/{id}','AmmendmentController@edit')->name('amendment_edit');
 
 //Route::get('/amendment/details/{id}','AmmendmentController@index')->name('details');
 

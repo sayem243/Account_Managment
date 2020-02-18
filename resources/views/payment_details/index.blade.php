@@ -114,11 +114,12 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th>SL</th>
+                                <th>Date</th>
                                 <th>Projects</th>
                                 <th>Demand (BDT) </th>
                                 <th>Paid (BDT)</th>
                                 <th> File </th>
-                                <th>Date</th>
+
 
                             </tr>
                             </thead>
@@ -136,6 +137,7 @@
                                 @endphp
                             <tr>
                                 <td>{{$i}}</td>
+                                <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
                                 <td>{{$detail->project['p_name']}}</td>
                                 <td>{{$detail->demand_amount}}</td>
                                 <td>{{$detail->paid_amount}}</td>
@@ -150,7 +152,7 @@
 
                                 {{--<td>{{$detail->filenames}}</td>--}}
 
-                                <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
+
                                 {{--<td>--}}
                                     {{--<input type="hidden" name="project_id[]" value="{{$detail->project['id']}}">--}}
                                     {{--<input type="text" name="amendment_amount[]" class="form-control">--}}
@@ -164,6 +166,21 @@
                         </table>
 
 
+                        {{--SEPARATE--}}
+                        <div class="card-header">
+                            <h5> Amendment Details </h5>
+
+                            <div class="card-header-right">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
+                                 <button type="button"><a target="_blank" href="{{route('amendment_printPDF',$payment->id)}}"><i class="far fa-file-pdf"></i> PDF</a> </button>
+                                    <a href="{{ route('amendment_printPDF',$payment->id) }}" ><button class="btn btn-secondary"  type="button"> PDF</button></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{--END OF SEPARATE--}}
+
+
                         <div class="col-md-12">
                             <h4 align="center">Amendment Details</h4>
                         </div>
@@ -172,12 +189,17 @@
                             <thead class="thead-dark" >
                             <tr>
                                 <th>SL</th>
+                                <th>Date</th>
                                 <th>Projects</th>
                                 <th>Amendment Amount</th>
                                 <th>File</th>
                                 <th>status</th>
                                 <th>Action</th>
-                                <th>Date</th>
+
+                                <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
+                                    <i class="feather icon-settings"></i>
+
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -190,6 +212,7 @@
                                 @endphp
                                 <tr>
                                     <td>{{$i}}</td>
+                                    <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
                                     <td>{{$detail->project['p_name']}}</td>
                                     <td>{{$detail->amendment_amount}}</td>
 
@@ -211,7 +234,19 @@
 
                                <td><button data-id="{{$detail->id}}" type="button" class="btn btn-sm  btn-primary amendment_approved">Approved</button></td>
 
-                                    <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
+                                    <td>
+                                        <div class="btn-group card-option">
+                                            <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                                            <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
+
+                                                    <li class="dropdown-item">
+                                                        {{--<a href="{{route('amendment_edit',$detail->id)}}">--}}
+                                                            {{--<i class="feather icon-edit"></i>--}}
+                                                            {{--Edit</a>--}}
+                                                    </li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
