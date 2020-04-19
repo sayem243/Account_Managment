@@ -112,14 +112,14 @@
                             {{--<td>{{$payment->comments}}</td>--}}
 
                         <td>
-                            @if($payment->status==1 and 'approve')
+                            @if($payment->status==1 and 'payment-approve')
 
-                            @can('verify')
+                            @can('payment-verify')
                                 <button data-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary verify">Verify </button>
                             @endcan
 
-                            @elseif($payment->status==2 and 'approve')
-                            @can('approve')
+                            @elseif($payment->status==2 and 'payment-approve')
+                            @can('payment-approve')
                                     <button data-id-id="{{$payment->id}}"type="button" class="btn btn-sm  btn-primary approved">Approve </button>
                             @endcan
                                 @endif
@@ -140,7 +140,8 @@
                                <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                                <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
 
-                                  @if($payment->status==1)
+
+                                   @if($payment->status==1)
                                    <li class="dropdown-item">
                                        <a href="{{route('payment_edit',$payment->id)}}">
                                            <i class="feather icon-edit"></i>

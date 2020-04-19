@@ -14,8 +14,10 @@ use App\UserType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use DB;
+
 use Hash;
 
 
@@ -53,24 +55,24 @@ class UserController extends Controller
     public function showRegistrationForm()
     {
         $usertypes=UserType::all();
+        $roles = Role::pluck('name','id')->all();
 
-        // return view('auth.register', compact('usertypes'));
-        //return view('auth.register')->with('usertypes',$usertypes);
-
+        //return view('roles.create',compact('permission'));
         $companies=Company::all();
         $userProjects=Project::all();
-        return view('auth.register',['usertypes'=>$usertypes ,'companies'=>$companies,'projects'=>$userProjects]);
+        return view('auth.register',['roles'=>$roles,'usertypes'=>$usertypes ,'companies'=>$companies,'projects'=>$userProjects]);
     }
 
     public function userprofileEdit($id){
 
         $user=User::find($id);
+        $roles = Role::pluck('name','name')->all();
 
         $projects=Project::all();
         $usertypes=UserType::all();
         $companies=Company::all();
 
-        return view('auth.edit',['user'=>$user,'projects'=>$projects,'usertypes'=>$usertypes,'companies'=>$companies]);
+        return view('auth.edit',['roles'=>$roles,'user'=>$user,'projects'=>$projects,'usertypes'=>$usertypes,'companies'=>$companies]);
 
     }
 
@@ -97,12 +99,17 @@ class UserController extends Controller
             'user_types_id'=> $request->user_types_id,
             'company_id'=>$request->company_id,
         );
-
         $user = User::create($data);
+        //$user->assignRole($request->input('roles'));
+
+        //DB::table('model_has_roles')->where('model_id')->delete();
         $user->assignRole($request->input('roles'));
+
+
+
         $profile= New UserProfile ;
 
-//        $user->userProfile()->create();
+//       $user->userProfile()->create();
 
         $profile->fname=$request->fname;
         $profile->lname=$request->lname;
@@ -117,6 +124,10 @@ class UserController extends Controller
         $profile->mobile=$request->mobile;
         $profile->company_id=$request->company_id;
 
+       // $role = New Role;
+
+
+
         $user->UserProfile()->save($profile);
         $project = Project::find($request->user_projects);
         $user->projects()->attach($project);
@@ -128,20 +139,9 @@ class UserController extends Controller
     public function userprofileUpdate(Request $request,$id){
 
         $user=User::find($id);
-//
-//        $data = array(
-//            'name' => $request->name,
-//            'email' => $request->email,
-//            'password' =>  $request->password,
-//            'username'=> $request->username,
-//            'user_types_id'=> $request->user_types_id,
-//            'company_id'=>$request->company_id,
-//        );
-//
-        //$user->save($data);
-
         $user->name=$request->name;
         $user->email=$request->email;
+
         $user->password=bcrypt($request->password);
         $user->username=$request->username;
         $user->user_types_id=$request->user_types_id;
@@ -151,6 +151,9 @@ class UserController extends Controller
 //        $user->save();
 
 //        $profile=UserProfile::find($user->UserProfile);
+
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user->assignRole($request->input('roles'));
 
         $user->UserProfile->fname=$request->fname;
         $user->UserProfile->lname=$request->lname;

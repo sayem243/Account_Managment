@@ -106,20 +106,19 @@
                                     </select>
 
                                 </div>
+                                   {{-- Permission--}}
+
+
+                                <div class="form-group">
+                                    <strong>Role:</strong>
+                                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                                </div>
+
+
+                           {{-- End Permission--}}
 
 
 
-                                {{--<div class="form-group">--}}
-                                    {{--<label for="exampleFormControlTextarea1">Role</label>--}}
-                                    {{--<textarea class="form-control"   name="role" id="role" rows="1"></textarea>--}}
-
-
-                                    {{--@foreach($permission as $value)--}}
-                                        {{--<label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}--}}
-                                            {{--{{ $value->name }}</label>--}}
-                                        {{--<br/>--}}{{----}}{{--@endforeach--}}
-
-                                {{--</div>--}}
                         </div>
                     </div>
 

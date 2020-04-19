@@ -24,11 +24,11 @@ class PaymentController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:Payment-create', ['only' => ['create','store','approve','verify']]);
-        //$this->middleware('permission:index', ['only' => ['index']]);
-        $this->middleware('permission:verify', ['only' => ['verify']]);
-        $this->middleware('permission:approve', ['only' => ['approve']]);
+        $this->middleware('permission:Payment-create', ['only' => ['create','store']]);
+        $this->middleware('permission:payment-verify', ['only' => ['verify']]);
+        $this->middleware('permission:payment-approve', ['only' => ['approve']]);
         $this->middleware('permission:payment-index', ['only' => ['index']]);
+        $this->middleware('permission:payment-edit',['only'=>['edite']]);
 
 
     }
@@ -38,7 +38,7 @@ class PaymentController extends Controller
 
         $payments=Payment::orderBy('created_at','DSC')->paginate(25);
         $users=User::all();
-
+        
         $amendments=Ammendment::all();
 
         return view('payment.payment_index',['payments'=>$payments,'amendments'=>$amendments,'users'=>$users])->with('i', (request()->input('page', 1) - 1) * 25);

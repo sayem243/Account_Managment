@@ -8,7 +8,8 @@
                         <h5>Users</h5>
                         <div class="card-header-right">
                             <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                                {{--<a href="{{route('users.create')}}" class="btn btn-sm  btn-info">Add New</a>--}}
+{{--                                <a href="{{route('register')}}" class="btn btn-sm  btn-info">Add New</a>--}}
+                                <a href="{{route('register')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                             </div>
 
                             <div class="btn-group card-option">
@@ -41,17 +42,23 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
+                                <th>Company</th>
                                 <th>Email</th>
                                 <th>Roles</th>
-                                <th width="280px">Action</th>
+
+                                <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
+                                    <i class="feather icon-settings"></i>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($data as $key => $user)
                                 <tr>
                                     <td>{{ ++$i }}</td>
-                                    <td>{{ $user->name }}</td>
+                                    <td> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname']}}</td>
+                                    <td>{{$user->UserProfile->company['name']}}</td>
                                     <td>{{ $user->email }}</td>
+
+
                                     <td>
                                         @if(!empty($user->getRoleNames()))
                                             @foreach($user->getRoleNames() as $v)
@@ -59,13 +66,50 @@
                                             @endforeach
                                         @endif
                                     </td>
+
+{{--                                    <td>--}}
+{{--                                        <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>--}}
+{{--                                        <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>--}}
+{{--                                        {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}--}}
+{{--                                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}--}}
+{{--                                        {!! Form::close() !!}--}}
+{{--                                    </td>--}}
+
+                                  
                                     <td>
-                                        <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-                                        <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-                                        {{--{!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}--}}
-                                        {{--{!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}--}}
-                                        {{--{!! Form::close() !!}--}}
+                                        <div class="btn-group card-option">
+                                            <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                                            <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
+
+                                                <li class="dropdown-item">
+                                                    <a href="{{route('userprofile_show',$user->id)}}">
+                                                        <i class="feather icon-eye"></i>
+                                                        Details</a>
+                                                </li>
+
+                                                <li class="dropdown-item">
+                                                    <a href="{{route('users.show',$user->id)}}">
+                                                        <i class="feather icon-eye"></i>
+                                                        Role-Show</a>
+                                                </li>
+                                                <li class="dropdown-item">
+                                                    <a href="{{route('userprofileEdit',$user->id)}}">
+                                                        <i class="feather icon-edit"></i>
+                                                        Edit</a>
+                                                </li>
+
+                                                <li class="dropdown-item">
+                                                    <a href="{{route('User_delete',$user->id)}}">
+                                                        <i class="feather icon-trash-2"></i>
+                                                        Remove</a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
                                     </td>
+                                </tr>
+
                                 </tr>
                             @endforeach
                             </tbody>

@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('admin.index')
 
-@section('content')
+@section('template')
 
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -66,6 +66,6 @@
     {!! Form::close() !!}
 
 
-    <p class="text-center text-primary"><small>©2019 Right Brain Solution Limited.All Rights Reserved</small></p>
+    <p class="text-center text-primary"><small>©2020 Right Brain Solution Limited.All Rights Reserved</small></p>
 @endsection
 

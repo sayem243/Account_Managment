@@ -64,18 +64,15 @@
 
                                     <?php $company = \App\Company::find($user->UserProfile['company_id']);?>
                                     <td> {{ $company['name'] }} </td>
+
+{{--                                    <td> {{$user->UserProfile->company['name']}}</td>--}}
+
                                     {{--<td> {{$user->UserProfile->company['name']}}</td>--}}
 
                                     <td> {{ $user->UserProfile['mobile'] }}</td>
 
                                     <td> {{ $user->email }}</td>
 
-                                    {{--<td> {{ $user->UserProfile['fathername'] }}</td>--}}
-                                    {{--<td> {{ $user->UserProfile['mothername'] }}</td>--}}
-                                    {{--<td> {{ $user->UserProfile['joindate']}}</td>--}}
-                                    {{--<td> {{ $user->UserProfile['p_address'] }}</td>--}}
-                                    {{--<td> {{ $user->UserProfile['address']}} </td>--}}
-                                    {{--<td> {{ $user->UserProfile['nid'] }} </td>--}}
                                     
                                     <td>
                                         <div class="btn-group card-option">
@@ -87,7 +84,6 @@
                                                         <i class="feather icon-eye"></i>
                                                         Show</a>
                                                 </li>
-
 
                                                 <li class="dropdown-item">
                                                     <a href="{{route('User_delete',$user->id)}}">

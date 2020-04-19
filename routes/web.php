@@ -154,9 +154,10 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('payments','PaymentController');
     Route::resource('users','UserController');
-    Route::resource('verify','PaymentController@verify');
-    Route::resource('approve','PaymentController@approve');
+    Route::resource('payment-verify','PaymentController@verify');
+    Route::resource('payment-approve','PaymentController@approve');
     Route::resource('payment-index','PaymentController@index');
+    Route::resource('payment-edit','PaymentController@edite');
 
     Route::resource('vocher','VocherController');
     Route::resource('vocher','VocherController@approved');
