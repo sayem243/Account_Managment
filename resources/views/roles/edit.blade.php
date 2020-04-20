@@ -6,7 +6,7 @@
                 <div class="card">
 
     <div class="card-header">
-        <h5>Advance Payment</h5>
+        <h5>Role Edit</h5>
         <div class="card-header-right">
             <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                 <a href="{{route('roles.index')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Back</a>

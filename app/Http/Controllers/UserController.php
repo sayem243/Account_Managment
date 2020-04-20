@@ -65,14 +65,17 @@ class UserController extends Controller
 
     public function userprofileEdit($id){
 
-        $user=User::find($id);
+        $users=User::find($id);
         $roles = Role::pluck('name','name')->all();
+        //$roles = Role::pluck('name','name')->all();
+        $userRole = $users->roles->pluck('name','name')->all();
+
 
         $projects=Project::all();
         $usertypes=UserType::all();
         $companies=Company::all();
 
-        return view('auth.edit',['roles'=>$roles,'user'=>$user,'projects'=>$projects,'usertypes'=>$usertypes,'companies'=>$companies]);
+        return view('auth.edit',['roles'=>$roles,'users'=>$users,'projects'=>$projects,'usertypes'=>$usertypes,'companies'=>$companies,'userRole'=>$userRole]);
 
     }
 

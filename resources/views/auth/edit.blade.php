@@ -6,7 +6,7 @@
         <div class="card-header">
              <h5>Log In Componant</h5></div>
 
-            <form class="form-horizontal" method="POST" action="{{ route('userprofileUpdate',$user->id) }}">
+            <form class="form-horizontal" method="POST" action="{{ route('userprofileUpdate',$users->id) }}">
 
                 <div class="card-body">
                     {{ csrf_field() }}
@@ -14,7 +14,7 @@
                         <div class="col-md-6">
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                 <label for="username" class="control-label">UserName</label>
-                                <input id="username" type="text" class="form-control" name="username" value="{{$user->username}}"  required>
+                                <input id="username" type="text" class="form-control" name="username" value="{{$users->username}}"  required>
 
                                 @if ($errors->has('username'))
                                     <span class="help-block">
@@ -29,7 +29,7 @@
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="control-label">E-Mail Address</label>
 
-                                <input id="email" type="email" class="form-control" name="email" value="{{$user->email}}" required >
+                                <input id="email" type="email" class="form-control" name="email" value="{{$users->email}}" required >
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -44,7 +44,7 @@
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password" class="control-label">Password</label>
 
-                                <input id="password" type="password" class="form-control" name="password" value="{{$user->password}}" required>
+                                <input id="password" type="password" class="form-control" name="password" value="{{$users->password}}" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -64,7 +64,8 @@
                                 <select class="form-control" name="user_projects[]" multiple >
                                     <option value="">Select Project</option>
                                     @foreach($projects as $project)
-                                        <option value="{{$project->id}}"> {{$project->p_name}} </option>
+                                        <option value="{{$project->id}}" {{$project->users==$users->projects?'selected="selected"':'' }} > {{$project->p_name}} </option>
+{{--                                        <option value="{{$project->id}}" {{ $project->id==$detail->project->id?'selected="selected"':'' }}>{{$project->p_name}}</option>--}}
                                     @endforeach
                                 </select>
                             </div>
@@ -78,7 +79,7 @@
 
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="Text" value="{{$user->name}}" >
+                                <input type="text" class="form-control" name="name" placeholder="Text" value="{{$users->name}}" >
                             </div>
 
                             <div class="form-group">
@@ -87,7 +88,9 @@
                                 <select class="form-control" name="user_types_id">
                                     <option value=""> Type </option>
                                     @foreach($usertypes as $usertype)
-                                        <option value="{{$usertype->id}}"> {{$usertype->u_title}} </option>
+                                        <option value="{{$usertype->id}}" {{$usertype->id==$users->user_types_id?'selected="selected"':''}}>{{$usertype->u_title}} </option>
+
+{{--                                        <option value="{{$user->id}}" {{$user->id==$payment->user->id?'selected="selected"':''}}> {{$user->name}} </option>--}}
                                     @endforeach
 
                                 </select>
@@ -96,10 +99,10 @@
 
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Select company</label>
-                                <select class="form-control" name="company_id" multiple>
+                                <select class="form-control" name="company_id" >
                                     <option value="">Select Company</option>
                                     @foreach($companies as $company)
-                                        <option value="{{$company->id}}"> {{$company->name}} </option>
+                                        <option value="{{$company->id}}" {{$users->UserProfile->company_id==$company->id?'selected="selected"':''}} > {{$company->name}} </option>
                                     @endforeach
                                 </select>
 
@@ -107,7 +110,9 @@
 
                             <div class="form-group">
                                 <strong>Role:</strong>
-                                {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                                {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+
+                                <br/>
                             </div>
 
 
@@ -123,31 +128,31 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control" name="fname" placeholder="First Name" value="{{$user->UserProfile->fname}}">
+                                    <input type="text" class="form-control" name="fname" placeholder="First Name" value="{{$users->UserProfile->fname}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Fathers Name</label>
-                                    <input type="text" class="form-control" name="fathername" placeholder="Fathers Name" value="{{$user->UserProfile->fathername}}" >
+                                    <input type="text" class="form-control" name="fathername" placeholder="Fathers Name" value="{{$users->UserProfile->fathername}}" >
                                 </div>
 
 
 
                                 <div class="form-group">
                                     <label>Present Address</label>
-                                    <input type="text" class="form-control" name="p_address" placeholder="Present Address" value="{{$user->UserProfile->p_address}}">
+                                    <input type="text" class="form-control" name="p_address" placeholder="Present Address" value="{{$users->UserProfile->p_address}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Mobile Number</label>
-                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number" value="{{$user->UserProfile->mobile}}" >
+                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number" value="{{$users->UserProfile->mobile}}" >
                                 </div>
 
 
 
                                 <div class="form-group">
                                     <label>NID</label>
-                                    <input type="number" class="form-control" name="nid" placeholder="National ID" value="{{$user->UserProfile->nid}}">
+                                    <input type="number" class="form-control" name="nid" placeholder="National ID" value="{{$users->UserProfile->nid}}">
                                 </div>
 
                             </div>
@@ -157,24 +162,24 @@
 
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input type="text" class="form-control" name="lname" placeholder="Last Name" value="{{$user->UserProfile->lname}}" >
+                                    <input type="text" class="form-control" name="lname" placeholder="Last Name" value="{{$users->UserProfile->lname}}" >
                                 </div>
 
 
 
                                 <div class="form-group">
                                     <label>Mothers Name</label>
-                                    <input type="text" class="form-control" name="mothername" placeholder="Mothers Name" value="{{$user->UserProfile->mothername}}">
+                                    <input type="text" class="form-control" name="mothername" placeholder="Mothers Name" value="{{$users->UserProfile->mothername}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Permanent Address</label>
-                                    <input type="text" class="form-control" name="address" placeholder="Permanent Address"  value="{{$user->UserProfile->address}}">
+                                    <input type="text" class="form-control" name="address" placeholder="Permanent Address"  value="{{$users->UserProfile->address}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Joining Date</label>
-                                    <input type="date" class="form-control" name="joindate" placeholder="Joining Date" value="{{$user->UserProfile->joindate}}">
+                                    <input type="date" class="form-control" name="joindate" placeholder="Joining Date" value="{{$users->UserProfile->joindate}}">
                                 </div>
 
 
