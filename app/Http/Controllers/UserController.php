@@ -125,7 +125,6 @@ class UserController extends Controller
         $profile->joindate=$request->joindate;
         $profile->nid=$request->nid;
         $profile->mobile=$request->mobile;
-        $profile->company_id=$request->company_id;
 
        // $role = New Role;
 
@@ -135,7 +134,7 @@ class UserController extends Controller
         $project = Project::find($request->user_projects);
         $user->projects()->attach($project);
 
-        return redirect()->route('userprofile')
+        return redirect()->route('users.index')
             ->with('success','User created successfully');
     }
 
@@ -145,7 +144,7 @@ class UserController extends Controller
         $user->name=$request->name;
         $user->email=$request->email;
 
-        $user->password=bcrypt($request->password);
+//        $user->password=bcrypt($request->password);
         $user->username=$request->username;
         $user->user_types_id=$request->user_types_id;
       // $user->company_id=$request->company_id;
@@ -169,18 +168,14 @@ class UserController extends Controller
         $user->UserProfile->joindate=$request->joindate;
         $user->UserProfile->nid=$request->nid;
         $user->UserProfile->mobile=$request->mobile;
-        $user->UserProfile->company_id=$request->company_id;
 
        // $profile->save();
 
         $user->push();
 
-        //$user->UserProfile()->save();
+        $user->projects()->sync($request->user_projects);
 
-        $project = Project::find($request->user_projects);
-        $user->projects()->attach($project);
-
-        return redirect()->route('userprofile')
+        return redirect()->route('users.index')
             ->with('success','User Update successfully');
 
     }

@@ -40,39 +40,11 @@
                             </div>
 
 
-
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password" class="control-label">Password</label>
-
-                                <input id="password" type="password" class="form-control" name="password" value="{{$users->password}}" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password-confirm" class="control-label">Confirm Password</label>
-
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  required>
-                            </div>
-
                             <div class="form-group">
                                 <label for="user_project">select Project</label>
-                                <select class="form-control" name="user_projects[]" multiple >
-                                    <option value="">Select Project</option>
-                                    @foreach($projects as $project)
-                                        <option value="{{$project->id}}" {{$project->users==$users->projects?'selected="selected"':'' }} > {{$project->p_name}} </option>
-{{--                                        <option value="{{$project->id}}" {{ $project->id==$detail->project->id?'selected="selected"':'' }}>{{$project->p_name}}</option>--}}
-                                    @endforeach
-                                </select>
+
+                                {{ Form::select('user_projects[]', array_pluck($projects,'p_name','id'), array_pluck($users->projects,'id'), ['class' => 'form-control','multiple']) }}
                             </div>
-
-
-
-
                         </div>
 
                         <div class="col-md-6">
