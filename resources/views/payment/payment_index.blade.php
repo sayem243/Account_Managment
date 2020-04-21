@@ -8,9 +8,11 @@
         <div class="card-header">
          <h5>Advance Payment</h5>
             <div class="card-header-right">
-                <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                    <a href="{{route('payment_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
-                </div>
+                @if(auth()->user()->can('Payment-create'))
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
+                        <a href="{{route('payment_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                    </div>
+                @endif
 
                 <div class="btn-group card-option">
                     <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
@@ -142,16 +144,19 @@
 
 
                                    @if($payment->status==1)
+                                       @if(auth()->user()->can('payment-edit'))
+                                           <li class="dropdown-item">
+                                               <a href="{{route('payment_edit',$payment->id)}}">
+                                                   <i class="feather icon-edit"></i>
+                                                   Edit</a>
+                                           </li>
+                                       @endif
+
                                    <li class="dropdown-item">
-                                       <a href="{{route('payment_edit',$payment->id)}}">
-                                           <i class="feather icon-edit"></i>
-                                           Edit</a>
+                                       <a href="{{route('delete',$payment->id)}}">
+                                           <i class="feather icon-trash-2"></i>
+                                           Remove</a>
                                    </li>
-                                       <li class="dropdown-item">
-                                           <a href="{{route('delete',$payment->id)}}">
-                                               <i class="feather icon-trash-2"></i>
-                                               Remove</a>
-                                       </li>
 
                                    @endif
                                    <li class="dropdown-item">
