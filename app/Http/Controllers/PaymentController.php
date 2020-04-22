@@ -29,6 +29,8 @@ class PaymentController extends Controller
         $this->middleware('permission:payment-approve', ['only' => ['approve']]);
         $this->middleware('permission:payment-index', ['only' => ['index']]);
         $this->middleware('permission:payment-edit',['only'=>['edite']]);
+        $this->middleware('permission:payment-delete',['only'=>['delete']]);
+        $this->middleware('permission:payment-paid',['only'=>['payment_paid']]);
 
 
     }
@@ -211,6 +213,9 @@ class PaymentController extends Controller
         $payment->status=3;
         $payment->save();
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
+    }
+    public function payment_paid(){
+
     }
 
 //    public function details($id){

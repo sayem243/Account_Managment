@@ -239,11 +239,11 @@
                                             <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                                             <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
 
-                                                    <li class="dropdown-item">
-                                                        {{--<a href="{{route('amendment_edit',$detail->id)}}">--}}
-                                                            {{--<i class="feather icon-edit"></i>--}}
-                                                            {{--Edit</a>--}}
-                                                    </li>
+{{--                                                    <li class="dropdown-item">--}}
+{{--                                                        <a href="{{route('amendment_edit',$detail->id)}}">--}}
+{{--                                                            <i class="feather icon-edit"></i>--}}
+{{--                                                            Edit</a>--}}
+{{--                                                    </li>--}}
                                             </ul>
                                         </div>
                                     </td>

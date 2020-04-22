@@ -18,15 +18,19 @@ class PermissionTableSeeder extends Seeder
             'role-create',
             'role-edit',
             'role-delete',
-            'product-list',
-            'Payment-create',
-            'comp_profile',
             'users',
             'projects',
             'amendments',
+            'comp_profile',
             'userprofiles',
-            'approve',
-            'verify',
+            'Payment-create',
+            'payment-index',
+            'payment-verify',
+            'payment-approve',
+            'voucher_create',
+            'voucher_approved',
+            'payment-edit',
+
 
 
 

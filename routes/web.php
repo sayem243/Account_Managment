@@ -82,6 +82,7 @@ Route::post('/payment/update/{id}','PaymentController@update')->name('payment_up
 Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
 Route::post('/payment/status/{id}','PaymentController@verify')->name('verify');
 Route::post('/payment/status/approve/{id}','PaymentController@approve')->name('danger');
+Route::post('/payment/status/payment-paid/{id}','PaymentController@payment_paid')->name('payment_paid');
 
 
 //Ajax route
@@ -98,6 +99,9 @@ Route::get('/payment/details/delete/{id}','PaymentDetailsController@delete')->na
 Route::get('/payment/print-pdf/{id}','PaymentDetailsController@paymentPDF')->name('printPDF');
 Route::get('/payment/print/{id}','PaymentDetailsController@printpdf')->name('payment_print');
 Route::post('/amendment/approved/{id}','PaymentDetailsController@approved')->name('amendment_approved');
+
+
+
 
 
 //  amendmentPayment
@@ -158,6 +162,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('payment-approve','PaymentController@approve');
     Route::resource('payment-index','PaymentController@index');
     Route::resource('payment-edit','PaymentController@edite');
+    Route::resource('payment-delete','PaymentController@delete');
+    Route::resource('payment-paid','PaymentController@payment_paid');
+
 
     Route::resource('vocher','VocherController');
     Route::resource('vocher','VocherController@approved');

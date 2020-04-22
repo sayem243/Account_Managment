@@ -8,11 +8,12 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="img-container"> <img src="{{asset('assets/images/PUL.png')}}" width="100px" > </div><style>
-                            .img-container{
-                                text-align: center;
-                            }
-                        </style>
+{{--                        <div class="img-container"> <img src="{{asset('assets/images/PUL.png')}}" width="100px" > </div>--}}
+{{--                        <style>--}}
+{{--                            .img-container{--}}
+{{--                                text-align: center;--}}
+{{--                            }--}}
+{{--                        </style>--}}
                         <h1 align="center"> Payment Details </h1>
                     </div>
 
@@ -160,5 +161,6 @@
 
         </div>
     </div>
+
 
 @endsection

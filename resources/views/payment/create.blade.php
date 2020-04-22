@@ -32,7 +32,8 @@
 
                           <option value="">Select User</option>
                           @foreach($users as $user)
-                              <option value="{{$user->id}}"> {{$user->name}} </option>
+                              <option value="{{$user->id}}"> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname'] }} </option>
+{{--                              <td> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname']}}</td>--}}
                           @endforeach
                       </select>
                   </div>

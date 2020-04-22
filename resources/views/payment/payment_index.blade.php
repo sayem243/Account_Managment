@@ -40,26 +40,17 @@
                     <th>Employe Name</th>
                     <th>Company</th>
                     <th>Created By</th>
-
-                    {{--<th>Checked By</th>--}}
-                    {{--<th>Approved By</th>--}}
-
                     <th>Demand(BDT)</th>
                     <th>Paid(BDT)</th>
                     <th>Amendment</th>
                     <th>Status </th>
-
                     {{--<th>Remarks</th>--}}
                     <th>Actions</th>
-
                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                         <i class="feather icon-settings"></i>
-
                     </th>
-
                 </tr>
                 </thead>
-
                 <tbody>
 
                 @php $i=0; @endphp
@@ -98,7 +89,7 @@
                         <td>{{$payment->total_amendment_amount}}</td>
 
                         <td class="status">
-                            {{--<a href="{{route('printPDF',$payment->id)}}">Print PDF</a>--}}
+
 
                                 @if($payment->status == 1)
                                     <span class="label label-primary">Created</span>
@@ -106,7 +97,8 @@
                                     <span class="label label-warning">Verified</span>
                                 @elseif($payment->status == 3)
                                     <span class="label label-success">Approved</span>
-
+{{--                                @elseif($payment->status==4)--}}
+{{--                                    <span class="label label-info">Paid</span>--}}
                                 @endif
 
                         </td>
@@ -122,9 +114,12 @@
 
                             @elseif($payment->status==2 and 'payment-approve')
                             @can('payment-approve')
-                                    <button data-id-id="{{$payment->id}}"type="button" class="btn btn-sm  btn-primary approved">Approve </button>
+                      <button data-id-id="{{$payment->id}}"type="button" class="btn btn-sm  btn-primary approved">Approve </button>
                             @endcan
-                                @endif
+{{--                            @elseif($payment->status==3)--}}
+{{--                       <button data-id-id="{{$payment->id}}"type="button" class="button button1 payment_paid">Paid </button>--}}
+
+                            @endif
 
                         </td>
 
@@ -152,25 +147,30 @@
                                            </li>
                                        @endif
 
+
+                                   @if(auth()->user()->can('payment-delete'))
                                    <li class="dropdown-item">
                                        <a href="{{route('delete',$payment->id)}}">
                                            <i class="feather icon-trash-2"></i>
                                            Remove</a>
                                    </li>
-
+                                       @endif
                                    @endif
+
+
                                    <li class="dropdown-item">
                                        <a href="{{route('details',$payment->id)}}">
                                            <i class="feather icon-eye"></i>
                                            Details</a>
                                    </li>
-
+                                    @if($payment->status==3)
                                    <li class="dropdown-item">
                                        <a href="{{route('amendment_create',$payment->id)}}">
                                            <i class="feather icon-check-square"></i>
                                            Amendment
                                        </a>
                                    </li>
+                                        @endif
                                </ul>
                            </div>
 
