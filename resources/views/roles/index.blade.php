@@ -72,12 +72,13 @@
                     <div class="btn-group card-option">
                         <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                         <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
-                             <li class="dropdown-item">
+                            @can('role-edit')
+                            <li class="dropdown-item">
                                     <a href="{{route('roles.edit',$role->id)}}">
                                         <i class="feather icon-edit"></i>
                                         Edit</a>
                                 </li>
-
+                            @endcan
                             <li class="dropdown-item">
                                 <a href="{{route('roles.show',$role->id)}}">
                                     <i class="feather icon-eye"></i>
@@ -85,12 +86,11 @@
                             </li>
 
                             <li class="dropdown-item">
-
-
+                                @can('role-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id]]) !!}
                                 <i class="feather icon-trash-2"> {!! Form::submit('Delete') !!}     </i>
                                 {!! Form::close() !!}
-
+                                @endcan
 
                             </li>
 

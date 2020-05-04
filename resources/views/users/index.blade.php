@@ -104,6 +104,12 @@
                                                         Remove</a>
                                                 </li>
 
+                                                <li class="dropdown-item">
+                                                    <a href="{{route('password-change',$user->id)}}">
+                                                        <i class="feather icon-edit"></i>
+                                                        Password Change</a>
+                                                </li>
+
                                             </ul>
                                         </div>
 

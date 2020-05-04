@@ -30,9 +30,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $data = User::orderBy('id','DESC')->paginate(20);
         return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+            ->with('i', ($request->input('page', 1) - 1) * 20);
     }
 
 
@@ -177,6 +177,32 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
             ->with('success','User Update successfully');
+
+    }
+
+
+    public function passwordChange(Request $request, $id){
+
+        $user=User::find($id);
+        if($request->has('submit')){
+            $user->password=bcrypt($request->password);
+            $user->push();
+            return redirect()->route('users.index')
+                ->with('success','Password Change successfully');
+        }
+        return view('auth.reset',['user'=>$user]);
+
+    }
+    public function passwordUpdate(Request $request, $id){
+
+        $user=User::find($id);
+        if($request->has('submit')){
+            $user->password=bcrypt($request->password);
+            $user->push();
+            return redirect()->route('users.index')
+                ->with('success','Password Change successfully');
+        }
+        return view('auth.reset',['user'=>$user]);
 
     }
 

@@ -12,7 +12,7 @@
 */
 
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('auth.login');
 
 });
@@ -119,7 +119,7 @@ Route::get('/amendment/print-pdf/{id}','AmmendmentController@amendmentPDF')->nam
 
 //Admin route and Template
 
-Route::get('/admin','AdminController@index')->name('admin_index');
+Route::get('/','AdminController@index')->name('admin_index');
 
 //Route::post('register', 'Auth\RegisterController@register')->name('register');
 //UserType
@@ -150,6 +150,8 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::get('password/change/{id}', 'UserController@passwordChange')->name('password-change');
+Route::post('password/update/{id}', 'UserController@passwordUpdate')->name('password-update');
 
 //pdf controller
 
