@@ -4,13 +4,13 @@
 <html lang="en">
 
 <head>
-    <title></title>
+    <title>Accounting Management</title>
 
     <meta charset="utf-8">
 
 
     <!-- Favicon icon -->
-    <link rel="icon" href="{{asset('asset(/images/favicon.ico')}}" type="image/x-icon">
+    <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon">
     <!-- fontawesome icon -->
     <link rel="stylesheet" href="{{asset('assets/fonts/fontawesome/css/fontawesome-all.min.css')}}">
 
