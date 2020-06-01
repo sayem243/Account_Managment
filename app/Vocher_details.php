@@ -20,9 +20,9 @@ class Vocher_details extends Model
         return $this->belongsTo('App\Payment');
     }
 
-     public function payment_details(){
+     /*public function payment_details(){
         return $this->belongsTo('App\Payment_details');
-     }
+     }*/
 
 
 }

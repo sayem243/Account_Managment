@@ -62,7 +62,7 @@
                                                   {{$vocher_detail->payment->payment_id}},
                                                 @endforeach
                                         </td>
-                                        <td>{{$vocher->user['name']}}</td>
+                                        <td>{{$vocher->user->userprofile['fname']}} {{$vocher->user->userprofile['lname']}}</td>
                                         <td>{{$vocher->user->userprofile->company['name']}}</td>
                                         <td>{{$vocher->voucher_id}}</td>
                                         <td>

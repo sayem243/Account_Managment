@@ -22,18 +22,12 @@ class CreateVochersTable extends Migration
             $table->string('file')->nullable();
             $table->smallInteger('status')->default(1);
             $table->string('voucher_id')->nullable();
-            $table->integer('payment_id')->unsigned()->nullable();
 
             $table->timestamps();
         });
 
         Schema::table('vochers', function($table) {
             $table->foreign('user_id')->references('id')->on('users');
-
-        });
-
-        Schema::table('vochers', function($table) {
-            $table->foreign('payment_id')->references('id')->on('payments');
 
         });
 

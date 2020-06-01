@@ -484,6 +484,31 @@
         }
     });
 
+    jQuery(".payment_paid").click(function(a){
+        var elements = a.target;
+        a.preventDefault();
+        var id = jQuery(this).attr('data-id-id');
+        if(confirm("Do You want to Payment Paid ?")) {
+
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/payment/status/paid/' + id,
+                data: {},
+                success: function (data) {
+                    if (data.status == 100) {
+                         {
+                            $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
+                            $(elements).closest('tr').find('td.status').find('span').html('Disbursed');
+                             location.reload(true);
+                        }
+                    }
+                }
+
+            });
+        }
+    });
+
 
     jQuery(".voucher-approve").click(function(a){
         var elements = a.target;

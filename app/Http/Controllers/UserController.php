@@ -227,7 +227,8 @@ class UserController extends Controller
     public function vocherAmount($id){
 
         $user=User::find($id);
-        $userPayments = $user->Payment;
+//        $userPayments = $user->Payment;
+        $userPayments = Payment::where('user_id', $id)->where('status', '=', 4)->get();
         $datas=array();
         if($userPayments){
             foreach ($userPayments as $userPayment){

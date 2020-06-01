@@ -82,7 +82,7 @@ Route::post('/payment/update/{id}','PaymentController@update')->name('payment_up
 Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
 Route::post('/payment/status/{id}','PaymentController@verify')->name('verify');
 Route::post('/payment/status/approve/{id}','PaymentController@approve')->name('danger');
-Route::post('/payment/status/payment-paid/{id}','PaymentController@payment_paid')->name('payment_paid');
+Route::post('/payment/status/paid/{id}','PaymentController@payment_paid')->name('payment_paid');
 
 
 //Ajax route

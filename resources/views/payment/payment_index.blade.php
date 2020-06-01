@@ -97,8 +97,8 @@
                                     <span class="label label-warning">Verified</span>
                                 @elseif($payment->status == 3)
                                     <span class="label label-success">Approved</span>
-{{--                                @elseif($payment->status==4)--}}
-{{--                                    <span class="label label-info">Paid</span>--}}
+                                @elseif($payment->status==4)
+                                    <span class="label label-info">Disbursed</span>
                                 @endif
 
                         </td>
@@ -114,11 +114,12 @@
 
                             @elseif($payment->status==2 and 'payment-approve')
                             @can('payment-approve')
-                      <button data-id-id="{{$payment->id}}"type="button" class="btn btn-sm  btn-primary approved">Approve </button>
+                                <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm  btn-primary approved">Approve </button>
                             @endcan
-{{--                            @elseif($payment->status==3)--}}
-{{--                       <button data-id-id="{{$payment->id}}"type="button" class="button button1 payment_paid">Paid </button>--}}
-
+                            @elseif($payment->status==3)
+                                @can('payment-paid')
+                                <button data-id-id="{{$payment->id}}" type="button" class="btn btn-sm btn-success payment_paid">Disburse</button>
+                                @endcan
                             @endif
 
                         </td>
@@ -163,7 +164,7 @@
                                            <i class="feather icon-eye"></i>
                                            Details</a>
                                    </li>
-                                    @if($payment->status==3)
+                                    @if($payment->status==3 || $payment->status==4)
                                    <li class="dropdown-item">
                                        <a href="{{route('amendment_create',$payment->id)}}">
                                            <i class="feather icon-check-square"></i>

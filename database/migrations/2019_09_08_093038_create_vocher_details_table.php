@@ -40,9 +40,9 @@ class CreateVocherDetailsTable extends Migration
 
         });
 
-        Schema::table('vocher_details', function($table) {
+        /*Schema::table('vocher_details', function($table) {
             $table->foreign('payment_details_id')->references('id')->on('payment_details');
-        });
+        });*/
 
 
     }

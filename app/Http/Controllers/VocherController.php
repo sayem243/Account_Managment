@@ -33,7 +33,7 @@ class VocherController extends Controller
 //        $paid_amounts=Payment_details::Where('project_id','payment_id')->get();
 
 
-     return  view('voucher.create',['payments'=>$payments,'projects'=>$projects,'users'=>$users ]);
+     return  view('voucher.create',['projects'=>$projects,'users'=>$users ]);
     }
 
     public function store(Request $request){
@@ -145,7 +145,9 @@ class VocherController extends Controller
 
         $vocher=Vocher::find($id);
         $amount=$request->amount;
-        $vocher->total_amount=array_sum($amount)+array_sum($request->exit_amount);
+        $newAmount=$request->amount?$request->amount:array(0);
+        $exitAmount = $request->exit_amount?$request->exit_amount:array(0);
+        $vocher->total_amount=array_sum($newAmount)+array_sum($exitAmount);
         $vocher->user_id=$request->user_id;
         $vocher->comments=$request->comments;
         $exit_amount=$request->exit_amount;
@@ -164,7 +166,7 @@ class VocherController extends Controller
                 if($payment>0){
                     $vocherDetails = new Vocher_details();
                     $vocherDetails->project_id = $projects[$key];
-                    $vocherDetails->payment_id = $payment[$key];
+                    $vocherDetails->payment_id = $payment;
                     $vocherDetails->amount = $amount[$key];
 
                     if($request->hasFile('filenames')){
@@ -200,7 +202,7 @@ class VocherController extends Controller
                 }
              }
 
-        $this->GenerateVocherId($vocher);
+//        $this->GenerateVocherId($vocher);
         return redirect()->route('voucher_index');
     }
 

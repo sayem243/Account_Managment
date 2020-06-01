@@ -43,7 +43,7 @@ class PaymentController extends Controller
         
         $amendments=Ammendment::all();
 
-        return view('payment.payment_index',['payments'=>$payments,'amendments'=>$amendments,'users'=>$users])->with('i', (request()->input('page', 1) - 1) * 25);
+        return view('payment.payment_index',['payments'=>$payments,'users'=>$users])->with('i', (request()->input('page', 1) - 1) * 25);
     }
 
     public function create(){
@@ -214,8 +214,13 @@ class PaymentController extends Controller
         $payment->save();
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
     }
-    public function payment_paid(){
-
+    public function payment_paid($id){
+        $user = auth()->user();
+        $payment=Payment::find($id);
+        //$payment->status=1;
+        $payment->status=4;
+        $payment->save();
+        return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
     }
 
 //    public function details($id){
