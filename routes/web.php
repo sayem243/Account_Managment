@@ -45,7 +45,7 @@ Route::get('home', [
 ]);
 
 
-Route::get('/comp_profile','CompanyController@index')->name('comp_profile');
+Route::get('/company/index','CompanyController@index')->name('comp_profile');
 Route::get('company/create','CompanyController@create')->name('comp_create');
 Route::post('company/store','CompanyController@store')->name('company_store');
 Route::get('/company/view/{id}','CompanyController@view')->name('comp_view');
@@ -57,7 +57,7 @@ Route::get('/company/delete/{id}','CompanyController@delete')->name('com_delete'
 //projects route
 
 
-Route::get('/project','ProjectController@index')->name('project');
+Route::get('/project/index','ProjectController@index')->name('project');
 Route::get('/project/create','ProjectController@create')->name('project_create');
 Route::post('/project/store','ProjectController@store')->name('project_store');
 Route::get('/project/edit/{id}' ,'ProjectController@edit')->name('project_edit');

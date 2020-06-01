@@ -98,13 +98,13 @@
                     <a href="{{route('admin_index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('payment')|| Request::is('payment/*') ? 'pcoded-trigger' : ''}}">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fa fa-credit-card" style="color:green"></i></span><span class="pcoded-mtext">Payements</span></a>
-                    <ul class="pcoded-submenu">
+                    <ul class="pcoded-submenu {{ Request::is('payment') || Request::is('payment/*')? 'active' : ''}}">
 
-                        <li class="nav-item"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-mtext">Advance Payment</span></a></li>
+                        <li class="nav-item {{ Request::is('payment') ? 'active' : ''}}"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-mtext">Advance Payment</span></a></li>
                         @if(auth()->user()->can('Payment-create'))
-                        <li class="nav-item"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-mtext">Add Payment</span></a></li>
+                        <li class="nav-item {{ Request::is('payment/create') ? 'active' : ''}}"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-mtext">Add Payment</span></a></li>
                         @endif
                         {{--<li class="nav-item"><a href="{{route('amendment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Amendment</span></a></li>--}}
 
@@ -115,32 +115,29 @@
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Voucher</span></a>
                     <ul class="pcoded-submenu {{ Request::is('voucher/*') ? 'active' : ''}}">
 
-                        <li class="nav-item"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Voucher</span></a></li>
+                        <li class="nav-item {{ Request::is('voucher/index') ? 'active' : ''}}"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Voucher</span></a></li>
                         @if(auth()->user()->can('voucher_create'))
-                        <li class="nav-item"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New Voucher</span></a></li>
+                        <li class="nav-item {{ Request::is('voucher/create') ? 'active' : ''}}"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New Voucher</span></a></li>
                         @endif
 
                     </ul>
                 </li>
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('company/*') ? 'pcoded-trigger' : ''}}">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fas fa-building"></i></span><span class="pcoded-mtext">Company </span></a>
-                    <ul class="pcoded-submenu">
-
-                        <li class="nav-item"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
-                        <li class="nav-item"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-mtext"> New company</span></a></li>
+                    <ul class="pcoded-submenu {{ Request::is('company/*') ? 'active' : ''}}">
+                        <li class="nav-item {{ Request::is('company/index') ? 'active' : ''}}"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
+                        <li class="nav-item {{ Request::is('company/create') ? 'active' : ''}}"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-mtext"> New company</span></a></li>
                     </ul>
 
                 </li>
 
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('project/*') ? 'pcoded-trigger' : ''}}">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="far fa-file"></i></span><span class="pcoded-mtext">Projects</span></a>
-                    <ul class="pcoded-submenu">
-
-                        <li class="nav-item"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
-                        <li class="nav-item"><a href="{{route('project_create')}}" class="nav-link active"><span class="pcoded-mtext">Add New</span></a></li>
-
+                    <ul class="pcoded-submenu {{ Request::is('project/*') ? 'active' : ''}}">
+                        <li class="nav-item {{ Request::is('project/index') ? 'active' : ''}}"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
+                        <li class="nav-item {{ Request::is('project/create') ? 'active' : ''}}"><a href="{{route('project_create')}}" class="nav-link active"><span class="pcoded-mtext">Add New</span></a></li>
                     </ul>
 
                 </li>

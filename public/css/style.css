@@ -141,3 +141,7 @@ a.btn {
 .pcoded-trigger .active{
     display: block !important;
 }
+
+.pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li.active > a:before, .pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li:focus > a:before, .pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li:hover > a:before {
+    background: #1dc4e9;
+}
