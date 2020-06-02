@@ -112,40 +112,25 @@
                 </li>
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('voucher/*') ? 'pcoded-trigger' : ''}}">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Voucher</span></a>
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Settlement</span></a>
                     <ul class="pcoded-submenu {{ Request::is('voucher/*') ? 'active' : ''}}">
 
-                        <li class="nav-item {{ Request::is('voucher/index') ? 'active' : ''}}"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Voucher</span></a></li>
+                        <li class="nav-item {{ Request::is('voucher/index') ? 'active' : ''}}"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Settlement</span></a></li>
                         @if(auth()->user()->can('voucher_create'))
-                        <li class="nav-item {{ Request::is('voucher/create') ? 'active' : ''}}"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New Voucher</span></a></li>
+                        <li class="nav-item {{ Request::is('voucher/create') ? 'active' : ''}}"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New Settlement</span></a></li>
                         @endif
 
                     </ul>
                 </li>
                 @unless(auth()->user()->hasRole('Employee'))
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('company/*') ? 'pcoded-trigger' : ''}}">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fas fa-building"></i></span><span class="pcoded-mtext">Company </span></a>
-                        <ul class="pcoded-submenu {{ Request::is('company/*') ? 'active' : ''}}">
-                            <li class="nav-item {{ Request::is('company/index') ? 'active' : ''}}"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
-                            <li class="nav-item {{ Request::is('company/create') ? 'active' : ''}}"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-mtext"> New company</span></a></li>
-                        </ul>
-
-                    </li>
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('project/*') ? 'pcoded-trigger' : ''}}">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="far fa-file"></i></span><span class="pcoded-mtext">Projects</span></a>
-                        <ul class="pcoded-submenu {{ Request::is('project/*') ? 'active' : ''}}">
-                            <li class="nav-item {{ Request::is('project/index') ? 'active' : ''}}"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
-                            <li class="nav-item {{ Request::is('project/create') ? 'active' : ''}}"><a href="{{route('project_create')}}" class="nav-link active"><span class="pcoded-mtext">Add New</span></a></li>
-                        </ul>
-
-                    </li>
-
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('company/*') ? 'pcoded-trigger' : ''}}{{ Request::is('project/*') ? 'pcoded-trigger' : ''}}{{ Request::is('usertype/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>
-                        <ul class="pcoded-submenu">
+                        <ul class="pcoded-submenu {{ Request::is('usertype/*') ? 'active' : ''}}{{ Request::is('company/*') ? 'active' : ''}}{{ Request::is('project/*') ? 'active' : ''}}">
 
-                            <li class="nav-item"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-mtext">Setting</span></a></li>
-                            <li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-mtext">Add New</span></a></li>
+                            <li class="nav-item {{ Request::is('company/index') ? 'active' : ''}}"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
+                            <li class="nav-item {{ Request::is('project/index') ? 'active' : ''}}"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
+                            <li class="nav-item {{ Request::is('usertype/index') ? 'active' : ''}}"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-mtext">User Type</span></a></li>
+                            {{--<li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-mtext">Add New</span></a></li>--}}
                         </ul>
 
                     </li>
@@ -414,7 +399,7 @@
                 jQuery('.user_payment_list').html(dataOption);
             }
         });
-    }).change();
+    });
 
 
 //    payment wise voucher project_list

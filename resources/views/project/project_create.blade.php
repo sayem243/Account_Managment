@@ -6,6 +6,11 @@
             <div class="card">
                 <div class="card-header">
                     <h5>Manage Project </h5>
+                    <div class="card-header-right">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
+                            <a href="{{route('project')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i>Back</a>
+                        </div>
+                    </div>
                 </div>
 
                 @if ($errors->any())

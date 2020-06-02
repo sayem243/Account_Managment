@@ -6,7 +6,7 @@
             <div class="col-sm-12">
         <div class="card" >
             <div class="card-header">
-            <h5 align="center">Setting Table</h5>
+            <h5 align="center">User Type</h5>
             </div>
             <div class="card-block">
             <div class="card-body">
@@ -30,9 +30,9 @@
         <div class="col-md-6">
 
     <div class="form-group">
-    <label class="col-form-label" for="u_title">Tittle :</label>
+    <label class="col-form-label" for="u_title">Title :</label>
     <div class="col-form-label">
-        <input type="text" class="form-control" name="u_title" id="u_title" placeholder="User Tittle">
+        <input type="text" class="form-control" name="u_title" id="u_title" placeholder="User Type">
     </div>
 </div>
 

@@ -124,7 +124,7 @@ Route::get('/','AdminController@index')->name('admin_index');
 //Route::post('register', 'Auth\RegisterController@register')->name('register');
 //UserType
 
-Route::get('/usertype','UserTypeController@index')->name('usertype');
+Route::get('/usertype/index','UserTypeController@index')->name('usertype');
 Route::get('/usertype/create','UserTypeController@create')->name('usertype_create');
 Route::post('/usertype/store','UserTypeController@store')->name('usertype_store');
 

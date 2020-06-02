@@ -1,5 +1,5 @@
 @extends('admin.index')
-@section('title','Voucher Edit')
+@section('title','Settlement Edit')
 @section('template')
 
     <div class="col-sm-12">
@@ -7,7 +7,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Voucher Edit </h5>
+                        <h5>Settlement Edit </h5>
                     </div>
 
 
@@ -114,7 +114,7 @@
                                     <tr>
                                         <td>
                                             <select class="form-control user_payment_list" name="payment_id[]" required>
-                                                <option value=""></option>
+                                                <option value="">Select Payment</option>
                                             </select>
                                         </td>
                                         <td>

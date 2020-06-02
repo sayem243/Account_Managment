@@ -1,12 +1,12 @@
 @extends('admin.index')
-@section('title','Voucher Entry')
+@section('title','Settlement Entry')
 @section('template')
  <div class="col-sm-12">
       <div class="row">
           <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Voucher Entry </h5>
+                        <h5>Settlement Entry </h5>
                     </div>
 
 

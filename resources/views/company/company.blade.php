@@ -6,7 +6,12 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>New Company</h5>
-                          </div>
+                        <div class="card-header-right">
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
+                                <a href="{{route('comp_profile')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i>Back</a>
+                            </div>
+                        </div>
+                    </div>
                    <div class="card-block">
                     <div class="card-body">
                         <form class="form-horizontal" action="{{ route('company_store')}}"  method="post"  enctype="multipart/form-data">
