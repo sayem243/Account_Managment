@@ -1,4 +1,7 @@
 @extends('admin.index')
+@section('header.styles')
+    {!! Html::style('/assets/css/multi-select.css') !!}
+@endsection
 @section('template')
 
  <div class="col-sm-12">
@@ -10,6 +13,7 @@
 
                 <div class="card-body">
                     {{ csrf_field() }}
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
@@ -23,9 +27,8 @@
                                 @endif
 
                             </div>
-
-
-
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="control-label">E-Mail Address</label>
 
@@ -38,22 +41,10 @@
                                 @endif
 
                             </div>
-
-
-                            <div class="form-group">
-                                <label for="user_project">select Project</label>
-
-                                {{ Form::select('user_projects[]', array_pluck($projects,'p_name','id'), array_pluck($users->projects,'id'), ['class' => 'form-control','multiple']) }}
-                            </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
-
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="Text" value="{{$users->name}}" >
-                            </div>
-
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Employe type</label>
 
@@ -61,14 +52,13 @@
                                     <option value=""> Type </option>
                                     @foreach($usertypes as $usertype)
                                         <option value="{{$usertype->id}}" {{$usertype->id==$users->user_types_id?'selected="selected"':''}}>{{$usertype->u_title}} </option>
-
-{{--                                        <option value="{{$user->id}}" {{$user->id==$payment->user->id?'selected="selected"':''}}> {{$user->name}} </option>--}}
                                     @endforeach
 
                                 </select>
 
                             </div>
-
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Select company</label>
                                 <select class="form-control" name="company_id" >
@@ -79,15 +69,21 @@
                                 </select>
 
                             </div>
-
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <strong>Role:</strong>
-                                {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+                                <label for="user_project">Project</label>
 
-                                <br/>
+                                {{ Form::select('user_projects[]', array_pluck($projects,'p_name','id'), array_pluck($users->projects,'id'), ['class' => 'form-control multi_select','multiple']) }}
                             </div>
-
-
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="role">Roles</label>
+                                {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control multi_select','multiple')) !!}
+                            </div>
                         </div>
                     </div>
 
@@ -173,4 +169,12 @@
         <!-- Input group -->
 
     </div>
+@endsection
+
+@section('footer.scripts')
+    {!! Html::script('/assets/js/jquery.multi-select.js') !!}
+
+    <script type="text/javascript">
+        jQuery('.multi_select').multiSelect();
+    </script>
 @endsection

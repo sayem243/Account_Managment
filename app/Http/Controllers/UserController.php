@@ -89,13 +89,14 @@ class UserController extends Controller
     {
 
         $this->validate($request, [
-            'name' => 'required',
+            'username' => 'required',
+            'fname' => 'required',
             'email' => 'required|email|unique:users,email',
 //            'password' => 'required|same:confirm-password',
         ]);
 
         $data = array(
-            'name' => $request->name,
+            'name' => $request->fname.' '.$request->lname,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'username'=> $request->username,
@@ -116,7 +117,6 @@ class UserController extends Controller
 
         $profile->fname=$request->fname;
         $profile->lname=$request->lname;
-        $profile->email=$request->email;
         $profile->mothername=$request->mothername;
         $profile->fathername=$request->fathername;
         $profile->p_address=$request->p_address;
@@ -141,7 +141,7 @@ class UserController extends Controller
     public function userprofileUpdate(Request $request,$id){
 
         $user=User::find($id);
-        $user->name=$request->name;
+        $user->name=$request->fname. ' '.$request->lname;
         $user->email=$request->email;
 
 //        $user->password=bcrypt($request->password);
@@ -159,7 +159,6 @@ class UserController extends Controller
 
         $user->UserProfile->fname=$request->fname;
         $user->UserProfile->lname=$request->lname;
-        $user->UserProfile->email=$request->email;
         $user->UserProfile->mothername=$request->mothername;
         $user->UserProfile->fathername=$request->fathername;
         $user->UserProfile->p_address=$request->p_address;

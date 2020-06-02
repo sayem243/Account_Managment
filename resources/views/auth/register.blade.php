@@ -1,5 +1,7 @@
 @extends('admin.index')
-
+@section('header.styles')
+    {!! Html::style('/assets/css/multi-select.css') !!}
+@endsection
 @section('template')
 
     <div class="col-sm-12">
@@ -16,73 +18,55 @@
                             <div class="col-md-6">
                                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                     <label for="username" class="control-label">UserName</label>
-                                        <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required>
+                                    <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required>
 
                                     @if ($errors->has('username'))
-                                            <span class="help-block">
+                                        <span class="help-block">
                                                                 <strong>{{ $errors->first('username') }}</strong>
                                                                 </span>
-                                        @endif
+                                    @endif
 
                                 </div>
-
-
-
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="email" class="control-label">E-Mail Address</label>
 
-                                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
 
-                                        @if ($errors->has('email'))
-                                            <span class="help-block">
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
                                                 <strong>{{ $errors->first('email') }}</strong>
                                                              </span>
-                                        @endif
+                                    @endif
 
                                 </div>
-
-
-
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                     <label for="password" class="control-label">Password</label>
 
-                                        <input id="password" type="password" class="form-control" name="password" required>
+                                    <input id="password" type="password" class="form-control" name="password" required>
 
-                                        @if ($errors->has('password'))
-                                            <span class="help-block">
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                        @endif
+                                    @endif
                                 </div>
-
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="password-confirm" class="control-label">Confirm Password</label>
 
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="user_project">Select Project</label>
-                                    <select class="form-control" name="user_projects[]" multiple>
-                                        <option value="">Select Project</option>
-                                        @foreach($projects as $project)
-                                            <option value="{{$project->id}}"> {{$project->p_name}} </option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-
-
-
+                            </div>
                         </div>
-
-                        <div class="col-md-6">
-
-                                <div class="form-group">
-                                    <label>Nick Name</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Text">
-                                </div>
-
+                        <div class="row">
+                            <div class="col md 6">
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Employe type</label>
 
@@ -95,10 +79,11 @@
                                     </select>
 
                                 </div>
-
+                            </div>
+                            <div class="col md 6">
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Select company</label>
-                                    <select class="form-control" name="company_id">
+                                    <select class="form-control" name="company_id" required>
                                         <option value="">Select Company</option>
                                         @foreach($companies as $company)
                                             <option value="{{$company->id}}"> {{$company->name}} </option>
@@ -106,21 +91,28 @@
                                     </select>
 
                                 </div>
-                                   {{-- Permission--}}
-
-
-                                <div class="form-group">
-                                    <strong>Role:</strong>
-                                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
-                                </div>
-
-
-                           {{-- End Permission--}}
-
-
-
+                            </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col md 6">
+                                <div class="form-group">
+                                    <label for="user_project">Select Project</label>
+                                    <select class="form-control multi_select" name="user_projects[]" multiple>
+                                        <option value="">Select Project</option>
+                                        @foreach($projects as $project)
+                                            <option value="{{$project->id}}"> {{$project->p_name}} </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col md 6">
+                                <div class="form-group">
+                                    <label for="roles">Role</label>
+                                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control multi_select','multiple')) !!}
+                                </div>
+                            </div>
+                        </div>
 
                     <div class="col-md-12">
                         <div class="card-header">
@@ -131,7 +123,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control" name="fname" placeholder="First Name">
+                                    <input type="text" class="form-control" name="fname" placeholder="First Name" required>
                                 </div>
 
                                 <div class="form-group">
@@ -199,4 +191,12 @@
 
         </div>
 
+@endsection
+
+@section('footer.scripts')
+{!! Html::script('/assets/js/jquery.multi-select.js') !!}
+
+    <script type="text/javascript">
+        jQuery('.multi_select').multiSelect();
+    </script>
 @endsection

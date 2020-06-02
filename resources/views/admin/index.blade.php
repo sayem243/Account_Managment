@@ -34,7 +34,7 @@
     {{--//datepicker--}}
 
 
-
+    @yield('header.styles')
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />--}}
 
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
@@ -122,35 +122,57 @@
 
                     </ul>
                 </li>
+                @unless(auth()->user()->hasRole('Employee'))
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('company/*') ? 'pcoded-trigger' : ''}}">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fas fa-building"></i></span><span class="pcoded-mtext">Company </span></a>
+                        <ul class="pcoded-submenu {{ Request::is('company/*') ? 'active' : ''}}">
+                            <li class="nav-item {{ Request::is('company/index') ? 'active' : ''}}"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
+                            <li class="nav-item {{ Request::is('company/create') ? 'active' : ''}}"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-mtext"> New company</span></a></li>
+                        </ul>
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('company/*') ? 'pcoded-trigger' : ''}}">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fas fa-building"></i></span><span class="pcoded-mtext">Company </span></a>
-                    <ul class="pcoded-submenu {{ Request::is('company/*') ? 'active' : ''}}">
-                        <li class="nav-item {{ Request::is('company/index') ? 'active' : ''}}"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
-                        <li class="nav-item {{ Request::is('company/create') ? 'active' : ''}}"><a href="{{route('comp_create')}}" class="nav-link"><span class="pcoded-mtext"> New company</span></a></li>
-                    </ul>
+                    </li>
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('project/*') ? 'pcoded-trigger' : ''}}">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="far fa-file"></i></span><span class="pcoded-mtext">Projects</span></a>
+                        <ul class="pcoded-submenu {{ Request::is('project/*') ? 'active' : ''}}">
+                            <li class="nav-item {{ Request::is('project/index') ? 'active' : ''}}"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
+                            <li class="nav-item {{ Request::is('project/create') ? 'active' : ''}}"><a href="{{route('project_create')}}" class="nav-link active"><span class="pcoded-mtext">Add New</span></a></li>
+                        </ul>
 
-                </li>
+                    </li>
+
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>
+                        <ul class="pcoded-submenu">
+
+                            <li class="nav-item"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-mtext">Setting</span></a></li>
+                            <li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-mtext">Add New</span></a></li>
+                        </ul>
+
+                    </li>
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">User</span></a>
+                        <ul class="pcoded-submenu">
+                            {{--                        <li class="nav-item"><a href="{{route('userprofile')}}" class="nav-link"><span class="pcoded-mtext">User Profile </span></a></li>--}}
+                            <li class="nav-item"><a href="{{route('users.index')}}" class="nav-link"><span class="pcoded-mtext">Users</span></a></li>
+                            <li class="nav-item"><a href="{{route('register')}}" class="nav-link"><span class="pcoded-mtext">New User</span></a></li>
+                            @if(auth()->user()->can('role-list'))
+                                <li class="nav-item"><a href="{{route('roles.index')}}" class="nav-link"><span class="pcoded-mtext">Role</span></a></li>
+                            @endif
+                        </ul>
+                    </li>
+
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Reports</span></a>
+                        <ul class="pcoded-submenu">
+                            <li class="nav-item"><a href="{{route('report_index')}}" class="nav-link"><span class="pcoded-mtext">Report </span></a></li>
+                            {{--<li class="nav-item"><a href="{{route('report_try')}}" class="nav-link"><span class="pcoded-mtext">Test </span></a></li>--}}
+
+                        </ul>
+                    </li>
+                @endunless
 
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('project/*') ? 'pcoded-trigger' : ''}}">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="far fa-file"></i></span><span class="pcoded-mtext">Projects</span></a>
-                    <ul class="pcoded-submenu {{ Request::is('project/*') ? 'active' : ''}}">
-                        <li class="nav-item {{ Request::is('project/index') ? 'active' : ''}}"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
-                        <li class="nav-item {{ Request::is('project/create') ? 'active' : ''}}"><a href="{{route('project_create')}}" class="nav-link active"><span class="pcoded-mtext">Add New</span></a></li>
-                    </ul>
 
-                </li>
-
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>
-                    <ul class="pcoded-submenu">
-
-                        <li class="nav-item"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-mtext">Setting</span></a></li>
-                        <li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-mtext">Add New</span></a></li>
-                    </ul>
-
-                </li>
 
                 {{--<li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">--}}
                     {{--<a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>--}}
@@ -165,26 +187,7 @@
                 {{--</li>--}}
 
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">User</span></a>
-                    <ul class="pcoded-submenu">
-{{--                        <li class="nav-item"><a href="{{route('userprofile')}}" class="nav-link"><span class="pcoded-mtext">User Profile </span></a></li>--}}
-                        <li class="nav-item"><a href="{{route('users.index')}}" class="nav-link"><span class="pcoded-mtext">Users</span></a></li>
-                        <li class="nav-item"><a href="{{route('register')}}" class="nav-link"><span class="pcoded-mtext">New User</span></a></li>
-                        @if(auth()->user()->can('role-list'))
-                        <li class="nav-item"><a href="{{route('roles.index')}}" class="nav-link"><span class="pcoded-mtext">Role</span></a></li>
-                        @endif
-                    </ul>
-                </li>
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Reports</span></a>
-                    <ul class="pcoded-submenu">
-                        <li class="nav-item"><a href="{{route('report_index')}}" class="nav-link"><span class="pcoded-mtext">Report </span></a></li>
-                        {{--<li class="nav-item"><a href="{{route('report_try')}}" class="nav-link"><span class="pcoded-mtext">Test </span></a></li>--}}
-
-                    </ul>
-                </li>
                     {{--roles--}}
 
 
@@ -338,7 +341,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 
+
+@yield('footer.scripts')
+
 <script type="text/javascript">
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

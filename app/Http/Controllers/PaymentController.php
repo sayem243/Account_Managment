@@ -48,12 +48,12 @@ class PaymentController extends Controller
 
     public function create(){
 
-       //$users=User::where('user_types_id',2)->get();
        $users=User::all();
+       if(auth()->user()->hasRole('Employee')){
+           $user= auth()->user();
+           $users=User::where('id', $user->id)->get();
+       }
 
-       // $users=DB::users('user_types_id')->get();
-
-      // $userprojects=DB::project_user('project_id')->get();
         $companies=Company::all();
         $projects=Project::all();
 
