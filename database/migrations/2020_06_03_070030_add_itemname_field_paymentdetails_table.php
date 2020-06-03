@@ -15,7 +15,7 @@ class AddItemnameFieldPaymentdetailsTable extends Migration
     {
         Schema::table('payment_details', function($table)
         {
-            $table->string('item_name')->nullable()->change();
+            $table->string('item_name',150)->nullable()->after('id');
         });
     }
 
