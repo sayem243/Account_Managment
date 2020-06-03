@@ -7,8 +7,8 @@
                 <div class="card-header">
                     <h5>Manage Project </h5>
                     <div class="card-header-right">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                            <a href="{{route('project')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i>Back</a>
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+                            <a href="{{route('project')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Companies</label>
-                                    <select class="form-control" name="company_id" multiple="multiple">
+                                    <select class="form-control" name="company_id">
                                         <option value="">Select Company</option>
                                         @foreach($companies as $company)
                                             <option value="{{$company->id}}"> {{$company->name}} </option>
@@ -58,7 +58,7 @@
                     </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-12" align="right">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
 
                         </div>

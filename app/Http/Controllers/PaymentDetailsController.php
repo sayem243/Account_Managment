@@ -53,6 +53,16 @@ class PaymentDetailsController extends Controller
         return redirect()->route('payment')->with(['message'=> 'Wrong ID!!']);
     }
 
+    public function deleteAjax($id){
+        $paymentDetails=Payment_details::find($id);
+        $paymentDetails->delete();
+        $paymentId = $paymentDetails->payment_id;
+        $payment=Payment::find($paymentId);
+        $payment->total_paid_amount = $payment->getTotalPaidAmount();
+        $payment->save();
+        return response()->json(['success'=>'Record has been deleted.','status'=>200]);
+    }
+
 
 
 

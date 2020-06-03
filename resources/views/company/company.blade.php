@@ -7,8 +7,8 @@
                     <div class="card-header">
                         <h5>New Company</h5>
                         <div class="card-header-right">
-                            <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                                <a href="{{route('comp_profile')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i>Back</a>
+                            <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+                                <a href="{{route('comp_profile')}}" class="btn btn-info"><i class="fa fa-angle-double-left"></i> Back</a>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                     <div class="col-sm-12 col-form-label" align="right">
 
                                         {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
-                                        <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i> Save</button>
+                                        <button type="submit" class="btn btn-primary" data-original-title="" title=""> <i class="feather icon-save"></i> Save</button>
                                     </div>
                                 </div>
 

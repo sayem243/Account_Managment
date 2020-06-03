@@ -63,52 +63,39 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-        $demand_amount=$request->demand_amount;
+//        $demand_amount=$request->demand_amount;
         $paid_amount=$request->paid_amount;
         $payment=new Payment();
         $payment->user_id=$request->user_id;
         $payment->comments=$request->comments;
-        $payment->total_demand_amount=array_sum($demand_amount);
+        $payment->total_demand_amount=array_sum($paid_amount);
         $payment->total_paid_amount=array_sum($paid_amount);
         $payment->created_by=$user->id;
 
         $file = $request->files->get('filenames');
         $payment->save();
         $projects=$request->project_id;
+        $itemName=$request->item_name;
        // $file=$request->filenames;
         foreach ($projects as $key => $project){
             if($project>0){
                 $paymentDetails = new Payment_details();
                 $paymentDetails->project_id=$project;
-                $paymentDetails->demand_amount=$demand_amount[$key];
+                $paymentDetails->item_name=$itemName[$key];
+                $paymentDetails->demand_amount=$paid_amount[$key];
                 $paymentDetails->paid_amount=$paid_amount[$key];
-                //$paymentDetails->paid_amount=$paid_amount[$key];
 
                 /*multiple file upload*/
 
-                if($request->hasFile('filenames')){
+                /*if($request->hasFile('filenames')){
                    if ($file[$key]->getClientOriginalName()) {
                        $filename = $file[$key]->getClientOriginalName();
                        $modifyFilename = time() . "_" . $filename;
                        $paymentDetails->filenames = $modifyFilename;
                        $file[$key]->move(public_path() . '/files/', $modifyFilename);
                    }
-                }
+                }*/
                    $payment->Payment_details()->save($paymentDetails);
-
-//                if($request->hasfile('filenames'))
-//                {
-//                    foreach($request->file('filenames') as $file)
-//                    {
-//                        $name=$file->getClientOriginalName();
-//                        $file->move(public_path().'/files/', $name);
-//                        $data[] = $name;
-//                    }
-//                }
-//                $file= new Payment_details();
-//                $file->filenames=json_encode($data);
-//                $file->Payment_details()->save();
-
 
             }
         }
@@ -155,36 +142,43 @@ class PaymentController extends Controller
 
         $payment=Payment::find($id);
         $user = auth()->user();
-        $demand_amount=$request->demand_amount;
-        $paid_amount=$request->paid_amount;
-        $exit_demand_amount=$request->exit_demand_amount;
-        $exit_paid_amount=$request->exit_paid_amount;
+        //Now demand amount not used.
+//        $demand_amount=$request->demand_amount?$request->demand_amount:array(0);
+        $paid_amount=$request->paid_amount?$request->paid_amount:array(0);
+//        $exit_demand_amount=$request->exit_demand_amount?$request->exit_demand_amount:array(0);
+        $exit_paid_amount=$request->exit_paid_amount?$request->exit_paid_amount:array(0);
         $payment->user_id=$request->user_id;
         $payment->comments=$request->comments;
 
-        $payment->total_demand_amount=(array_sum($demand_amount)+array_sum($request->exit_demand_amount));
-        $payment->total_paid_amount=(array_sum($paid_amount)+array_sum($request->exit_paid_amount));
+        $payment->total_demand_amount=(array_sum($paid_amount)+array_sum($exit_paid_amount));
+
+        $payment->total_paid_amount=(array_sum($paid_amount)+array_sum($exit_paid_amount));
 
         $payment->created_by=$user->id;
         $payment->save();
         $projects=$request->project_id;
-        $exit_payment_details=$request->exit_payment_detail;
+        $itemName=$request->item_name;
+
         if($projects){
             foreach ($projects as $key=>$project){
                 if($project>0){
                     $paymentDetails = new Payment_details();
+                    $paymentDetails->item_name=$itemName[$key];
                     $paymentDetails->project_id=$project;
-                    $paymentDetails->demand_amount=$demand_amount[$key];
+                    $paymentDetails->demand_amount=$paid_amount[$key];
                     $paymentDetails->paid_amount=$paid_amount[$key];
                     $payment->Payment_details()->save($paymentDetails);
                 }
             }
         }
+        $exit_payment_details=$request->exit_payment_detail;
+        $exitItemName=$request->exit_item_name;
         if($exit_payment_details){
             foreach ($exit_payment_details as $key=>$detail){
                 $paymentDetails = Payment_details::find($detail);
+                $paymentDetails->item_name=$exitItemName[$key];
                 $paymentDetails->project_id =$request->exit_project_id[$key];
-                $paymentDetails->demand_amount=$exit_demand_amount[$key];
+                $paymentDetails->demand_amount=$exit_paid_amount[$key];
                 $paymentDetails->paid_amount=$exit_paid_amount[$key];
                 $payment->Payment_details()->save($paymentDetails);
             }
@@ -192,10 +186,11 @@ class PaymentController extends Controller
         return redirect()->route('payment');
     }
     //verify
-    public function verify($id){
+    public function verify(Request $request, $id){
         $user = auth()->user();
+        $status = $request->post('payment_status');
         $payment=Payment::find($id);
-        $payment->status=2;
+        $payment->status=$status;
         $payment->verified_by=$user->id;
         $payment->verified_at= new \DateTime();
         //$payment->status=2;
@@ -244,4 +239,5 @@ class PaymentController extends Controller
         $payment->delete();
         return redirect()->route('payment');
     }
+
 }

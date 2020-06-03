@@ -7,6 +7,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Edit Company</h5>
+                        <div class="card-header-right">
+                            <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+                                <a href="{{route('comp_profile')}}" class="btn btn-info"><i class="fa fa-angle-double-left"></i> Back</a>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="card-block">
@@ -65,7 +70,7 @@
                                         <div class="form-group">
                                             <label class="col-form-label" for="name">Company Address <span class="required">*</span></label>
                                             <div class="col-form-label">
-                                                <textarea type="text" class="form-control"  rows="6" name="c_address" id="c_address" aria-describedby="validationTooltipUsernamePrepend" value="{{$company->c_address}}" required=""></textarea>
+                                                <textarea type="text" class="form-control"  rows="6" name="c_address" id="c_address" aria-describedby="validationTooltipUsernamePrepend" required="">{{$company->c_address}}</textarea>
                                             </div>
                                         </div>
 

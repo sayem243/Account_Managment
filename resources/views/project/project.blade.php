@@ -1,4 +1,5 @@
 @extends('admin.index')
+@section('title','- Project List')
 @section('template')
     <div class="col-sm-12">
         <div class="row">
@@ -7,8 +8,8 @@
                     <div class="card-header">
                         <h5>Manage Project </h5>
                         <div class="card-header-right">
-                            <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                                <a href="{{route('project_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+                                <a href="{{route('project_create')}}" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
                             </div>
                         </div>
 

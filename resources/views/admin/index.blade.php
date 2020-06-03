@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>PUL Group @yield('title') </title>
+    <title>@yield('title') - PUL Group</title>
     <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 11]>
@@ -341,12 +341,13 @@
         var element = e.target;
         e.preventDefault();
         var id = jQuery(this).attr('data-id');
+        var payment_status = jQuery(this).attr('data-status');
         if (confirm("Are you sure ?")) {
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
                 url: '/payment/status/' + id,
-                data: {},
+                data: {'payment_status':payment_status},
                 success: function (data) {
                     if (data.status == 200) {
                         $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
@@ -363,6 +364,9 @@
         var element = e.target;
         e.preventDefault();
         var id = jQuery(this).val();
+        if(id<=0){
+            return false;
+        }
         jQuery.ajax({
             type:'GET',
             dataType : 'json',

@@ -80,6 +80,7 @@ Route::post('/payment/store','PaymentController@store')->name('payment_store');
 Route::get('/payment/edit/{id}','PaymentController@edite')->name('payment_edit');
 Route::post('/payment/update/{id}','PaymentController@update')->name('payment_update');
 Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
+Route::post('/payment/details/delete/{id}','PaymentDetailsController@deleteAjax')->name('delete_ajax');
 Route::post('/payment/status/{id}','PaymentController@verify')->name('verify');
 Route::post('/payment/status/approve/{id}','PaymentController@approve')->name('danger');
 Route::post('/payment/status/paid/{id}','PaymentController@payment_paid')->name('payment_paid');
@@ -164,6 +165,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('payment-approve','PaymentController@approve');
     Route::resource('payment-index','PaymentController@index');
     Route::resource('payment-edit','PaymentController@edite');
+    Route::resource('payment-edit','PaymentDetailsController@deleteAjax');
     Route::resource('payment-delete','PaymentController@delete');
     Route::resource('payment-paid','PaymentController@payment_paid');
 
