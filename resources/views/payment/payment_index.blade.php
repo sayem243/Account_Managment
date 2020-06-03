@@ -28,11 +28,8 @@
                     <th>Employe Name</th>
                     <th>Company</th>
                     <th>Created By</th>
-                    <th>Demand(BDT)</th>
-                    <th>Paid(BDT)</th>
-                    <th>Amendment</th>
+                    <th>Amount(BDT)</th>
                     <th>Status </th>
-                    {{--<th>Remarks</th>--}}
                     <th>Actions</th>
                     <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                         <i class="feather icon-settings"></i>
@@ -67,18 +64,9 @@
                         {{--<td>{{$payment->approvedBy['name']}}</td>--}}
 
                         <td>
-                            {{$payment->total_demand_amount}}
-                        </td>
-
-                        <td>
                             {{$payment->total_paid_amount}}
                         </td>
-
-                        <td>{{$payment->total_amendment_amount}}</td>
-
                         <td class="status">
-
-
                                 @if($payment->status == 1 && $payment->verified_by ==null)
                                     <span class="label label-primary">Created</span>
                                 @elseif($payment->status == 1 && $payment->verified_by !=null)
@@ -92,8 +80,6 @@
                                 @endif
 
                         </td>
-
-                            {{--<td>{{$payment->comments}}</td>--}}
 
                         <td>
                             @if($payment->status==1 and 'payment-approve')
@@ -168,14 +154,6 @@
                                         @endif
                                </ul>
                            </div>
-
-                            {{----}}
-                            {{--<div class="btn-group-vertical">--}}
-                                {{--<a href="{{route('payment_edit',$payment->id)}}" button type="button" class="btn btn-sm  btn-info" >Edit </a>--}}
-                                {{--<a href="{{route('delete', $payment->id)}}" button type="button" class="btn btn-sm  btn-info">Delete</a>--}}
-
-                            {{--</div>--}}
-
 
                         </td>
                     </tr>

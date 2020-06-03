@@ -8,6 +8,11 @@
       <div class="card">
           <div class="card-header">
               <h5>Add Payment</h5>
+              <div class="card-header-right">
+                  <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+                      <a href="{{route('payment')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
+                  </div>
+              </div>
           </div>
 
           @if ($errors->any())
@@ -80,10 +85,10 @@
                               </select>
                           </td>
                           <td>
-                              <input type="text" class="form-control item_name" name="item_name[]" id="item_name">
+                              <input type="text" class="form-control item_name" name="item_name[]" id="item_name" placeholder="Item Name" required>
                           </td>
                           <td>
-                              <input type="text" class="form-control paid_amount" name="paid_amount[]" id="paid_amount">
+                              <input type="text" class="form-control paid_amount" name="paid_amount[]" id="paid_amount" placeholder="Amount" required>
                           </td>
                           <td>
                               <button type="button" class="btn btn-danger hide">Delete</button>
