@@ -262,10 +262,10 @@ class PaymentController extends Controller
             $countRecords->where('payments.payment_id', 'like', "{$name}%");
         }
 
-        /*if(isset($query['company_id'])){
+        if(isset($query['company_id'])){
             $company_id = $query['company_id'];
             $countRecords->where('payments.company_id',$company_id);
-        }*/
+        }
         if (isset($query['user_id'])) {
             $user_id = $query['user_id'];
             $countRecords->where('payments.user_id', $user_id);
@@ -291,8 +291,7 @@ class PaymentController extends Controller
 //        $rows->join('projects', 'payment_details.project_id', '=', 'projects.id');
         $rows->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $rows->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
-        $rows->join('user_profiles', 'employee.id', '=', 'user_profiles.user_id');
-        $rows->join('companies', 'user_profiles.company_id', '=', 'companies.id');
+        $rows->join('companies', 'payments.company_id', '=', 'companies.id');
         $rows->select('payments.id as pId', 'payments.payment_id as name', 'payments.total_paid_amount as amount', 'payments.status as pStatus', 'payments.created_at as created_at', 'payments.verified_by as paymentVerifyBy');
         $rows->addSelect('companies.name as companyName');
         $rows->addSelect('employee.name as employeeName');
@@ -303,10 +302,10 @@ class PaymentController extends Controller
         }
 
 
-        /*if(isset($query['company_id'])){
+        if(isset($query['company_id'])){
             $company_id = $query['company_id'];
             $rows->where('payments.company_id',$company_id);
-        }*/
+        }
         if (isset($query['user_id'])) {
             $user_id = $query['user_id'];
             $rows->where('payments.user_id', $user_id);
