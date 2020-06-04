@@ -47,7 +47,7 @@
                       </td>
 
 
-                      <td>
+                      <td colspan="2">
                           <select class="form-control" name="user_id" id="user_id" >
                               <option value="">Select User</option>
                               @foreach($users as $user)
@@ -55,7 +55,7 @@
                               @endforeach
                           </select>
                       </td>
-                      <td colspan="4"></td>
+                      <td colspan="3"></td>
                   </tr>
                   <tr>
                       <th scope="col">S/N</th>

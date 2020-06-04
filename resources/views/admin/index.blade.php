@@ -336,29 +336,6 @@
         }
     });
 
-    jQuery(".verify").click(function(e){
-        var element = e.target;
-        e.preventDefault();
-        var id = jQuery(this).attr('data-id');
-        var payment_status = jQuery(this).attr('data-status');
-        if (confirm("Are you sure ?")) {
-            jQuery.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/payment/status/' + id,
-                data: {'payment_status':payment_status},
-                success: function (data) {
-                    if (data.status == 200) {
-                        $(element).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-warning');
-                        $(element).closest('tr').find('td.status').find('span').html('Verified');
-
-                        location.reload(true);
-                    }
-                }
-            });
-        }
-    });
-
     jQuery("#user_id").on('change',function(e){
         var element = e.target;
         e.preventDefault();
@@ -453,57 +430,6 @@
          });
 
     });
-
-    jQuery(".approved").click(function(a){
-        var elements = a.target;
-        a.preventDefault();
-        var id = jQuery(this).attr('data-id-id');
-        if(confirm("Do You want to Approve ?")) {
-
-            jQuery.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/payment/status/approve/' + id,
-                data: {},
-                success: function (data) {
-                    if (data.status == 100) {
-                         {
-                            $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
-                            $(elements).closest('tr').find('td.status').find('span').html('Approved')
-                             location.reload(true);
-                        }
-                    }
-                }
-
-            });
-        }
-    });
-
-    jQuery(".payment_paid").click(function(a){
-        var elements = a.target;
-        a.preventDefault();
-        var id = jQuery(this).attr('data-id-id');
-        if(confirm("Do You want to Payment Paid ?")) {
-
-            jQuery.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/payment/status/paid/' + id,
-                data: {},
-                success: function (data) {
-                    if (data.status == 100) {
-                         {
-                            $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
-                            $(elements).closest('tr').find('td.status').find('span').html('Disbursed');
-                             location.reload(true);
-                        }
-                    }
-                }
-
-            });
-        }
-    });
-
 
     jQuery(".voucher-approve").click(function(a){
         var elements = a.target;

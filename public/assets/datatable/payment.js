@@ -107,6 +107,72 @@ $(document).ready(function () {
         dataTable.button( '.buttons-pdf' ).trigger();
     });
 
+    jQuery("body").on("click",".verify",function(e){
+        var element = e.target;
+        e.preventDefault();
+        var id = jQuery(this).attr('data-id');
+        var payment_status = jQuery(this).attr('data-status');
+        if (confirm("Are you sure ?")) {
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/payment/status/' + id,
+                data: {'payment_status':payment_status},
+                success: function (data) {
+                    if (data.status == 200) {
+                        dataTable.draw();
+                    }
+                }
+            });
+        }
+    });
+
+
+    jQuery(document).on("click",".approved",function(a){
+        var elements = a.target;
+        a.preventDefault();
+        var id = jQuery(this).attr('data-id-id');
+        if(confirm("Do You want to Approve ?")) {
+
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/payment/status/approve/' + id,
+                data: {},
+                success: function (data) {
+                    if (data.status == 100) {
+                        {
+                            dataTable.draw();
+                        }
+                    }
+                }
+
+            });
+        }
+    });
+
+    jQuery(document).on("click",".payment_paid",function(a){
+        var elements = a.target;
+        a.preventDefault();
+        var id = jQuery(this).attr('data-id-id');
+        if(confirm("Do You want to Payment Paid ?")) {
+
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/payment/status/paid/' + id,
+                data: {},
+                success: function (data) {
+                    if (data.status == 100) {
+                        {
+                            dataTable.draw();
+                        }
+                    }
+                }
+
+            });
+        }
+    });
 
 });
 
