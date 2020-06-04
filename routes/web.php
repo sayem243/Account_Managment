@@ -84,7 +84,7 @@ Route::post('/payment/details/delete/{id}','PaymentDetailsController@deleteAjax'
 Route::post('/payment/status/{id}','PaymentController@verify')->name('verify');
 Route::post('/payment/status/approve/{id}','PaymentController@approve')->name('danger');
 Route::post('/payment/status/paid/{id}','PaymentController@payment_paid')->name('payment_paid');
-
+Route::post('/payment/datatable', 'PaymentController@dataTable')->name('payment_datatable');
 
 //Ajax route
 

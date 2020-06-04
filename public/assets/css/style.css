@@ -353,7 +353,8 @@ p.text-muted {
 }
 .dropdown-menu > li > a {
   padding: 5px;
-  color: #888;
+  color: #000;
+  font-size: 13px;
 }
 .dropdown-menu > li > a i {
   font-size: 15px;
@@ -10597,4 +10598,17 @@ div.code-toolbar > .toolbar span:hover {
 		-webkit-box-shadow: 0 0 0 0 rgba(4, 169, 245, 0);
 		box-shadow: 0 0 0 0 rgba(4, 169, 245, 0)
 	}
+}
+
+.payment_table table.dataTable thead .sorting:before,
+.payment_table table.dataTable thead .sorting:after,
+.payment_table table.dataTable thead .sorting_asc:before,
+.payment_table table.dataTable thead .sorting_asc:after,
+.payment_table table.dataTable thead .sorting_desc:before,
+.payment_table table.dataTable thead .sorting_desc:after,
+.payment_table table.dataTable thead .sorting_asc_disabled:before,
+.payment_table table.dataTable thead .sorting_asc_disabled:after,
+.payment_table table.dataTable thead .sorting_desc_disabled:before,
+.payment_table table.dataTable thead .sorting_desc_disabled:after {
+  bottom: 0px;
 }

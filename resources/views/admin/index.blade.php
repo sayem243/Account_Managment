@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
-
+    <link href="{{ asset('assets/plugins/DataTables/datatables.css') }}" rel="stylesheet">
     {{--//datepicker--}}
 
 
@@ -64,7 +64,6 @@
         }
 
     </style>
-
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
@@ -322,7 +321,7 @@
 <script src="{{asset('assets/js/pcoded.min.js')}}"></script>
 {{--add jquery--}}
 {{--<script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>--}}
-
+<script src="{{ asset('assets/plugins/DataTables/datatables.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 

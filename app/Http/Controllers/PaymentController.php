@@ -7,12 +7,13 @@ use App\Payment_details;
 use App\Project;
 use App\User;
 use App\UserType;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Company;
 use App\Account;
+use Illuminate\Support\Facades\DB;
 use PDF;
-use DB;
 
 
 class PaymentController extends Controller
@@ -39,11 +40,13 @@ class PaymentController extends Controller
     public function index(){
 
         $payments=Payment::orderBy('created_at','DSC')->paginate(25);
+        $companies=Company::all();
+        $projects=Project::all();
         $users=User::all();
-        
+
         $amendments=Ammendment::all();
 
-        return view('payment.payment_index',['payments'=>$payments,'users'=>$users])->with('i', (request()->input('page', 1) - 1) * 25);
+        return view('payment.payment_index',['payments'=>$payments,'users'=>$users,'companies'=>$companies,'projects'=>$projects])->with('i', (request()->input('page', 1) - 1) * 25);
     }
 
     public function create(){
@@ -238,6 +241,119 @@ class PaymentController extends Controller
         $payment=Payment::find($id);
         $payment->delete();
         return redirect()->route('payment');
+    }
+
+    public function dataTable(Request $request)
+    {
+
+        $query = $request->request->all();
+
+        $countRecords =  DB::table('payments');
+        $countRecords->select(DB::raw('count(*) as totalPayment'));
+        if(isset($query['payment_id'])){
+            $name = $query['payment_id'];
+            $countRecords->where('payments.payment_id','like',"{$name}%");
+        }
+
+        /*if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $countRecords->where('payments.company_id',$company_id);
+        }*/
+        if(isset($query['user_id'])){
+            $user_id = $query['user_id'];
+            $countRecords->where('payments.user_id',$user_id);
+        }
+
+        $tcount = $countRecords->first();
+        $iTotalRecords = $tcount->totalPayment;
+        $iDisplayLength = intval($_REQUEST['length']);
+        $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+        $iDisplayStart = intval($_REQUEST['start']);
+        $sEcho = intval($_REQUEST['draw']);
+        $records = array();
+        $records["data"] = array();
+        $end = $iDisplayStart + $iDisplayLength;
+        $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+
+        $rows = DB::table('payments');
+//        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
+//        $rows->join('projects', 'payment_details.project_id', '=', 'projects.id');
+        $rows->join('users as employee', 'payments.user_id', '=', 'employee.id');
+        $rows->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
+        $rows->join('user_profiles', 'employee.id', '=', 'user_profiles.user_id');
+        $rows->join('companies', 'user_profiles.company_id', '=', 'companies.id');
+        $rows->select('payments.id as pId','payments.payment_id as name','payments.total_paid_amount as amount','payments.status as pStatus','payments.created_at as created_at','payments.verified_by as paymentVerifyBy');
+        $rows->addSelect('companies.name as companyName');
+        $rows->addSelect('employee.name as employeeName');
+        $rows->addSelect('createdBy.name as creatorName');
+        if(isset($query['payment_id'])){
+            $name = $query['payment_id'];
+            $rows->where('payments.payment_id','like',"{$name}%");
+        }
+
+
+        /*if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $rows->where('payments.company_id',$company_id);
+        }*/
+        if(isset($query['user_id'])){
+            $user_id = $query['user_id'];
+            $rows->where('payments.user_id',$user_id);
+        }
+
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName,$columnSortOrder);
+        $result = $rows->get();
+
+        $i = $iDisplayStart > 0  ? ($iDisplayStart+1) : 1;
+
+        foreach ($result as $post):
+            $paymentStatus = '';
+            if ($post->pStatus==1 && $post->paymentVerifyBy==null){
+                $paymentStatus ='<span class="label label-primary">Created</span>';
+            }elseif ($post->pStatus==1 && $post->paymentVerifyBy!=null){
+                $paymentStatus ='<span class="label label-primary">Un verified</span>';
+            }elseif ($post->pStatus==2){
+                $paymentStatus ='<span class="label label-warning">Verified</span>';
+            }elseif ($post->pStatus==3){
+                $paymentStatus ='<span class="label label-success">Approved</span>';
+            }elseif ($post->pStatus==4){
+                $paymentStatus ='<span class="label label-info">Disbursed</span>';
+            }
+
+            $records["data"][] = array(
+                $id                 = $i,
+                $createdAt          = date('d-m-Y',strtotime($post->created_at)),
+                $name               = $post->name,
+                $employeeName       = $post->employeeName,
+                $companyName        = $post->companyName?$post->companyName:'',
+                $amount             = $post->amount,
+                $creatorName        = $post->creatorName,
+                $pStatus            = $paymentStatus,
+
+                "dfad",
+
+                "<div class='btn-group card-option'><a href='javascript:'  class='btn btn-notify btn-sm'  data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-ellipsis-v'></i></a>
+<ul class='list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right' x-placement='bottom-end'>
+<li class='dropdown-item'> <a href='/payment/edit/{$post->pId}'> <i class='feather icon-edit'></i> Edit</a></li>
+</ul></div>");
+            $i++;
+
+        endforeach;
+        if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+        }
+
+        $records["draw"] = $sEcho;
+        $records["recordsTotal"] = $iTotalRecords;
+        $records["recordsFiltered"] = $iTotalRecords;
+        return new JsonResponse($records);
     }
 
 }
