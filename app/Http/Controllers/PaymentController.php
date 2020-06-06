@@ -67,51 +67,81 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-//        $demand_amount=$request->demand_amount;
         $paid_amount=$request->paid_amount;
-        $userProfile = UserProfile::where('user_id', $request->user_id)->get();
 
-
-        $payment=new Payment();
-        $payment->user_id=$request->user_id;
-        $payment->comments=$request->comments;
-        $payment->company_id=$userProfile[0]->company_id;
-        $payment->total_demand_amount=array_sum($paid_amount);
-        $payment->total_paid_amount=array_sum($paid_amount);
-        $payment->created_by=$user->id;
-
-        $file = $request->files->get('filenames');
-        $payment->save();
         $projects=$request->project_id;
         $itemName=$request->item_name;
-       // $file=$request->filenames;
+        $newArray = array();
+        $returnArray = array();
         foreach ($projects as $key => $project){
             if($project>0){
-                $paymentDetails = new Payment_details();
-                $paymentDetails->project_id=$project;
-                $paymentDetails->item_name=$itemName[$key];
-                $paymentDetails->demand_amount=$paid_amount[$key];
-                $paymentDetails->paid_amount=$paid_amount[$key];
-
-                /*multiple file upload*/
-
-                /*if($request->hasFile('filenames')){
-                   if ($file[$key]->getClientOriginalName()) {
-                       $filename = $file[$key]->getClientOriginalName();
-                       $modifyFilename = time() . "_" . $filename;
-                       $paymentDetails->filenames = $modifyFilename;
-                       $file[$key]->move(public_path() . '/files/', $modifyFilename);
-                   }
-                }*/
-                   $payment->Payment_details()->save($paymentDetails);
-
+                $newArray[$project][]= array('project_id'=>$project,'itemName'=>$itemName[$key],'amount'=>$paid_amount[$key]);
             }
         }
 
-             $this->GeneratePaymentId($payment);
+        foreach ($newArray as $newKey=>$arrayValue){
+
+            $payment=new Payment();
+            $payment->user_id=$request->user_id;
+            $payment->comments=$request->comments;
+            $payment->company_id=$request->company_id;
+            $payment->created_by=$user->id;
+            $payment->total_demand_amount=0;
+            $payment->total_paid_amount=0;
+            $payment->status=0;
+
+            $payment->save();
+
+            foreach ($arrayValue as $key=>$value){
+                $paymentDetails = new Payment_details();
+                $paymentDetails->project_id=$value['project_id'];
+                $paymentDetails->item_name=$value['itemName'];
+                $paymentDetails->demand_amount=$value['amount'];
+                $paymentDetails->paid_amount=$value['amount'];
+
+                $payment->Payment_details()->save($paymentDetails);
+            }
+
+            $this->setTotalPaidAmount($payment);
+
+            $this->GeneratePaymentId($payment);
+
+            $returnArray[]=$payment->id;
+        }
+
+        if ($returnArray){
+            return redirect()->route('payment_draft_view',http_build_query(['payment[]'=>$returnArray]))->with('success', 'Post has been successfully submitted pending for approval');
+        }
+
 
         return redirect()->route('payment')->with('success', 'Post has been successfully submitted pending for approval');
 
+    }
+
+    public function draftView(Request $request){
+        $payments = Payment::whereIn('id', $request->payment)->get();
+
+        return view('payment.draft',['payments'=>$payments]);
+
+    }
+
+    public function draftToConfirmStore(Request $request){
+        $paymentsId = $request->payment_id;
+
+        foreach ($paymentsId as $paymentId){
+            $payment = Payment::find($paymentId);
+            $payment->status = 1;
+            $payment->save();
+        }
+
+        return redirect()->route('payment')->with('success', 'Payment has been successfully Created');
+    }
+
+    private function setTotalPaidAmount(Payment $payment){
+
+        $payment->total_demand_amount=$payment->getTotalPaidAmount();
+        $payment->total_paid_amount=$payment->getTotalPaidAmount();
+        $payment->save();
     }
 
     private function GeneratePaymentId(Payment $payment){
@@ -228,13 +258,11 @@ class PaymentController extends Controller
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
     }
 
-//    public function details($id){
-//
-//        $payment=Payment::find($id);
-//        $amendment = $payment->ammendment;
-//        $total=$amendment->sum('additional_amount');
-//        return view('payment.details',['payment'=>$payment, 'total'=>$total]);
-//    }
+    public function details($id){
+
+        $payment=Payment::find($id);
+        return view('payment.details',['payment'=>$payment]);
+    }
 
        public function  Voucher($id){
 
@@ -257,6 +285,7 @@ class PaymentController extends Controller
 
         $countRecords = DB::table('payments');
         $countRecords->select(DB::raw('count(*) as totalPayment'));
+        $countRecords->where('payments.status','!=', 0);
         if (isset($query['payment_id'])) {
             $name = $query['payment_id'];
             $countRecords->where('payments.payment_id', 'like', "{$name}%");
@@ -270,6 +299,11 @@ class PaymentController extends Controller
             $user_id = $query['user_id'];
             $countRecords->where('payments.user_id', $user_id);
         }
+        if(auth()->user()->hasRole('Employee')){
+            $user= auth()->user();
+            $countRecords->where('payments.user_id', $user->id);
+        }
+
 
         $tcount = $countRecords->first();
         $iTotalRecords = $tcount->totalPayment;
@@ -296,6 +330,7 @@ class PaymentController extends Controller
         $rows->addSelect('companies.name as companyName');
         $rows->addSelect('employee.name as employeeName');
         $rows->addSelect('createdBy.name as creatorName');
+        $rows->where('payments.status','!=', 0);
         if (isset($query['payment_id'])) {
             $name = $query['payment_id'];
             $rows->where('payments.payment_id', 'like', "{$name}%");
@@ -309,6 +344,10 @@ class PaymentController extends Controller
         if (isset($query['user_id'])) {
             $user_id = $query['user_id'];
             $rows->where('payments.user_id', $user_id);
+        }
+        if(auth()->user()->hasRole('Employee')){
+            $user= auth()->user();
+            $rows->where('payments.user_id', $user->id);
         }
 
         $rows->offset($iDisplayStart);

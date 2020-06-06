@@ -45,6 +45,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Payment','approved_by');
     }
 
+    public function paymentDisbursedBy(){
+        return $this->hasMany('App\Payment','disbursed_by');
+    }
+
     public function paymentVerifiedBy(){
         return $this->hasMany('App\Payment','verified_by');
     }

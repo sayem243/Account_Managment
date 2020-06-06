@@ -1,139 +1,81 @@
 @extends('admin.index')
-
+@section('title','Confirm Payment')
 @section('template')
 
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-            <div class="card-header">
-                <h5> Payment Details </h5>
+                    <div class="card-header">
+                        <h5> Payment Details </h5>
 
-                    <div class="card-header-right">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                            <a href="{{route('payment_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
-                            <a href="{{route('Voucher',$payment->id)}}" class="btn btn-sm  btn-info"><i class="fab fa-amazon-pay"></i>Vocher</a>
-
-
+                        <div class="card-header-right">
+                            <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+                                <a href="{{route('payment')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
+                            </div>
                         </div>
-
-                        <div class="btn-group card-option">
-                            <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="" title="">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end">
-                                <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
-                                <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                                <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-
-                            </ul>
-                        </div>
-
                     </div>
-                </div>
-
-                    {{--Advance Payment Information--}}
-
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>Company Name: {{$payment->company['name']}}</h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>Payment ID: {{$payment->payment_id}}</h4>
+                                        <p>Name: {{$payment->user['name']}}</p>
+                                        <p>Total Amount: {{$payment->total_paid_amount}}</p>
+                                        <p>Created By: {{$payment->userCreatedBy['name']}}</p>
+                                        <p>Verified By: {{$payment->verifiedBy?$payment->verifiedBy['name']:''}}</p>
+                                        <p>Approved By: {{$payment->approvedBy?$payment->approvedBy['name']:''}}</p>
+                                        <p>Disbursed By: {{$payment->disbursedBy?$payment->disbursedBy['name']:''}}</p>
 
-                                <table class="table table-bordered">
-                                    <thead class="thead-dark">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Company </th>
-                                        <th>Project</th>
-                                    </tr>
-                                    </thead>
+                                        <div class="signature_area" style="border: 1px solid #000000; height: 60px; width: 250px;text-align: center">
+                                            Signature
 
-                                    <tbody>
-                                    <td>{{$payment->user['name']}} </td>
-                                    <td>{{$payment->company['name']}}</td>
-                                    <td>{{$payment->project['p_name']}}</td>
-                                    </tbody>
-                                </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <table class="table table-bordered">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Project</th>
+                                                <th>Amount </th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            @foreach($payment->Payment_details as $paymentDetail)
+                                                <tr>
+                                                    <td>{{$paymentDetail->item_name}}</td>
+                                                    <td>{{$paymentDetail->project['p_name']}}</td>
+                                                    <td>{{$paymentDetail->paid_amount}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                            <tfoot>
+                                            <tr style="font-weight: bold">
+                                                <td colspan="2" align="center">Total</td>
+                                                <td>{{$payment->total_paid_amount}}</td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+
+
                             </div>
-                            <div class="col-md-6">
-                                <table class="table table-bordered">
-                                    <thead class="thead-dark">
-                                    <tr>
-                                        <th>Demand Amount</th>
-                                        <th> Initial Paid </th>
-                                        <th>Total Paid</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    <td>{{$payment->total_demand_amount}}</td>
-                                    <td>{{$payment->total_paid_amount}}</td>
-                                    {{--<td>{{$total+$payment->due}}</td>--}}
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
-
-                        <table class="table table-bordered">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th>SL</th>
-                                <th>Amount (BDT) </th>
-                                <th>Date</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-
-                            @php
-                                $i=1;
-                                $sum=0;
-                            @endphp
-                            @foreach($payment->ammendment as $ammendment)
-
-
-                            <tr>
-                             <td>{{$i}}</td>
-                                {{--<td>{{$payment->user['name']}}</td>--}}
-                                {{--<td>{{$payment->company['name']}}</td>--}}
-                                {{--<td>{{$payment->project['p_name']}}</td>--}}
-                                {{--<td>{{$payment->d_amount}}</td>--}}
-                                <td> {{ $ammendment->additional_amount }} </td>
-
-                                <td>{{date('d-m-Y', strtotime($ammendment->created_at))}}</td>
-
-
-
-
-                            </tr>
-                            @php
-                                $sum += $ammendment->additional_amount;
-                                $i++;
-
-                            @endphp
-                            @endforeach
-
-
-                            <tr>
-                               <th colspan="6"> Total Amendment  Amount={{$sum}}</th>
-                            </tr>
-
-                            </tbody>
-
-
-                        </table>
-
-
-                    </div>
-
-
+                </div>
+            </div>
 
         </div>
-    </div>
-
-    </div>
     </div>
 
 @endsection

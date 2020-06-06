@@ -52,7 +52,16 @@
                                   <option value="">Select User</option>
                                   @foreach($users as $user)
                                       <option value="{{$user->id}}"> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname'] }} </option>
-        {{--                              <td> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname']}}</td>--}}
+                                  @endforeach
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label for="exampleInputEmail1">Company:</label>
+                              <select class="form-control js-example-basic-single" name="company_id" id="company_id" required>
+
+                                  <option value="">Select Company</option>
+                                  @foreach($companies as $company)
+                                      <option value="{{$company->id}}"> {{$company->name}} </option>
                                   @endforeach
                               </select>
                           </div>
@@ -101,7 +110,7 @@
                   <div class="line aligncenter">
                       <div class="form-group row">
                           <div class="col-sm-12 col-form-label" align="right">
-                              <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
+                              <button type="submit" class="btn btn-primary" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
                               {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                           </div>
                       </div>

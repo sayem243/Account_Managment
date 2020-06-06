@@ -34,6 +34,11 @@ class Payment extends Model
         return $this->belongsTo('App\User','approved_by');
     }
 
+    public function disbursedBy(){
+
+        return $this->belongsTo('App\User','disbursed_by');
+    }
+
     public function verifiedBy(){
         return $this->belongsTo('App\User','verified_by');
     }

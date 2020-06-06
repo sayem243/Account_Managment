@@ -78,6 +78,8 @@ Route::get('/payment','PaymentController@index')->name('payment');
 Route::get('/payment/create/','PaymentController@create')->name('payment_create');
 Route::post('/payment/store','PaymentController@store')->name('payment_store');
 Route::get('/payment/edit/{id}','PaymentController@edite')->name('payment_edit');
+Route::get('/payment/draft/view','PaymentController@draftView')->name('payment_draft_view');
+Route::post('/payment/draft/to/confirm','PaymentController@draftToConfirmStore')->name('payment_store_confirm');
 Route::post('/payment/update/{id}','PaymentController@update')->name('payment_update');
 Route::get('/payment/delete/{id}','PaymentController@delete')->name('delete');
 Route::post('/payment/details/delete/{id}','PaymentDetailsController@deleteAjax')->name('delete_ajax');
@@ -95,7 +97,7 @@ Route::get('/user/payment/paid/{payment}/{project}','UserController@paidAmount')
 
 
 
-Route::get('/payment/details/{id}','PaymentDetailsController@index')->name('details');
+Route::get('/payment/details/{id}','PaymentController@details')->name('details');
 Route::get('/payment/details/delete/{id}','PaymentDetailsController@delete')->name('details_delete');
 Route::get('/payment/print-pdf/{id}','PaymentDetailsController@paymentPDF')->name('printPDF');
 Route::get('/payment/print/{id}','PaymentDetailsController@printpdf')->name('payment_print');
