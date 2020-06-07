@@ -94,7 +94,7 @@
                               <input type="text" class="form-control item_name" name="item_name[]" id="item_name" placeholder="Item Name" required>
                           </td>
                           <td>
-                              <input type="text" class="form-control paid_amount" name="paid_amount[]" id="paid_amount" placeholder="Amount" required>
+                              <input type="text" class="form-control paid_amount amount" name="paid_amount[]" id="paid_amount" placeholder="Amount" required>
                           </td>
                           <td>
                               <button type="button" class="btn btn-danger hide">Delete</button>
@@ -102,6 +102,13 @@
                       </tr>
 
                       </tbody>
+                      <tfoot>
+                      <tr style="font-weight: bold">
+                          <td colspan="2" align="right" style="padding-right: 20px">Total:</td>
+                          <td colspan="" class="total_amount" style="padding: 10px 15px"></td>
+                          <td></td>
+                      </tr>
+                      </tfoot>
                   </table>
                   <div class="col-sm-12 col-form-label" align="right">
                       <button type="button" class="btn btn-info btn-sm add-row"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</button>
@@ -153,6 +160,27 @@
         $('.js-example-basic-single').select2();
     });
 
+    jQuery(document).ready(function(){
+
+        jQuery(document).on('keyup','.amount', function () {
+            calculateSum();
+        })
+    });
+
+    function calculateSum() {
+
+        var sum = 0;
+//iterate through each td based on class and add the values
+        $(".amount").each(function() {
+
+            //add only if the value is number
+            if(!isNaN(this.value) && this.value.length!=0) {
+                sum += parseFloat(this.value);
+            }
+
+        });
+        $('.total_amount').text(sum);
+    };
 
 </script>
 

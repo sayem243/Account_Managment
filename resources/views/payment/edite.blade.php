@@ -104,7 +104,7 @@
                                             <input type="text" class="form-control item_name" name="exit_item_name[]" id="exit_item_name" value="{{$detail->item_name}}">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control paid_amount" name="exit_paid_amount[]" id="paid_amount" value="{{$detail->paid_amount}}" >
+                                            <input type="text" class="form-control paid_amount amount" name="exit_paid_amount[]" id="paid_amount" value="{{$detail->paid_amount}}" >
                                         </td>
                                         <td>
                                             <button type="button" data-id="{{$detail->id}}" class="btn btn-danger remove exit_hide">Delete</button>
@@ -124,7 +124,7 @@
                                             <input type="text" class="form-control item_name" name="item_name[]" id="item_name" placeholder="Item Name">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control paid_amount" name="paid_amount[]" id="paid_amount">
+                                            <input type="text" class="form-control paid_amount amount" name="paid_amount[]" id="paid_amount">
                                         </td>
                                         <td>
                                             <button type="button" data-id="" class="btn btn-danger remove hide">Delete</button>
@@ -132,6 +132,13 @@
                                     </tr>
 
                                 </tbody>
+                                <tfoot>
+                                <tr style="font-weight: bold">
+                                    <td colspan="2" align="right" style="padding-right: 20px">Total:</td>
+                                    <td colspan="" class="total_amount" style="padding: 10px 15px"></td>
+                                    <td></td>
+                                </tr>
+                                </tfoot>
                             </table>
                             <div class="col-sm-12 col-form-label" align="right">
                                 <button type="button" class="btn btn-info btn-sm add-row"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</button>
@@ -198,6 +205,25 @@
                 }
             });
         });
+
+
+        jQuery(document).ready(function(){
+            calculateSum();
+            jQuery(document).on('keyup','.amount', function () {
+                calculateSum();
+            })
+        });
+
+        function calculateSum() {
+
+            var sum = 0;
+            $(".amount").each(function() {
+                if(!isNaN(this.value) && this.value.length!=0) {
+                    sum += parseFloat(this.value);
+                }
+            });
+            $('.total_amount').text(sum);
+        }
     </script>
 @endsection
 
