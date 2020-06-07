@@ -85,6 +85,7 @@ class PaymentController extends Controller
             $payment->user_id=$request->user_id;
             $payment->comments=$request->comments;
             $payment->company_id=$request->company_id;
+            $payment->project_id=$newKey;
             $payment->created_by=$user->id;
             $payment->total_demand_amount=0;
             $payment->total_paid_amount=0;
@@ -110,11 +111,11 @@ class PaymentController extends Controller
         }
 
         if ($returnArray){
-            return redirect()->route('payment_draft_view',http_build_query(['payment[]'=>$returnArray]))->with('success', 'Post has been successfully submitted pending for approval');
+            return redirect()->route('payment_draft_view',http_build_query(['payment[]'=>$returnArray]))->with('success', 'Payment has been successfully Created pending for verification');
         }
 
 
-        return redirect()->route('payment')->with('success', 'Post has been successfully submitted pending for approval');
+        return redirect()->route('payment')->with('success', 'Payment has been successfully Submitted pending for Confirmation');
 
     }
 
@@ -168,10 +169,34 @@ class PaymentController extends Controller
         $payment=Payment::find($id);
         $companies=Company::all();
         $user=User::all();
-        $project=Project::all();
         $paymentDetails=Payment_details::all();
 
-        return view('payment.edite',['payment'=>$payment ,'companies'=>$companies ,'users'=>$user,'project'=>$project ,'paymentDetails'=>$paymentDetails]);
+        $userProjects = $payment->user->projects;
+
+        $data = array();
+        if($userProjects){
+
+            foreach ($userProjects as $userProject){
+                $data[$userProject->id]=array(
+                    'id'=> $userProject->id,
+                    'name'=> $userProject->p_name,
+                );
+            }
+        }
+
+        $creatorUserProjects = auth()->user()->projects;
+        $creatorUserData = array();
+        if($creatorUserProjects){
+            foreach ($creatorUserProjects as $creatorUserProject){
+                $creatorUserData[$creatorUserProject->id]=array(
+                    'id'=> $creatorUserProject->id,
+                    'name'=> $creatorUserProject->p_name,
+                );
+            }
+        }
+        $projects=array_intersect_key($data,$creatorUserData);
+
+        return view('payment.edite',['payment'=>$payment ,'companies'=>$companies ,'users'=>$user,'projects'=>$projects ,'paymentDetails'=>$paymentDetails]);
 
     }
 
@@ -180,19 +205,12 @@ class PaymentController extends Controller
 
         $payment=Payment::find($id);
         $user = auth()->user();
-        $userProfile = UserProfile::where('user_id', $request->user_id)->get();
-        //Now demand amount not used.
-//        $demand_amount=$request->demand_amount?$request->demand_amount:array(0);
         $paid_amount=$request->paid_amount?$request->paid_amount:array(0);
-//        $exit_demand_amount=$request->exit_demand_amount?$request->exit_demand_amount:array(0);
         $exit_paid_amount=$request->exit_paid_amount?$request->exit_paid_amount:array(0);
         $payment->user_id=$request->user_id;
-        $payment->company_id=$userProfile[0]->company_id;
+        $payment->company_id=$request->company_id;
+        $payment->project_id=$request->exit_project_id[0];
         $payment->comments=$request->comments;
-
-        $payment->total_demand_amount=(array_sum($paid_amount)+array_sum($exit_paid_amount));
-
-        $payment->total_paid_amount=(array_sum($paid_amount)+array_sum($exit_paid_amount));
 
         $payment->created_by=$user->id;
         $payment->save();
@@ -201,7 +219,7 @@ class PaymentController extends Controller
 
         if($projects){
             foreach ($projects as $key=>$project){
-                if($project>0){
+                if($project>0 && $paid_amount[$key]>0){
                     $paymentDetails = new Payment_details();
                     $paymentDetails->item_name=$itemName[$key];
                     $paymentDetails->project_id=$project;
@@ -223,7 +241,9 @@ class PaymentController extends Controller
                 $payment->Payment_details()->save($paymentDetails);
             }
         }
-        return redirect()->route('payment');
+        $this->setTotalPaidAmount($payment);
+
+        return redirect()->route('payment')->with('success', 'Payment has been successfully Updated.');;
     }
     //verify
     public function verify(Request $request, $id){
@@ -253,6 +273,8 @@ class PaymentController extends Controller
         $user = auth()->user();
         $payment=Payment::find($id);
         //$payment->status=1;
+        $payment->disbursed_by=$user->id;
+        $payment->disbursed_at= new \DateTime();
         $payment->status=4;
         $payment->save();
         return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
@@ -284,8 +306,15 @@ class PaymentController extends Controller
         $query = $request->request->all();
 
         $countRecords = DB::table('payments');
-        $countRecords->select(DB::raw('count(*) as totalPayment'));
+        $countRecords->select('payments.id as totalPayment');
+        $countRecords->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
+        $countRecords->join('projects', 'payment_details.project_id', '=', 'projects.id');
+        $countRecords->join('users as employee', 'payments.user_id', '=', 'employee.id');
+        $countRecords->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
+        $countRecords->join('companies', 'payments.company_id', '=', 'companies.id');
+
         $countRecords->where('payments.status','!=', 0);
+
         if (isset($query['payment_id'])) {
             $name = $query['payment_id'];
             $countRecords->where('payments.payment_id', 'like', "{$name}%");
@@ -295,6 +324,12 @@ class PaymentController extends Controller
             $company_id = $query['company_id'];
             $countRecords->where('payments.company_id',$company_id);
         }
+
+        if(isset($query['project_id'])){
+            $project_id = $query['project_id'];
+            $countRecords->where('projects.id',$project_id);
+        }
+
         if (isset($query['user_id'])) {
             $user_id = $query['user_id'];
             $countRecords->where('payments.user_id', $user_id);
@@ -303,10 +338,11 @@ class PaymentController extends Controller
             $user= auth()->user();
             $countRecords->where('payments.user_id', $user->id);
         }
+        $countRecords->groupBy('payment_details.payment_id');
 
-
-        $tcount = $countRecords->first();
-        $iTotalRecords = $tcount->totalPayment;
+        $result = $countRecords->get();
+        $tcount = count($result);
+        $iTotalRecords = $tcount;
         $iDisplayLength = intval($_REQUEST['length']);
         $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
         $iDisplayStart = intval($_REQUEST['start']);
@@ -321,8 +357,8 @@ class PaymentController extends Controller
         $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 
         $rows = DB::table('payments');
-//        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
-//        $rows->join('projects', 'payment_details.project_id', '=', 'projects.id');
+        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
+        $rows->join('projects', 'payment_details.project_id', '=', 'projects.id');
         $rows->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $rows->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
         $rows->join('companies', 'payments.company_id', '=', 'companies.id');
@@ -341,6 +377,11 @@ class PaymentController extends Controller
             $company_id = $query['company_id'];
             $rows->where('payments.company_id',$company_id);
         }
+
+        if(isset($query['project_id'])){
+            $project_id = $query['project_id'];
+            $rows->where('projects.id',$project_id);
+        }
         if (isset($query['user_id'])) {
             $user_id = $query['user_id'];
             $rows->where('payments.user_id', $user_id);
@@ -353,6 +394,7 @@ class PaymentController extends Controller
         $rows->offset($iDisplayStart);
         $rows->limit($iDisplayLength);
         $rows->orderBy($columnName, $columnSortOrder);
+        $rows->groupBy('payment_details.payment_id');
         $result = $rows->get();
 
         $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;

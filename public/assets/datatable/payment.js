@@ -20,12 +20,14 @@ $(document).ready(function () {
                 var payment_id = $('#payment_id').val();
                 var company_id = $('#company_id').val();
                 var user_id = $('#user_id').val();
+                var project_id = $('#project_id').val();
 
                 // Append to data
                 data._token = CSRF_TOKEN;
                 data.payment_id = payment_id;
                 data.company_id = company_id;
                 data.user_id = user_id;
+                data.project_id = project_id;
             }
         },
         'columns': [
@@ -84,6 +86,10 @@ $(document).ready(function () {
     });
 
     $('#company_id').change(function(){
+        dataTable.draw();
+    });
+
+    $('#project_id').change(function(){
         dataTable.draw();
     });
 

@@ -254,6 +254,9 @@
                     <div class="page-wrapper">
                         <!-- [ Main Content ] start -->
                         <div class="row">
+                            <div class="col-md-12">
+                                @include('flash-message')
+                            </div>
                             <!--[ daily sales section ] start-->
                         @yield('template')
                         <!-- [ Main Content ] end -->
@@ -349,11 +352,12 @@
             url:'/project/user/'+ id,
             data:{},
             success:function(data){
+                // console.log(data)
                 var dataOption='<option value="0">Select Project</option>';
+                jQuery.each(data, function(i, item) {
+                    dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
+                });
 
-                for (var i = 0, len = data.length; i < len; i++) {
-                    dataOption += '<option value="'+data[i]["id"]+'">'+data[i]["name"]+'</option>';
-                }
                 jQuery('.user_project_list').html(dataOption);
             }
         });

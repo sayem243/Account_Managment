@@ -34,7 +34,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1"><h4>Create: Advance Payment</h4></label>
+                                        <label for="exampleInputEmail1"><h4>Update: Advance Payment</h4></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -57,6 +57,16 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">Company:</label>
+                                        <select class="form-control js-example-basic-single" name="company_id" id="company_id" required>
+
+                                            <option value="">Select Company</option>
+                                            @foreach($companies as $company)
+                                                <option value="{{$company->id}}" {{$company->id==$payment->company->id?'selected="selected"':''}}> {{$company->name}} </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="comments">Comments:</label>
                                         <textarea name="comments" rows="4" class="form-control">{{$payment->comments}}</textarea>
                                     </div>
@@ -64,16 +74,14 @@
                             </div>
 
 
-                            <div class="col-sm-12 col-form-label" align="right">
-                                <input type="button" class="btn btn-info add-row" value="Add Row">
-                            </div>
+
                             <table class="table table-bordered payment_details_table">
                                 <thead class="thead-dark">
                                 <tr>
-                                    <th>Project</th>
-                                    <th>Item Name</th>
-                                    <th>Amount</th>
-                                    <th>Action</th>
+                                    <th width="30%">Project</th>
+                                    <th width="40%">Item Name</th>
+                                    <th width="20%">Amount</th>
+                                    <th width="10%">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -82,10 +90,12 @@
                                         <td>
                                             <input type="hidden" name="exit_payment_detail[]" value="{{$detail->id}}">
 
-                                            <select class="form-control exit_user_project_list" name="exit_project_id[]" required>
+                                            <input type="hidden" name="exit_project_id[]" value="{{$detail->project->id}}">
+
+                                            <select class="form-control exit_user_project_list" disabled required>
                                                 <option value="">Select Project</option>
-                                                @foreach($payment->user->projects as $project)
-                                                    <option value="{{$project->id}}" {{ $project->id==$detail->project->id?'selected="selected"':''}}>{{$project->p_name}}</option>
+                                                @foreach($projects as $project)
+                                                    <option value="{{$project['id']}}" {{ $project['id']==$detail->project->id?'selected="selected"':''}}>{{$project['name']}}</option>
                                                 @endforeach
 
                                             </select>
@@ -104,8 +114,9 @@
 
                                     <tr>
                                         <td>
-                                            <select class="form-control user_project_list" name="project_id[]" required>
-                                                <option value=""></option>
+                                            <select class="form-control" name="project_id[]" required>
+                                                <option value="0">Select Project</option>
+                                                <option value="{{$detail->project->id}}">{{$detail->project->p_name}}</option>
 
                                             </select>
                                         </td>
@@ -122,7 +133,9 @@
 
                                 </tbody>
                             </table>
-
+                            <div class="col-sm-12 col-form-label" align="right">
+                                <input type="button" class="btn btn-info add-row" value="Add Row">
+                            </div>
                             <div class="line aligncenter">
                                 <div class="form-group row">
                                     <div class="col-sm-12 col-form-label" align="right">
@@ -153,6 +166,7 @@
                 var table = $('.payment_details_table');
                 var nrow = table.find('tr').last().clone();
                 nrow.find('td').find('button').removeClass('hide');
+                nrow.find("input[type=text]").val("");
                 table.append(nrow);
             });
 

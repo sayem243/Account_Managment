@@ -80,10 +80,10 @@
                   <table class="table table-bordered payment_details_table">
                    <thead class="thead-dark">
                     <tr>
-                        <th>Project</th>
-                        <th>Item Name</th>
-                        <th>Amount</th>
-                        <th>Action</th>
+                        <th width="30%">Project</th>
+                        <th width="40%">Item Name</th>
+                        <th width="20%">Amount</th>
+                        <th width="10%">Action</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -138,8 +138,9 @@
 
         $(".add-row").on('click', function(){
             var table = $('.payment_details_table');
-             var nrow = table.find('tr:eq(1)').clone();
-             nrow.find('td').find('button').removeClass('hide');
+            var nrow = table.find('tr:eq(1)').clone();
+            nrow.find('td').find('button').removeClass('hide');
+            nrow.find("input[type=text]").val("");
             table.append(nrow);
         });
 

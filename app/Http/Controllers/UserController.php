@@ -209,18 +209,31 @@ class UserController extends Controller
 
         $user = User::find($id);
         $userProjects = $user->projects;
-//        var_dump($userProjects);die;
+
         $data = array();
         if($userProjects){
 
             foreach ($userProjects as $userProject){
-                $data[]=array(
+                $data[$userProject->id]=array(
                     'id'=> $userProject->id,
                     'name'=> $userProject->p_name,
                 );
             }
         }
-        return response()->json($data);
+
+        $creatorUserProjects = auth()->user()->projects;
+        $creatorUserData = array();
+        if($creatorUserProjects){
+            foreach ($creatorUserProjects as $creatorUserProject){
+                $creatorUserData[$creatorUserProject->id]=array(
+                    'id'=> $creatorUserProject->id,
+                    'name'=> $creatorUserProject->p_name,
+                );
+            }
+        }
+        $result=array_intersect_key($data,$creatorUserData);
+
+        return response()->json($result);
     }
 //voucher payment id
     public function vocherAmount($id){
