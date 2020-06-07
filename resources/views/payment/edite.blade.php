@@ -75,7 +75,7 @@
 
 
 
-                            <table class="table table-bordered payment_details_table">
+                            <table class="table table-bordered payment_details_table" style="margin-bottom: 0px">
                                 <thead class="thead-dark">
                                 <tr>
                                     <th width="30%">Project</th>
@@ -134,12 +134,12 @@
                                 </tbody>
                             </table>
                             <div class="col-sm-12 col-form-label" align="right">
-                                <input type="button" class="btn btn-info add-row" value="Add Row">
+                                <button type="button" class="btn btn-info btn-sm add-row"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</button>
                             </div>
                             <div class="line aligncenter">
-                                <div class="form-group row">
-                                    <div class="col-sm-12 col-form-label" align="right">
-                                        <button type="submit" class="btn purple-bg white-font" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
+                                <div class="form-group">
+                                    <div class="col-sm-10" align="right">
+                                        <button type="submit" class="btn btn-primary btn-lg" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
                                         {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                                     </div>
                                 </div>
