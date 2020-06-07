@@ -443,7 +443,7 @@ class PaymentController extends Controller
             $records["data"][] = array(
                 $id                 = $i,
                 $createdAt          = date('d-m-Y',strtotime($post->created_at)),
-                $name               = $post->name,
+                $name               = '<a target="_blank" href="/payment/details/'.$post->pId.'">'.$post->name.'</a>',
                 $employeeName       = $post->employeeName,
                 $companyName        = $post->companyName?$post->companyName:'',
                 $amount             = $post->amount,
