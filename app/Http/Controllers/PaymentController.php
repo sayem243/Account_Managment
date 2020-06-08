@@ -171,8 +171,19 @@ class PaymentController extends Controller
         $user=User::all();
         $paymentDetails=Payment_details::all();
 
-        $userProjects = $payment->user->projects;
+        $companyProjects = $payment->company->project;
+        $companyData = array();
+        if($companyProjects){
 
+            foreach ($companyProjects as $companyProject){
+                $companyData[$companyProject->id]=array(
+                    'id'=> $companyProject->id,
+                    'name'=> $companyProject->p_name,
+                );
+            }
+        }
+
+        $userProjects = $payment->user->projects;
         $data = array();
         if($userProjects){
 
@@ -194,7 +205,7 @@ class PaymentController extends Controller
                 );
             }
         }
-        $projects=array_intersect_key($data,$creatorUserData);
+        $projects=array_intersect_key($data,$creatorUserData,$companyData);
 
         return view('payment.edite',['payment'=>$payment ,'companies'=>$companies ,'users'=>$user,'projects'=>$projects ,'paymentDetails'=>$paymentDetails]);
 
