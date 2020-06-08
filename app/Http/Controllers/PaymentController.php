@@ -337,6 +337,13 @@ class PaymentController extends Controller
         if(auth()->user()->hasRole('Employee')){
             $user= auth()->user();
             $countRecords->where('payments.user_id', $user->id);
+        }else{
+            $projects= auth()->user()->projects;
+            $projectId=array();
+            foreach ($projects as $project){
+                $projectId[]=$project->id;
+            }
+            $countRecords->whereIn('payment_details.project_id', $projectId);
         }
         $countRecords->groupBy('payment_details.payment_id');
 
@@ -389,6 +396,13 @@ class PaymentController extends Controller
         if(auth()->user()->hasRole('Employee')){
             $user= auth()->user();
             $rows->where('payments.user_id', $user->id);
+        }else{
+            $projects= auth()->user()->projects;
+            $projectId=array();
+            foreach ($projects as $project){
+                $projectId[]=$project->id;
+            }
+            $rows->whereIn('payment_details.project_id', $projectId);
         }
 
         $rows->offset($iDisplayStart);
