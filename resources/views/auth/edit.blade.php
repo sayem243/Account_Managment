@@ -7,7 +7,13 @@
  <div class="col-sm-12">
      <div class="card">
         <div class="card-header">
-             <h5>Log In Componant</h5></div>
+             <h5>Log In Componant</h5>
+            <div class="card-header-right">
+                <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+                    <a href="{{route('users.index')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
+                </div>
+            </div>
+        </div>
 
             <form class="form-horizontal" method="POST" action="{{ route('userprofileUpdate',$users->id) }}">
 
