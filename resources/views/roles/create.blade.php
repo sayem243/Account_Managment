@@ -1,5 +1,5 @@
 @extends('admin.index')
-@section('title','-Role')
+@section('title','Role Add')
 @section('template')
     <div class="col-sm-12">
         <div class="row">

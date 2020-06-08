@@ -1,4 +1,5 @@
 @extends('admin.index')
+@section('title','Role List')
 @section('template')
 {{--@section('content')--}}
 

@@ -1,4 +1,5 @@
 @extends('admin.index')
+@section('title','Role Update')
 @section('template')
     <div class="col-sm-12">
         <div class="row">
