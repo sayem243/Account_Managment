@@ -1,4 +1,5 @@
 @extends('admin.index')
+@section('title','Project Create')
 @section('template')
     <div class="col-sm-12">
     <div class="row">

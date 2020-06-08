@@ -1,5 +1,5 @@
 @extends('admin.index')
-
+@section('title','Company')
 @section('template')
 
 
@@ -59,7 +59,7 @@
                                     </li>
 
                                     <li class="dropdown-item">
-                                        <a href="{{route('com_delete',$company->id)}}">
+                                        <a onclick="return confirm('Are you sure want to delete?')" href="{{route('com_delete',$company->id)}}">
                                             <i class="feather icon-trash-2"></i>
                                             Remove</a>
                                     </li>

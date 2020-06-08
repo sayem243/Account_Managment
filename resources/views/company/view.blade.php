@@ -1,5 +1,5 @@
 @extends('layout.Master')
-
+@section('title','Details Company')
 @section('content')
 
 
