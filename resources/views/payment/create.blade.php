@@ -57,7 +57,7 @@
                           </div>
                           <div class="form-group">
                               <label for="exampleInputEmail1">Company:</label>
-                              <select class="form-control js-example-basic-single" name="company_id" id="company_id" required>
+                              <select class="form-control js-example-basic-single" name="company_id" id="payment_company_id" required>
 
                                   <option value="">Select Company</option>
                                   @foreach($companies as $company)

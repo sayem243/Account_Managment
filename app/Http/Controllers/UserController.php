@@ -205,7 +205,23 @@ class UserController extends Controller
 
     }
 
-    public function projectByUser($id){
+    public function projectByUser(Request $request, $id){
+
+//        var_dump($request->company_id);die;
+
+        $company = Company::find($request->company_id);
+        $companyProjects = $company->project;
+
+        $companyData = array();
+        if($companyProjects){
+
+            foreach ($companyProjects as $companyProject){
+                $companyData[$companyProject->id]=array(
+                    'id'=> $companyProject->id,
+                    'name'=> $companyProject->p_name,
+                );
+            }
+        }
 
         $user = User::find($id);
         $userProjects = $user->projects;
@@ -231,7 +247,7 @@ class UserController extends Controller
                 );
             }
         }
-        $result=array_intersect_key($data,$creatorUserData);
+        $result=array_intersect_key($data,$creatorUserData,$companyData);
 
         return response()->json($result);
     }

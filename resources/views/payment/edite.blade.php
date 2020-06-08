@@ -48,7 +48,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="user_id">Paid To:</label>
-                                        <select class="form-control" name="user_id" id="user_id" required>
+                                        <select class="form-control" name="user_id" id="edit_user_id" required>
 
                                             <option value="">Select User</option>
                                             @foreach($users as $user)

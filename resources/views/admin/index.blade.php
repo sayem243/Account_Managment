@@ -339,20 +339,24 @@
         }
     });
 
-    jQuery("#user_id").on('change',function(e){
+    jQuery("#user_id, #payment_company_id").on('change',function(e){
         var element = e.target;
         e.preventDefault();
-        var id = jQuery(this).val();
-        if(id<=0){
+        var user_id = jQuery('#user_id').val();
+        var payment_company_id = jQuery('#payment_company_id').val();
+        if(user_id<=0 || payment_company_id==''){
+            var dataOption='<option value="0">Select Project</option>';
+            jQuery('.user_project_list').html(dataOption);
             return false;
         }
         jQuery.ajax({
             type:'GET',
             dataType : 'json',
-            url:'/project/user/'+ id,
-            data:{},
+            url:'/project/user/'+ user_id,
+            data:{
+                'company_id':payment_company_id
+            },
             success:function(data){
-                // console.log(data)
                 var dataOption='<option value="0">Select Project</option>';
                 jQuery.each(data, function(i, item) {
                     dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
