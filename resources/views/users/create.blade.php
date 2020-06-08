@@ -1,5 +1,5 @@
 @extends('admin.index')
-
+@section('title','User Add')
 @section('template')
 
     <div class="row">

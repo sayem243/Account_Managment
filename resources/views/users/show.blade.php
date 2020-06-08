@@ -1,5 +1,5 @@
 @extends('admin.index')
-@section('title','-show')
+@section('title','User Details')
 @section('template')
     <div class="col-sm-12">
         <div class="row">
