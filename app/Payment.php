@@ -51,6 +51,10 @@ class Payment extends Model
         return $this->hasMany('App\Ammendment');
     }
 
+    public function paymentSettlements(){
+        return $this->hasMany('App\PaymentSettlement');
+    }
+
     public function Payment_details(){
         return $this->hasMany('App\Payment_details');
     }
@@ -69,6 +73,14 @@ class Payment extends Model
             $amount+=$payment_detail->paid_amount;
         }
         return $amount;
+    }
+
+    public function getTotalPaymentSettlementAmount(){
+        $settlementAmount=0;
+        foreach ($this->paymentSettlements as $paymentSettlement){
+            $settlementAmount+=$paymentSettlement->settlement_amount;
+        }
+        return $settlementAmount;
     }
 
     //

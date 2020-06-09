@@ -157,28 +157,7 @@ $(document).ready(function () {
         }
     });
 
-    jQuery(document).on("click",".payment_paid",function(a){
-        var elements = a.target;
-        a.preventDefault();
-        var id = jQuery(this).attr('data-id-id');
-        if(confirm("Do You want to Payment Paid ?")) {
 
-            jQuery.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/payment/status/paid/' + id,
-                data: {},
-                success: function (data) {
-                    if (data.status == 100) {
-                        {
-                            dataTable.draw();
-                        }
-                    }
-                }
-
-            });
-        }
-    });
 
 });
 

@@ -27,6 +27,10 @@ class Project extends Model
         return $this->hasMany('App\Ammendment');
     }
 
+    public function paymentSettlements(){
+        return $this->hasMany('App\PaymentSettlement');
+    }
+
     public  function users(){
 
         return $this->belongsToMany('App\User');

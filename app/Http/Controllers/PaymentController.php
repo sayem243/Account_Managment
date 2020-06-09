@@ -294,7 +294,12 @@ class PaymentController extends Controller
     public function details($id){
 
         $payment=Payment::find($id);
-        return view('payment.details',['payment'=>$payment]);
+        $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
+        return view('payment.details',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
+    }
+
+    private function getTotalSettlementAmount(Payment $payment){
+        return $payment->getTotalPaymentSettlementAmount();
     }
 
        public function  Voucher($id){
@@ -448,8 +453,6 @@ class PaymentController extends Controller
                 if (auth()->user()->can('payment-verify')){
                     $action.='<button data-id="'.$post->pId.'" data-status="1" type="button" class="btn btn-sm  btn-primary verify">Un verify</button>';
                 }
-            }elseif($post->pStatus==3 && auth()->user()->can('payment-verify')){
-                $action.='<button data-id-id="'.$post->pId.'" type="button" class="btn btn-sm btn-success payment_paid">Disburse</button>';
             }
 
             $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
@@ -457,7 +460,7 @@ class PaymentController extends Controller
             if ($post->pStatus == 1 && auth()->user()->can('payment-edit')) {
                 $button .= '<li class="dropdown-item"> <a href="/payment/edit/'.$post->pId.'"> <i class="feather icon-edit"></i> Edit</a></li>';
             }
-            if ($post->pStatus < 4 && auth()->user()->can('payment-delete')) {
+            if ($post->pStatus < 2 && auth()->user()->can('payment-delete')) {
                 $button .='<li class="dropdown-item" ><a onclick="return confirm(\'Are you sure you want to delete this item\')" href = "/payment/delete/'.$post->pId.'" ><i class="feather icon-trash-2" ></i >Remove</a ></li >';
             }
 

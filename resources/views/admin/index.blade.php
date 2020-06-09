@@ -63,6 +63,12 @@
             position: relative;
         }
 
+        @media print {
+            .hidden-print{
+                display: none;
+            }
+        }
+
     </style>
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />

@@ -70,12 +70,87 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-10 hidden-print" style="text-align: right">
 
+                                    @if($payment->status==3 && auth()->user()->can('payment-paid'))
+                                        <button data-id-id="{{$payment->id}}" type="button" class="btn btn-lg btn-primary payment_paid">Disburse</button>
+                                    @endif
+                                    @if($payment->status==4 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
+                                            <button id="addTag" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalForm">
+                                                Settlement
+                                            </button>
+                                    @endif
+
+                                </div>
                             </div>
+
                 </div>
             </div>
 
         </div>
     </div>
 
+    <div id="modalForm" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Settlement</h4>
+                </div>
+                @if($payment->status==4)
+                <form class="tagForm" id="tag-form" action="{{ route('settlement_store',$payment->id)}}" method="post">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <label for="settlement_amount">Amount: </label>
+                        <input id="settlement_amount" class="form-control" name="settlement_amount" type="number" min="1" max="{{$payment->total_paid_amount - $totalSettlementAmount}}" value="{{$payment->total_paid_amount - $totalSettlementAmount}}" required/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <input id="tag-form-submit" type="submit" class="btn btn-primary" value="Save">
+                    </div>
+                </form>
+                    @else
+                    <p>This payment is not permission</p>
+                @endif
+            </div>
+        </div>
+
+@endsection
+
+
+@section('footer.scripts')
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery(document).on("click",".payment_paid",function(a){
+                var elements = a.target;
+                a.preventDefault();
+                var id = jQuery(this).attr('data-id-id');
+                if(confirm("Do You want to Payment Paid ?")) {
+
+                    jQuery.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '/payment/status/paid/' + id,
+                        data: {},
+                        success: function (data) {
+                            if (data.status == 100) {
+                                {
+                                    jQuery(elements).remove();
+                                    location.reload(true);
+                                }
+                            }
+                        }
+
+                    });
+                }
+            });
+
+            jQuery('#aaddTag').click(function(e) {
+                e.preventDefault();
+                jQuery('#mymodal').modal();
+            });
+            $('.modal').on('hidden.bs.modal', function(){
+                $(this).find('form')[0].reset();
+            });
+        })
+    </script>
 @endsection

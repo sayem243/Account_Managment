@@ -88,6 +88,10 @@ Route::post('/payment/status/approve/{id}','PaymentController@approve')->name('d
 Route::post('/payment/status/paid/{id}','PaymentController@payment_paid')->name('payment_paid');
 Route::post('/payment/datatable', 'PaymentController@dataTable')->name('payment_datatable');
 
+//Payment Settlement Route
+Route::get('/settlement/list','PaymentSettlementController@index')->name('settlement_list');
+Route::post('/settlement/payment/{id}','PaymentSettlementController@store')->name('settlement_store');
+
 //Ajax route
 
 Route::get('/project/user/{id}','UserController@projectByUser')->name('user_project');
@@ -170,6 +174,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('payment-edit','PaymentDetailsController@deleteAjax');
     Route::resource('payment-delete','PaymentController@delete');
     Route::resource('payment-paid','PaymentController@payment_paid');
+
+    Route::resource('payment-settlement-list','PaymentSettlementController@index');
+    Route::resource('payment-settlement-create','PaymentSettlementController@store');
 
 
     Route::resource('vocher','VocherController');

@@ -9,11 +9,6 @@
             <div class="card-header">
                 <h5> Payment Details </h5>
 
-                <div class="card-header-right">
-                    <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
-                        <a href="{{route('payment')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
-                    </div>
-                </div>
                 </div>
 
                     <form class="form-horizontal" action="{{ route('payment_store_confirm')}}" method="post" enctype="multipart/form-data">
@@ -84,6 +79,7 @@
                         <div class="line aligncenter">
                             <div class="form-group row">
                                 <div class="col-sm-12 col-form-label" align="right">
+                                    <a href="{{route('payment')}}" class="btn btn-danger"> Cancel</a>
                                     <button type="submit" class="btn btn-primary" data-original-title="" title=""> <i class="feather icon-save"></i>Save & Confirm</button>
                                 </div>
                             </div>
