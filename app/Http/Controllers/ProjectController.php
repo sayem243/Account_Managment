@@ -13,7 +13,7 @@ class ProjectController extends Controller
 {
     public function index(){
 
-        $projects=Project::all();
+        $projects=Project::all()->sortBy('company_id');
       //  return view('project.project')->with('projects',$projects);
         return view('project.project',['projects'=>$projects]);
 
