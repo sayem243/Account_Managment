@@ -116,14 +116,11 @@
                     </ul>
                 </li>
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('voucher/*') ? 'pcoded-trigger' : ''}}">
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('settlement/*') ? 'pcoded-trigger' : ''}}">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Settlement</span></a>
-                    <ul class="pcoded-submenu {{ Request::is('voucher/*') ? 'active' : ''}}">
+                    <ul class="pcoded-submenu {{ Request::is('settlement/*') ? 'active' : ''}}">
 
-                        <li class="nav-item {{ Request::is('voucher/index') ? 'active' : ''}}"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Settlement</span></a></li>
-                        @if(auth()->user()->can('voucher_create'))
-                        <li class="nav-item {{ Request::is('voucher/create') ? 'active' : ''}}"><a href="{{route('voucher_create')}}" class="nav-link"><span class="pcoded-mtext">New Settlement</span></a></li>
-                        @endif
+                        <li class="nav-item {{ Request::is('settlement/list') ? 'active' : ''}}"><a href="{{route('settlement_list')}}" class="nav-link"><span class="pcoded-mtext">Settlement</span></a></li>
 
                     </ul>
                 </li>

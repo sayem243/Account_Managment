@@ -156,8 +156,6 @@
  <script type="text/javascript">
         window.print();
 
-        // in words
-
 
 
 

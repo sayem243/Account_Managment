@@ -20,7 +20,7 @@
                                     <div class="col-md-6">
                                         <h4>Company Name: {{$payment->company['name']}}</h4>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="text-align: right">
                                         <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
                                     </div>
                                 </div>
@@ -84,6 +84,32 @@
                                 </div>
                             </div>
 
+                    <div class="col-md-12 hidden-print">
+                        @if(sizeof($payment->paymentSettlements)>0)
+
+                            <h3>Settlement History</h3>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>SL.</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                </thead>
+
+                                @php $i=0; @endphp
+                                @foreach($payment->paymentSettlements as $paymentSettlement)
+                                    @php $i++ @endphp
+                                    <tr>
+                                        <td>{{$i}}</td>
+                                        <td>{{date('d-m-Y',strtotime($paymentSettlement->created_at))}}</td>
+                                        <td>{{$paymentSettlement->settlement_amount}}</td>
+                                    </tr>
+                                @endforeach
+
+                            </table>
+
+                        @endif
+                    </div>
                 </div>
             </div>
 
@@ -96,21 +122,30 @@
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Settlement</h4>
                 </div>
-                @if($payment->status==4)
-                <form class="tagForm" id="tag-form" action="{{ route('settlement_store',$payment->id)}}" method="post">
-                    {{ csrf_field() }}
-                    <div class="modal-body">
-                        <label for="settlement_amount">Amount: </label>
-                        <input id="settlement_amount" class="form-control" name="settlement_amount" type="number" min="1" max="{{$payment->total_paid_amount - $totalSettlementAmount}}" value="{{$payment->total_paid_amount - $totalSettlementAmount}}" required/>
+                <div class="modal-body">
+                    <div class="col-xs-5">
+                        Total Advance Amount: {{$payment->total_paid_amount}}
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <input id="tag-form-submit" type="submit" class="btn btn-primary" value="Save">
+                    <div class="col-xs-6">
+                        Total Settles Amount: {{$totalSettlementAmount}}
                     </div>
-                </form>
+                    @if($payment->status==4)
+                        <form class="tagForm" id="tag-form" action="{{ route('settlement_store',$payment->id)}}" method="post">
+                            {{ csrf_field() }}
+                            <div class="modal-body">
+                                <label for="settlement_amount">Amount: </label>
+                                <input id="settlement_amount" class="form-control" name="settlement_amount" type="number" min="1" max="{{$payment->total_paid_amount - $totalSettlementAmount}}" value="{{$payment->total_paid_amount - $totalSettlementAmount}}" required/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <input id="tag-form-submit" type="submit" class="btn btn-primary" value="Save">
+                            </div>
+                        </form>
                     @else
-                    <p>This payment is not permission</p>
-                @endif
+                        <p>This payment is not permission</p>
+                    @endif
+                </div>
+
             </div>
         </div>
 
