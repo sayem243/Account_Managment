@@ -23,6 +23,11 @@ use Hash;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -198,7 +203,12 @@ class UserController extends Controller
         if($request->has('submit')){
             $user->password=bcrypt($request->password);
             $user->push();
-            return redirect()->route('users.index')
+            if(auth()->user()->hasRole('superadmin')){
+
+                return redirect()->route('users.index')
+                    ->with('success','Password Change successfully');
+            }
+            return redirect()->route('admin_index')
                 ->with('success','Password Change successfully');
         }
         return view('auth.reset',['user'=>$user]);

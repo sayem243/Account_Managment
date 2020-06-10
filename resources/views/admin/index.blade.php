@@ -223,7 +223,12 @@
 
                             <span>{{ Auth::user()->name }}</span>
 
-                            <a href="{{ route('logout') }}" class="dud-logout" title="Logout"
+                            <br>
+                            <a style="color: #ffffff;padding-left: 55px" href="{{route('password-change',auth()->user()->id)}}">
+                                Password Change <i class="feather icon-edit"></i>
+                            </a>
+                            <br>
+                            <a style="color: #ffffff;padding-left: 55px; display: block; margin-top: 10px" href="{{ route('logout') }}" class="" title="Logout"
                                onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();"
                             >
@@ -231,7 +236,7 @@
                                     {{ csrf_field() }}
                                 </form>
 
-                                <i class="feather icon-log-out"></i>
+                               Logout <i class="feather icon-log-out"></i>
                             </a>
 
                         </div>
