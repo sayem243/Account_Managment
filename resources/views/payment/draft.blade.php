@@ -20,20 +20,22 @@
                         <input type="hidden" value="{{$payment->id}}" name="payment_id[]">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h4>Payment ID: {{$payment->payment_id}}</h4>
-{{--                                --}}
+                            <div class="col-md-5">
+                                <h5>Project: {{$payment->project['p_name']}}</h5>
+                                <h5>Company: {{$payment->company['name']}}</h5>
                             </div>
-                            <div class="col-md-6" style="text-align: right">
+                            <div class="col-md-4">
+                                <h4>SH ID: {{$payment->payment_id}}</h4>
+                            </div>
+                            <div class="col-md-3" style="text-align: right">
                                 <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
-                                <h6>Total Amount: {{$payment->total_paid_amount}}</h6>
+                                <h6 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h6>
                             </div>
                         </div>
                         <hr style="margin-top: 1px; margin-bottom: 10px">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-5">
                                 <p>Name: {{$payment->user['name']}}</p>
-                                {{--<p>Total Amount: {{$payment->total_paid_amount}}</p>--}}
                                 <p>Created By: {{$payment->userCreatedBy['name']}}</p>
                                 <p>Verified By: {{$payment->verifiedBy?$payment->verifiedBy['name']:''}}</p>
                                 <p>Approved By: {{$payment->approvedBy?$payment->approvedBy['name']:''}}</p>
@@ -44,11 +46,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <p>Project: {{$payment->project['p_name']}}</p>
-                                <p>Company: {{$payment->company['name']}}</p>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-7">
 
                                 <table class="table table-bordered">
                                     <thead class="thead-dark">

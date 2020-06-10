@@ -53,7 +53,7 @@ class PaymentController extends Controller
     public function create(){
 
        $users=User::all();
-       if(auth()->user()->hasRole('Employee')){
+       if(auth()->user()->hasRole('Employee') || auth()->user()->hasRole('Vendor')){
            $user= auth()->user();
            $users=User::where('id', $user->id)->get();
        }
@@ -350,7 +350,7 @@ class PaymentController extends Controller
             $user_id = $query['user_id'];
             $countRecords->where('payments.user_id', $user_id);
         }
-        if(auth()->user()->hasRole('Employee')){
+        if(auth()->user()->hasRole('Employee') || auth()->user()->hasRole('Vendor')){
             $user= auth()->user();
             $countRecords->where('payments.user_id', $user->id);
         }else{
@@ -409,7 +409,7 @@ class PaymentController extends Controller
             $user_id = $query['user_id'];
             $rows->where('payments.user_id', $user_id);
         }
-        if(auth()->user()->hasRole('Employee')){
+        if(auth()->user()->hasRole('Employee') || auth()->user()->hasRole('Vendor')){
             $user= auth()->user();
             $rows->where('payments.user_id', $user->id);
         }else{

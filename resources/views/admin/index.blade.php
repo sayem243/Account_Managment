@@ -116,21 +116,24 @@
                     </ul>
                 </li>
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('settlement/*') ? 'pcoded-trigger' : ''}}">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Settlement</span></a>
-                    <ul class="pcoded-submenu {{ Request::is('settlement/*') ? 'active' : ''}}">
+                @unless(auth()->user()->hasRole('Employee') || auth()->user()->hasRole('Vendor'))
 
-                        <li class="nav-item {{ Request::is('settlement/list') ? 'active' : ''}}"><a href="{{route('settlement_list')}}" class="nav-link"><span class="pcoded-mtext">Settlement</span></a></li>
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('settlement/*') ? 'pcoded-trigger' : ''}}">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Settlement</span></a>
+                        <ul class="pcoded-submenu {{ Request::is('settlement/*') ? 'active' : ''}}">
 
-                    </ul>
-                </li>
-                @unless(auth()->user()->hasRole('Employee'))
+                            <li class="nav-item {{ Request::is('settlement/list') ? 'active' : ''}}"><a href="{{route('settlement_list')}}" class="nav-link"><span class="pcoded-mtext">Settlement</span></a></li>
+
+                        </ul>
+                    </li>
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('company/*') ? 'pcoded-trigger' : ''}}{{ Request::is('project/*') ? 'pcoded-trigger' : ''}}{{ Request::is('usertype/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>
                         <ul class="pcoded-submenu {{ Request::is('usertype/*') ? 'active' : ''}}{{ Request::is('company/*') ? 'active' : ''}}{{ Request::is('project/*') ? 'active' : ''}}">
 
                             <li class="nav-item {{ Request::is('company/index') ? 'active' : ''}}"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
-                            <li class="nav-item {{ Request::is('project/index') ? 'active' : ''}}"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
+                            @if(auth()->user()->can('projects'))
+                                <li class="nav-item {{ Request::is('project/index') ? 'active' : ''}}"><a href="{{route('project')}}" class="nav-link active"><span class="pcoded-mtext">Project</span></a></li>
+                            @endif
                             <li class="nav-item {{ Request::is('usertype/index') ? 'active' : ''}}"><a href="{{route('usertype')}}" class="nav-link"><span class="pcoded-mtext">User Type</span></a></li>
                             {{--<li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-mtext">Add New</span></a></li>--}}
                         </ul>

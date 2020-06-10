@@ -57,12 +57,13 @@
                                                         <i class="feather icon-edit"></i>
                                                         Edit</a>
                                                 </li>
-
+                                                @if(auth()->user()->hasRole('superadmin'))
                                                 <li class="dropdown-item">
                                                     <a href="{{route('project_delete',$project->id)}}">
                                                         <i class="feather icon-trash-2"></i>
                                                         Remove</a>
                                                 </li>
+                                                @endif
                                             </ul>
 
                                         </div>

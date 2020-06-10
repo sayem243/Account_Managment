@@ -71,23 +71,27 @@
                                                         <i class="feather icon-eye"></i>
                                                         Role-Show</a>
                                                 </li>
+                                                @if(auth()->user()->hasRole('superadmin'))
                                                 <li class="dropdown-item">
                                                     <a href="{{route('userprofileEdit',$user->id)}}">
                                                         <i class="feather icon-edit"></i>
                                                         Edit</a>
                                                 </li>
-
+                                                @endif
+                                                @if(auth()->user()->hasRole('superadmin'))
                                                 <li class="dropdown-item">
                                                     <a href="{{route('User_delete',$user->id)}}">
                                                         <i class="feather icon-trash-2"></i>
                                                         Remove</a>
                                                 </li>
-
+                                                @endif
+                                                @if(auth()->user()->hasRole('superadmin') || auth()->user()->id == $user->id)
                                                 <li class="dropdown-item">
                                                     <a href="{{route('password-change',$user->id)}}">
                                                         <i class="feather icon-edit"></i>
                                                         Password Change</a>
                                                 </li>
+                                                @endif
 
                                             </ul>
                                         </div>

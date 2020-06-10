@@ -57,12 +57,13 @@
                                             <i class="feather icon-edit"></i>
                                             Edit</a>
                                     </li>
-
+                                @if(auth()->user()->hasRole('superadmin'))
                                     <li class="dropdown-item">
                                         <a onclick="return confirm('Are you sure want to delete?')" href="{{route('com_delete',$company->id)}}">
                                             <i class="feather icon-trash-2"></i>
                                             Remove</a>
                                     </li>
+                                @endif
 
                                 </ul>
 
