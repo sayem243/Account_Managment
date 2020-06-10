@@ -45,10 +45,10 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="user_id">Paid To:</label>
-                                        <select class="form-control" name="user_id" id="edit_user_id" required>
+                                        <select style="pointer-events: none;" class="form-control" name="user_id" id="edit_user_id" required>
 
                                             <option value="">Select User</option>
                                             @foreach($users as $user)
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Company:</label>
-                                        <select class="form-control js-example-basic-single" name="company_id" id="company_id" required>
+                                        <select style="pointer-events: none;" class="form-control js-example-basic-single" name="company_id" id="company_id" required>
 
                                             <option value="">Select Company</option>
                                             @foreach($companies as $company)
@@ -66,9 +66,11 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                </div>
+                                <div class="col-md-7">
                                     <div class="form-group">
                                         <label for="comments">Comments:</label>
-                                        <textarea name="comments" rows="4" class="form-control">{{$payment->comments}}</textarea>
+                                        <textarea name="comments" rows="5" class="form-control">{{$payment->comments}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -80,8 +82,8 @@
                                 <tr>
                                     <th width="30%">Project</th>
                                     <th width="40%">Item Name</th>
-                                    <th width="20%">Amount</th>
-                                    <th width="10%">Action</th>
+                                    <th style="text-align: right;padding-right: 15px" width="20%">Amount</th>
+                                    <th style="text-align: right;padding-right: 15px" width="10%">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -104,9 +106,9 @@
                                             <input type="text" class="form-control item_name" name="exit_item_name[]" id="exit_item_name" value="{{$detail->item_name}}">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control paid_amount amount" name="exit_paid_amount[]" id="paid_amount" value="{{$detail->paid_amount}}" >
+                                            <input style="text-align: right" type="text" class="form-control paid_amount amount" name="exit_paid_amount[]" id="paid_amount" value="{{$detail->paid_amount}}" >
                                         </td>
-                                        <td>
+                                        <td style="text-align: right">
                                             <button type="button" data-id="{{$detail->id}}" class="btn btn-danger remove exit_hide">Delete</button>
                                         </td>
                                     </tr>
@@ -124,9 +126,9 @@
                                             <input type="text" class="form-control item_name" name="item_name[]" id="item_name" placeholder="Item Name">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control paid_amount amount" name="paid_amount[]" id="paid_amount">
+                                            <input style="text-align: right" type="text" class="form-control paid_amount amount" name="paid_amount[]" id="paid_amount">
                                         </td>
-                                        <td>
+                                        <td style="text-align: right">
                                             <button type="button" data-id="" class="btn btn-danger remove hide">Delete</button>
                                         </td>
                                     </tr>
@@ -135,7 +137,7 @@
                                 <tfoot>
                                 <tr style="font-weight: bold">
                                     <td colspan="2" align="right" style="padding-right: 20px">Total:</td>
-                                    <td colspan="" class="total_amount" style="padding: 10px 15px"></td>
+                                    <td colspan="" class="total_amount" align="right" style="padding: 10px 20px"></td>
                                     <td></td>
                                 </tr>
                                 </tfoot>
@@ -145,8 +147,8 @@
                             </div>
                             <div class="line aligncenter">
                                 <div class="form-group">
-                                    <div class="col-sm-10" align="right">
-                                        <button type="submit" class="btn btn-primary btn-lg" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
+                                    <div class="col-sm-12" align="right">
+                                        <button type="submit" class="btn btn-primary btn-lg" data-original-title="" title=""> <i class="feather icon-save"></i> Save</button>
                                         {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                                     </div>
                                 </div>

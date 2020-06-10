@@ -11,7 +11,7 @@ $(document).ready(function () {
             [10, 20, 50, 100, 150, -1],
             [10, 20, 50, 100, 150, "All"] // change per page values here
         ],
-        "pageLength": 10, // default record count per page
+        "pageLength": 50, // default record count per page
         "ajax": {
             "type"   : "POST",
             "url": "/payment/datatable", // ajax source
@@ -36,22 +36,21 @@ $(document).ready(function () {
             { "name": 'name' },
             { "name": 'companyName' },
             { "name": 'amount' },
-            { "name": 'creatorName' },
             { "name": 'pStatus' },
         ],
         "order": [
             [1, "asc"]
         ],// set first column as a default sort by asc
         "columnDefs": [ {
-            "targets": 9,
+            "targets": 8,
             "orderable": false
         },
             {
-                "targets": 8,
+                "targets": 7,
                 "orderable": false
             },
             {
-                "targets": 7,
+                "targets": 6,
                 "orderable": false
             },
             {

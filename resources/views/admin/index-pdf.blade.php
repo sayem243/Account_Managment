@@ -56,7 +56,7 @@
 <script src="{{asset('assets/js/pcoded.min.js')}}"></script>
 {{--add jquery--}}
 {{--<script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>--}}
-
+@yield('footer.scripts')
 
 </body>
 </html>

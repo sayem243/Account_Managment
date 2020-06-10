@@ -83,10 +83,5 @@ class Payment extends Model
         return $settlementAmount;
     }
 
-    //
-
-//    public function voucher(){
-//        return $this->hasMany('App\Payment');
-//    }
 
 }

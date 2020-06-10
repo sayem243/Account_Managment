@@ -21,18 +21,19 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4>Company Name: {{$payment->company['name']}}</h4>
+                                <h4>Payment ID: {{$payment->payment_id}}</h4>
+{{--                                --}}
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="text-align: right">
                                 <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
+                                <h6>Total Amount: {{$payment->total_paid_amount}}</h6>
                             </div>
                         </div>
-                        <hr>
+                        <hr style="margin-top: 1px; margin-bottom: 10px">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h4>Payment ID: {{$payment->payment_id}}</h4>
+                            <div class="col-md-3">
                                 <p>Name: {{$payment->user['name']}}</p>
-                                <p>Total Amount: {{$payment->total_paid_amount}}</p>
+                                {{--<p>Total Amount: {{$payment->total_paid_amount}}</p>--}}
                                 <p>Created By: {{$payment->userCreatedBy['name']}}</p>
                                 <p>Verified By: {{$payment->verifiedBy?$payment->verifiedBy['name']:''}}</p>
                                 <p>Approved By: {{$payment->approvedBy?$payment->approvedBy['name']:''}}</p>
@@ -43,14 +44,17 @@
 
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <p>Project: {{$payment->project['p_name']}}</p>
+                                <p>Company: {{$payment->company['name']}}</p>
+                            </div>
                             <div class="col-md-6">
 
                                 <table class="table table-bordered">
                                     <thead class="thead-dark">
                                     <tr>
-                                        <th>Item</th>
-                                        <th>Project</th>
-                                        <th>Amount </th>
+                                        <th width="80%">Item</th>
+                                        <th width="20%" style="text-align: right;padding-right: 10px">Amount </th>
                                     </tr>
                                     </thead>
 
@@ -58,15 +62,14 @@
                                     @foreach($payment->Payment_details as $paymentDetail)
                                         <tr>
                                             <td>{{$paymentDetail->item_name}}</td>
-                                            <td>{{$paymentDetail->project['p_name']}}</td>
-                                            <td>{{$paymentDetail->paid_amount}}</td>
+                                            <td style="text-align: right;padding-right: 10px">{{$paymentDetail->paid_amount}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                     <tfoot>
-                                    <tr style="font-weight: bold">
-                                        <td colspan="2" align="center">Total</td>
-                                        <td>{{$payment->total_paid_amount}}</td>
+                                    <tr style="font-weight: bold; font-size: 18px; color: red">
+                                        <td style="text-align: right;padding-right: 10px">Total</td>
+                                        <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount}}</td>
                                     </tr>
                                     </tfoot>
                                 </table>

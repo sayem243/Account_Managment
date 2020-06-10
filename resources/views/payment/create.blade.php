@@ -43,7 +43,7 @@
                       </div>
                   </div>
                   <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-5">
 
                           <div class="form-group">
                               <label for="exampleInputEmail1">Paid To:</label>
@@ -65,10 +65,11 @@
                                   @endforeach
                               </select>
                           </div>
-
+                      </div>
+                      <div class="col-md-7">
                           <div class="form-group">
                               <label for="comments">Comments:</label>
-                              <textarea name="comments" rows="4" class="form-control"></textarea>
+                              <textarea name="comments" rows="5" class="form-control"></textarea>
                           </div>
                       </div>
                   </div>
@@ -79,8 +80,8 @@
                     <tr>
                         <th width="30%">Project</th>
                         <th width="40%">Item Name</th>
-                        <th width="20%">Amount</th>
-                        <th width="10%">Action</th>
+                        <th style="text-align: right;padding-right: 15px" width="20%">Amount</th>
+                        <th style="text-align: right;padding-right: 15px" width="10%">Action</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -93,10 +94,10 @@
                           <td>
                               <input type="text" class="form-control item_name" name="item_name[]" id="item_name" placeholder="Item Name" required>
                           </td>
-                          <td>
-                              <input type="text" class="form-control paid_amount amount" name="paid_amount[]" id="paid_amount" placeholder="Amount" required>
+                          <td style="text-align: right">
+                              <input style="text-align:right;" type="text" class="form-control paid_amount amount" name="paid_amount[]" id="paid_amount" placeholder="Amount" required>
                           </td>
-                          <td>
+                          <td style="text-align: right">
                               <button type="button" class="btn btn-danger hide">Delete</button>
                           </td>
                       </tr>
@@ -105,7 +106,7 @@
                       <tfoot>
                       <tr style="font-weight: bold">
                           <td colspan="2" align="right" style="padding-right: 20px">Total:</td>
-                          <td colspan="" class="total_amount" style="padding: 10px 15px"></td>
+                          <td colspan="" class="total_amount" align="right" style="padding: 10px 20px"></td>
                           <td></td>
                       </tr>
                       </tfoot>
@@ -115,8 +116,8 @@
                   </div>
                   <div class="line aligncenter">
                       <div class="form-group row">
-                          <div class="col-sm-10 col-form-label" align="right">
-                              <button type="submit" class="btn btn-primary" data-original-title="" title=""> <i class="feather icon-save"></i>Save</button>
+                          <div class="col-sm-12 col-form-label" align="right">
+                              <button type="submit" class="btn btn-primary btn-lg" data-original-title="" title="">Next <i class="fas fa-angle-double-right"></i></button>
                               {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                           </div>
                       </div>

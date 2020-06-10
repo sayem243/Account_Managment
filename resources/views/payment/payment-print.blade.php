@@ -69,6 +69,7 @@
                                     <b>{{$payment->comments}}</b>
                                 </div>
                             </div>
+                            <a href="#" onclick="return window.print();">adsf</a>
                         </div>
 
 
@@ -153,13 +154,17 @@
 
 
 
- <script type="text/javascript">
-        window.print();
+@endsection
+@section('footer.scripts')
+
+    <script type="text/javascript">
+        // window.print();
+
+        jQuery(document).ready(function () {
+            window.print();
+            // setTimeout("closePrintView()", 3000);
+        });
 
 
-
-
- </script>
-
-
+    </script>
 @endsection

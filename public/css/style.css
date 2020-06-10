@@ -145,3 +145,28 @@ a.btn {
 .pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li.active > a:before, .pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li:focus > a:before, .pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li:hover > a:before {
     background: #1dc4e9;
 }
+
+.label.label-yellow {
+    background: yellow;
+    color: #000;
+}
+.label.label-orange {
+    background: darkorange;
+    color: #fff;
+}
+.label.label-green {
+    background: green;
+    color: #fff;
+}
+.label.label-blue {
+    background: blue;
+    color: #fff;
+}
+.label.label-light-grey {
+    background: lightgrey;
+    color: #000;
+}
+.label.label-grey {
+    background: grey;
+    color: #000;
+}

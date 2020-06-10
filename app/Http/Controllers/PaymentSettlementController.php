@@ -41,7 +41,22 @@ class PaymentSettlementController extends Controller
 
         $settlement->save();
 
+        $totalSettleAmount = $this->getTotalSettlementAmount($payment);
+
+        if($payment->total_paid_amount>$totalSettleAmount){
+            $payment->status = 5;
+        }
+        if($payment->total_paid_amount == $totalSettleAmount){
+            $payment->status = 6;
+        }
+        $payment->save();
+
+
         return redirect()->route('details',$payment->id);
+    }
+
+    private function getTotalSettlementAmount(Payment $payment){
+        return $payment->getTotalPaymentSettlementAmount();
     }
 
 

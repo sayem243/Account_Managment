@@ -111,7 +111,7 @@ class PaymentController extends Controller
         }
 
         if ($returnArray){
-            return redirect()->route('payment_draft_view',http_build_query(['payment[]'=>$returnArray]))->with('success', 'Payment has been successfully Created pending for verification');
+            return redirect()->route('payment_draft_view',http_build_query(['payment[]'=>$returnArray]))->with('success', 'Click save and confirm to create this handslip.');
         }
 
 
@@ -432,15 +432,19 @@ class PaymentController extends Controller
         foreach ($result as $post):
             $paymentStatus = '';
             if ($post->pStatus == 1 && $post->paymentVerifyBy == null) {
-                $paymentStatus = '<span class="label label-primary">Created</span>';
+                $paymentStatus = '<span class="label label-yellow">Created but not verified</span>';
             } elseif ($post->pStatus == 1 && $post->paymentVerifyBy != null) {
                 $paymentStatus = '<span class="label label-primary">Un verified</span>';
             } elseif ($post->pStatus == 2) {
-                $paymentStatus = '<span class="label label-warning">Verified</span>';
+                $paymentStatus = '<span class="label label-orange">Verified but not approved</span>';
             } elseif ($post->pStatus == 3) {
-                $paymentStatus = '<span class="label label-success">Approved</span>';
+                $paymentStatus = '<span class="label label-green">HS has been approved</span>';
             } elseif ($post->pStatus == 4) {
-                $paymentStatus = '<span class="label label-info">Disbursed</span>';
+                $paymentStatus = '<span class="label label-blue">HS has been disbursed</span>';
+            } elseif ($post->pStatus == 5) {
+                $paymentStatus = '<span class="label label-light-grey">Money partially returned</span>';
+            } elseif ($post->pStatus == 6) {
+                $paymentStatus = '<span class="label label-grey">Money fully settled</span>';
             }
 
             $action='';
@@ -475,7 +479,7 @@ class PaymentController extends Controller
                 $employeeName       = $post->employeeName,
                 $companyName        = $post->companyName?$post->companyName:'',
                 $amount             = $post->amount,
-                $creatorName        = $post->creatorName,
+//                $creatorName        = $post->creatorName,
                 $pStatus            = $paymentStatus,
 
                 $action,
