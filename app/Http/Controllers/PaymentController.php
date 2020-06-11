@@ -161,7 +161,7 @@ class PaymentController extends Controller
         $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
         $pdf = PDF::loadView('payment.pdf_view', ['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
 //        return $pdf->download(time().'_payment.pdf');
-        return $pdf->stream(time()."_invoice.pdf",array("Attachment" => false));
+        return $pdf->stream(time()."_hand_slip.pdf",array("Attachment" => false));
     }
 
     public function paymentPrint($id){
