@@ -330,8 +330,8 @@ class PaymentController extends Controller
 
         $countRecords = DB::table('payments');
         $countRecords->select('payments.id as totalPayment');
-        $countRecords->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
-        $countRecords->join('projects', 'payment_details.project_id', '=', 'projects.id');
+//        $countRecords->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
+//        $countRecords->join('projects', 'payment_details.project_id', '=', 'projects.id');
         $countRecords->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $countRecords->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
         $countRecords->join('companies', 'payments.company_id', '=', 'companies.id');
@@ -350,7 +350,7 @@ class PaymentController extends Controller
 
         if(isset($query['project_id'])){
             $project_id = $query['project_id'];
-            $countRecords->where('projects.id',$project_id);
+            $countRecords->where('payments.project_id',$project_id);
         }
 
         if (isset($query['user_id'])) {
@@ -366,9 +366,9 @@ class PaymentController extends Controller
             foreach ($projects as $project){
                 $projectId[]=$project->id;
             }
-            $countRecords->whereIn('payment_details.project_id', $projectId);
+            $countRecords->whereIn('payments.project_id', $projectId);
         }
-        $countRecords->groupBy('payment_details.payment_id');
+//        $countRecords->groupBy('payment_details.payment_id');
 
         $result = $countRecords->get();
         $tcount = count($result);
@@ -387,8 +387,8 @@ class PaymentController extends Controller
         $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 
         $rows = DB::table('payments');
-        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
-        $rows->join('projects', 'payment_details.project_id', '=', 'projects.id');
+//        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
+//        $rows->join('projects', 'payment_details.project_id', '=', 'projects.id');
         $rows->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $rows->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
         $rows->join('companies', 'payments.company_id', '=', 'companies.id');
@@ -410,7 +410,7 @@ class PaymentController extends Controller
 
         if(isset($query['project_id'])){
             $project_id = $query['project_id'];
-            $rows->where('projects.id',$project_id);
+            $rows->where('payments.project_id',$project_id);
         }
         if (isset($query['user_id'])) {
             $user_id = $query['user_id'];
@@ -425,13 +425,13 @@ class PaymentController extends Controller
             foreach ($projects as $project){
                 $projectId[]=$project->id;
             }
-            $rows->whereIn('payment_details.project_id', $projectId);
+            $rows->whereIn('payments.project_id', $projectId);
         }
 
         $rows->offset($iDisplayStart);
         $rows->limit($iDisplayLength);
         $rows->orderBy($columnName, $columnSortOrder);
-        $rows->groupBy('payment_details.payment_id');
+//        $rows->groupBy('payment_details.payment_id');
         $result = $rows->get();
 
         $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
