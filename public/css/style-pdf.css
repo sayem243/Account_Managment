@@ -1,17 +1,16 @@
-.body {
+body {
     font-family: "Open Sans", sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     color: #323437;
     font-weight: 400;
     position: relative;
+    margin-top: 0px;
 }
 .card-body {
-    padding: 30px 25px;
+    padding: 0;
 }
-.card-body {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 1.25rem;
+p{
+    margin-top: 0px;
 }
 
 /*.row {*/
@@ -60,6 +59,11 @@
 
 h4 {
     font-size: 20px;
+    margin: 5px 0;
+}
+h5{
+    margin: 0;
+    font-size: 14px;
 }
 .table-bordered {
     border: 1px solid #eaeaea;

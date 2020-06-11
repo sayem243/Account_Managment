@@ -1,5 +1,5 @@
 @extends('admin.index-pdf')
-
+@section('title','hand_slip_'.time())
 @section('template')
 
     <div class="col-sm-12">
@@ -7,152 +7,94 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h1 align="center"> Payment Details </h1>
+                        <h4> Payment Details </h4>
                     </div>
-
-                    {{--Advance Payment Information--}}
-
                     <div class="card-body">
+
                         <div class="row">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <td>
+                                        <h5>Project: {{$payment->project['p_name']}}</h5>
+                                        <h5>Company: {{$payment->company['name']}}</h5>
+                                    </td>
+                                    <td>
+                                        <h4>SH ID: {{$payment->payment_id}}</h4>
+                                    </td>
+                                    <td align="right">
+                                        <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
+                                        <h5 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h5>
+                                    </td>
+                                </tr>
+                                </thead>
+                            </table>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Payment ID: </label>
-                                    {{$payment->payment_id }}
-                                </div>
+                        </div>
+                        {{--<hr style="margin-top: 1px; margin-bottom: 10px">--}}
+                        <div class="row">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <td width="40%" style="vertical-align: top">
+                                        <h5>Name: {{$payment->user['name']}}</h5>
+                                        <p>Created By: {{$payment->userCreatedBy['name']}}</p>
+                                        <p>Verified By: {{$payment->verifiedBy?$payment->verifiedBy['name']:''}}</p>
+                                        <p>Approved By: {{$payment->approvedBy?$payment->approvedBy['name']:''}}</p>
+                                        <p>Disbursed By: {{$payment->disbursedBy?$payment->disbursedBy['name']:''}}</p>
 
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Payment Date: </label>
-                                    {{date('d-m-Y',strtotime($payment->created_at))}}
-                                </div>
+                                        <div class="signature_area" style="border: 1px solid #000000; height: 60px; width: 250px;text-align: center">
+                                            Signature
 
-                                <div class="form-group">
-                                    <label for="">Company: </label>
-                                    {{$payment->user->userProfile->company['name']}}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                                        </div>
+                                    </td>
+                                    <td width="60%" style="vertical-align: top">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th style="padding: 5px" align="left" width="75%">Item</th>
+                                                <th width="25%" style="text-align: right;padding-right: 10px">Amount </th>
+                                            </tr>
+                                            </thead>
 
-                                <div class="form-group">
-                                    <label for="">User Name: </label>
-                                    {{--{{$payment->user['name'] }}--}}
-                                    {{$payment->user->UserProfile['fname'].' '.$payment->user->UserProfile['lname']}}
-                                </div>
+                                            <tbody>
+                                            @foreach($payment->Payment_details as $paymentDetail)
+                                                <tr>
+                                                    <td style="padding: 2px 5px">{{$paymentDetail->item_name}}</td>
+                                                    <td style="text-align: right;padding-right: 10px">{{$paymentDetail->paid_amount}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                            <tfoot>
+                                            <tr style="font-weight: bold; font-size: 18px; color: red">
+                                                <td style="text-align: right;padding-right: 10px">Total</td>
+                                                <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount}}</td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </thead>
+                            </table>
 
-                                <div class="form-group">
-                                    <label for="">Mobile Number: </label>
-                                    {{$payment->user->userProfile['mobile'] }}
-                                </div>
-
-                                <div class="form-group">
-
-                                    <label for="">Verified By:</label>
-                                    {{$payment->verifiedBy['name']}}
-
-                                </div>
-
-
-                                <div class="form-group">
-                                    @if($payment->status==3)
-                                        <label for="">Approved By: </label>
-                                        {{$payment->approvedBy['name']}}
-                                    @endif
-
-                                </div>
-
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for=""><b>Remarks :</b></label>
-                                    <b>{{$payment->comments}}</b>
-                                </div>
+                                @php use App\CustomClass\NumberToWordConverter;
+                               $amount = NumberToWordConverter::convert($payment->total_paid_amount);
+                                @endphp
+                                <p style="color: red;"><strong style="font-weight: bold">Write in words: </strong>{{$amount}}</p>
                             </div>
-                            <a href="#" onclick="return window.print();">adsf</a>
                         </div>
 
-
-                        <div class="col-md-12">
-                            <h4 align="center">Advance Payment Details</h4>
-                        </div>
-
-                        <table class="table table-striped">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th>SL</th>
-                                <th>Projects</th>
-                                <th>Demand Amount(BDT) </th>
-                                <th>Paid Amount</th>
-                                <th>Date</th>
-
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            @php
-                                $i=0;
-                            @endphp
-                            @foreach($payment->Payment_details as $detail )
-                                @php
-                                    $i++ ;
-                                @endphp
-                                <tr>
-                                    <td>{{$i}}</td>
-                                    <td>{{$detail->project['p_name']}}</td>
-                                    <td>{{$detail->demand_amount}}</td>
-                                    <td>{{$detail->paid_amount}}</td>
-                                    <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
-                                </tr>
-
-
-                            @endforeach
-
-
-                            </tbody>
-
-                        </table>
-
-                        <div class="col-md-12">
-                            <h4 align="center">Amendment Details</h4>
-                        </div>
-
-                        <table class="table table-striped">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th>SL</th>
-                                <th>Projects</th>
-                                <th>Amendment Amount</th>
-                                <th>Date</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @php
-                                $i=0;
-                            @endphp
-                            @foreach($payment->ammendments as $detail )
-                                @php
-                                    $i++ ;
-                                @endphp
-                                <tr>
-                                    <td>{{$i}}</td>
-                                    <td>{{$detail->project['p_name']}}</td>
-                                    <td>{{$detail->amendment_amount}}</td>
-                                    <td> {{date('d-m-Y',strtotime($detail->created_at))}}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
                     </div>
+
+
                 </div>
             </div>
 
         </div>
     </div>
-
-
-
 
 @endsection
 @section('footer.scripts')
@@ -162,6 +104,7 @@
 
         jQuery(document).ready(function () {
             window.print();
+            setTimeout(function() { window.close(); }, 100);
             // setTimeout("closePrintView()", 3000);
         });
 

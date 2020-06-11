@@ -17,16 +17,16 @@ class PaymentDetailsController extends Controller
         return view('payment_details.index',['payment'=>$payment,'amendment'=>$amendment]);
     }
 
-    public function paymentPDF($id){
+    /*public function paymentPDF($id){
         $payment=Payment::find($id);
         $pdf = PDF::loadView('payment.pdf_view', compact('payment'));
         return $pdf->stream("invoice.pdf",array("Attachment" => false));
-     }
+     }*/
 
-    public function printpdf($id){
+    /*public function printpdf($id){
         $payment=Payment::find($id);
         return view('payment.payment-print',compact('payment'));
-    }
+    }*/
 
     public function approved($id){
         $amendment=Ammendment::find($id);

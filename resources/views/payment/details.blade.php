@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="row hidden-print">
-                            <div class="col-md-11 hidden-print" style="text-align: right">
+                            <div class="col-md-12 hidden-print" style="text-align: right">
 
                                 @if($payment->status==3 && auth()->user()->can('payment-paid'))
                                     <button data-id-id="{{$payment->id}}" type="button" class="btn btn-lg btn-primary payment_paid">Disburse</button>
@@ -91,6 +91,8 @@
                                         Settlement
                                     </button>
                                 @endif
+
+                                    <a target="_blank" style="-webkit-transform:scale(1);font-size: 14px" href="{{route('payment_print',$payment->id)}}" class="btn btn-primary btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
 
                             </div>
                         </div>

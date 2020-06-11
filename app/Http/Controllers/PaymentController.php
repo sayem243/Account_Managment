@@ -155,12 +155,19 @@ class PaymentController extends Controller
 
 
 
-    public function printPDF($id){
+    public function paymentPDF($id){
 
-        $user=Payment::find($id);
-        $pdf = PDF::loadView('payment.pdf_view', compact('user',$id));
-        return $pdf->download('payment.pdf');
+        $payment=Payment::find($id);
+        $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
+        $pdf = PDF::loadView('payment.pdf_view', ['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
+//        return $pdf->download(time().'_payment.pdf');
+        return $pdf->stream(time()."_invoice.pdf",array("Attachment" => false));
+    }
 
+    public function paymentPrint($id){
+        $payment=Payment::find($id);
+        $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
+        return view('payment.payment-print',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
     }
 
     public function edite($id){
