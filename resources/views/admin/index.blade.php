@@ -109,7 +109,7 @@
 
                         <li class="nav-item {{ Request::is('payment') ? 'active' : ''}}"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-mtext">Advance Payment</span></a></li>
                         @if(auth()->user()->can('Payment-create'))
-                        <li class="nav-item {{ Request::is('payment/create') ? 'active' : ''}}"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-mtext">Add Payment</span></a></li>
+                        {{--<li class="nav-item {{ Request::is('payment/create') ? 'active' : ''}}"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-mtext">Add Payment</span></a></li>--}}
                         @endif
                         {{--<li class="nav-item"><a href="{{route('amendment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Amendment</span></a></li>--}}
 

@@ -78,10 +78,10 @@
                     </div>
                     @endforeach
                         <div class="line aligncenter">
-                            <div class="form-group row">
+                            <div class="form-group">
                                 <div class="col-sm-12 col-form-label" align="right">
                                     <a href="{{route('payment')}}" class="btn btn-danger"> Cancel</a>
-                                    <button type="submit" class="btn btn-primary" data-original-title="" title=""> <i class="feather icon-save"></i>Save & Confirm</button>
+                                    <button type="submit" class="btn btn-info" data-original-title="" title=""> <i class="feather icon-save"></i>Save & Confirm</button>
                                 </div>
                             </div>
                         </div>

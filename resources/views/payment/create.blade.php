@@ -111,13 +111,15 @@
                       </tr>
                       </tfoot>
                   </table>
-                  <div class="col-sm-12 col-form-label" align="right">
-                      <button type="button" class="btn btn-info btn-sm add-row"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</button>
+                  <div class="row">
+                      <div class="col-md-12 col-form-label" align="right">
+                          <button style="margin-right: 0" type="button" class="btn btn-info btn-sm add-row"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</button>
+                      </div>
                   </div>
                   <div class="line aligncenter">
                       <div class="form-group row">
                           <div class="col-sm-12 col-form-label" align="right">
-                              <button type="submit" class="btn btn-primary btn-lg" data-original-title="" title="">Next <i class="fas fa-angle-double-right"></i></button>
+                              <button style="margin-right: 0" type="submit" class="btn btn-info btn-lg" data-original-title="" title="">Next <i class="fas fa-angle-double-right"></i></button>
                               {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                           </div>
                       </div>
