@@ -3,7 +3,7 @@ $(document).ready(function () {
     var dataTable= $('.table').DataTable( {
 
         loadingMessage: 'Loading...',
-        "processing": true,
+        "processing": false,
         "serverSide": true,
         "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
         'searching': false,
@@ -14,6 +14,7 @@ $(document).ready(function () {
         "pageLength": 50, // default record count per page
         "ajax": {
             "type"   : "POST",
+            "cache": false,
             "url": "/payment/datatable", // ajax source
             'data': function(data){
                 // Read values
