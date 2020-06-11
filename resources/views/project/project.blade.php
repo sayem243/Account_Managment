@@ -39,39 +39,55 @@
                                 </th>
                             </tr>
                             </thead>
-                            @php $i=0; @endphp
-                            @foreach($projects as $project)
-                                @php $i++ @endphp
+
+                            @foreach($companies as $company)
 
                                 <tr>
-                                    <td>{{$i}}</td>
-
-                                    <td>{{$project->p_name}} </td>
-                                    <td>{{ $project->company['name']}}</td>
-                                    <td>
-                                        <div class="btn-group card-option">
-                                            <a href="javascript:"  class="btn btn-notify btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
-                                            <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
-                                                <li class="dropdown-item">
-                                                    <a href="{{route('project_edit',$project->id)}}">
-                                                        <i class="feather icon-edit"></i>
-                                                        Edit</a>
-                                                </li>
-                                                @if(auth()->user()->hasRole('superadmin'))
-                                                <li class="dropdown-item">
-                                                    <a href="{{route('project_delete',$project->id)}}">
-                                                        <i class="feather icon-trash-2"></i>
-                                                        Remove</a>
-                                                </li>
-                                                @endif
-                                            </ul>
-
-                                        </div>
-                                    </td>
-
+                                    <td align="center" colspan="5"><h5>{{$company->name}}</h5></td>
                                 </tr>
-                            @endforeach
 
+                                @php $i=0; @endphp
+                                @if (array_key_exists($company->id, $projects))
+
+                                @foreach($projects[$company->id] as $key=>$project)
+                                    @php $i++ @endphp
+                                    <tr>
+                                        <td>{{$i}}</td>
+
+                                        <td>{{$project->projectName}} </td>
+                                        <td>{{ $project->companyName}}</td>
+                                        <td>
+                                            <div class="btn-group card-option">
+                                                <a href="javascript:"  class="btn btn-notify btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                                                <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
+                                                    <li class="dropdown-item">
+                                                        <a href="{{route('project_edit',$project->id)}}">
+                                                            <i class="feather icon-edit"></i>
+                                                            Edit</a>
+                                                    </li>
+                                                    @if(auth()->user()->hasRole('superadmin'))
+                                                    <li class="dropdown-item">
+                                                        <a href="{{route('project_delete',$project->id)}}">
+                                                            <i class="feather icon-trash-2"></i>
+                                                            Remove</a>
+                                                    </li>
+                                                    @endif
+                                                </ul>
+
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                                    @else
+
+                                    <tr>
+                                        <td colspan="5">No project found</td>
+                                    </tr>
+
+                                @endif
+
+                            @endforeach
                         </table>
                     </div>
 

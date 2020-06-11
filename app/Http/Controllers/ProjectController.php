@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Company;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 
@@ -13,9 +14,20 @@ class ProjectController extends Controller
 {
     public function index(){
 
-        $projects=Project::all()->sortBy('company_id');
-      //  return view('project.project')->with('projects',$projects);
-        return view('project.project',['projects'=>$projects]);
+        $companies=Company::all()->sortBy('name');
+
+        $rows = DB::table('projects');
+        $rows->join('companies', 'projects.company_id', '=', 'companies.id');
+        $rows->select( 'projects.id', 'projects.p_name as projectName');
+        $rows->addSelect('companies.id as comId', 'companies.name as companyName');
+        $rows->orderBy('projectName', 'Asc');
+        $projects = $rows->get();
+        $arrayData= array();
+        foreach ($projects as $project){
+            $arrayData[$project->comId][]= $project;
+        }
+
+        return view('project.project',['projects'=>$arrayData, 'companies'=>$companies]);
 
         }
 
