@@ -51,9 +51,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-12" align="right">
-                            <button type="submit" class="btn btn-primary">Save </button>
+                    <div class="form-group row">
+                        <div class="col-sm-12" align="right">
+                            <button style="margin-right: 0" type="submit" class="btn btn-info">Save </button>
                         </div>
                     </div>
 

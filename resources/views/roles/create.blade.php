@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="col-sm-12 col-form-label" align="right">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-info">Submit</button>
         </div>
     </div>
     {!! Form::close() !!}
