@@ -2,6 +2,7 @@
 @section('header.styles')
     {!! Html::style('/assets/css/multi-select.css') !!}
 @endsection
+@section('title','User Add')
 @section('template')
 
     <div class="col-sm-12">

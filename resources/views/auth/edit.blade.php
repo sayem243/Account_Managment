@@ -1,4 +1,5 @@
 @extends('admin.index')
+@section('title','User Update')
 @section('header.styles')
     {!! Html::style('/assets/css/multi-select.css') !!}
 @endsection

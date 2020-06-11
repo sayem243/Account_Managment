@@ -1,4 +1,5 @@
 @extends('admin.index')
+@section('title','Password Reset')
 @section('template')
 
  <div class="col-sm-12">
