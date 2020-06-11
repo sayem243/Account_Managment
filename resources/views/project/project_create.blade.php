@@ -51,7 +51,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="address">Address</label>
-                                <textarea type="text" class="form-control" rows="8" id="address" name="address" aria-describedby="name" placeholder="Enter project address"></textarea>
+                                <textarea type="text" class="form-control" rows="5" id="address" name="address" aria-describedby="name" placeholder="Enter project address"></textarea>
                             </div>
                         </div>
 
@@ -59,7 +59,7 @@
                     </div>
                         <div class="form-group row">
                             <div class="col-sm-12" align="right">
-                                <button style="margin-right: 0" type="submit" class="btn btn-info">Submit</button>
+                                <button style="margin-right: 0" type="submit" class="btn btn-info"> <i class="feather icon-save"></i> Save</button>
                             </div>
 
                         </div>
