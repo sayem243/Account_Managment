@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('title','Payment Settlement List')
 @section('template')
     <div class="col-sm-12">

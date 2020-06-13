@@ -1,4 +1,4 @@
-@extends('layout.Master')
+@extends('layout')
 @section('title','Details Company')
 @section('content')
 

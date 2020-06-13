@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('template')
 <div class="col-sm-12">
  <div class="row">

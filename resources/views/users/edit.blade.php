@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('title','User Update')
 @section('template')
     <div class="col-sm-12">

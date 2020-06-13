@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('title','Users List')
 @section('template')
     <div class="col-sm-12">
@@ -8,9 +8,9 @@
                     <div class="card-header">
                         <h5>Users</h5>
                         <div class="card-header-right">
-                            <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group btn-group" role="group" aria-label="Button group with nested dropdown">
 {{--                                <a href="{{route('register')}}" class="btn btn-sm  btn-info">Add New</a>--}}
-                                <a href="{{route('register')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Add New</a>
+                                <a href="{{route('register')}}" class="btn btn-lg btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Add New</a>
                             </div>
                         </div>
                     </div>
@@ -57,8 +57,8 @@
                                   
                                     <td>
                                         <div class="btn-group card-option">
-                                            <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
-                                            <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
+                                            <button type='button' class='btn btn-notify' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-ellipsis-v'></i></button>
+                                            <ul class='list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right' x-placement='bottom-end'>
 
                                                 <li class="dropdown-item">
                                                     <a href="{{route('userprofile_show',$user->id)}}">

@@ -19,6 +19,7 @@
 
     {{--select2 css--}}
 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- Favicon icon -->
     <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon">
@@ -37,8 +38,10 @@
     @yield('header.styles')
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />--}}
 
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">--}}
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css" >
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" type="text/css" >
     <style>
         .hide{
             display: none!important;
@@ -71,7 +74,6 @@
 
     </style>
 
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
 <body>
@@ -270,9 +272,6 @@
             <div class="pcoded-inner-content">
                 <!-- [ breadcrumb ] start -->
 
-                <!-- [ breadcrumb ] end -->
-                <div class="main-body">
-                    <div class="page-wrapper">
                         <!-- [ Main Content ] start -->
                         <div class="row">
                             <div class="col-md-12">
@@ -282,76 +281,40 @@
                         @yield('template')
                         <!-- [ Main Content ] end -->
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 <!-- [ Main Content ] end -->
 
-<!-- Warning Section Starts -->
-<!-- Older IE warning message -->
-<!--[if lt IE 11]>
-<div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>You are using an outdated version of Internet Explorer, please upgrade
-        <br/>to any of the following web browsers to access this website.
-    </p>
-    <div class="iew-container">
-        <ul class="iew-download">
-            <li>
-                <a href="http://www.google.com/chrome/">
-                    <img src="assets/images/browser/chrome.png" alt="Chrome">
-                    <div>Chrome</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mozilla.org/en-US/firefox/new/">
-                    <img src="assets/images/browser/firefox.png" alt="Firefox">
-                    <div>Firefox</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.opera.com">
-                    <img src="assets/images/browser/opera.png" alt="Opera">
-                    <div>Opera</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.apple.com/safari/">
-                    <img src="assets/images/browser/safari.png" alt="Safari">
-                    <div>Safari</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                    <img src="assets/images/browser/ie.png" alt="">
-                    <div>IE (11 & above)</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <p>Sorry for the inconvenience!</p>
-</div>
-<![endif]-->
-<!-- Warning Section Ends -->
-
 <!-- Required Js -->
 
 {{--<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>--}}
-<script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js" ></script>
+<script src="{{ asset("assets/jquery/popper.min.js") }}" ></script>
+<script src="{{ asset("assets/bootstrap/js/bootstrap.min.js") }}" ></script>
+<script src="{{ asset("assets/bootstrap/js/bootstrap.bundle.min.js") }}" ></script>
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+{{--<script src="{{asset('assets/js/vendor-all.min.js')}}"></script>--}}
 <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/js/pcoded.min.js')}}"></script>
+<script src="{{ asset("assets/plugins/cookies/jquery-cookie.js") }}"></script>
 {{--add jquery--}}
 {{--<script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>--}}
 <script src="{{ asset('assets/plugins/DataTables/datatables.js') }}"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+<!-- Common scripts -->
 
 @yield('footer.scripts')
-
+<script src="{{ asset('assets/js/scripts.js') }}"></script>
 <script type="text/javascript">
 
     $.ajaxSetup({

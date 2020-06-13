@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('title','Add Payment')
 @section('template')
 
@@ -47,7 +47,7 @@
 
                           <div class="form-group">
                               <label for="exampleInputEmail1">Paid To:</label>
-                              <select class="form-control js-example-basic-single" name="user_id" id="user_id" required>
+                              <select class="form-control" name="user_id" id="user_id" required>
 
                                   <option value="">Select User</option>
                                   @foreach($users as $user)
@@ -57,7 +57,7 @@
                           </div>
                           <div class="form-group">
                               <label for="exampleInputEmail1">Company:</label>
-                              <select class="form-control js-example-basic-single" name="company_id" id="payment_company_id" required>
+                              <select class="form-control" name="company_id" id="payment_company_id" required>
 
                                   <option value="">Select Company</option>
                                   @foreach($companies as $company)
@@ -104,7 +104,7 @@
 
                       </tbody>
                       <tfoot>
-                      <tr style="font-weight: bold">
+                      <tr style="font-weight: bold; font-size: 20px">
                           <td colspan="2" align="right" style="padding-right: 20px">Total:</td>
                           <td colspan="" class="total_amount" align="right" style="padding: 10px 20px"></td>
                           <td></td>
@@ -116,9 +116,9 @@
                           <button style="margin-right: 0" type="button" class="btn btn-info btn-sm add-row"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</button>
                       </div>
                   </div>
-                  <div class="line aligncenter">
+                  <div class="line aligncenter" style="float: right">
                       <div class="form-group row">
-                          <div class="col-sm-12 col-form-label" align="right">
+                          <div class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
                               <button style="margin-right: 0" type="submit" class="btn btn-info btn-lg" data-original-title="" title="">Next <i class="fas fa-angle-double-right"></i></button>
                               {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                           </div>
@@ -134,14 +134,6 @@
 
 </div>
 
-
-
-
-{{--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />--}}
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
-
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
 

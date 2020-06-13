@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('title','Update Company')
 @section('template')
 
@@ -81,11 +81,10 @@
                                 </div>
                                 {{--<div class="separator"></div>--}}
 
-                                <div class="line aligncenter">
+                                <div class="line aligncenter" style="float: right">
 
                                     <div class="form-group row">
-                                        <div class="col-sm-12 col-form-label" align="right">
-                                            {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
+                                        <div class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
                                             <button style="margin-right: 0" type="submit" class="btn btn-info" data-original-title="" title=""> <i class="feather icon-save"></i> Save</button>
                                         </div>
                                     </div>

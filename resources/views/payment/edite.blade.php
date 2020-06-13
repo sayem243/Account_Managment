@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('title','Update Payment')
 @section('template')
 
@@ -135,7 +135,7 @@
 
                                 </tbody>
                                 <tfoot>
-                                <tr style="font-weight: bold">
+                                <tr style="font-weight: bold; font-size: 20px">
                                     <td colspan="2" align="right" style="padding-right: 20px">Total:</td>
                                     <td colspan="" class="total_amount" align="right" style="padding: 10px 20px"></td>
                                     <td></td>
@@ -147,9 +147,9 @@
                                     <button style="margin-right: 0" type="button" class="btn btn-info btn-sm add-row"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</button>
                                 </div>
                             </div>
-                            <div class="line aligncenter">
+                            <div class="line aligncenter" style="float: right">
                                 <div class="form-group row">
-                                    <div class="col-sm-12" align="right">
+                                    <div class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
                                         <button style="margin-right: 0" type="submit" class="btn btn-info btn-lg" data-original-title="" title=""> <i class="feather icon-save"></i> Save</button>
                                         {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                                     </div>
@@ -169,7 +169,6 @@
 @endsection
 
 @section('footer.scripts')
-    {{--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>--}}
     <script type="text/javascript">
         $(document).ready(function(){
 

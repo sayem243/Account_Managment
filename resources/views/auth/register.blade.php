@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('header.styles')
     {!! Html::style('/assets/css/multi-select.css') !!}
 @endsection
@@ -180,11 +180,14 @@
 
                             </div>
 
-                            <div class="col-sm-12 col-form-label" align="right">
-                                <button type="submit" class="btn btn-primary" >Submit</button>
 
+                        </div>
+                        <div class="line aligncenter" style="float: right">
+                            <div class="form-group row">
+                                <div class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
+                                    <button style="margin-right: 0" type="submit" class="btn btn-info"> <i class="feather icon-save"></i> Save</button>
+                                </div>
                             </div>
-
                         </div>
 
                     </div>

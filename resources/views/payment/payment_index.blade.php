@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('title','Advance Payment')
 @section('template')
 
@@ -29,9 +29,9 @@
 
                       </td>
 
-                      <td>
+                      <td colspan="2">
                           <select class="form-control" name="company_id" id="company_id" aria-describedby="validationTooltipPackagePrepend" required>
-                              <option value="">Select Company</option>
+                              <option value="">All Company</option>
                               @foreach($companies as $company)
                                   <option value="{{ $company->id }}">{{ $company->name }}</option>
                               @endforeach
@@ -39,7 +39,7 @@
                       </td>
                       <td>
                           <select class="form-control" name="project_id" id="project_id">
-                              <option value="">Select Project</option>
+                              <option value="">All Project</option>
                               @foreach($projects as $project)
                                   <option value="{{ $project->id }}">{{ $project->p_name }}</option>
                               @endforeach
@@ -47,9 +47,9 @@
                       </td>
 
 
-                      <td colspan="2">
+                      <td colspan="1">
                           <select class="form-control" name="user_id" id="user_id" >
-                              <option value="">Select User</option>
+                              <option value="">All User</option>
                               @foreach($users as $user)
                                   <option value="{{ $user->id }}">{{ $user->name }}</option>
                               @endforeach

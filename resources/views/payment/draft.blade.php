@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('title','Confirm Payment')
 @section('template')
 
@@ -17,8 +17,9 @@
                     {{--Advance Payment Information--}}
                     @foreach($payments as $payment)
 
+
+                    <div class="card-body" style="border: 1px solid #000; margin-bottom: 5px;">
                         <input type="hidden" value="{{$payment->id}}" name="payment_id[]">
-                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-5">
                                 <h5>Project: {{$payment->project['p_name']}}</h5>
@@ -77,9 +78,9 @@
 
                     </div>
                     @endforeach
-                        <div class="line aligncenter">
+                        <div class="line aligncenter" style="float: right">
                             <div class="form-group">
-                                <div class="col-sm-12 col-form-label" align="right">
+                                <div class="col-sm-12 col-form-label btn-group-lg" align="right">
                                     <a href="{{route('payment')}}" class="btn btn-danger"> Cancel</a>
                                     <button type="submit" class="btn btn-info" data-original-title="" title=""> <i class="feather icon-save"></i>Save & Confirm</button>
                                 </div>

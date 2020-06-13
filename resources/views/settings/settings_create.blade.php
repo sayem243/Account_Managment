@@ -3,7 +3,7 @@
 {{--@section('content')--}}
     {{----}}
 
-@extends('admin.index')
+@extends('layout')
 
 @section('template')
 

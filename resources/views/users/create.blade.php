@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('layout')
 @section('title','User Add')
 @section('template')
 
