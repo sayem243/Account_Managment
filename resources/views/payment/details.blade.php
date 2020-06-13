@@ -92,6 +92,7 @@
                                     </button>
                                 @endif
 
+                                    <a target="_blank" style="-webkit-transform:scale(1);font-size: 14px" href="{{route('printPDF',$payment->id)}}" class="btn btn-primary btn-lg hidden-print"><i class="fa fa-file-pdf fa-1x"></i> PDF</a>
                                     <a target="_blank" style="-webkit-transform:scale(1);font-size: 14px" href="{{route('payment_print',$payment->id)}}" class="btn btn-primary btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
 
                             </div>
