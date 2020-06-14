@@ -93,7 +93,7 @@ Like: www.facebook.com/terminalbd
                 <div class="b-bg">
                     <i class="feather icon-trending-up"></i>
                 </div>
-                <span class="b-title">iBilling</span>
+                <span class="b-title">Accounting Management</span>
             </a>
             <a class="mobile-menu on" id="mobile-collapse" href="javascript:"><span></span></a>
         </div>
