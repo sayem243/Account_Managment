@@ -10604,16 +10604,3 @@ div.code-toolbar > .toolbar span:hover {
 .pcoded-navbar.navbar-collapsed .pcoded-inner-navbar > li.pcoded-hasmenu .active{
   display: block;
 }
-
-.payment_table table.dataTable thead .sorting:before,
-.payment_table table.dataTable thead .sorting:after,
-.payment_table table.dataTable thead .sorting_asc:before,
-.payment_table table.dataTable thead .sorting_asc:after,
-.payment_table table.dataTable thead .sorting_desc:before,
-.payment_table table.dataTable thead .sorting_desc:after,
-.payment_table table.dataTable thead .sorting_asc_disabled:before,
-.payment_table table.dataTable thead .sorting_asc_disabled:after,
-.payment_table table.dataTable thead .sorting_desc_disabled:before,
-.payment_table table.dataTable thead .sorting_desc_disabled:after {
-  bottom: 0px;
-}
