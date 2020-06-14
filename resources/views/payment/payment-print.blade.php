@@ -6,23 +6,20 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4> Payment Details </h4>
-                    </div>
                     <div class="card-body">
 
                         <div class="row">
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <td>
-                                        <h5>Project: {{$payment->project['p_name']}}</h5>
+                                    <td style="vertical-align: top">
+                                        <h5 style="margin-bottom: 8px">Project: {{$payment->project['p_name']}}</h5>
                                         <h5>Company: {{$payment->company['name']}}</h5>
                                     </td>
-                                    <td>
+                                    <td style="vertical-align: top">
                                         <h4>SH ID: {{$payment->payment_id}}</h4>
                                     </td>
-                                    <td align="right">
+                                    <td style="vertical-align: top" align="right">
                                         <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
                                         <h5 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h5>
                                     </td>
@@ -37,36 +34,44 @@
                                 <thead>
                                 <tr>
                                     <td width="40%" style="vertical-align: top">
-                                        <h5>Name: {{$payment->user['name']}}</h5>
+                                        <h5 style="margin-bottom: 8px">Name: {{$payment->user['name']}}</h5>
                                         <p>Created By: {{$payment->userCreatedBy['name']}}</p>
                                         <p>Verified By: {{$payment->verifiedBy?$payment->verifiedBy['name']:''}}</p>
                                         <p>Approved By: {{$payment->approvedBy?$payment->approvedBy['name']:''}}</p>
                                         <p>Disbursed By: {{$payment->disbursedBy?$payment->disbursedBy['name']:''}}</p>
 
+
                                     </td>
                                     <td width="60%" style="vertical-align: top">
-                                        <table class="table table-bordered" style="margin-bottom: 0; display: block; max-height: 300px; min-height: 275px; overflow-y: scroll; ">
+                                        <table class="table table-bordered">
                                             <thead>
                                             <tr>
-                                                <th style="padding: 5px; width: 100%; position: sticky; top: 0; background-color: gray; text-align: left" align="left;">Item</th>
-                                                <th style="text-align: right;padding-right: 10px; position: sticky; top: 0; background-color: gray">Amount </th>
+                                                <th style="padding: 5px 10px 10px" align="left" width="75%">Item</th>
+                                                <th style="text-align: right;padding-right: 10px; padding-bottom: 10px">Amount </th>
                                             </tr>
                                             </thead>
 
-                                            <tbody style="width: 100%">
+                                            <tbody>
+                                            @php $i=0; @endphp
                                             @foreach($payment->Payment_details as $paymentDetail)
                                                 <tr>
-                                                    <td style="padding: 2px 5px;">{{$paymentDetail->item_name}}</td>
+                                                    <td style="padding: 2px 5px">{{$paymentDetail->item_name}}</td>
                                                     <td style="text-align: right;padding-right: 10px">{{$paymentDetail->paid_amount}}</td>
                                                 </tr>
+                                                @php $i++; @endphp
+                                                @if($i==10)
+                                                    <tr>
+                                                        <td style="padding: 0px 5px 7px" align="center" colspan="3">more ...</td>
+                                                    </tr>
+                                                    @break
+                                                @endif
+
                                             @endforeach
                                             </tbody>
-                                        </table>
-                                        <table class="table table-bordered">
                                             <tfoot>
                                             <tr style="font-weight: bold; font-size: 18px; color: red">
-                                                <td style="width: 95%; text-align: right;padding-right: 20px">Total:</td>
-                                                <td style="text-align: right;padding-right: 20px">{{$payment->total_paid_amount}}</td>
+                                                <td style="text-align: right;padding-right: 10px">Total</td>
+                                                <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount}}</td>
                                             </tr>
                                             </tfoot>
                                         </table>
@@ -74,8 +79,8 @@
                                 </tr>
                                 </thead>
                             </table>
-                            <div style="position: absolute; left: 15px; bottom: 0px" class="col-md-12">
-                                <div class="signature_area" style="margin-bottom: 10px; border: 1px solid #000000; height: 60px; width: 250px;text-align: center">
+                            <div class="col-md-12" style="position: absolute; left: 0; top: 240px">
+                                <div class="signature_area" style="border: 2px solid #000000; height: 60px; width: 250px;text-align: center;margin-bottom: 10px">
                                     Signature
 
                                 </div>
@@ -99,10 +104,10 @@
 @section('footer.scripts')
 
     <script type="text/javascript">
-        jQuery(document).ready(function () {
+        /*jQuery(document).ready(function () {
             window.print();
             setTimeout(function() { window.close(); }, 100);
-        });
+        });*/
 
 
     </script>
