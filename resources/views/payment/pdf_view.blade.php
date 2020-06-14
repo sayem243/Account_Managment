@@ -30,7 +30,7 @@
 
                         </div>
                         <hr style="margin-top: 1px; margin-bottom: 10px">
-                        <div class="row">
+                        <div class="row" style="position: relative">
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -41,26 +41,32 @@
                                         <p>Approved By: {{$payment->approvedBy?$payment->approvedBy['name']:''}}</p>
                                         <p>Disbursed By: {{$payment->disbursedBy?$payment->disbursedBy['name']:''}}</p>
 
-                                        <div class="signature_area" style="border: 1px solid #000000; height: 60px; width: 250px;text-align: center">
-                                            Signature
 
-                                        </div>
                                     </td>
                                     <td width="60%" style="vertical-align: top">
                                         <table class="table table-bordered">
                                             <thead>
                                             <tr>
-                                                <th style="padding: 5px" align="left" width="75%">Item</th>
-                                                <th width="25%" style="text-align: right;padding-right: 10px">Amount </th>
+                                                <th style="padding: 5px 10px 10px" align="left" width="75%">Item</th>
+                                                <th style="text-align: right;padding-right: 10px; padding-bottom: 10px">Amount </th>
                                             </tr>
                                             </thead>
 
                                             <tbody>
+                                            @php $i=0; @endphp
                                             @foreach($payment->Payment_details as $paymentDetail)
                                                 <tr>
                                                     <td style="padding: 2px 5px">{{$paymentDetail->item_name}}</td>
                                                     <td style="text-align: right;padding-right: 10px">{{$paymentDetail->paid_amount}}</td>
                                                 </tr>
+                                               @php $i++; @endphp
+                                                @if($i==10)
+                                                    <tr>
+                                                        <td style="padding: 0px 5px 7px" align="center" colspan="3">more ...</td>
+                                                    </tr>
+                                                    @break
+                                                @endif
+
                                             @endforeach
                                             </tbody>
                                             <tfoot>
@@ -74,10 +80,11 @@
                                 </tr>
                                 </thead>
                             </table>
+                            <div class="col-md-12" style="position: absolute; left: 0; top: 240px">
+                                <div class="signature_area" style="border: 2px solid #000000; height: 60px; width: 250px;text-align: center;margin-bottom: 10px">
+                                    Signature
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                                </div>
                                 @php use App\CustomClass\NumberToWordConverter;
                                $amount = NumberToWordConverter::convert($payment->total_paid_amount);
                                 @endphp
