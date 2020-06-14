@@ -99,10 +99,10 @@
 @section('footer.scripts')
 
     <script type="text/javascript">
-        /*jQuery(document).ready(function () {
+        jQuery(document).ready(function () {
             window.print();
             setTimeout(function() { window.close(); }, 100);
-        });*/
+        });
 
 
     </script>
