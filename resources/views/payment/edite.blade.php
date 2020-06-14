@@ -173,7 +173,7 @@
         $(document).ready(function(){
 
             $(".add-row").on('click', function(){
-                var table = $('.payment_details_table');
+                var table = $('.payment_details_table tbody');
                 var nrow = table.find('tr').last().clone();
                 nrow.find('td').find('button').removeClass('hide');
                 nrow.find("input[type=text]").val("");
