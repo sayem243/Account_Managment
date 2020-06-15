@@ -14,6 +14,7 @@ class UserProfileController extends Controller
 
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:userprofiles', ['only' => ['index','create','store']]);
     }
 

@@ -26,6 +26,7 @@ class PaymentController extends Controller
      */
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:Payment-create', ['only' => ['create','store']]);
         $this->middleware('permission:payment-verify', ['only' => ['verify']]);
         $this->middleware('permission:payment-approve', ['only' => ['approve']]);

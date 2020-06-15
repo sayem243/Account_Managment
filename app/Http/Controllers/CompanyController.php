@@ -9,6 +9,7 @@ class CompanyController extends Controller
 {
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:comp_profile', ['only' => ['index','create','store']]);
 
     }

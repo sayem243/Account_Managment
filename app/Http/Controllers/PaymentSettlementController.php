@@ -15,6 +15,7 @@ class PaymentSettlementController extends Controller
      */
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:payment-settlement-list', ['only' => ['index']]);
         $this->middleware('permission:payment-settlement-create', ['only' => ['store']]);
         $this->middleware('permission:payment-settlement-delete',['only'=>['delete']]);
