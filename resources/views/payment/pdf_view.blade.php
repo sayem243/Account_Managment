@@ -18,7 +18,7 @@
                                         <h5>Company: {{$payment->company['name']}}</h5>
                                     </td>
                                     <td style="vertical-align: top">
-                                        <h4>SH ID: {{$payment->payment_id}}</h4>
+                                        <h4>HS ID: {{$payment->payment_id}}</h4>
                                     </td>
                                     <td style="vertical-align: top" align="right">
                                         <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>

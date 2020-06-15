@@ -60,7 +60,7 @@
                   <tr>
                       <th scope="col">S/N</th>
                       <th width="80px" scope="col">Date</th>
-                      <th width="100px" scope="col">ID</th>
+                      <th width="100px" scope="col">HS ID</th>
                       <th scope="col">Name</th>
                       <th width="150px" scope="col">Company</th>
                       <th width="120px" scope="col">Amount</th>

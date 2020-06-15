@@ -23,7 +23,7 @@
                                 <h5>Company: {{$payment->company['name']}}</h5>
                             </div>
                             <div class="col-md-4">
-                                <h4>SH ID: {{$payment->payment_id}}</h4>
+                                <h4>HS ID: {{$payment->payment_id}}</h4>
                             </div>
                             <div class="col-md-3" style="text-align: right">
                                 <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
