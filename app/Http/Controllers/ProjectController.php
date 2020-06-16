@@ -12,6 +12,13 @@ use Spatie\Permission\Models\Role;
 
 class ProjectController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:projects', ['only' => ['index','create','store','edit','update','delete']]);
+    }
+
     public function index(){
 
         $companies=Company::all()->sortBy('name');
@@ -86,11 +93,6 @@ class ProjectController extends Controller
 
     }
 
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
 
 }
