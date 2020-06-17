@@ -144,7 +144,7 @@
                     <div class="col-xs-6">
                         Total Settles Amount: {{$totalSettlementAmount}}
                     </div>
-                    @if($payment->status==4)
+                    @if($payment->status==4||$payment->status==5)
                         <form class="tagForm" id="tag-form" action="{{ route('settlement_store',$payment->id)}}" method="post">
                             {{ csrf_field() }}
                             <div class="modal-body">
