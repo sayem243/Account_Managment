@@ -22,15 +22,15 @@
                         <input type="hidden" value="{{$payment->id}}" name="payment_id[]">
                         <div class="row">
                             <div class="col-md-5">
-                                <h5>Project: {{$payment->project['p_name']}}</h5>
                                 <h5>Company: {{$payment->company['name']}}</h5>
+                                <h5>Project: {{$payment->project['p_name']}}</h5>
                             </div>
                             <div class="col-md-4">
                                 <h4>HS ID: {{$payment->payment_id}}</h4>
                             </div>
                             <div class="col-md-3" style="text-align: right">
                                 <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
-                                <h6 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h6>
+                                <h4 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h4>
                             </div>
                         </div>
                         <hr style="margin-top: 1px; margin-bottom: 10px">

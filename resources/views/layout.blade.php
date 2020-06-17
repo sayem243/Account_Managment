@@ -31,6 +31,7 @@ Like: www.facebook.com/terminalbd
     <!-- animation css -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/animation/css/animate.min.css') }}">
     <!-- vendor css -->
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     @yield('header.styles')
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css" >
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" type="text/css" >

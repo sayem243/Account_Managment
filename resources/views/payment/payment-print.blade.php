@@ -9,19 +9,19 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <table class="table">
+                            <table class="table" style="margin-bottom: 0px">
                                 <thead>
                                 <tr>
                                     <td style="vertical-align: top">
-                                        <h5 style="margin-bottom: 8px">Project: {{$payment->project['p_name']}}</h5>
-                                        <h5>Company: {{$payment->company['name']}}</h5>
+                                        <h5 style="margin-bottom: 8px">Company: {{$payment->company['name']}}</h5>
+                                        <h5>Project: {{$payment->project['p_name']}}</h5>
                                     </td>
                                     <td style="vertical-align: top">
                                         <h4>HS ID: {{$payment->payment_id}}</h4>
                                     </td>
                                     <td style="vertical-align: top" align="right">
                                         <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
-                                        <h5 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h5>
+                                        <h4 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h4>
                                     </td>
                                 </tr>
                                 </thead>
@@ -73,6 +73,14 @@
                                                 <td style="text-align: right;padding-right: 10px">Total</td>
                                                 <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount}}</td>
                                             </tr>
+                                            <tr style="font-weight: bold; font-size: 18px; color: red">
+                                                <td style="text-align: right;padding-right: 10px">Total Settlement</td>
+                                                <td style="text-align: right;padding-right: 10px">{{$totalSettlementAmount}}</td>
+                                            </tr>
+                                            <tr style="font-weight: bold; font-size: 18px; color: red">
+                                                <td style="text-align: right;padding-right: 10px">Due</td>
+                                                <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount-$totalSettlementAmount}}</td>
+                                            </tr>
                                             </tfoot>
                                         </table>
                                     </td>
@@ -87,7 +95,7 @@
                                 @php use App\CustomClass\NumberToWordConverter;
                                $amount = NumberToWordConverter::convert($payment->total_paid_amount);
                                 @endphp
-                                <p style="color: red;"><strong style="font-weight: bold">Write in words: </strong>{{$amount}}</p>
+                                <p style="color: red;"><strong style="font-weight: bold">Write in words: </strong>{{$amount}} only</p>
                             </div>
                         </div>
 

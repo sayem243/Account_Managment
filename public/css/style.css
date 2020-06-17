@@ -149,24 +149,36 @@ a.btn {
 .label.label-yellow {
     background: yellow;
     color: #000;
+    width: 100%;
+    display: block;
 }
 .label.label-orange {
     background: darkorange;
     color: #fff;
+    width: 100%;
+    display: block;
 }
 .label.label-green {
     background: green;
     color: #fff;
+    width: 100%;
+    display: block;
 }
 .label.label-blue {
     background: blue;
     color: #fff;
+    width: 100%;
+    display: block;
 }
 .label.label-light-grey {
     background: lightgrey;
     color: #000;
+    width: 100%;
+    display: block;
 }
 .label.label-grey {
     background: grey;
     color: #000;
+    width: 100%;
+    display: block;
 }

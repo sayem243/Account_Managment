@@ -126,6 +126,12 @@ $(document).ready(function () {
                 data: {'payment_status':payment_status},
                 success: function (data) {
                     if (data.status == 200) {
+                        jQuery('.alert').addClass('alert-success').show();
+                        jQuery('.alert').find('.message').html(data.message);
+                        dataTable.draw();
+                    }else{
+                        jQuery('.alert').addClass('alert-danger').show();
+                        jQuery('.alert').find('.message').html(data.message);
                         dataTable.draw();
                     }
                 }
@@ -146,10 +152,15 @@ $(document).ready(function () {
                 url: '/payment/status/approve/' + id,
                 data: {},
                 success: function (data) {
-                    if (data.status == 100) {
-                        {
-                            dataTable.draw();
-                        }
+
+                    if (data.status == 200) {
+                        jQuery('.alert').addClass('alert-success').show();
+                        jQuery('.alert').find('.message').html(data.message);
+                        dataTable.draw();
+                    }else{
+                        jQuery('.alert').addClass('alert-danger').show();
+                        jQuery('.alert').find('.message').html(data.message);
+                        dataTable.draw();
                     }
                 }
 

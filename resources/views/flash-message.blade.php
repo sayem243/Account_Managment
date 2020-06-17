@@ -36,3 +36,7 @@
         Please check the form below for errors
     </div>
 @endif
+<div class="alert alert-block" style="display: none">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong class="message"></strong>
+</div>

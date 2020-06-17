@@ -175,6 +175,11 @@ class PaymentController extends Controller
 
         //$payment = \DB::table('payments')->where('id', $id)->first();
         $payment=Payment::find($id);
+
+        if($payment->status>1){
+            return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+        }
+
         $companies=Company::all();
         $user=User::all();
         $paymentDetails=Payment_details::all();
@@ -223,6 +228,9 @@ class PaymentController extends Controller
     public function update(Request $request,$id){
 
         $payment=Payment::find($id);
+        if($payment->status>1){
+            return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+        }
         $user = auth()->user();
         $paid_amount=$request->paid_amount?$request->paid_amount:array(0);
         $exit_paid_amount=$request->exit_paid_amount?$request->exit_paid_amount:array(0);
@@ -262,19 +270,30 @@ class PaymentController extends Controller
         }
         $this->setTotalPaidAmount($payment);
 
-        return redirect()->route('payment')->with('success', 'Payment has been successfully Updated.');;
+        return redirect()->route('payment')->with('success', 'Payment has been successfully Updated.');
     }
     //verify
     public function verify(Request $request, $id){
         $user = auth()->user();
         $status = $request->post('payment_status');
+
         $payment=Payment::find($id);
-        $payment->status=$status;
-        $payment->verified_by=$user->id;
-        $payment->verified_at= new \DateTime();
-        //$payment->status=2;
-        $payment->save();
-        return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
+        if($payment->status==1 ||$payment->status==2){
+            if($status==1){
+                $msg="un verified.";
+            }else{
+                $msg="verified.";
+            }
+            $payment->status=$status;
+            $payment->verified_by=$status==2?$user->id:null;
+            $payment->verified_at= new \DateTime();
+            //$payment->status=2;
+            $payment->save();
+            return response()->json(['message'=>'Payment has been successfully '.$msg,'status'=>200]);
+
+        }
+        return response()->json(['message'=>'Error! This are not permitted.','status'=>301]);
+
     }
 
     //approved by
@@ -282,21 +301,27 @@ class PaymentController extends Controller
         $user = auth()->user();
         $payment=Payment::find($id);
         //$payment->status=1;
-        $payment->approved_by=$user->id;
-        $payment->approved_at= new \DateTime();
-        $payment->status=3;
-        $payment->save();
-        return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
+        if($payment->status==2) {
+            $payment->approved_by = $user->id;
+            $payment->approved_at = new \DateTime();
+            $payment->status = 3;
+            $payment->save();
+            return response()->json(['message' => 'Payment has been successfully approved.', 'status' => 200]);
+        }
+        return response()->json(['message'=>'Error! This are not permitted.','status'=>301]);
     }
     public function payment_paid($id){
         $user = auth()->user();
         $payment=Payment::find($id);
         //$payment->status=1;
-        $payment->disbursed_by=$user->id;
-        $payment->disbursed_at= new \DateTime();
-        $payment->status=4;
-        $payment->save();
-        return response()->json(['success'=>'Got Simple Ajax Request.','status'=>100]);
+        if($payment->status==3) {
+            $payment->disbursed_by = $user->id;
+            $payment->disbursed_at = new \DateTime();
+            $payment->status = 4;
+            $payment->save();
+            return response()->json(['success' => 'Payment has been successfully disbursed.', 'status' => 200]);
+        }
+        return response()->json(['message'=>'Error! This are not permitted.','status'=>301]);
     }
 
     public function details($id){
@@ -320,8 +345,11 @@ class PaymentController extends Controller
 
     public function delete($id){
         $payment=Payment::find($id);
+        if($payment->status>1){
+            return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+        }
         $payment->delete();
-        return redirect()->route('payment');
+        return redirect()->route('payment')->with('success', 'Payment has been successfully deleted.');
     }
 
     public function dataTable(Request $request)
@@ -393,7 +421,7 @@ class PaymentController extends Controller
         $rows->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $rows->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
         $rows->join('companies', 'payments.company_id', '=', 'companies.id');
-        $rows->select('payments.id as pId', 'payments.payment_id as name', 'payments.total_paid_amount as amount', 'payments.status as pStatus', 'payments.created_at as created_at', 'payments.verified_by as paymentVerifyBy');
+        $rows->select('payments.id as pId', 'payments.payment_id as name', 'payments.total_paid_amount as amount', 'payments.status as pStatus', 'payments.created_at as created_at', 'payments.verified_at as paymentVerifyAt');
         $rows->addSelect('companies.name as companyName');
         $rows->addSelect('employee.name as employeeName');
         $rows->addSelect('createdBy.name as creatorName');
@@ -439,10 +467,10 @@ class PaymentController extends Controller
 
         foreach ($result as $post):
             $paymentStatus = '';
-            if ($post->pStatus == 1 && $post->paymentVerifyBy == null) {
+            if ($post->pStatus == 1 && $post->paymentVerifyAt == null) {
                 $paymentStatus = '<span class="label label-yellow">Created but not verified</span>';
-            } elseif ($post->pStatus == 1 && $post->paymentVerifyBy != null) {
-                $paymentStatus = '<span class="label label-primary">Un verified</span>';
+            } elseif ($post->pStatus == 1 && $post->paymentVerifyAt != null) {
+                $paymentStatus = '<span class="label label-yellow">Waiting for verified</span>';
             } elseif ($post->pStatus == 2) {
                 $paymentStatus = '<span class="label label-orange">Verified but not approved</span>';
             } elseif ($post->pStatus == 3) {
@@ -457,7 +485,7 @@ class PaymentController extends Controller
 
             $action='';
             if($post->pStatus==1 && auth()->user()->can('payment-verify')){
-                $action.='<button data-id="'.$post->pId.'" data-status="2" type="button" class="btn btn-sm  btn-primary verify">Verify </button>';
+                $action.='<button data-id="'.$post->pId.'" data-status="2" type="button" class="btn btn-sm  btn-primary verify" style="min-width: 73px">Verify </button>';
             }elseif($post->pStatus==2){
                 if (auth()->user()->can('payment-approve')){
                     $action.='<button data-id-id="'.$post->pId.'" type="button" class="btn btn-sm  btn-primary approved">Approve </button>';
