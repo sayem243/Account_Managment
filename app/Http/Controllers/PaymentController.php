@@ -41,14 +41,11 @@ class PaymentController extends Controller
 
     public function index(){
 
-        $payments=Payment::orderBy('created_at','DSC')->paginate(25);
         $companies=Company::all();
         $projects=Project::all();
         $users=User::all();
 
-        $amendments=Ammendment::all();
-
-        return view('payment.payment_index',['payments'=>$payments,'users'=>$users,'companies'=>$companies,'projects'=>$projects])->with('i', (request()->input('page', 1) - 1) * 25);
+        return view('payment.payment_index',['users'=>$users,'companies'=>$companies,'projects'=>$projects])->with('i', (request()->input('page', 1) - 1) * 25);
     }
 
     public function create(){
