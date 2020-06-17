@@ -14,6 +14,8 @@ class ExpenditureSectorController extends Controller
      */
     public function index()
     {
+        $expenditureSectors=ExpenditureSector::all()->sortBy('name');
+        return view('expenditure_sector.index',['expenditureSectors'=>$expenditureSectors]);
         //
     }
 
@@ -24,7 +26,7 @@ class ExpenditureSectorController extends Controller
      */
     public function create()
     {
-        //
+        return view('expenditure_sector.add');
     }
 
     /**
@@ -35,41 +37,48 @@ class ExpenditureSectorController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $this->validate($request, [
+            'name' =>  ['required', 'unique:expenditure_sectors']
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ExpenditureSector  $expenditureSector
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ExpenditureSector $expenditureSector)
-    {
-        //
+        $expenditureSector =new ExpenditureSector();
+        $expenditureSector->name=$request->name;
+        $expenditureSector->save();
+
+        return redirect()->route('expenditure_sector_index')->with('success', 'Expenditure sector has been successfully Created.');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ExpenditureSector  $expenditureSector
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ExpenditureSector $expenditureSector)
+    public function edit($id)
     {
-        //
+        $expenditureSector =  ExpenditureSector::find($id);
+        return view('expenditure_sector.edit')->with('expenditureSector' ,$expenditureSector);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ExpenditureSector  $expenditureSector
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExpenditureSector $expenditureSector)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            "name" => 'required|unique:expenditure_sectors,name,'.$id
+        ]);
+
+        $expenditureSector = ExpenditureSector::find($id);
+
+        $expenditureSector->name=$request->name;
+        $expenditureSector->save();
+
+        return redirect()->route('expenditure_sector_index')->with('success', 'Expenditure sector has been successfully Updated.');
     }
 
     /**
@@ -78,8 +87,12 @@ class ExpenditureSectorController extends Controller
      * @param  \App\ExpenditureSector  $expenditureSector
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExpenditureSector $expenditureSector)
+    public function destroy($id)
     {
-        //
+        $expenditure=ExpenditureSector::find($id);
+
+        $expenditure->delete();
+
+        return redirect()->route('expenditure_sector_index');
     }
 }
