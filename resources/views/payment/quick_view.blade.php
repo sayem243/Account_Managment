@@ -1,6 +1,3 @@
-@extends('admin.index-pdf')
-@section('title','hand_slip_'.time())
-@section('template')
 
     <div class="col-sm-12">
         <div class="row">
@@ -21,14 +18,14 @@
                                     </td>
                                     <td style="vertical-align: top" align="right">
                                         <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
-                                        <h4 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h4>
+                                        <h4 style="color: red;">Total Amount: {{$payment->total_paid_amount}}</h4>
                                     </td>
                                 </tr>
                                 </thead>
                             </table>
 
                         </div>
-                        <hr style="margin-top: 1px; margin-bottom: 10px">
+                        <hr style="margin-top: 1px; margin-bottom: 5px">
                         <div class="row" style="position: relative">
                             <table class="table">
                                 <thead>
@@ -58,7 +55,7 @@
                                                     <td style="padding: 2px 5px">{{$paymentDetail->item_name}}</td>
                                                     <td style="text-align: right;padding-right: 10px">{{$paymentDetail->paid_amount}}</td>
                                                 </tr>
-                                                @php $i++; @endphp
+                                               @php $i++; @endphp
                                                 @if($i==10)
                                                     <tr>
                                                         <td style="padding: 0px 5px 7px" align="center" colspan="3">more ...</td>
@@ -107,16 +104,3 @@
 
         </div>
     </div>
-
-@endsection
-@section('footer.scripts')
-
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            window.print();
-            setTimeout(function() { window.close(); }, 100);
-        });
-
-
-    </script>
-@endsection

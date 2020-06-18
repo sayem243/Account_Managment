@@ -31,10 +31,11 @@ Like: www.facebook.com/terminalbd
     <!-- animation css -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/animation/css/animate.min.css') }}">
     <!-- vendor css -->
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
     @yield('header.styles')
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css" >
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" type="text/css" >
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <!-- Bootstrap & Jquery Base javascript -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js" ></script>

@@ -265,10 +265,10 @@ button{
 	max-width:auto!important;
 }
 
-.heading .info {
+/*.heading .info {
 	float: right;
 	margin-top: 0!important;
-}
+}*/
 
 .right-info{
 	float: right;
@@ -277,6 +277,7 @@ button{
 .btn > i {
 	margin-right: 3px;
 }
+/*
 
 .table th {
 	padding: 13px!important;
@@ -288,6 +289,7 @@ button{
 	vertical-align: middle!important;
 	padding-left: 5px!important;
 }
+*/
 
 .btn-notify{
 	padding-top: 3px;

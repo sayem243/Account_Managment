@@ -80,8 +80,50 @@
 
  </div>
  </div>
+ <!-- Modal -->
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header" style="display: block">
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                 <h4 class="modal-title" id="myModalLabel">Payment Details</h4>
+             </div>
+
+             <div class="modal-body">
+
+             </div>
+
+
+         </div>
+     </div>
+ </div>
+ <style>
+     .modal-dialog {
+         width: 95%;
+         max-width: 95%;
+         height: 100%;
+         padding: 0;
+     }
+
+     .modal-content {
+         height: auto;
+         min-height: 100%;
+         border-radius: 0;
+     }
+ </style>
 @endsection
 
 @section('footer.scripts')
     <script src="{{ asset("assets/datatable/payment.js") }}" ></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery("#myModal").on("show.bs.modal", function(e) {
+                var id = jQuery(e.relatedTarget).data('target-id');
+                jQuery.get( "/payment/quick/view/" + id, function( data ) {
+                    jQuery(".modal-body").html(data.html);
+                });
+
+            });
+        });
+    </script>
 @endsection

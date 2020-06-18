@@ -156,6 +156,15 @@ class PaymentController extends Controller
 
 
 
+    public function quickView($id){
+
+        $payment=Payment::find($id);
+        $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
+        $returnHTML = view('payment.quick_view',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount])->render();
+        return response()->json( ['html'=>$returnHTML]);
+    }
+
+
     public function paymentPDF($id){
 
         $payment=Payment::find($id);
@@ -511,7 +520,7 @@ class PaymentController extends Controller
             $records["data"][] = array(
                 $id                 = $i,
                 $createdAt          = date('d-m-Y',strtotime($post->created_at)),
-                $name               = '<a target="_blank" href="/payment/details/'.$post->pId.'">'.$post->name.'</a>',
+                $name               = '<a data-toggle="modal" data-target-id="'.$post->pId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
                 $employeeName       = $post->employeeName,
                 $companyName        = $post->companyName?$post->companyName:'',
                 $amount             = $post->amount,

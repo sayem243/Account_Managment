@@ -105,6 +105,7 @@ Route::get('/payment/details/{id}','PaymentController@details')->name('details')
 Route::get('/payment/details/delete/{id}','PaymentDetailsController@delete')->name('details_delete');
 Route::get('/payment/print-pdf/{id}','PaymentController@paymentPDF')->name('printPDF');
 Route::get('/payment/print/{id}','PaymentController@paymentPrint')->name('payment_print');
+Route::get('/payment/quick/view/{id}','PaymentController@quickView')->name('payment_quick_view');
 Route::post('/amendment/approved/{id}','PaymentDetailsController@approved')->name('amendment_approved');
 
 
