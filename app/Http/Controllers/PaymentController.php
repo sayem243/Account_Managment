@@ -376,6 +376,15 @@ class PaymentController extends Controller
 
         $countRecords->where('payments.status','!=', 0);
 
+        if (isset($query['payment_status'])) {
+            $name = $query['payment_status'];
+            if($name!='all'){
+                $countRecords->where('payments.status','=', "{$name}%");
+            }else{
+                $countRecords->where('payments.status','!=', 0);
+            }
+        }
+
         if (isset($query['payment_id'])) {
             $name = $query['payment_id'];
             $countRecords->where('payments.payment_id', 'like', "{$name}%");
@@ -435,6 +444,16 @@ class PaymentController extends Controller
         $rows->addSelect('employee.name as employeeName');
         $rows->addSelect('createdBy.name as creatorName');
         $rows->where('payments.status','!=', 0);
+
+        if (isset($query['payment_status'])) {
+            $name = $query['payment_status'];
+            if($name!='all'){
+                $rows->where('payments.status','=', "{$name}%");
+            }else{
+                $rows->where('payments.status','!=', 0);
+            }
+        }
+
         if (isset($query['payment_id'])) {
             $name = $query['payment_id'];
             $rows->where('payments.payment_id', 'like', "{$name}%");

@@ -23,12 +23,15 @@ $(document).ready(function () {
                 var user_id = $('#user_id').val();
                 var project_id = $('#project_id').val();
 
+                var payment_status = $('#payment_status').val();
+
                 // Append to data
                 data._token = CSRF_TOKEN;
                 data.payment_id = payment_id;
                 data.company_id = company_id;
                 data.user_id = user_id;
                 data.project_id = project_id;
+                data.payment_status = payment_status;
             }
         },
         'columns': [
@@ -96,6 +99,11 @@ $(document).ready(function () {
     $('#user_id').change(function(){
         dataTable.draw();
     });
+
+    $('#payment_status').change(function(){
+        dataTable.draw();
+    });
+
 
     $("#csvBtn").on("click", function() {
         dataTable.button( '.buttons-csv' ).trigger();

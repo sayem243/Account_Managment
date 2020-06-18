@@ -55,7 +55,18 @@
                               @endforeach
                           </select>
                       </td>
-                      <td colspan="3"></td>
+                      <td>
+                          <select class="form-control" name="payment_status" id="payment_status" >
+                              <option value="all">All</option>
+                              <option value="1">Open</option>
+                              <option value="2">Verified</option>
+                              <option value="3">Approved</option>
+                              <option value="4">Disbursed</option>
+                              <option value="5">Partial Settled</option>
+                              <option value="6">Archived</option>
+                          </select>
+                      </td>
+                      <td colspan="2"></td>
                   </tr>
                   <tr>
                       <th scope="col">S/N</th>

@@ -214,7 +214,7 @@
 }
 
 .alert {
-	display: flex;
+	display: block;
 }
 
 .alert.alert-secondary .alert-text {
