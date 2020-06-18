@@ -72,11 +72,11 @@
                       <th scope="col">S/N</th>
                       <th width="80px" scope="col">Date</th>
                       <th width="100px" scope="col">HS ID</th>
-                      <th scope="col">Name</th>
+                      <th width="150px" scope="col">Name</th>
                       <th width="150px" scope="col">Company</th>
                       <th width="120px" scope="col">Amount</th>
-                      <th scope="col">Status</th>
-                      <th scope="col text-center">Action</th>
+                      <th width="200px" scope="col">Status</th>
+                      <th width="200px" scope="col text-center">Action</th>
                       <th scope="col text-center"><i class="feather icon-settings"></i></th>
                   </tr>
 

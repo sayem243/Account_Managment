@@ -496,19 +496,19 @@ class PaymentController extends Controller
         foreach ($result as $post):
             $paymentStatus = '';
             if ($post->pStatus == 1 && $post->paymentVerifyAt == null) {
-                $paymentStatus = '<span class="label label-yellow">Created but not verified</span>';
+                $paymentStatus = '<span class="label label-yellow">Created (not verified)</span>';
             } elseif ($post->pStatus == 1 && $post->paymentVerifyAt != null) {
-                $paymentStatus = '<span class="label label-yellow">Waiting for verified</span>';
+                $paymentStatus = '<span class="label label-yellow">Editing (needs re-verification)</span>';
             } elseif ($post->pStatus == 2) {
-                $paymentStatus = '<span class="label label-orange">Verified but not approved</span>';
+                $paymentStatus = '<span class="label label-orange">Verified (not approved)</span>';
             } elseif ($post->pStatus == 3) {
-                $paymentStatus = '<span class="label label-green">HS has been approved</span>';
+                $paymentStatus = '<span class="label label-green">Approved</span>';
             } elseif ($post->pStatus == 4) {
-                $paymentStatus = '<span class="label label-blue">HS has been disbursed</span>';
+                $paymentStatus = '<span class="label label-blue">Disbursed</span>';
             } elseif ($post->pStatus == 5) {
-                $paymentStatus = '<span class="label label-light-grey">Money partially returned</span>';
+                $paymentStatus = '<span class="label label-light-grey">Settled partial</span>';
             } elseif ($post->pStatus == 6) {
-                $paymentStatus = '<span class="label label-grey">Money fully settled</span>';
+                $paymentStatus = '<span class="label label-grey">Archived</span>';
             }
 
             $action='';
