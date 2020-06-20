@@ -119,7 +119,7 @@
                   <div class="line aligncenter" style="float: right">
                       <div class="form-group row">
                           <div class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
-                              <button style="margin-right: 0" type="submit" class="btn btn-info btn-lg" data-original-title="" title="">Next <i class="fas fa-angle-double-right"></i></button>
+                              <button onclick="return confirm('Are you sure?')" style="margin-right: 0" type="submit" class="btn btn-info btn-lg" data-original-title="" title="">Next <i class="fas fa-angle-double-right"></i></button>
                               {{--<button type="reset" class="btn btn btn-outline-danger" data-original-title="" title=""> <i class="feather icon-refresh-ccw"></i> Cancel</button>--}}
                           </div>
                       </div>
