@@ -11,7 +11,7 @@
             <div class="card-header-right">
                 @if(auth()->user()->can('Payment-create'))
                     <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
-                        <a href="{{route('payment_create')}}" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
+                        <a style="-webkit-transform: scale(0.9);" href="{{route('payment_create')}}" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
                     </div>
                 @endif
 

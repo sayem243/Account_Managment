@@ -12,12 +12,9 @@
                     <div class="card-header-right">
                         <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
                             @can('role-create')
-                                <a class="btn btn-sm  btn-info" href="{{ route('roles.create') }}"><i class="fa fa-plus" aria-hidden="true"></i> New Role</a>
+                                <a style="-webkit-transform: scale(0.9);" class="btn btn-sm  btn-info" href="{{ route('roles.create') }}"><i class="fa fa-plus" aria-hidden="true"></i> New Role</a>
                             @endcan
                         </div>
-
-
-
                     </div>
 
                 </div>

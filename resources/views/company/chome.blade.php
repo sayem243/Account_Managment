@@ -11,7 +11,7 @@
               <h5>Company Details </h5>
               <div class="card-header-right">
                   <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested">
-                      <a href="{{route('comp_create')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
+                      <a style="-webkit-transform: scale(0.9);" href="{{route('comp_create')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
                   </div>
               </div>
 

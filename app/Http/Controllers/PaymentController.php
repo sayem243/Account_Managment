@@ -46,15 +46,14 @@ class PaymentController extends Controller
         $projects=Project::all();
         $users=User::all();
 
-        $amendments=Ammendment::all();
-
         return view('payment.payment_index',['payments'=>$payments,'users'=>$users,'companies'=>$companies,'projects'=>$projects])->with('i', (request()->input('page', 1) - 1) * 25);
     }
 
     public function create(){
 
-       $users=User::all();
-       if(auth()->user()->hasRole('Employee') || auth()->user()->hasRole('Vendor')){
+       if (auth()->user()->can('payment-create-other-user')){
+           $users=User::all();
+       }else{
            $user= auth()->user();
            $users=User::where('id', $user->id)->get();
        }
@@ -168,24 +167,30 @@ class PaymentController extends Controller
     public function paymentPDF($id){
 
         $payment=Payment::find($id);
-        $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
-        $pdf = PDF::loadView('payment.pdf_view', ['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
+        if($this->checkAuthUserProjects($payment)){
+            $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
+            $pdf = PDF::loadView('payment.pdf_view', ['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
 //        return $pdf->download(time().'_payment.pdf');
-        return $pdf->stream(time()."_hand_slip.pdf",array("Attachment" => false));
+            return $pdf->stream(time()."_hand_slip.pdf",array("Attachment" => false));
+        }
+        return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+
     }
 
     public function paymentPrint($id){
         $payment=Payment::find($id);
-        $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
-        return view('payment.payment-print',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
+        if($this->checkAuthUserProjects($payment)){
+            $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
+            return view('payment.payment-print',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
+        }
+        return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
     }
 
     public function edite($id){
 
-        //$payment = \DB::table('payments')->where('id', $id)->first();
         $payment=Payment::find($id);
 
-        if($payment->status>1){
+        if($payment->status>1 || !$this->checkAuthUserProjects($payment)){
             return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
         }
 
@@ -237,7 +242,7 @@ class PaymentController extends Controller
     public function update(Request $request,$id){
 
         $payment=Payment::find($id);
-        if($payment->status>1){
+        if($payment->status>1 || !$this->checkAuthUserProjects($payment)){
             return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
         }
         $user = auth()->user();
@@ -310,7 +315,7 @@ class PaymentController extends Controller
         $user = auth()->user();
         $payment=Payment::find($id);
         //$payment->status=1;
-        if($payment->status==2) {
+        if($payment->status==2 && $this->checkAuthUserProjects($payment)) {
             $payment->approved_by = $user->id;
             $payment->approved_at = new \DateTime();
             $payment->status = 3;
@@ -323,7 +328,7 @@ class PaymentController extends Controller
         $user = auth()->user();
         $payment=Payment::find($id);
         //$payment->status=1;
-        if($payment->status==3) {
+        if($payment->status==3 && $this->checkAuthUserProjects($payment)) {
             $payment->disbursed_by = $user->id;
             $payment->disbursed_at = new \DateTime();
             $payment->status = 4;
@@ -336,8 +341,11 @@ class PaymentController extends Controller
     public function details($id){
 
         $payment=Payment::find($id);
-        $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
-        return view('payment.details',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
+        if ($this->checkAuthUserProjects($payment)){
+            $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
+            return view('payment.details',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
+        }
+        return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
     }
 
     private function getTotalSettlementAmount(Payment $payment){
@@ -354,7 +362,7 @@ class PaymentController extends Controller
 
     public function delete($id){
         $payment=Payment::find($id);
-        if($payment->status>1){
+        if($payment->status>1 || !$this->checkAuthUserProjects($payment)){
             return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
         }
         $payment->delete();
@@ -404,7 +412,7 @@ class PaymentController extends Controller
             $user_id = $query['user_id'];
             $countRecords->where('payments.user_id', $user_id);
         }
-        if(auth()->user()->hasRole('Employee') || auth()->user()->hasRole('Vendor')){
+        if(auth()->user()->can('employee') || auth()->user()->can('vendor')){
             $user= auth()->user();
             $countRecords->where('payments.user_id', $user->id);
         }else{
@@ -473,7 +481,7 @@ class PaymentController extends Controller
             $user_id = $query['user_id'];
             $rows->where('payments.user_id', $user_id);
         }
-        if(auth()->user()->hasRole('Employee') || auth()->user()->hasRole('Vendor')){
+        if(auth()->user()->can('employee') || auth()->user()->can('vendor')){
             $user= auth()->user();
             $rows->where('payments.user_id', $user->id);
         }else{
@@ -560,6 +568,20 @@ class PaymentController extends Controller
         $records["recordsTotal"] = $iTotalRecords;
         $records["recordsFiltered"] = $iTotalRecords;
         return new JsonResponse($records);
+    }
+
+    private function checkAuthUserProjects($payment){
+        $creatorUserProjects = auth()->user()->projects;
+        $creatorUserData = array();
+        if($creatorUserProjects){
+            foreach ($creatorUserProjects as $creatorUserProject){
+                $creatorUserData[$creatorUserProject->id]=$creatorUserProject->p_name;
+            }
+        }
+        if (array_key_exists($payment->project_id, $creatorUserData)){
+            return true;
+        }
+        return false;
     }
 
 }

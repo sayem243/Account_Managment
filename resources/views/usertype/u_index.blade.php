@@ -7,11 +7,10 @@
             <div class="card-header">
                 <h5>User Types List</h5>
                 <div class="card-header-right">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                        <a href="{{route('usertype_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                    <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+                        <a style="-webkit-transform: scale(0.9);" href="{{route('usertype_create')}}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                     </div>
                 </div>
-
             </div>
 
             @if ($errors->any())

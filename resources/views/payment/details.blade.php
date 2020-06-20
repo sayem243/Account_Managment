@@ -88,20 +88,20 @@
                                 <p style="color: red; padding: 10px 5px"><strong style="font-weight: bold">Write in words: </strong>{{$amount}} only</p>
                             </div>
                         </div>
-                        <div class="row hidden-print">
-                            <div class="col-md-12 hidden-print" style="text-align: right">
+                        <div class="row hidden-print" style="float: right">
+                            <div style="padding-right: 3px" class="col-sm-12 col-form-label btn-group btn-group-lg hidden-print">
 
                                 @if($payment->status==3 && auth()->user()->can('payment-paid'))
-                                    <button data-id-id="{{$payment->id}}" type="button" class="btn btn-lg btn-primary payment_paid">Disburse</button>
+                                    <button style="border-radius: .3rem" data-id-id="{{$payment->id}}" type="button" class="btn btn-lg btn-info payment_paid">Disburse</button>
                                 @endif
                                 @if($payment->status>3 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
-                                    <button id="addTag" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalForm">
+                                    <button style="border-radius: .3rem" id="addTag" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalForm">
                                         Settlement
                                     </button>
                                 @endif
 
-                                    <a target="_blank" style="-webkit-transform:scale(1);font-size: 14px" href="{{route('printPDF',$payment->id)}}" class="btn btn-primary btn-lg hidden-print"><i class="fa fa-file-pdf fa-1x"></i> PDF</a>
-                                    <a target="_blank" style="-webkit-transform:scale(1);font-size: 14px" href="{{route('payment_print',$payment->id)}}" class="btn btn-primary btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
+                                    <a style="border-radius: .3rem" target="_blank" href="{{route('printPDF',$payment->id)}}" class="btn btn-info btn-lg hidden-print"><i class="fa fa-file-pdf fa-1x"></i> PDF</a>
+                                    <a style="border-radius: .3rem" target="_blank" href="{{route('payment_print',$payment->id)}}" class="btn btn-info btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
 
                             </div>
                         </div>
@@ -159,9 +159,9 @@
                                 <label for="settlement_amount">Amount: </label>
                                 <input id="settlement_amount" class="form-control" name="settlement_amount" type="number" min="1" max="{{$payment->total_paid_amount - $totalSettlementAmount}}" value="{{$payment->total_paid_amount - $totalSettlementAmount}}" required/>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <input id="tag-form-submit" type="submit" class="btn btn-primary" value="Save">
+                            <div class="modal-footer btn-group btn-group-lg">
+                                <button style="border-radius: .3rem" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button style="border-radius: .3rem" id="tag-form-submit" type="submit" class="btn btn-info">Save</button>
                             </div>
                         </form>
                     @else

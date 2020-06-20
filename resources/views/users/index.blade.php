@@ -10,7 +10,7 @@
                         <div class="card-header-right">
                             <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
 {{--                                <a href="{{route('register')}}" class="btn btn-sm  btn-info">Add New</a>--}}
-                                <a href="{{route('register')}}" class="btn btn-lg btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Add New</a>
+                                <a style="-webkit-transform: scale(0.9);" href="{{route('register')}}" class="btn btn-lg btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Add New</a>
                             </div>
                         </div>
                     </div>

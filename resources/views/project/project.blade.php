@@ -9,7 +9,7 @@
                         <h5>Manage Project </h5>
                         <div class="card-header-right">
                             <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
-                                <a href="{{route('project_create')}}" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
+                                <a style="-webkit-transform: scale(0.9);" href="{{route('project_create')}}" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
                             </div>
                         </div>
 
