@@ -14,6 +14,7 @@ use App\UserType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -35,9 +36,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(20);
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 20);
+
+        if(auth()->user()->can('users')){
+            $data = User::orderBy('id','DESC')->paginate(20);
+            return view('users.index',compact('data'))
+                ->with('i', ($request->input('page', 1) - 1) * 20);
+        }
+        return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+
+
     }
 
 
@@ -59,29 +66,36 @@ class UserController extends Controller
      */
     public function showRegistrationForm()
     {
-        $usertypes=UserType::all();
-        $roles = Role::pluck('name','id')->all();
+        if (auth()->user()->can('users')) {
+            $usertypes = UserType::all();
+            $roles = Role::pluck('name', 'id')->all();
 
-        //return view('roles.create',compact('permission'));
-        $companies=Company::all();
-        $userProjects=Project::all();
-        return view('auth.register',['roles'=>$roles,'usertypes'=>$usertypes ,'companies'=>$companies,'projects'=>$userProjects]);
+            //return view('roles.create',compact('permission'));
+            $companies = Company::all();
+            $userProjects = Project::all();
+            return view('auth.register', ['roles' => $roles, 'usertypes' => $usertypes, 'companies' => $companies, 'projects' => $userProjects]);
+        }
+        return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+
     }
 
-    public function userprofileEdit($id){
+    public function userprofileEdit($id)
+    {
+        if (auth()->user()->can('users')) {
+            $users = User::find($id);
+            $roles = Role::pluck('name', 'name')->all();
+            //$roles = Role::pluck('name','name')->all();
+            $userRole = $users->roles->pluck('name', 'name')->all();
 
-        $users=User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        //$roles = Role::pluck('name','name')->all();
-        $userRole = $users->roles->pluck('name','name')->all();
 
+            $projects = Project::all();
+            $usertypes = UserType::all();
+            $companies = Company::all();
 
-        $projects=Project::all();
-        $usertypes=UserType::all();
-        $companies=Company::all();
+            return view('auth.edit', ['roles' => $roles, 'users' => $users, 'projects' => $projects, 'usertypes' => $usertypes, 'companies' => $companies, 'userRole' => $userRole]);
 
-        return view('auth.edit',['roles'=>$roles,'users'=>$users,'projects'=>$projects,'usertypes'=>$usertypes,'companies'=>$companies,'userRole'=>$userRole]);
-
+        }
+        return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
     }
 
     /**
@@ -188,13 +202,18 @@ class UserController extends Controller
     public function passwordChange(Request $request, $id){
 
         $user=User::find($id);
-        if($request->has('submit')){
-            $user->password=bcrypt($request->password);
-            $user->push();
-            return redirect()->route('users.index')
-                ->with('success','Password Change successfully');
+        $authUserId = Auth::user()['id'];
+        if ($user->id==$authUserId){
+
+            if($request->has('submit')){
+                $user->password=bcrypt($request->password);
+                $user->push();
+                return redirect()->route('users.index')
+                    ->with('success','Password Change successfully');
+            }
+            return view('auth.reset',['user'=>$user]);
         }
-        return view('auth.reset',['user'=>$user]);
+        return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
 
     }
     public function passwordUpdate(Request $request, $id){
