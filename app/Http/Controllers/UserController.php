@@ -259,6 +259,10 @@ class UserController extends Controller
         }
         $result=array_intersect_key($data,$creatorUserData,$companyData);
 
+        $keys = array_column($result, 'name');
+
+        array_multisort($keys, SORT_ASC, $result);
+
         return response()->json($result);
     }
 //voucher payment id
