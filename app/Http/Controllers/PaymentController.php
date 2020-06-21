@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Ammendment;
 use App\Payment_details;
+use App\PaymentSettlement;
+use App\PaymentTransfer;
 use App\Project;
 use App\User;
 use App\UserProfile;
@@ -34,8 +36,6 @@ class PaymentController extends Controller
         $this->middleware('permission:payment-edit',['only'=>['edite']]);
         $this->middleware('permission:payment-delete',['only'=>['delete']]);
         $this->middleware('permission:payment-paid',['only'=>['payment_paid']]);
-
-
     }
 
 
@@ -49,7 +49,19 @@ class PaymentController extends Controller
         return view('payment.payment_index',['payments'=>$payments,'users'=>$users,'companies'=>$companies,'projects'=>$projects])->with('i', (request()->input('page', 1) - 1) * 25);
     }
 
-    public function create(){
+    public function create(Request $request){
+
+        $paymentUser=null;
+        if ($request->reference_payment_id==''){
+            $request->session()->forget('reference_payment_id');
+            $request->session()->forget('transfer_amount');
+        }
+
+        if ($request->session()->get('reference_payment_id')){
+            $payment = Payment::find($request->session()->get('reference_payment_id'));
+            $paymentUser = $payment?$payment->user_id:null;
+        }
+
 
        if (auth()->user()->can('payment-create-other-user')){
            $users=User::all();
@@ -61,7 +73,7 @@ class PaymentController extends Controller
         $companies=Company::all();
         $projects=Project::all();
 
-        return view('payment.create',['users'=>$users, 'companies'=>$companies ,'projects'=>$projects]);
+        return view('payment.create',['users'=>$users, 'companies'=>$companies ,'projects'=>$projects,'paymentUser'=>$paymentUser]);
     }
 
     public function store(Request $request)
@@ -129,13 +141,49 @@ class PaymentController extends Controller
     public function draftToConfirmStore(Request $request){
         $paymentsId = $request->payment_id;
 
+        $msg = 'created.';
         foreach ($paymentsId as $paymentId){
             $payment = Payment::find($paymentId);
-            $payment->status = 1;
+            $payment->status = $request->session()->get('reference_payment_id')?3:1;
             $payment->save();
+
+            if($request->session()->get('reference_payment_id')){
+                $transferred = new PaymentTransfer();
+                $transferred->transfer_amount = $payment->total_paid_amount;
+                $transferred->payment_id = $payment->id;
+                $transferred->reference_payment_id = $request->session()->get('reference_payment_id');
+                $transferred->save();
+            }
+
+        }
+        if($request->session()->get('reference_payment_id')){
+            $refPayment = Payment::find($request->session()->get('reference_payment_id'));
+            $totalSettleAmount = $this->getTotalSettlementAmount($refPayment);
+
+            if($refPayment->total_paid_amount>$totalSettleAmount){
+                $refPayment->status = 5;
+            }
+            if($refPayment->total_paid_amount <= $totalSettleAmount){
+                $refPayment->status = 6;
+            }
+
+            $refPayment->save();
+
+            $settlement = new PaymentSettlement();
+
+            $settlement->settlement_amount = $request->session()->get('transfer_amount');
+            $settlement->payment_id= $refPayment->id;
+            $settlement->project_id= $refPayment->project->id;
+            $settlement->type= 'TRANSFER';
+
+            $settlement->save();
+            $msg = 'transferred.';
         }
 
-        return redirect()->route('payment')->with('success', 'Payment has been successfully Created');
+        $request->session()->forget('transfer_amount');
+        $request->session()->forget('reference_payment_id');
+
+        return redirect()->route('payment')->with('success', 'Payment has been successfully '.$msg);
     }
 
     private function setTotalPaidAmount(Payment $payment){

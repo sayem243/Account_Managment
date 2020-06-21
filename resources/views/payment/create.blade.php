@@ -30,6 +30,9 @@
 
               <form class="form-horizontal" action="{{ route('payment_store')}}" method="post" enctype="multipart/form-data">
                  {{ csrf_field() }}
+
+                  <input type="hidden" class="session_transfer_amount" name="session_transfer_amount" value="{{session()->get('transfer_amount')}}">
+
                   <div class="row">
                       <div class="col-md-6">
                           <div class="form-group">
@@ -52,7 +55,7 @@
                                   <option value="">Select User</option>
                                   @if($users)
                                       @foreach($users as $user)
-                                          <option value="{{$user->id}}"> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname'] }} </option>
+                                          <option value="{{$user->id}}" {{$paymentUser==$user->id?'selected="selected"':''}}> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname'] }} </option>
                                       @endforeach
                                   @endif
                               </select>
@@ -111,6 +114,13 @@
                           <td colspan="" class="total_amount" align="right" style="padding: 10px 20px"></td>
                           <td></td>
                       </tr>
+                      @if(session()->get('transfer_amount'))
+                      <tr style="font-weight: bold; font-size: 20px">
+                          <td colspan="2" align="right" style="padding-right: 20px">Retried Amount:</td>
+                          <td align="right" style="padding: 10px 20px">{{session()->get('transfer_amount')}}</td>
+                          <td></td>
+                      </tr>
+                      @endif
                       </tfoot>
                   </table>
                   <div class="row">
@@ -157,9 +167,18 @@
     });
 
     jQuery(document).ready(function(){
-
+        $('.total_amount').text(calculateSum());
         jQuery(document).on('keyup','.amount', function () {
-            calculateSum();
+            var session_transfer_amount = jQuery('.session_transfer_amount').val();
+            if (session_transfer_amount>0){
+                if(session_transfer_amount<calculateSum()){
+                    alert('Maximum amount limit crossed');
+                    jQuery(this).val('');
+                    $('.total_amount').text(calculateSum());
+                    return false;
+                }
+            }
+            $('.total_amount').text(calculateSum());
         })
     });
 
@@ -175,8 +194,8 @@
             }
 
         });
-        $('.total_amount').text(sum);
-    };
+        return sum;
+    }
 
 </script>
 

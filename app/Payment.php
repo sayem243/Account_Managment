@@ -55,6 +55,14 @@ class Payment extends Model
         return $this->hasMany('App\PaymentSettlement');
     }
 
+    public function paymentTransfers(){
+        return $this->hasMany('App\PaymentTransfer','payment_id');
+    }
+
+    public function referencePayment(){
+        return $this->hasMany('App\PaymentTransfer','reference_payment_id');
+    }
+
     public function Payment_details(){
         return $this->hasMany('App\Payment_details');
     }

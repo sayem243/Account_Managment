@@ -39,6 +39,7 @@ class PaymentSettlementController extends Controller
         $settlement->settlement_amount= $request->settlement_amount;
         $settlement->payment_id= $payment->id;
         $settlement->project_id= $payment->project->id;
+        $settlement->type= 'SETTLE';
 
         $settlement->save();
 

@@ -92,6 +92,9 @@ Route::post('/payment/datatable', 'PaymentController@dataTable')->name('payment_
 Route::get('/settlement/list','PaymentSettlementController@index')->name('settlement_list');
 Route::post('/settlement/payment/{id}','PaymentSettlementController@store')->name('settlement_store');
 
+//Payment Transferred Route
+Route::post('/transferred/payment/{id}','PaymentTransferredController@store')->name('transferred_store');
+
 //Ajax route
 
 Route::get('/project/user/{id}','UserController@projectByUser')->name('user_project');

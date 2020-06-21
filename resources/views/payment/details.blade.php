@@ -99,6 +99,11 @@
                                         Settlement
                                     </button>
                                 @endif
+                                @if(($payment->status==4 || $payment->status==5) && $payment->total_paid_amount > $totalSettlementAmount)
+                                    <button style="border-radius: .3rem" id="addRetried" class="btn btn-info btn-lg" data-toggle="modal" data-target="#retriedModalForm">
+                                        Retried
+                                    </button>
+                                @endif
 
                                     <a style="border-radius: .3rem" target="_blank" href="{{route('printPDF',$payment->id)}}" class="btn btn-info btn-lg hidden-print"><i class="fa fa-file-pdf fa-1x"></i> PDF</a>
                                     <a style="border-radius: .3rem" target="_blank" href="{{route('payment_print',$payment->id)}}" class="btn btn-info btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
@@ -116,6 +121,7 @@
                                 <thead>
                                 <th>SL.</th>
                                 <th>Date</th>
+                                <th>Type</th>
                                 <th>Amount</th>
                                 </thead>
 
@@ -125,6 +131,7 @@
                                     <tr>
                                         <td>{{$i}}</td>
                                         <td>{{date('d-m-Y',strtotime($paymentSettlement->created_at))}}</td>
+                                        <td>{{$paymentSettlement->type}}</td>
                                         <td>{{$paymentSettlement->settlement_amount}}</td>
                                     </tr>
                                 @endforeach
@@ -138,7 +145,7 @@
 
         </div>
     </div>
-
+{{--settlement modal--}}
     <div id="modalForm" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -171,6 +178,53 @@
 
             </div>
         </div>
+    </div>
+
+    {{--transfer modal--}}
+    <div id="retriedModalForm" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="retriedModalForm" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Retired</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-xs-5">
+                        Total Advance Amount: {{$payment->total_paid_amount}}
+                    </div>
+                    <div class="col-xs-6">
+                        Total Settles Amount: {{$totalSettlementAmount}}
+                    </div>
+                    @if($payment->status==4||$payment->status==5)
+                        <form class="retriedForm" id="retried-form" action="{{ route('transferred_store',$payment->id)}}" method="post">
+                            {{ csrf_field() }}
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="transfer_amount">Amount: </label>
+                                        <input id="transfer_amount" class="form-control" name="transfer_amount" type="number" min="1" max="{{$payment->total_paid_amount - $totalSettlementAmount}}" value="{{$payment->total_paid_amount - $totalSettlementAmount}}" required/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="retried_type">Retried Type: </label>
+                                        <select class="form-control retried_type" name="retried_type" id="retried_type">
+                                            <option value="RETURN">Cash Return</option>
+                                            <option value="TRANSFER">Transfer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer btn-group btn-group-lg">
+                                <button style="border-radius: .3rem" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button style="border-radius: .3rem" id="tag-form-submit" type="submit" class="btn btn-info">Save</button>
+                            </div>
+                        </form>
+                    @else
+                        <p>This payment is not permission</p>
+                    @endif
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 @endsection
 
