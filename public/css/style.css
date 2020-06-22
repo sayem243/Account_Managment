@@ -194,3 +194,12 @@ button.btn, a.btn {
 .payment_table table.dataTable thead .sorting_desc_disabled:after{
     bottom: 0;
 }
+
+.btn-green{
+    background-color: green;
+    color: #ffffff;
+}
+
+.payment_table table.dataTable td:nth-child(8){
+    text-align: right;
+}

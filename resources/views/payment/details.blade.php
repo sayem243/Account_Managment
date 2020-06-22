@@ -95,13 +95,13 @@
                                     <button style="border-radius: .3rem" data-id-id="{{$payment->id}}" type="button" class="btn btn-lg btn-info payment_paid">Disburse</button>
                                 @endif
                                 @if($payment->status>3 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
-                                    <button style="border-radius: .3rem" id="addTag" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalForm">
+                                    <button style="border-radius: .3rem" id="addTag" class="btn btn-green btn-lg" data-toggle="modal" data-target="#modalForm">
                                         Settlement
                                     </button>
                                 @endif
                                 @if(($payment->status==4 || $payment->status==5) && $payment->total_paid_amount > $totalSettlementAmount)
-                                    <button style="border-radius: .3rem" id="addRetried" class="btn btn-info btn-lg" data-toggle="modal" data-target="#retriedModalForm">
-                                        Retried
+                                    <button style="border-radius: .3rem" id="addRetried" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#retriedModalForm">
+                                        Retrie
                                     </button>
                                 @endif
 
@@ -157,7 +157,7 @@
                         Total Advance Amount: {{$payment->total_paid_amount}}
                     </div>
                     <div class="col-xs-6">
-                        Total Settles Amount: {{$totalSettlementAmount}}
+                        Total Settlement Amount: {{$totalSettlementAmount}}
                     </div>
                     @if($payment->status==4||$payment->status==5)
                         <form class="tagForm" id="tag-form" action="{{ route('settlement_store',$payment->id)}}" method="post">
@@ -185,14 +185,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Retired</h4>
+                    <h4 class="modal-title" id="myModalLabel">Retire</h4>
                 </div>
                 <div class="modal-body">
                     <div class="col-xs-5">
                         Total Advance Amount: {{$payment->total_paid_amount}}
                     </div>
                     <div class="col-xs-6">
-                        Total Settles Amount: {{$totalSettlementAmount}}
+                        Total Settlement Amount: {{$totalSettlementAmount}}
                     </div>
                     @if($payment->status==4||$payment->status==5)
                         <form class="retriedForm" id="retried-form" action="{{ route('transferred_store',$payment->id)}}" method="post">
@@ -204,7 +204,7 @@
                                         <input id="transfer_amount" class="form-control" name="transfer_amount" type="number" min="1" max="{{$payment->total_paid_amount - $totalSettlementAmount}}" value="{{$payment->total_paid_amount - $totalSettlementAmount}}" required/>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="retried_type">Retried Type: </label>
+                                        <label for="retried_type">Retrie Type: </label>
                                         <select class="form-control retried_type" name="retried_type" id="retried_type">
                                             <option value="RETURN">Cash Return</option>
                                             <option value="TRANSFER">Transfer</option>

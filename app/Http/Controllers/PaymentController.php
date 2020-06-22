@@ -127,7 +127,7 @@ class PaymentController extends Controller
         }
 
 
-        return redirect()->route('payment')->with('success', 'Payment has been successfully Submitted pending for Confirmation');
+        return redirect()->route('payment');
 
     }
 
@@ -569,13 +569,13 @@ class PaymentController extends Controller
 
             $action='';
             if($post->pStatus==1 && auth()->user()->can('payment-verify')){
-                $action.='<button data-id="'.$post->pId.'" data-status="2" type="button" class="btn btn-sm  btn-primary verify" style="min-width: 73px">Verify </button>';
+                $action.='<button data-id="'.$post->pId.'" data-status="2" type="button" class="btn btn-sm  btn-primary verify" style="min-width: 75px;-webkit-transform: scale(1);">Verify </button>';
             }elseif($post->pStatus==2){
                 if (auth()->user()->can('payment-approve')){
-                    $action.='<button data-id-id="'.$post->pId.'" type="button" class="btn btn-sm  btn-primary approved">Approve </button>';
+                    $action.='<button data-id-id="'.$post->pId.'" type="button" class="btn btn-sm  btn-primary approved" style="-webkit-transform: scale(1);">Approve </button>';
                 }
                 if (auth()->user()->can('payment-verify')){
-                    $action.='<button data-id="'.$post->pId.'" data-status="1" type="button" class="btn btn-sm  btn-primary verify">Un verify</button>';
+                    $action.='<button data-id="'.$post->pId.'" data-status="1" type="button" class="btn btn-sm  btn-primary verify" style="-webkit-transform: scale(1);">Un verify</button>';
                 }
             }
 
