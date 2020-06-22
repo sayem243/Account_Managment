@@ -68,7 +68,7 @@
                                         <td style="text-align: right;padding-right: 10px">Total</td>
                                         <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount}}</td>
                                     </tr>
-                                    <tr style="font-weight: bold; font-size: 18px; color: red">
+                                    <tr style="font-weight: bold; font-size: 18px; color: #000000; background-color: #e0e0e0">
                                         <td style="text-align: right;padding-right: 10px">Total Settlement</td>
                                         <td style="text-align: right;padding-right: 10px">{{$totalSettlementAmount}}</td>
                                     </tr>

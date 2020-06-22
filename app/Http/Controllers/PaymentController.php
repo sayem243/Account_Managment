@@ -78,6 +78,7 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
+        var_dump($request->user_id);die;
         $user = auth()->user();
         $paid_amount=$request->paid_amount;
 
@@ -142,6 +143,7 @@ class PaymentController extends Controller
         $paymentsId = $request->payment_id;
 
         $msg = 'created.';
+        $total_transfer_amount = 0;
         foreach ($paymentsId as $paymentId){
             $payment = Payment::find($paymentId);
             $payment->status = $request->session()->get('reference_payment_id')?3:1;
@@ -153,13 +155,26 @@ class PaymentController extends Controller
                 $transferred->payment_id = $payment->id;
                 $transferred->reference_payment_id = $request->session()->get('reference_payment_id');
                 $transferred->save();
+
+                $total_transfer_amount += $payment->total_paid_amount;
             }
 
         }
         if($request->session()->get('reference_payment_id')){
             $refPayment = Payment::find($request->session()->get('reference_payment_id'));
-            $totalSettleAmount = $this->getTotalSettlementAmount($refPayment);
 
+            $settlement = new PaymentSettlement();
+
+            $settlement->settlement_amount = $total_transfer_amount;
+            $settlement->payment_id= $refPayment->id;
+            $settlement->project_id= $refPayment->project->id;
+            $settlement->type= 'TRANSFER';
+
+            $settlement->save();
+
+            $msg = 'transferred.';
+
+            $totalSettleAmount = $this->getTotalSettlementAmount($refPayment);
             if($refPayment->total_paid_amount>$totalSettleAmount){
                 $refPayment->status = 5;
             }
@@ -168,16 +183,6 @@ class PaymentController extends Controller
             }
 
             $refPayment->save();
-
-            $settlement = new PaymentSettlement();
-
-            $settlement->settlement_amount = $request->session()->get('transfer_amount');
-            $settlement->payment_id= $refPayment->id;
-            $settlement->project_id= $refPayment->project->id;
-            $settlement->type= 'TRANSFER';
-
-            $settlement->save();
-            $msg = 'transferred.';
         }
 
         $request->session()->forget('transfer_amount');
