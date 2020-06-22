@@ -105,9 +105,9 @@
                                     </button>
                                 @endif
 
-                                    <a style="border-radius: .3rem" target="_blank" href="{{route('printPDF',$payment->id)}}" class="btn btn-info btn-lg hidden-print"><i class="fa fa-file-pdf fa-1x"></i> PDF</a>
                                     @if($payment->status>3)
-                                    <a style="border-radius: .3rem" target="_blank" href="{{route('payment_print',$payment->id)}}" class="btn btn-info btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
+                                        <a style="border-radius: .3rem" target="_blank" href="{{route('printPDF',$payment->id)}}" class="btn btn-info btn-lg hidden-print"><i class="fa fa-file-pdf fa-1x"></i> PDF</a>
+                                        <a style="border-radius: .3rem" target="_blank" href="{{route('payment_print',$payment->id)}}" class="btn btn-info btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
                                     @endif
 </div>
 </div>
