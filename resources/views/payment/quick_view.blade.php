@@ -25,7 +25,7 @@
                             </table>
 
                         </div>
-                        <hr style="margin-top: 1px; margin-bottom: 5px">
+                        {{--<hr style="margin-top: 1px; margin-bottom: 5px">--}}
                         <div class="row" style="position: relative">
                             <table class="table">
                                 <thead>
@@ -40,7 +40,7 @@
 
                                     </td>
                                     <td width="60%" style="vertical-align: top">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-top: 5px">
                                             <thead>
                                             <tr>
                                                 <th style="padding: 5px 10px 10px" align="left" width="75%">Item</th>
@@ -70,7 +70,7 @@
                                                 <td style="text-align: right;padding-right: 10px">Total</td>
                                                 <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount}}</td>
                                             </tr>
-                                            <tr style="font-weight: bold; font-size: 18px; color: red">
+                                            <tr style="font-weight: bold; font-size: 18px; color: #000000; background-color: #e0e0e0">
                                                 <td style="text-align: right;padding-right: 10px">Total Settlement</td>
                                                 <td style="text-align: right;padding-right: 10px">{{$totalSettlementAmount}}</td>
                                             </tr>
