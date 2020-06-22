@@ -78,7 +78,6 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
-        var_dump($request->user_id);die;
         $user = auth()->user();
         $paid_amount=$request->paid_amount;
 
