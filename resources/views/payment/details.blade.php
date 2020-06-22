@@ -113,7 +113,7 @@
                     </div>
 
                     <div class="col-md-12 hidden-print">
-                        @if(sizeof($payment->paymentSettlements)>0)
+                        @if(sizeof($payment->paymentSettlements)>0||sizeof($payment->paymentTransfers)>0)
 
                             <h3>Settlement History</h3>
 
@@ -126,6 +126,15 @@
                                 </thead>
 
                                 @php $i=0; @endphp
+                                @foreach($payment->paymentTransfers as $paymentTransfer)
+                                    @php $i++ @endphp
+                                    <tr style="color: #000000; background-color: #e0e0e0">
+                                        <td>{{$i}}</td>
+                                        <td>{{date('d-m-Y',strtotime($paymentTransfer->created_at))}}</td>
+                                        <td>TRANSFERRED FROM <a href="{{route('details',$paymentTransfer->referencePayment->id)}}">{{$paymentTransfer->referencePayment->payment_id}}</a></td>
+                                        <td>{{$paymentTransfer->transfer_amount}}</td>
+                                    </tr>
+                                @endforeach
                                 @foreach($payment->paymentSettlements as $paymentSettlement)
                                     @php $i++ @endphp
                                     <tr>
