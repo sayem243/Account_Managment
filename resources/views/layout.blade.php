@@ -149,7 +149,7 @@ Like: www.facebook.com/terminalbd
                     </li>
                 @endif
 
-                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin'))
+                @if(auth()->user()->can('users'))
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">User</span></a>
                         <ul class="pcoded-submenu">
