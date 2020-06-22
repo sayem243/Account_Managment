@@ -50,7 +50,7 @@
 
                           <div class="form-group">
                               <label for="exampleInputEmail1">Paid To:</label>
-                              <select class="form-control" name="user_id" id="user_id" required>
+                              <select style="{{$paymentUser?'pointer-events: none; background-color: #e7e7e7;':''}}" class="form-control" name="user_id" id="user_id" required>
 
                                   <option value="">Select User</option>
                                   @if($users)
@@ -62,11 +62,11 @@
                           </div>
                           <div class="form-group">
                               <label for="exampleInputEmail1">Company:</label>
-                              <select class="form-control" name="company_id" id="payment_company_id" required>
+                              <select style="{{$paymentCompany?'pointer-events: none; background-color: #e7e7e7;':''}}" class="form-control" name="company_id" id="payment_company_id" required>
 
                                   <option value="">Select Company</option>
                                   @foreach($companies as $company)
-                                      <option value="{{$company->id}}"> {{$company->name}} </option>
+                                      <option value="{{$company->id}}" {{$paymentCompany==$company->id?'selected="selected"':''}}> {{$company->name}} </option>
                                   @endforeach
                               </select>
                           </div>

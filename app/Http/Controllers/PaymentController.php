@@ -52,6 +52,7 @@ class PaymentController extends Controller
     public function create(Request $request){
 
         $paymentUser=null;
+        $paymentCompany=null;
         if ($request->reference_payment_id==''){
             $request->session()->forget('reference_payment_id');
             $request->session()->forget('transfer_amount');
@@ -60,6 +61,7 @@ class PaymentController extends Controller
         if ($request->session()->get('reference_payment_id')){
             $payment = Payment::find($request->session()->get('reference_payment_id'));
             $paymentUser = $payment?$payment->user_id:null;
+            $paymentCompany = $payment?$payment->company_id:null;
         }
 
 
@@ -73,7 +75,7 @@ class PaymentController extends Controller
         $companies=Company::all();
         $projects=Project::all();
 
-        return view('payment.create',['users'=>$users, 'companies'=>$companies ,'projects'=>$projects,'paymentUser'=>$paymentUser]);
+        return view('payment.create',['users'=>$users, 'companies'=>$companies ,'projects'=>$projects,'paymentUser'=>$paymentUser,'paymentCompany'=>$paymentCompany]);
     }
 
     public function store(Request $request)
