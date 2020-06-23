@@ -88,9 +88,19 @@ class ProjectController extends Controller
     Public function delete($id){
 
         $project=Project::find($id);
-        $project->delete();
-        return redirect()->route('project');
+        if(auth()->user()->hasRole('superadmin')) {
+            $project->delete();
+            return redirect()->route('project')->with('success','Project deleted successfully');
+        }
+        return redirect()->route('project')->with('error','Error! This are not permitted.');
 
+    }
+
+    public function projectRestore($id){
+        Project::withTrashed()
+            ->where('id', $id)
+            ->restore();
+        return redirect()->route('project')->with('success','Project restored successfully');
     }
 
 

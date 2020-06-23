@@ -71,21 +71,28 @@
                                                         <i class="feather icon-eye"></i>
                                                         Role-Show</a>
                                                 </li>
-                                                @if(auth()->user()->hasRole('superadmin'))
+                                                @if(auth()->user()->hasRole('superadmin') && !$user->trashed())
                                                 <li class="dropdown-item">
                                                     <a href="{{route('userprofileEdit',$user->id)}}">
                                                         <i class="feather icon-edit"></i>
                                                         Edit</a>
                                                 </li>
                                                 @endif
-                                                @if(auth()->user()->hasRole('superadmin'))
+                                                @if(auth()->user()->hasRole('superadmin') && !$user->trashed())
                                                 <li class="dropdown-item">
                                                     <a href="{{route('User_delete',$user->id)}}">
                                                         <i class="feather icon-trash-2"></i>
                                                         Remove</a>
                                                 </li>
                                                 @endif
-                                                @if(auth()->user()->hasRole('superadmin') || auth()->user()->id == $user->id)
+                                                @if(auth()->user()->hasRole('superadmin') && $user->trashed())
+                                                <li class="dropdown-item">
+                                                    <a href="{{route('user_restore',$user->id)}}">
+                                                        <i class="fa fa-undo" aria-hidden="true"></i>
+                                                        Restore</a>
+                                                </li>
+                                                @endif
+                                                @if( !$user->trashed() && auth()->user()->hasRole('superadmin') || auth()->user()->id == $user->id)
                                                 <li class="dropdown-item">
                                                     <a href="{{route('password-change',$user->id)}}">
                                                         <i class="feather icon-edit"></i>

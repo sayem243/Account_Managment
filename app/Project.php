@@ -3,13 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role;
 
 class Project extends Model
 {
+
     public function company(){
 
-        return $this->belongsTo('App\Company');
+        return $this->belongsTo('App\Company')->withTrashed();
     }
 
     public function Payment(){
@@ -46,5 +48,5 @@ class Project extends Model
 //
 //        return $this->hasMany('App\Vocher_details');
 //    }
-
+    use SoftDeletes;
 }

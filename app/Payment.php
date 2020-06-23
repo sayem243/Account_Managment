@@ -12,16 +12,16 @@ class Payment extends Model
 
     public function user(){
 
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->withTrashed();
     }
     public function company(){
 
-        return $this->belongsTo('App\Company');
+        return $this->belongsTo('App\Company')->withTrashed();
     }
 
     public function project(){
 
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo('App\Project')->withTrashed();
     }
 
     public function userCreatedBy(){

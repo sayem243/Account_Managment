@@ -52,7 +52,7 @@ Route::get('/company/view/{id}','CompanyController@view')->name('comp_view');
 Route::get('/company/edit/{id}','CompanyController@edit')->name('comp_edit');
 Route::post('/company/update/{id}','CompanyController@update')->name('comp_update');
 Route::get('/company/delete/{id}','CompanyController@delete')->name('com_delete');
-
+Route::get('/company/restore/{id}','CompanyController@companyRestore')->name('company_restore');
 
 //projects route
 
@@ -63,6 +63,7 @@ Route::post('/project/store','ProjectController@store')->name('project_store');
 Route::get('/project/edit/{id}' ,'ProjectController@edit')->name('project_edit');
 Route::post('/project/update/{id}' ,'ProjectController@update')->name('project_update');
 Route::get('/project/delete/{id}' ,'ProjectController@delete')->name('project_delete');
+Route::get('/project/restore/{id}','ProjectController@projectRestore')->name('project_restore');
 
 //Settings route
 
@@ -154,7 +155,8 @@ Route::get('register', 'UserController@showRegistrationForm')->name('register');
 Route::post('store', 'UserController@store')->name('store');
 Route::get('/register/edit/{id}','UserController@userprofileEdit')->name('userprofileEdit');
 Route::post('/register/update{id}','UserController@userprofileUpdate')->name('userprofileUpdate');
-Route::get('delete/{id}','UserController@delete')->name('User_delete');
+Route::get('/user/delete/{id}','UserController@delete')->name('User_delete');
+Route::get('/user/restore/{id}','UserController@userRestore')->name('user_restore');
 
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');

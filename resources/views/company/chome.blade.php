@@ -57,13 +57,20 @@
                                             <i class="feather icon-edit"></i>
                                             Edit</a>
                                     </li>
-                                @if(auth()->user()->hasRole('superadmin'))
+                                @if(auth()->user()->hasRole('superadmin') && !$company->trashed())
                                     <li class="dropdown-item">
                                         <a onclick="return confirm('Are you sure want to delete?')" href="{{route('com_delete',$company->id)}}">
                                             <i class="feather icon-trash-2"></i>
                                             Remove</a>
                                     </li>
                                 @endif
+                               @if(auth()->user()->hasRole('superadmin') && $company->trashed())
+                                   <li class="dropdown-item">
+                                       <a href="{{route('company_restore',$company->id)}}">
+                                           <i class="fa fa-undo" aria-hidden="true"></i>
+                                           Restore</a>
+                                   </li>
+                               @endif
 
                                 </ul>
 

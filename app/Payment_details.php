@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Payment_details extends Model
 {
@@ -11,7 +12,7 @@ class Payment_details extends Model
     }
 
     public function project(){
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo('App\Project')->withTrashed();
     }
 
   /*public function voucher_details(){

@@ -38,7 +38,7 @@ class UserController extends Controller
     {
 
         if(auth()->user()->can('users')){
-            $data = User::orderBy('id','DESC')->paginate(20);
+            $data = User::withTrashed()->orderBy('id','DESC')->paginate(20);
             return view('users.index',compact('data'))
                 ->with('i', ($request->input('page', 1) - 1) * 20);
         }
@@ -88,9 +88,9 @@ class UserController extends Controller
             $userRole = $users->roles->pluck('name', 'name')->all();
 
 
-            $projects = Project::all();
+            $projects = Project::withTrashed()->get();
             $usertypes = UserType::all();
-            $companies = Company::all();
+            $companies = Company::withTrashed()->get();
 
             return view('auth.edit', ['roles' => $roles, 'users' => $users, 'projects' => $projects, 'usertypes' => $usertypes, 'companies' => $companies, 'userRole' => $userRole]);
 
@@ -440,8 +440,16 @@ class UserController extends Controller
     //users delete method
 
     public function delete($id){
-        $user=UserProfile::find($id);
+        $user=User::find($id);
         $user->delete();
-        return redirect()->route('register');
+        return redirect()->route('users.index')->with('success','User deleted successfully');
+    }
+    //users restore method
+
+    public function userRestore($id){
+        User::withTrashed()
+            ->where('id', $id)
+            ->restore();
+        return redirect()->route('users.index')->with('success','User restored successfully');
     }
 }

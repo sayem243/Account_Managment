@@ -42,8 +42,8 @@ class PaymentController extends Controller
     public function index(){
 
         $payments=Payment::orderBy('created_at','DSC')->paginate(25);
-        $companies=Company::all();
-        $projects=Project::all();
+        $companies=Company::withTrashed()->get();
+        $projects=Project::withTrashed()->get();
         $users=User::all();
 
         return view('payment.payment_index',['payments'=>$payments,'users'=>$users,'companies'=>$companies,'projects'=>$projects])->with('i', (request()->input('page', 1) - 1) * 25);
@@ -62,6 +62,10 @@ class PaymentController extends Controller
             $payment = Payment::find($request->session()->get('reference_payment_id'));
             $paymentUser = $payment?$payment->user_id:null;
             $paymentCompany = $payment?$payment->company_id:null;
+
+            if($payment->user->trashed() || $payment->company->trashed()){
+                return redirect()->route('payment')->with('error', 'Error! This company deleted.');
+            }
         }
 
 
@@ -129,7 +133,7 @@ class PaymentController extends Controller
         }
 
 
-        return redirect()->route('payment');
+        return redirect()->route('payment')->with('error', 'Error! something. Please try again.');
 
     }
 
@@ -147,7 +151,17 @@ class PaymentController extends Controller
         $total_transfer_amount = 0;
         foreach ($paymentsId as $paymentId){
             $payment = Payment::find($paymentId);
-            $payment->status = $request->session()->get('reference_payment_id')?3:1;
+            if($request->session()->get('reference_payment_id')){
+                $refPayment = Payment::find($request->session()->get('reference_payment_id'));
+                $payment->status = 3;
+                $payment->payment_type = 2;
+                $payment->verified_by = $refPayment->verified_by;
+                $payment->verified_at = $refPayment->verified_at;
+                $payment->approved_by = $refPayment->approved_by;
+                $payment->approved_at = $refPayment->approved_at;
+            }else{
+                $payment->status = 1;
+            }
             $payment->save();
 
             if($request->session()->get('reference_payment_id')){
@@ -247,9 +261,12 @@ class PaymentController extends Controller
         if($payment->status>1 || !$this->checkAuthUserProjects($payment)){
             return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
         }
+        if ($payment->user->trashed() || $payment->company->trashed() || $payment->project->trashed()) {
+            return redirect()->route('payment')->with('error', 'Error! This are not edited.');
+        }
 
-        $companies=Company::all();
-        $user=User::all();
+        $companies=Company::withTrashed()->get();
+        $user=User::withTrashed()->get();
         $paymentDetails=Payment_details::all();
 
         $companyProjects = $payment->company->project;
@@ -346,7 +363,7 @@ class PaymentController extends Controller
         $status = $request->post('payment_status');
 
         $payment=Payment::find($id);
-        if($payment->status==1 ||$payment->status==2){
+        if($user->id!=''&&$payment->status==1 ||$payment->status==2){
             if($status==1){
                 $msg="un verified.";
             }else{
@@ -369,7 +386,7 @@ class PaymentController extends Controller
         $user = auth()->user();
         $payment=Payment::find($id);
         //$payment->status=1;
-        if($payment->status==2 && $this->checkAuthUserProjects($payment)) {
+        if($user->id!='' && $payment->status==2 && $this->checkAuthUserProjects($payment)) {
             $payment->approved_by = $user->id;
             $payment->approved_at = new \DateTime();
             $payment->status = 3;
@@ -431,7 +448,7 @@ class PaymentController extends Controller
         $countRecords = DB::table('payments');
         $countRecords->select('payments.id as totalPayment');
 //        $countRecords->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
-//        $countRecords->join('projects', 'payment_details.project_id', '=', 'projects.id');
+        $countRecords->join('projects', 'payments.project_id', '=', 'projects.id');
         $countRecords->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $countRecords->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
         $countRecords->join('companies', 'payments.company_id', '=', 'companies.id');
@@ -497,13 +514,15 @@ class PaymentController extends Controller
 
         $rows = DB::table('payments');
 //        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
-//        $rows->join('projects', 'payment_details.project_id', '=', 'projects.id');
+        $rows->join('projects', 'payments.project_id', '=', 'projects.id');
         $rows->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $rows->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
         $rows->join('companies', 'payments.company_id', '=', 'companies.id');
         $rows->select('payments.id as pId', 'payments.payment_id as name', 'payments.total_paid_amount as amount', 'payments.status as pStatus', 'payments.created_at as created_at', 'payments.verified_at as paymentVerifyAt');
         $rows->addSelect('companies.name as companyName');
-        $rows->addSelect('employee.name as employeeName');
+        $rows->addSelect('companies.deleted_at as companyDeletedAt');
+        $rows->addSelect('projects.deleted_at as projectDeletedAt');
+        $rows->addSelect('employee.name as employeeName','employee.deleted_at as employeeDeletedAt');
         $rows->addSelect('createdBy.name as creatorName');
         $rows->where('payments.status','!=', 0);
 
@@ -557,14 +576,32 @@ class PaymentController extends Controller
 
         foreach ($result as $post):
             $paymentStatus = '';
+
+
             if ($post->pStatus == 1 && $post->paymentVerifyAt == null) {
-                $paymentStatus = '<span class="label label-yellow">Created (not verified)</span>';
+                if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
+                    $paymentStatus = '<span class="label label-yellow">Created (not verified)</span>';
+                }else{
+                    $paymentStatus = '<span style="width: 100%; display: block" class="label label-danger">Deleted</span>';
+                }
             } elseif ($post->pStatus == 1 && $post->paymentVerifyAt != null) {
-                $paymentStatus = '<span class="label label-yellow">Editing (needs re-verification)</span>';
+                if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
+                    $paymentStatus = '<span class="label label-yellow">Editing (needs re-verification)</span>';
+                }else{
+                    $paymentStatus = '<span style="width: 100%; display: block" class="label label-danger">Deleted</span>';
+                }
             } elseif ($post->pStatus == 2) {
-                $paymentStatus = '<span class="label label-orange">Verified (not approved)</span>';
+                if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
+                    $paymentStatus = '<span class="label label-orange">Verified (not approved)</span>';
+                }else{
+                    $paymentStatus = '<span style="width: 100%; display: block" class="label label-danger">Deleted</span>';
+                }
             } elseif ($post->pStatus == 3) {
-                $paymentStatus = '<span class="label label-green">Approved</span>';
+                if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
+                    $paymentStatus = '<span class="label label-green">Approved</span>';
+                }else{
+                    $paymentStatus = '<span style="width: 100%; display: block" class="label label-danger">Deleted</span>';
+                }
             } elseif ($post->pStatus == 4) {
                 $paymentStatus = '<span class="label label-blue">Disbursed</span>';
             } elseif ($post->pStatus == 5) {
@@ -573,25 +610,32 @@ class PaymentController extends Controller
                 $paymentStatus = '<span class="label label-grey">Archived</span>';
             }
 
+
             $action='';
-            if($post->pStatus==1 && auth()->user()->can('payment-verify')){
-                $action.='<button data-id="'.$post->pId.'" data-status="2" type="button" class="btn btn-sm  btn-primary verify" style="min-width: 75px;-webkit-transform: scale(1);">Verify </button>';
-            }elseif($post->pStatus==2){
-                if (auth()->user()->can('payment-approve')){
-                    $action.='<button data-id-id="'.$post->pId.'" type="button" class="btn btn-sm  btn-primary approved" style="-webkit-transform: scale(1);">Approve </button>';
-                }
-                if (auth()->user()->can('payment-verify')){
-                    $action.='<button data-id="'.$post->pId.'" data-status="1" type="button" class="btn btn-sm  btn-primary verify" style="-webkit-transform: scale(1);">Un verify</button>';
+
+            if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null){
+                if($post->pStatus==1 && auth()->user()->can('payment-verify')){
+                    $action.='<button data-id="'.$post->pId.'" data-status="2" type="button" class="btn btn-sm  btn-primary verify" style="min-width: 75px;-webkit-transform: scale(1);">Verify </button>';
+                }elseif($post->pStatus==2){
+                    if (auth()->user()->can('payment-approve')){
+                        $action.='<button data-id-id="'.$post->pId.'" type="button" class="btn btn-sm  btn-primary approved" style="-webkit-transform: scale(1);">Approve </button>';
+                    }
+                    if (auth()->user()->can('payment-verify')){
+                        $action.='<button data-id="'.$post->pId.'" data-status="1" type="button" class="btn btn-sm  btn-primary verify" style="-webkit-transform: scale(1);">Un verify</button>';
+                    }
                 }
             }
 
             $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                     <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
-            if ($post->pStatus == 1 && auth()->user()->can('payment-edit')) {
-                $button .= '<li class="dropdown-item"> <a href="/payment/edit/'.$post->pId.'"> <i class="feather icon-edit"></i> Edit</a></li>';
-            }
-            if ($post->pStatus < 2 && auth()->user()->can('payment-delete')) {
-                $button .='<li class="dropdown-item" ><a onclick="return confirm(\'Are you sure you want to delete this item\')" href = "/payment/delete/'.$post->pId.'" ><i class="feather icon-trash-2" ></i >Remove</a ></li >';
+            if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
+
+                if ($post->pStatus == 1 && auth()->user()->can('payment-edit')) {
+                    $button .= '<li class="dropdown-item"> <a href="/payment/edit/' . $post->pId . '"> <i class="feather icon-edit"></i> Edit</a></li>';
+                }
+                if ($post->pStatus < 2 && auth()->user()->can('payment-delete')) {
+                    $button .= '<li class="dropdown-item" ><a onclick="return confirm(\'Are you sure you want to delete this item\')" href = "/payment/delete/' . $post->pId . '" ><i class="feather icon-trash-2" ></i >Remove</a ></li >';
+                }
             }
 
             $button .='<li class="dropdown-item"><a href="/payment/details/'.$post->pId.'"><i class="feather icon-eye"></i>Details</a></li>';

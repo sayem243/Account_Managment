@@ -21,7 +21,7 @@ class CompanyController extends Controller
 
     public function index(){
 
-        $company=Company::all();
+        $company=Company::withTrashed()->get();
         return view('company.chome')->with('companys' ,$company);
     }
 
@@ -97,10 +97,20 @@ class CompanyController extends Controller
 
         $company=Company::find($id);
 
-        $company->delete();
+        if(auth()->user()->hasRole('superadmin')){
+            $company->delete();
+            return redirect()->route('comp_profile')->with('success','Company deleted successfully.');
+        }
 
-        return redirect()->route('comp_profile');
+        return redirect()->route('comp_profile')->with('error','Error! This are not permitted.');
 
+    }
+
+    public function companyRestore($id){
+        Company::withTrashed()
+            ->where('id', $id)
+            ->restore();
+        return redirect()->route('comp_profile')->with('success','Company restored successfully');
     }
 
 
