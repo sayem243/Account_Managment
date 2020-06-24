@@ -21,8 +21,8 @@
 
                         <div class="row">
                             <div class="col-md-5">
-                                <h5>Company: {{$payment->company['name']}}</h5>
-                                <h5>Project: {{$payment->project['p_name']}}</h5>
+                                <h5 style="{{$payment->company->trashed()?'background-color: #ff4b47; color: #ffffff':''}}">Company: {{$payment->company['name']}}</h5>
+                                <h5 style="{{$payment->project->trashed()?'background-color: #ff4b47; color: #ffffff':''}}">Project: {{$payment->project['p_name']}}</h5>
                             </div>
                             <div class="col-md-4">
                                 <h4>HS ID: {{$payment->payment_id}}</h4>
@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-md-5">
 
-                                <p>Name: {{$payment->user['name']}}</p>
+                                <p style="{{$payment->user->trashed()?'background-color: #ff4b47; color: #ffffff':''}}">Name: {{$payment->user['name']}}</p>
                                 <p>Created By: {{$payment->userCreatedBy['name']}}</p>
                                 <p>Verified By: {{$payment->verifiedBy?$payment->verifiedBy['name']:''}}</p>
                                 <p>Approved By: {{$payment->approvedBy?$payment->approvedBy['name']:''}}</p>

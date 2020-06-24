@@ -51,7 +51,7 @@
                           <select class="form-control" name="user_id" id="user_id" >
                               <option value="">All User</option>
                               @foreach($users as $user)
-                                  <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                  <option value="{{ $user['id'] }}">{{ $user['name'] }}</option>
                               @endforeach
                           </select>
                       </td>
@@ -74,9 +74,9 @@
                       <th width="100px" scope="col">HS ID</th>
                       <th width="150px" scope="col">Name</th>
                       <th width="150px" scope="col">Company</th>
-                      <th width="120px" scope="col">Amount</th>
+                      <th width="150px" scope="col">Amount</th>
                       <th width="200px" scope="col">Status</th>
-                      <th width="200px" scope="col text-center">Action</th>
+                      <th width="170px" scope="col text-center">Action</th>
                       <th scope="col text-center"><i class="feather icon-settings"></i></th>
                   </tr>
 

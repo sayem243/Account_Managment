@@ -40,11 +40,17 @@ class PaymentController extends Controller
 
 
     public function index(){
-
+        $user = auth()->user();
         $payments=Payment::orderBy('created_at','DSC')->paginate(25);
         $companies=Company::withTrashed()->get();
-        $projects=Project::withTrashed()->get();
-        $users=User::all();
+        $projects=$user->projects;
+        $pUser= array();
+        foreach ($projects as $project){
+            foreach ($project->users as $user){
+                $pUser[$user->id]= array('id'=>$user->id,'name'=>$user->name);
+            }
+        }
+        $users=$pUser;
 
         return view('payment.payment_index',['payments'=>$payments,'users'=>$users,'companies'=>$companies,'projects'=>$projects])->with('i', (request()->input('page', 1) - 1) * 25);
     }
@@ -576,32 +582,14 @@ class PaymentController extends Controller
 
         foreach ($result as $post):
             $paymentStatus = '';
-
-
             if ($post->pStatus == 1 && $post->paymentVerifyAt == null) {
-                if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
-                    $paymentStatus = '<span class="label label-yellow">Created (not verified)</span>';
-                }else{
-                    $paymentStatus = '<span style="width: 100%; display: block" class="label label-danger">Deleted</span>';
-                }
+                $paymentStatus = '<span class="label label-yellow">Created (not verified)</span>';
             } elseif ($post->pStatus == 1 && $post->paymentVerifyAt != null) {
-                if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
-                    $paymentStatus = '<span class="label label-yellow">Editing (needs re-verification)</span>';
-                }else{
-                    $paymentStatus = '<span style="width: 100%; display: block" class="label label-danger">Deleted</span>';
-                }
+                $paymentStatus = '<span class="label label-yellow">Editing (needs re-verification)</span>';
             } elseif ($post->pStatus == 2) {
-                if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
-                    $paymentStatus = '<span class="label label-orange">Verified (not approved)</span>';
-                }else{
-                    $paymentStatus = '<span style="width: 100%; display: block" class="label label-danger">Deleted</span>';
-                }
+                $paymentStatus = '<span class="label label-orange">Verified (not approved)</span>';
             } elseif ($post->pStatus == 3) {
-                if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
-                    $paymentStatus = '<span class="label label-green">Approved</span>';
-                }else{
-                    $paymentStatus = '<span style="width: 100%; display: block" class="label label-danger">Deleted</span>';
-                }
+                $paymentStatus = '<span class="label label-green">Approved</span>';
             } elseif ($post->pStatus == 4) {
                 $paymentStatus = '<span class="label label-blue">Disbursed</span>';
             } elseif ($post->pStatus == 5) {
@@ -624,6 +612,8 @@ class PaymentController extends Controller
                         $action.='<button data-id="'.$post->pId.'" data-status="1" type="button" class="btn btn-sm  btn-primary verify" style="-webkit-transform: scale(1);">Un verify</button>';
                     }
                 }
+            }else{
+                $action = '<span style="width: 100%; display: block" class="label label-danger">Deleted</span>';
             }
 
             $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>

@@ -51,7 +51,7 @@
 
                                 @foreach($projects[$company->id] as $key=>$project)
                                     @php $i++ @endphp
-                                    <tr>
+                                    <tr style="{{$project->deletedAt!=null?'background-color: #ff4b47; color: #ffffff':''}}">
                                         <td>{{$i}}</td>
 
                                         <td>{{$project->projectName}} </td>

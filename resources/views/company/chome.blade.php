@@ -36,7 +36,7 @@
                 @php $i=0; @endphp
                 @foreach($companys as $company)
                  @php $i++ @endphp
-                 <tr>
+                 <tr style="{{$company->trashed()?'background-color: #ff4b47; color: #ffffff':''}}">
                         <td>{{$i}}</td>
                         {{--<td>{{$company->id}} </td>--}}
                         <td>{{$company->name}}</td>

@@ -10,7 +10,7 @@
                                 <thead>
                                 <tr>
                                     <td style="vertical-align: top">
-                                        <h5 style="margin-bottom: 8px">Company: {{$payment->company['name']}}</h5>
+                                        <h5 >Company: {{$payment->company['name']}}</h5>
                                         <h5>Project: {{$payment->project['p_name']}}</h5>
                                     </td>
                                     <td style="vertical-align: top">
