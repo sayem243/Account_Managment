@@ -21,11 +21,11 @@ class ProjectController extends Controller
 
     public function index(){
 
-        $companies=Company::all()->sortBy('name');
+        $companies=Company::withTrashed()->get()->sortBy('name');
 
         $rows = DB::table('projects');
         $rows->join('companies', 'projects.company_id', '=', 'companies.id');
-        $rows->select( 'projects.id', 'projects.p_name as projectName');
+        $rows->select( 'projects.id', 'projects.p_name as projectName', 'projects.deleted_at as deletedAt');
         $rows->addSelect('companies.id as comId', 'companies.name as companyName');
         $rows->orderBy('projectName', 'Asc');
         $projects = $rows->get();

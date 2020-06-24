@@ -10,13 +10,13 @@ use App\Project;
 use App\User;
 use App\UserProfile;
 use App\UserType;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Company;
 use App\Account;
 use Illuminate\Support\Facades\DB;
-use PDF;
 
 
 class PaymentController extends Controller

@@ -65,7 +65,7 @@
                                                             <i class="feather icon-edit"></i>
                                                             Edit</a>
                                                     </li>
-                                                    @if(auth()->user()->hasRole('superadmin') && !$project->trashed())
+                                                    @if(auth()->user()->hasRole('superadmin') && $project->deletedAt==null)
                                                     <li class="dropdown-item">
                                                         <a href="{{route('project_delete',$project->id)}}">
                                                             <i class="feather icon-trash-2"></i>
@@ -73,7 +73,7 @@
                                                     </li>
                                                     @endif
 
-                                                    @if(auth()->user()->hasRole('superadmin') && $project->trashed())
+                                                    @if(auth()->user()->hasRole('superadmin') && $project->deletedAt!=null)
                                                         <li class="dropdown-item">
                                                             <a href="{{route('project_restore',$project->id)}}">
                                                                 <i class="fa fa-undo" aria-hidden="true"></i>
