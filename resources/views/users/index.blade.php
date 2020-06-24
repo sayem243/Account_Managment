@@ -30,8 +30,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($data as $key => $user)
-                                <tr>
+                            @foreach ($data as $user)
+                                <tr style="{{$user->trashed()?'background-color: #ff4b47; color: #ffffff':''}}">
                                     <td>{{ ++$i }}</td>
                                     <td> {{$user->UserProfile['fname'].' '.$user->UserProfile['lname']}}</td>
                                     <td>{{$user->UserProfile->company['name']}}</td>
