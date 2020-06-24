@@ -1,5 +1,9 @@
 $(document).ready(function () {
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $.fn.dataTable.ext.buttons.all_payment = {
+        className: 'buttons-alert payment_status',
+
+    };
     var dataTable= $('.table').DataTable( {
 
         loadingMessage: 'Loading...',
@@ -23,15 +27,14 @@ $(document).ready(function () {
                 var user_id = $('#user_id').val();
                 var project_id = $('#project_id').val();
 
-                var payment_status = $('#payment_status').val();
-
+                var payment_status = $('.payment_table').find('.active').attr('data-status');
                 // Append to data
                 data._token = CSRF_TOKEN;
                 data.payment_id = payment_id;
                 data.company_id = company_id;
                 data.user_id = user_id;
                 data.project_id = project_id;
-                data.payment_status = payment_status;
+                data.payment_status = payment_status?payment_status:'all';
             }
         },
         'columns': [
@@ -61,6 +64,54 @@ $(document).ready(function () {
                 "targets": 0,
                 "orderable": false
             }],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'all_payment',
+                text: 'All',
+                className: 'buttons-alert payment_status btn-info',
+                attr:  {
+                    title: 'Copy',
+                    'data-status': 'all'
+                }
+            },
+            {
+                extend: 'all_payment',
+                text: 'Verified',
+                className: 'buttons-alert payment_status btn-info',
+                attr:  {
+                    title: 'Verified',
+                    'data-status': 2
+                }
+            },
+            {
+                extend: 'all_payment',
+                text: 'Approved',
+                className: 'buttons-alert payment_status btn-info',
+                attr:  {
+                    title: 'Approved',
+                    'data-status': 3
+                }
+            },
+            {
+                extend: 'all_payment',
+                text: 'Disbursed',
+                className: 'buttons-alert payment_status btn-info',
+                attr:  {
+                    title: 'Disbursed',
+                    'data-status': 4
+                }
+            },
+            {
+                extend: 'all_payment',
+                text: 'Archived',
+                className: 'buttons-alert payment_status btn-info',
+                attr:  {
+                    title: 'Archived',
+                    'data-status': 6
+                }
+            }
+        ]
         /*"buttons": [
             {
                 extend: 'collection',
@@ -100,7 +151,9 @@ $(document).ready(function () {
         dataTable.draw();
     });
 
-    $('#payment_status').change(function(){
+    $('.payment_status').on('click', function(){
+        $('.payment_status').removeClass('active');
+        $(this).addClass('active');
         dataTable.draw();
     });
 

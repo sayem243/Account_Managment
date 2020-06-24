@@ -203,3 +203,10 @@ button.btn, a.btn {
 .payment_table table.dataTable td:nth-child(8){
     text-align: right;
 }
+
+.payment_table button.payment_status{
+    -webkit-transform: scale(1);
+    margin-right: 10px;
+    min-width: 80px;
+    border-radius: 0.25rem!important;
+}

@@ -37,7 +37,7 @@
                               @endforeach
                           </select>
                       </td>
-                      <td>
+                      <td colspan="2">
                           <select class="form-control" name="project_id" id="project_id">
                               <option value="">All Project</option>
                               @foreach($projects as $project)
@@ -53,17 +53,6 @@
                               @foreach($users as $user)
                                   <option value="{{ $user['id'] }}">{{ $user['name'] }}</option>
                               @endforeach
-                          </select>
-                      </td>
-                      <td>
-                          <select class="form-control" name="payment_status" id="payment_status" >
-                              <option value="all">All</option>
-                              <option value="1">Open</option>
-                              <option value="2">Verified</option>
-                              <option value="3">Approved</option>
-                              <option value="4">Disbursed</option>
-                              <option value="5">Partial Settled</option>
-                              <option value="6">Archived</option>
                           </select>
                       </td>
                       <td colspan="2"></td>

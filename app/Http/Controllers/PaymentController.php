@@ -462,11 +462,11 @@ class PaymentController extends Controller
         $countRecords->where('payments.status','!=', 0);
 
         if (isset($query['payment_status'])) {
-            $name = $query['payment_status'];
-            if($name!='all'){
-                $countRecords->where('payments.status','=', "{$name}%");
+            $status = $query['payment_status'];
+            if($status=='all'){
+                $countRecords->where('payments.status','!=', 6);
             }else{
-                $countRecords->where('payments.status','!=', 0);
+                $countRecords->where('payments.status','=', $status);
             }
         }
 
@@ -533,11 +533,11 @@ class PaymentController extends Controller
         $rows->where('payments.status','!=', 0);
 
         if (isset($query['payment_status'])) {
-            $name = $query['payment_status'];
-            if($name!='all'){
-                $rows->where('payments.status','=', "{$name}%");
+            $status = $query['payment_status'];
+            if($status=='all'){
+                $rows->where('payments.status','!=', 6);
             }else{
-                $rows->where('payments.status','!=', 0);
+                $rows->where('payments.status','=', $status);
             }
         }
 
