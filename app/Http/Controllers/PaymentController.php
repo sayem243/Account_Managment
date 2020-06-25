@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ammendment;
+use App\Documents;
 use App\Payment_details;
 use App\PaymentSettlement;
 use App\PaymentTransfer;
@@ -178,6 +179,25 @@ class PaymentController extends Controller
                 $transferred->save();
 
                 $total_transfer_amount += $payment->total_paid_amount;
+            }
+
+            $files = $request->file('payment_attachment');
+
+            if (isset($files[$paymentId]) && $files[$paymentId]!=null){
+                $i=1;
+                foreach ($files[$paymentId] as $attachment){
+                    if ($attachment->getClientOriginalName()) {
+                        $document = new Documents();
+                        $filename = $attachment->getClientOriginalName();
+                        $modifyFilename = time()."_".$i."_".$filename;
+                        $document->payment_id = $payment->id;
+                        $document->file_name = $modifyFilename;
+                        $document->file_path = 'uploads/hand_slip/'.$modifyFilename;
+                        $attachment->move(public_path() .'/uploads/hand_slip/', $modifyFilename);
+                        $document->save();
+                    }
+                    $i++;
+                }
             }
 
         }

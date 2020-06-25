@@ -55,6 +55,10 @@ class Payment extends Model
         return $this->hasMany('App\PaymentSettlement');
     }
 
+    public function paymentDocuments(){
+        return $this->hasMany('App\Documents');
+    }
+
     public function paymentTransfers(){
         return $this->hasMany('App\PaymentTransfer','payment_id');
     }

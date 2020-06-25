@@ -46,6 +46,18 @@
                                     Signature
 
                                 </div>
+
+                                <table class="table payment_attachment_table" style="margin-top: 25px; margin-bottom: 0">
+                                    <tbody>
+                                    <tr>
+                                        <td><input type="file" name="payment_attachment[{{$payment->id}}][]"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-info add_row">Add</button>
+                                            <button type="button" class="btn btn-danger remove_row" style="display: none">Delete</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="col-md-7">
 
@@ -74,15 +86,13 @@
                                 </table>
                             </div>
                         </div>
-
-
                     </div>
                     @endforeach
                         <div class="line aligncenter" style="float: right">
                             <div class="form-group">
-                                <div class="col-sm-12 col-form-label btn-group-lg" align="right">
+                                <div style="padding-right: 1px" class="col-sm-12 col-form-label btn-group-lg" align="right">
                                     <a href="{{route('payment')}}" class="btn btn-danger"> Cancel</a>
-                                    <button type="submit" class="btn btn-info" data-original-title="" title=""> <i class="feather icon-save"></i>Save & Confirm</button>
+                                    <button style="margin-right: 0px" type="submit" class="btn btn-info" data-original-title="" title=""> <i class="feather icon-save"></i>Save & Confirm</button>
                                 </div>
                             </div>
                         </div>
@@ -95,4 +105,22 @@
     </div>
     </div>
 
+@endsection
+
+@section('footer.scripts')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(document).on('click', '.add_row', function(){
+                var $tr = $(this).closest('tr');
+                $tr.clone().insertAfter($tr);
+                $tr.find('td').find('button.remove_row').show();
+                $tr.find('td').find('button.add_row').hide();
+            });
+
+            // Find and remove selected table rows
+            $('body').on('click','.remove_row', function(){
+                $(this).closest("tr").remove();
+            });
+        });
+    </script>
 @endsection

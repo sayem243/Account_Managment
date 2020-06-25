@@ -71,8 +71,17 @@ $(document).ready(function () {
                 text: 'All',
                 className: 'buttons-alert payment_status btn-info',
                 attr:  {
-                    title: 'Copy',
+                    title: 'All',
                     'data-status': 'all'
+                }
+            },
+            {
+                extend: 'all_payment',
+                text: 'Created',
+                className: 'buttons-alert payment_status btn-info',
+                attr:  {
+                    title: 'Created',
+                    'data-status': 1
                 }
             },
             {
