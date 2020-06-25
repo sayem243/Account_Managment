@@ -117,6 +117,52 @@
     <script src="{{ asset("assets/datatable/payment.js") }}" ></script>
     <script type="text/javascript">
         jQuery(document).ready(function(){
+            // project by company
+            jQuery('body').on('change','#company_id', function () {
+                var companyId= jQuery(this).val();
+                if(companyId===0||companyId===''){
+                    companyId = 0
+                }
+                jQuery.ajax({
+                    type:'GET',
+                    dataType : 'json',
+                    url:'{{ url("/ajax/project/company") }}/'+companyId,
+                    data:{},
+                    success:function(data){
+                        console.log(data);
+                        var dataOption='<option value>All Project</option>';
+                        jQuery.each(data, function(i, item) {
+                            dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
+                        });
+                        jQuery('#project_id').html(dataOption);
+                    }
+                });
+
+            });
+
+            // user by project
+            jQuery('body').on('change','#project_id', function () {
+                var projectId= jQuery(this).val();
+                if(projectId===0||projectId===''){
+                    projectId = 0
+                }
+                jQuery.ajax({
+                    type:'GET',
+                    dataType : 'json',
+                    url:'{{ url("/ajax/user/project") }}/'+projectId,
+                    data:{},
+                    success:function(data){
+                        console.log(data);
+                        var dataOption='<option value>All User</option>';
+                        jQuery.each(data, function(i, item) {
+                            dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
+                        });
+                        jQuery('#user_id').html(dataOption);
+                    }
+                });
+
+            });
+
             jQuery("#myModal").on("show.bs.modal", function(e) {
                 var id = jQuery(e.relatedTarget).data('target-id');
                 jQuery.get( "/payment/quick/view/" + id, function( data ) {

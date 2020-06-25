@@ -46,8 +46,8 @@ Route::get('home', [
 
 
 Route::get('/company/index','CompanyController@index')->name('comp_profile');
-Route::get('company/create','CompanyController@create')->name('comp_create');
-Route::post('company/store','CompanyController@store')->name('company_store');
+Route::get('/company/create','CompanyController@create')->name('comp_create');
+Route::post('/company/store','CompanyController@store')->name('company_store');
 Route::get('/company/view/{id}','CompanyController@view')->name('comp_view');
 Route::get('/company/edit/{id}','CompanyController@edit')->name('comp_edit');
 Route::post('/company/update/{id}','CompanyController@update')->name('comp_update');
@@ -232,3 +232,7 @@ Route::Post('/daterange/fetch_data', 'DateRangeController@fetch_data')->name('da
 
 Route::get('/reports/details/reports/','ReportController@reportDate')->name('report_try');
 Route::get('/generate-pdf','PaymentDetailsController@generatePDF');
+
+//ajax request section
+Route::get('/ajax/project/company/{id}','AjaxFunctionController@getProjectsByCompany')->name('ajax_project_by_company_id');
+Route::get('/ajax/user/project/{id}','AjaxFunctionController@getUsersByProject')->name('ajax_user_by_project_id');
