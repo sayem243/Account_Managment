@@ -145,63 +145,85 @@
 
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function(){
+@endsection
 
-        $(".add-row").on('click', function(){
-            var table = $('.payment_details_table');
-            var nrow = table.find('tr:eq(1)').clone();
-            nrow.find('td').find('button').removeClass('hide');
-            nrow.find("input[type=text]").val("");
-            table.append(nrow);
-        });
-
-        // Find and remove selected table rows
-        $('body').on('click','.btn', function(){
-           $(this).closest("tr").remove();
-        });
-    });
-
-    $(document).ready(function(){
-        $('.js-example-basic-single').select2();
-    });
-
-    jQuery(document).ready(function(){
-        $('.total_amount').text(calculateSum());
-        jQuery(document).on('keyup','.amount', function () {
-            var session_transfer_amount = jQuery('.session_transfer_amount').val();
-            if (session_transfer_amount>0){
-                if(session_transfer_amount<calculateSum()){
-                    alert('Maximum amount limit crossed');
-                    jQuery(this).val('');
-                    $('.total_amount').text(calculateSum());
+@section('footer.scripts')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            jQuery("#user_id, #payment_company_id").on('change',function(e){
+                var element = e.target;
+                e.preventDefault();
+                var user_id = jQuery('#user_id').val();
+                var payment_company_id = jQuery('#payment_company_id').val();
+                if(user_id<=0 || payment_company_id==''){
+                    var dataOption='<option value="0">Select Project</option>';
+                    jQuery('.user_project_list').html(dataOption);
                     return false;
                 }
-            }
+                jQuery.ajax({
+                    type:'GET',
+                    dataType : 'json',
+                    url:'/project/user/'+ user_id,
+                    data:{
+                        'company_id':payment_company_id
+                    },
+                    success:function(data){
+                        var dataOption='<option value="0">Select Project</option>';
+                        jQuery.each(data, function(i, item) {
+                            dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
+                        });
+
+                        jQuery('.user_project_list').html(dataOption);
+                    }
+                });
+            }).change();
+
+            $(".add-row").on('click', function(){
+                var table = $('.payment_details_table');
+                var nrow = table.find('tr:eq(1)').clone();
+                nrow.find('td').find('button').removeClass('hide');
+                nrow.find("input[type=text]").val("");
+                table.append(nrow);
+            });
+
+            // Find and remove selected table rows
+            $('body').on('click','.btn', function(){
+                $(this).closest("tr").remove();
+            });
+
+            $('.js-example-basic-single').select2();
+
             $('.total_amount').text(calculateSum());
-        })
-    });
-
-    function calculateSum() {
-
-        var sum = 0;
-//iterate through each td based on class and add the values
-        $(".amount").each(function() {
-
-            //add only if the value is number
-            if(!isNaN(this.value) && this.value.length!=0) {
-                sum += parseFloat(this.value);
-            }
-
+            jQuery(document).on('keyup','.amount', function () {
+                var session_transfer_amount = jQuery('.session_transfer_amount').val();
+                if (session_transfer_amount>0){
+                    if(session_transfer_amount<calculateSum()){
+                        alert('Maximum amount limit crossed');
+                        jQuery(this).val('');
+                        $('.total_amount').text(calculateSum());
+                        return false;
+                    }
+                }
+                $('.total_amount').text(calculateSum());
+            });
         });
-        return sum;
-    }
 
-</script>
+        function calculateSum() {
 
+            var sum = 0;
+//iterate through each td based on class and add the values
+            $(".amount").each(function() {
 
+                //add only if the value is number
+                if(!isNaN(this.value) && this.value.length!=0) {
+                    sum += parseFloat(this.value);
+                }
 
+            });
+            return sum;
+        }
 
+    </script>
 
 @endsection
 

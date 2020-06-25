@@ -88,7 +88,7 @@
                                 @php use App\CustomClass\NumberToWordConverter;
                                $amount = NumberToWordConverter::convert($payment->total_paid_amount);
                                 @endphp
-                                <p style="color: red; padding: 10px 5px"><strong style="font-weight: bold">Write in
+                                <p style="color: red; padding: 10px 5px; margin-bottom: 5px"><strong style="font-weight: bold">Write in
                                         words: </strong>{{$amount}} only</p>
                             </div>
                         </div>
@@ -128,10 +128,32 @@
 
                     <div class="col-md-12 hidden-print">
                         @if($payment->comments)
-                        <p style="color: red; font-weight: bold;font-size: 16px">
+                        <p style="color: red; font-weight: bold;font-size: 16px; margin-bottom: 5px">
                            Comments: {{$payment->comments}}
                         </p>
                         @endif
+
+                        @if(sizeof($payment->paymentDocuments)>0)
+                            <h3>Attachment</h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($payment->paymentDocuments as $document)
+                                   <tr>
+                                       <td>{{date('d-m-Y',strtotime($document->created_at))}}</td>
+                                       <td>{{$document->file_name}}</td>
+                                       <td><a target="_blank" download href="{{asset($document->file_path)}}">Download</a></td>
+                                   </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                         @endif
 
                         @if(sizeof($payment->paymentSettlements)>0||sizeof($payment->paymentTransfers)>0)
 

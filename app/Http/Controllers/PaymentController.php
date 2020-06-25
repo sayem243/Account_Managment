@@ -43,7 +43,7 @@ class PaymentController extends Controller
     public function index(){
         $user = auth()->user();
         $payments=Payment::orderBy('created_at','DSC')->paginate(25);
-        $companies=Company::withTrashed()->get();
+//        $companies=Company::withTrashed()->get();
         $projects=$user->projects;
         $pUser= array();
         foreach ($projects as $project){
@@ -52,6 +52,11 @@ class PaymentController extends Controller
             }
         }
         $users=$pUser;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= array('id'=>$project->company->id,'name'=>$project->company->name);
+        }
+        $companies=$userProjectCompany;
 
         return view('payment.payment_index',['payments'=>$payments,'users'=>$users,'companies'=>$companies,'projects'=>$projects])->with('i', (request()->input('page', 1) - 1) * 25);
     }
@@ -140,7 +145,7 @@ class PaymentController extends Controller
         }
 
 
-        return redirect()->route('payment')->with('error', 'Error! something. Please try again.');
+        return redirect()->route('payment')->with('error', 'Error! something wrong. Please try again.');
 
     }
 

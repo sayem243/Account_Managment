@@ -294,33 +294,6 @@ Like: www.facebook.com/terminalbd
         }
     });
 
-    jQuery("#user_id, #payment_company_id").on('change',function(e){
-        var element = e.target;
-        e.preventDefault();
-        var user_id = jQuery('#user_id').val();
-        var payment_company_id = jQuery('#payment_company_id').val();
-        if(user_id<=0 || payment_company_id==''){
-            var dataOption='<option value="0">Select Project</option>';
-            jQuery('.user_project_list').html(dataOption);
-            return false;
-        }
-        jQuery.ajax({
-            type:'GET',
-            dataType : 'json',
-            url:'/project/user/'+ user_id,
-            data:{
-                'company_id':payment_company_id
-            },
-            success:function(data){
-                var dataOption='<option value="0">Select Project</option>';
-                jQuery.each(data, function(i, item) {
-                    dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
-                });
-
-                jQuery('.user_project_list').html(dataOption);
-            }
-        });
-    }).change();
 
     //voucher ajax
 
@@ -372,7 +345,7 @@ Like: www.facebook.com/terminalbd
             }
 
         });
-    }).change();
+    });
 
     // Paid
 
@@ -394,7 +367,7 @@ Like: www.facebook.com/terminalbd
 
     });
 
-    jQuery(".voucher-approve").click(function(a){
+   /* jQuery(".voucher-approve").click(function(a){
         var elements = a.target;
         a.preventDefault();
         var id = jQuery(this).attr('data-id-id');
@@ -414,11 +387,11 @@ Like: www.facebook.com/terminalbd
                 }
             });
         }
-    });
+    });*/
 
     //amendment approve
 
-    jQuery(".amendment_approved").click(function(a){
+    /*jQuery(".amendment_approved").click(function(a){
         var elements = a.target;
         a.preventDefault();
         var id = jQuery(this).attr('data-id');
@@ -437,7 +410,7 @@ Like: www.facebook.com/terminalbd
                 }
             });
         }
-    });
+    });*/
 
     // Report Date Filtering
 

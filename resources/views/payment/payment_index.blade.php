@@ -33,7 +33,7 @@
                           <select class="form-control" name="company_id" id="company_id" aria-describedby="validationTooltipPackagePrepend" required>
                               <option value="">All Company</option>
                               @foreach($companies as $company)
-                                  <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                  <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
                               @endforeach
                           </select>
                       </td>
