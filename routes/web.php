@@ -236,3 +236,8 @@ Route::get('/generate-pdf','PaymentDetailsController@generatePDF');
 //ajax request section
 Route::get('/ajax/project/company/{id}','AjaxFunctionController@getProjectsByCompany')->name('ajax_project_by_company_id');
 Route::get('/ajax/user/project/{id}','AjaxFunctionController@getUsersByProject')->name('ajax_user_by_project_id');
+
+//report section
+
+Route::get('/report/payment', 'ReportController@paymentReport')->name('payment_report');
+Route::post('/report/payment/datatable', 'ReportController@dataTablePaymentReport')->name('payment_report_datatable');

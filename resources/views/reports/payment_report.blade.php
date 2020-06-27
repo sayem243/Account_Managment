@@ -1,35 +1,12 @@
 @extends('layout')
-@section('title','Advance Payment')
+@section('title','Advance Payment Report')
 @section('template')
-    <style>
-        /*input.date_picker {
-            position: relative;
-            height: 35px;
-            color: white;
-        }
-
-        input.date_picker:before {
-            position: absolute;
-            top: 5px; left: 5px;
-            content: attr(data-date);
-            display: inline-block;
-            color: black;
-        }
-
-        input.date_picker::-webkit-datetime-edit, input.date_picker::-webkit-inner-spin-button, input.date_picker::-webkit-clear-button {
-            display: none;
-        }
-
-        input.date_picker::-webkit-calendar-picker-indicator {
-            position: absolute;
-            top: 5px;
-            right: 0;
-            color: black;
-            opacity: 1;
-        }*/
-
-    </style>
-
+<style>
+   .payment_report_table table tbody tr td:nth-child(6) {
+       text-align: right;
+       padding-right: 20px;
+    }
+</style>
  <div class="col-sm-12">
    <div class="row">
     <div class="col-sm-12">
@@ -37,16 +14,28 @@
         <div class="card-header">
          <h5>Advance Payment</h5>
             <div class="card-header-right">
-                @if(auth()->user()->can('Payment-create'))
-                    <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
-                        <a style="-webkit-transform: scale(0.9);" href="{{route('payment_create')}}" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
-                    </div>
-                @endif
+                <div class="btn-group card-option">
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="list-unstyled dropdown-info card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end">
 
+                        <li class="dropdown-item">
+                            <a id="excelBtn" class="dropdown-item" href="javascript:"> <i class="far fa-file-excel"></i> Excel</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a id="pdfBtn" class="dropdown-item" href="javascript:"> <i class="far fa-file-pdf"></i> PDF</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a id="printBtn" class="dropdown-item" href="javascript:"> <i class="fa fa-print" aria-hidden="true"></i> Print</a>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
 
         </div>
-          <div class="card-body payment_table">
+          <div class="card-body payment_table payment_report_table">
 
               {{--{!! $payments->links() !!}--}}
               <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
@@ -57,7 +46,7 @@
 
                       </td>
 
-                      <td colspan="2">
+                      <td colspan="1">
                           <select class="form-control" name="company_id" id="company_id" aria-describedby="validationTooltipPackagePrepend" required>
                               <option value="">All Company</option>
                               @foreach($companies as $company)
@@ -86,7 +75,7 @@
                       <td colspan="1">
                           <input type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="from_date" id="from_date">
                       </td>
-                      <td colspan="2">
+                      <td colspan="1">
                           <input type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="to_date" id="to_date">
                       </td>
                   </tr>
@@ -98,13 +87,21 @@
                       <th width="150px" scope="col">Company</th>
                       <th width="150px" scope="col">Amount</th>
                       <th width="200px" scope="col">Status</th>
-                      <th width="170px" scope="col text-center">Action</th>
-                      <th scope="col text-center"><i class="feather icon-settings"></i></th>
                   </tr>
 
                   </thead>
                   <tbody>
                   </tbody>
+
+                  <tfoot>
+                  <tr style="font-size: 18px; background-color: red; color: #FFFFFF; font-weight: bold">
+                      <td></td>
+                      <td></td>
+                      <td style="text-align: right; font-weight: bold; font-size: 18px" colspan="3">Total</td>
+                      <td style="text-align: right; padding-right: 20px" class="total_amount"></td>
+                      <td></td>
+                  </tr>
+                  </tfoot>
               </table>
         </div>
 
@@ -148,7 +145,7 @@
 
 @section('footer.scripts')
     {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>--}}
-    <script src="{{ asset("assets/datatable/payment.js") }}" ></script>
+    <script src="{{ asset("assets/datatable/payment-report.js") }}" ></script>
     <script type="text/javascript">
         jQuery(document).ready(function(){
             // project by company
@@ -204,14 +201,7 @@
                 });
 
             });
-
-            /*$("input[type=date]").on("change", function() {
-                this.setAttribute(
-                    "data-date",
-                    moment(this.value, "YYYY-MM-DD")
-                        .format( this.getAttribute("data-date-format") )
-                )
-            }).trigger("change")*/
         });
+
     </script>
 @endsection

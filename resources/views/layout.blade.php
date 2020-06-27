@@ -161,17 +161,15 @@ Like: www.facebook.com/terminalbd
                     </li>
                 @endif
 
-                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('CEO')|| auth()->user()->hasRole('Director')|| auth()->user()->hasRole('Manager'))
+{{--                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('CEO')|| auth()->user()->hasRole('Director')|| auth()->user()->hasRole('Manager'))--}}
 
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Reports</span></a>
-                        <ul class="pcoded-submenu">
-                            <li class="nav-item"><a href="{{route('report_index')}}" class="nav-link"><span class="pcoded-mtext">Report </span></a></li>
-                            {{--<li class="nav-item"><a href="{{route('report_try')}}" class="nav-link"><span class="pcoded-mtext">Test </span></a></li>--}}
-
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('report/*') ? 'pcoded-trigger' : ''}}">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-bar-chart" aria-hidden="true"></i></span><span class="pcoded-mtext">Reports</span></a>
+                        <ul class="pcoded-submenu {{ Request::is('report/*') ? 'active' : ''}}">
+                            <li class="nav-item {{ Request::is('report/payment') ? 'active' : ''}}"><a href="{{route('payment_report')}}" class="nav-link"><i class="fa fa-bar-chart" aria-hidden="true"></i>Payment Report</a></li>
                         </ul>
                     </li>
-                @endif
+                {{--@endif--}}
 
 
 
