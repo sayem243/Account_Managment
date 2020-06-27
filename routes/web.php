@@ -203,7 +203,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 Route::get('/voucher/create/','VocherController@create')->name('voucher_create');
 Route::post('/voucher/store','VocherController@store')->name('voucher_store');
-Route::get('/voucher/index/','VocherController@index')->name('voucher_index');
+Route::get('/voucher/index','VoucherController@index')->name('voucher_index');
+Route::post('/voucher/item/datatable', 'VoucherController@dataTable')->name('voucher_item_datatable');
 Route::get('/voucher/edit/{id}','VocherController@edit')->name('voucher_edit');
 Route::post('/voucher/update/{id}','VocherController@update')->name('voucher_update');
 
@@ -241,3 +242,11 @@ Route::get('/ajax/user/project/{id}','AjaxFunctionController@getUsersByProject')
 
 Route::get('/report/payment', 'ReportController@paymentReport')->name('payment_report');
 Route::post('/report/payment/datatable', 'ReportController@dataTablePaymentReport')->name('payment_report_datatable');
+
+//Expenditure Sector section
+Route::get('/expenditure_sector/index','ExpenditureSectorController@index')->name('expenditure_sector_index');
+Route::get('/expenditure_sector/create','ExpenditureSectorController@create')->name('expenditure_sector_create');
+Route::post('/expenditure_sector/store','ExpenditureSectorController@store')->name('expenditure_sector_store');
+Route::get('/expenditure_sector/edit/{id}','ExpenditureSectorController@edit')->name('expenditure_sector_edit');
+Route::post('/expenditure_sector/update/{id}','ExpenditureSectorController@update')->name('expenditure_sector_update');
+Route::get('/expenditure_sector/delete/{id}' ,'ExpenditureSectorController@destroy')->name('expenditure_sector_delete');
