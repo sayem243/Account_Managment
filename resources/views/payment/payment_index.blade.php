@@ -1,6 +1,34 @@
 @extends('layout')
 @section('title','Advance Payment')
 @section('template')
+    <style>
+        /*input.date_picker {
+            position: relative;
+            height: 35px;
+            color: white;
+        }
+
+        input.date_picker:before {
+            position: absolute;
+            top: 5px; left: 5px;
+            content: attr(data-date);
+            display: inline-block;
+            color: black;
+        }
+
+        input.date_picker::-webkit-datetime-edit, input.date_picker::-webkit-inner-spin-button, input.date_picker::-webkit-clear-button {
+            display: none;
+        }
+
+        input.date_picker::-webkit-calendar-picker-indicator {
+            position: absolute;
+            top: 5px;
+            right: 0;
+            color: black;
+            opacity: 1;
+        }*/
+
+    </style>
 
  <div class="col-sm-12">
    <div class="row">
@@ -37,7 +65,7 @@
                               @endforeach
                           </select>
                       </td>
-                      <td colspan="2">
+                      <td colspan="1">
                           <select class="form-control" name="project_id" id="project_id">
                               <option value="">All Project</option>
                               @foreach($projects as $project)
@@ -55,7 +83,12 @@
                               @endforeach
                           </select>
                       </td>
-                      <td colspan="2"></td>
+                      <td colspan="1">
+                          <input type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="from_date" id="from_date">
+                      </td>
+                      <td colspan="2">
+                          <input type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="to_date" id="to_date">
+                      </td>
                   </tr>
                   <tr>
                       <th scope="col">S/N</th>
@@ -114,6 +147,7 @@
 @endsection
 
 @section('footer.scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="{{ asset("assets/datatable/payment.js") }}" ></script>
     <script type="text/javascript">
         jQuery(document).ready(function(){
@@ -170,6 +204,14 @@
                 });
 
             });
+
+            /*$("input[type=date]").on("change", function() {
+                this.setAttribute(
+                    "data-date",
+                    moment(this.value, "YYYY-MM-DD")
+                        .format( this.getAttribute("data-date-format") )
+                )
+            }).trigger("change")*/
         });
     </script>
 @endsection

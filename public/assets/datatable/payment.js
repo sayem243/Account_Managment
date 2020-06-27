@@ -27,6 +27,9 @@ $(document).ready(function () {
                 var user_id = $('#user_id').val();
                 var project_id = $('#project_id').val();
 
+                var from_date = $('#from_date').val();
+                var to_date = $('#to_date').val();
+
                 var payment_status = $('.payment_table').find('.active').attr('data-status');
                 // Append to data
                 data._token = CSRF_TOKEN;
@@ -35,6 +38,8 @@ $(document).ready(function () {
                 data.user_id = user_id;
                 data.project_id = project_id;
                 data.payment_status = payment_status?payment_status:'all';
+                data.from_date = from_date;
+                data.to_date = to_date;
             }
         },
         'columns': [
@@ -157,6 +162,10 @@ $(document).ready(function () {
     });
 
     $('#user_id').change(function(){
+        dataTable.draw();
+    });
+
+    $('.date_picker').change(function(){
         dataTable.draw();
     });
 

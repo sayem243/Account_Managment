@@ -525,6 +525,12 @@ class PaymentController extends Controller
             }
             $countRecords->whereIn('payments.project_id', $projectId);
         }
+
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'];
+            $to_date = $query['to_date'];
+            $countRecords->whereBetween('payments.created_at', [$from_date, $to_date]);
+        }
 //        $countRecords->groupBy('payment_details.payment_id');
 
         $result = $countRecords->get();
@@ -595,6 +601,11 @@ class PaymentController extends Controller
                 $projectId[]=$project->id;
             }
             $rows->whereIn('payments.project_id', $projectId);
+        }
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'];
+            $to_date = $query['to_date'];
+            $rows->whereBetween('payments.created_at', [$from_date, $to_date]);
         }
 
         $rows->offset($iDisplayStart);
