@@ -203,7 +203,7 @@ class UserController extends Controller
 
         $user=User::find($id);
         $authUserId = Auth::user()['id'];
-        if ($user->id==$authUserId){
+        if ($user->id==$authUserId || auth()->user()->hasRole('superadmin')){
 
             if($request->has('submit')){
                 $user->password=bcrypt($request->password);
