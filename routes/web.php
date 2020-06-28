@@ -202,7 +202,7 @@ Route::group(['middleware' => ['auth']], function() {
 //Route::get('/Voucher/details/{id}','PaymentController@Voucher')->name('Voucher');
 
 Route::get('/voucher/create/','VocherController@create')->name('voucher_create');
-Route::post('/voucher/store','VocherController@store')->name('voucher_store');
+Route::post('/voucher/store','VoucherController@store')->name('voucher_store');
 Route::get('/voucher/index','VoucherController@index')->name('voucher_index');
 Route::post('/voucher/item/datatable', 'VoucherController@dataTable')->name('voucher_item_datatable');
 Route::get('/voucher/edit/{id}','VocherController@edit')->name('voucher_edit');

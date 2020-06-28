@@ -79,6 +79,11 @@ class Payment extends Model
         return $this->hasMany('App\Vocher_details');
     }
 
+    public function voucherItems(){
+
+        return $this->hasMany('App\VoucherItems');
+    }
+
     public function getTotalPaidAmount(){
         $amount=0;
         foreach ($this->Payment_details as $payment_detail){

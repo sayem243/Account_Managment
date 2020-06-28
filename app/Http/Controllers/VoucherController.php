@@ -9,6 +9,8 @@ use App\Project;
 use App\User;
 use App\Vocher;
 use App\Vocher_details;
+use App\Voucher;
+use App\VoucherItems;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +22,7 @@ class VoucherController extends Controller
         $this->middleware('auth');
         //$this->middleware('permission:Payment-create', ['only' => ['index','create','store','approve','verify']]);
         $this->middleware('permission:voucher_approved', ['only' => ['approved']]);
-        $this->middleware('permission:voucher_create', ['only' => ['create']]);
+        $this->middleware('permission:voucher_create', ['only' => ['index','store']]);
 
 
     }
@@ -74,7 +76,7 @@ class VoucherController extends Controller
         $rows->join('projects', 'voucher_items.project_id', '=', 'projects.id');
         $rows->join('payments', 'voucher_items.payment_id', '=', 'payments.id');
         $rows->select('voucher_items.id as viId', 'voucher_items.item_name as name', 'voucher_items.voucher_amount as amount');
-        $rows->addSelect('projects.p_name as projectName');
+        $rows->addSelect('projects.p_name as projectName','projects.id as projectId');
         $rows->addSelect('payments.payment_id as pId');
         $rows->where('voucher_items.status','==', 0);
 
@@ -93,7 +95,7 @@ class VoucherController extends Controller
 
         foreach ($result as $post):
 
-            $dropdown='<select name="expenditure_sector[]" class="form-control">
+            $dropdown='<select name="expenditure_sector['.$post->viId.']" class="form-control">
 <option value="">Select Type</option>';
 foreach ($expenditureSectors as $expenditureSector){
     $dropdown.= '<option value="'.$expenditureSector->id.'">'.$expenditureSector->name.'</option>';
@@ -108,9 +110,9 @@ $dropdown .='</select>';
                 $checkbox,
                 $dropdown,
                 $name               = $post->name,
-                $pId               = $post->pId,
-                $projectName        = $post->projectName?$post->projectName:'',
-                $amount             = $post->amount,
+                $pId                = $post->pId,
+                $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
+                $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
             );
             $i++;
 
@@ -128,176 +130,47 @@ $dropdown .='</select>';
 
 
     public function store(Request $request){
-        $amount=$request->amount;
-        $vocher=new Vocher();
-        $vocher->total_amount=array_sum($amount);
-        $vocher->user_id=$request->user_id;
-
-        $vocher->comments=$request->comments;
-
-        $vocher->save();
-        $projects=$request->project_id;
-        $payments=$request->payment_id;
-
-        $file=$request->files->get('filenames');
-
-        foreach ($payments as $key=>$payment){
-            if($payment>0){
-                $vocherDetails = new Vocher_details();
-                $vocherDetails->project_id = $projects[$key];
-                $vocherDetails->payment_id = $payment;
-                $vocherDetails->amount = $amount[$key];
-
-                if($request->hasFile('filenames')){
-                if($file[$key]->getClientOriginalName()){
-                    $filename = $file[$key]->getClientOriginalName();
-                    $modifyFilename=time() . "_" .$filename;
-                    $vocherDetails->filenames=$modifyFilename;
-                    $file[$key]->move(public_path() . '/files/',$modifyFilename);
+        $voucher_items = $request->voucher_item;
+        $expenditure_sectors = $request->expenditure_sector;
+        $projects_id = $request->project_id;
+        $arrayData = array();
+        if($voucher_items){
+            foreach ($voucher_items as $voucher_item){
+                if(isset($expenditure_sectors[$voucher_item])){
+                    $arrayData[$expenditure_sectors[$voucher_item]][]= $voucher_item;
                 }
-                }
-
-                $vocher->Vocher_details()->save($vocherDetails);
             }
-
         }
-            $this->GenerateVocherId($vocher);
 
+        if ($arrayData){
+            foreach ($arrayData as $key=>$items){
+                $voucher = new Voucher();
+                $voucher->expenditure_sector_id = $key;
+                $voucher->created_by = auth()->user()->id;
+
+                $voucher->save();
+
+                foreach ($items as $item){
+                    $voucherItem = VoucherItems::find($item);
+                    $voucherItem->voucher_id = $voucher->id;
+                    $voucherItem->status = 1;
+                    $voucherItem->save();
+                }
+                $voucher->total_amount = $voucher->getTotalAmount();
+                $this->GenerateVocherId($voucher);
+
+            }
+        }
 
        return redirect()->route('voucher_index');
     }
 
-    private function GenerateVocherId(Vocher $vocher){
+    private function GenerateVocherId(Voucher $voucher){
         $datetime = new \DateTime("now");
-        $sequentialId = sprintf("%s%s",$datetime->format('my'), str_pad($vocher->id,4, '0', STR_PAD_LEFT));
-//        $generateCertificate = "V-{$sequentialId}";
-        $vocher->voucher_id=$sequentialId;
-        $vocher->save();
-    }
-
-    public static function paidAmountByPaymentAndProject($payment, $project){
-        $paymentDetails = DB::table('payment_details')
-            ->where([
-                ['payment_id', '=', $payment],
-                ['project_id', '=', $project],
-            ])
-            ->get();
-        $data=array();
-        if($paymentDetails){
-            $amount=0;
-            foreach ($paymentDetails as $paymentDetail){
-
-                $amount+=$paymentDetail->paid_amount;
-            }
-           $data['amount']=$amount;
-        }
-
-        $amendmentDetails=DB::table('ammendments')->where([
-            ['payment_id','=',$payment],
-            ['project_id','=',$project],
-        ])->get();
-
-        $value=array();
-        if($amendmentDetails){
-            $tk=0;
-            foreach ($amendmentDetails as $amendmentDetail){
-
-                $tk+=$amendmentDetail->amendment_amount;
-            }
-            $value['tk']=$tk;
-        }
-
-        return  $amount+$value['tk'];
-    }
-    public function edit ($id){
-
-        $vochers=Vocher::find($id);
-        $users=User::all();
-        $payments=Payment::all();
-
-
-        return view('voucher.edit',['vochers'=>$vochers,'payments'=>$payments ,'users'=>$users]);
-
-    }
-
-    public function update(Request $request,$id){
-
-        $vocher=Vocher::find($id);
-        $amount=$request->amount;
-        $newAmount=$request->amount?$request->amount:array(0);
-        $exitAmount = $request->exit_amount?$request->exit_amount:array(0);
-        $vocher->total_amount=array_sum($newAmount)+array_sum($exitAmount);
-        $vocher->user_id=$request->user_id;
-        $vocher->comments=$request->comments;
-        $exit_amount=$request->exit_amount;
-
-//        if($request->hasFile('file')){
-//          $vocher->file=$request->file->store('/public/voucher');
-//        }
-        $vocher->save();
-        $projects=$request->project_id;
-        $payments=$request->payment_id;
-        $exit_payment_details=$request->exit_payment_detail;
-        $file=$request->files->get('filenames');
-
-        if($payments){
-            foreach ($payments as $key=>$payment){
-                if($payment>0){
-                    $vocherDetails = new Vocher_details();
-                    $vocherDetails->project_id = $projects[$key];
-                    $vocherDetails->payment_id = $payment;
-                    $vocherDetails->amount = $amount[$key];
-
-                    if($request->hasFile('filenames')){
-                        if($file[$key]->getClientOriginalName()){
-                            $filename = $file[$key]->getClientOriginalName();
-                            $modifyFilename=time() . "_" .$filename;
-                            $vocherDetails->filenames=$modifyFilename;
-                            $file[$key]->move(public_path() . '/files/',$modifyFilename);
-                        }
-                    }
-
-                    $vocher->Vocher_details()->save($vocherDetails);
-                }
-                }
-            }
-        if($exit_payment_details){
-            foreach ($exit_payment_details as $key=>$detail){
-              $vocherDetails=Vocher_details::find($detail);
-
-              $vocherDetails->project_id=$request->exit_project_id[$key];
-              $vocherDetails->payment_id=$request->exit_payment_id[$key];
-              $vocherDetails->amount=$exit_amount[$key];
-
-                    if($request->hasFile('filenames')){
-                        if($file[$key]->getClientOriginalName()){
-                            $filename=$file[$key]->getClientOriginalName();
-                            $modifyFilename=time() ."_".$filename;
-                            $vocherDetails->filenames=$modifyFilename;
-                            $file[$key]->move(public_path() . '/files/',$modifyFilename);
-                        }
-                    }
-                    $vocher->Vocher_details()->save($vocherDetails);
-                }
-             }
-
-//        $this->GenerateVocherId($vocher);
-        return redirect()->route('voucher_index');
-    }
-
-    public function  delete($id){
-        $vocher=Vocher::find($id);
-        $vocher->delete();
-        return redirect()->route('voucher_index');
-    }
-
-
-
-    public function approved($id){
-        $voucher=Vocher::find($id);
-        $voucher->status=2;
+        $sequentialId = sprintf("%s%s",$datetime->format('my'), str_pad($voucher->id,4, '0', STR_PAD_LEFT));
+        $voucher->voucher_generate_id=$sequentialId;
         $voucher->save();
-        return response()->json(['success'=>'Got Simple Ajax Request.','status'=>200]);
     }
+
 
 }

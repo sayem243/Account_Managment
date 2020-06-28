@@ -44,16 +44,17 @@ class PaymentSettlementController extends Controller
 
         $settlement->save();
 
-        foreach ($payment->Payment_details as $payment_detail){
-
-            $voucherItem= new VoucherItems();
-            $voucherItem->item_name= $payment_detail->item_name;
-            $voucherItem->payment_amount= $payment_detail->paid_amount;
-            $voucherItem->voucher_amount= $payment_detail->paid_amount;
-            $voucherItem->payment_id= $payment->id;
-            $voucherItem->payment_details_id = $payment_detail->id;
-            $voucherItem->project_id = $payment_detail->project->id;
-            $voucherItem->save();
+        if(sizeof($payment->voucherItems)<1){
+            foreach ($payment->Payment_details as $payment_detail){
+                $voucherItem= new VoucherItems();
+                $voucherItem->item_name= $payment_detail->item_name;
+                $voucherItem->payment_amount= $payment_detail->paid_amount;
+                $voucherItem->voucher_amount= $payment_detail->paid_amount;
+                $voucherItem->payment_id= $payment->id;
+                $voucherItem->payment_details_id = $payment_detail->id;
+                $voucherItem->project_id = $payment_detail->project->id;
+                $voucherItem->save();
+            }
         }
 
         $totalSettleAmount = $this->getTotalSettlementAmount($payment);
