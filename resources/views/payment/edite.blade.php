@@ -70,7 +70,7 @@
                                 <div class="col-md-7">
                                     <div class="form-group">
                                         <label for="comments">Comments:</label>
-                                        <textarea name="comments" rows="5" class="form-control">{{$payment->comments}}</textarea>
+                                        <textarea name="comments" rows="5" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -215,6 +215,13 @@
             jQuery(document).on('keyup','.amount', function () {
                 calculateSum();
             })
+        });
+
+        $(document).on("keypress keyup blur", ".amount", function (e) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g,''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
         });
 
         function calculateSum() {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Ammendment;
 use App\Documents;
 use App\Payment_details;
+use App\PaymentComments;
 use App\PaymentSettlement;
 use App\PaymentTransfer;
 use App\Project;
@@ -113,7 +114,7 @@ class PaymentController extends Controller
 
             $payment=new Payment();
             $payment->user_id=$request->user_id;
-            $payment->comments=$request->comments;
+//            $payment->comments=$request->comments;
             $payment->company_id=$request->company_id;
             $payment->project_id=$newKey;
             $payment->created_by=$user->id;
@@ -133,6 +134,13 @@ class PaymentController extends Controller
                 $payment->Payment_details()->save($paymentDetails);
             }
 
+            if($request->comments){
+                $paymentComment = new PaymentComments();
+                $paymentComment->comments = $request->comments;
+                $paymentComment->created_by = $user->id;
+                $payment->PaymentComments()->save($paymentComment);
+            }
+
             $this->setTotalPaidAmount($payment);
 
             $this->GeneratePaymentId($payment);
@@ -147,6 +155,46 @@ class PaymentController extends Controller
 
         return redirect()->route('payment')->with('error', 'Error! something wrong. Please try again.');
 
+    }
+
+    public function commentStore(Request $request, $id){
+
+        /** @var Payment $payment*/
+        $payment = Payment::find($id);
+        if($request->comments){
+            $paymentComment = new PaymentComments();
+            $paymentComment->comments = $request->comments;
+            $paymentComment->created_by = auth()->user()->id;
+            $payment->PaymentComments()->save($paymentComment);
+            return redirect()->route('details',$payment->id)->with('success','Comments has been successfully created.');
+        }
+        return redirect()->route('details',$payment->id)->with('error','Error! Ops something wrong.');
+    }
+
+    public function paymentAttachmentStore(Request $request, $id){
+
+        $files = $request->file('payment_attachment');
+        /** @var Payment $payment*/
+        $payment = Payment::find($id);
+        if (isset($files) && $files!=null){
+            $i=1;
+            foreach ($files as $attachment){
+                if ($attachment->getClientOriginalName()) {
+                    $document = new Documents();
+                    $filename = $attachment->getClientOriginalName();
+                    $modifyFilename = time()."_".$i."_".$filename;
+                    $document->payment_id = $payment->id;
+                    $document->file_name = $modifyFilename;
+                    $document->file_path = 'uploads/hand_slip/'.$modifyFilename;
+                    $attachment->move(public_path() .'/uploads/hand_slip/', $modifyFilename);
+                    $document->created_by = auth()->user()->id;
+                    $document->save();
+                }
+                $i++;
+            }
+            return redirect()->route('details',$payment->id)->with('success','Attachment has been successfully uploaded.');
+        }
+        return redirect()->route('details',$payment->id)->with('error','Error! Ops something wrong.');
     }
 
     public function draftView(Request $request){
@@ -199,6 +247,7 @@ class PaymentController extends Controller
                         $document->file_name = $modifyFilename;
                         $document->file_path = 'uploads/hand_slip/'.$modifyFilename;
                         $attachment->move(public_path() .'/uploads/hand_slip/', $modifyFilename);
+                        $document->created_by = auth()->user()->id;
                         $document->save();
                     }
                     $i++;
@@ -353,7 +402,7 @@ class PaymentController extends Controller
         $payment->user_id=$request->user_id;
         $payment->company_id=$request->company_id;
         $payment->project_id=$request->exit_project_id[0];
-        $payment->comments=$request->comments;
+//        $payment->comments=$request->comments;
 
         $payment->created_by=$user->id;
         $payment->save();
@@ -384,6 +433,13 @@ class PaymentController extends Controller
                 $payment->Payment_details()->save($paymentDetails);
             }
         }
+        if($request->comments){
+            $paymentComment = new PaymentComments();
+            $paymentComment->comments = $request->comments;
+            $paymentComment->created_by = $user->id;
+            $payment->PaymentComments()->save($paymentComment);
+        }
+
         $this->setTotalPaidAmount($payment);
 
         return redirect()->route('payment')->with('success', 'Payment has been successfully Updated.');

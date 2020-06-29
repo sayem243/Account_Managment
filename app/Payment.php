@@ -84,6 +84,11 @@ class Payment extends Model
         return $this->hasMany('App\VoucherItems');
     }
 
+    public function paymentComments(){
+
+        return $this->hasMany('App\PaymentComments');
+    }
+
     public function getTotalPaidAmount(){
         $amount=0;
         foreach ($this->Payment_details as $payment_detail){

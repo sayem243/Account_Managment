@@ -156,7 +156,7 @@
                 var user_id = jQuery('#user_id').val();
                 var payment_company_id = jQuery('#payment_company_id').val();
                 if(user_id<=0 || payment_company_id==''){
-                    var dataOption='<option value="0">Select Project</option>';
+                    var dataOption='<option value="">Select Project</option>';
                     jQuery('.user_project_list').html(dataOption);
                     return false;
                 }
@@ -168,7 +168,7 @@
                         'company_id':payment_company_id
                     },
                     success:function(data){
-                        var dataOption='<option value="0">Select Project</option>';
+                        var dataOption='<option value="">Select Project</option>';
                         jQuery.each(data, function(i, item) {
                             dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
                         });
@@ -205,6 +205,13 @@
                     }
                 }
                 $('.total_amount').text(calculateSum());
+            });
+
+            $(document).on("keypress keyup blur", ".paid_amount", function (e) {
+                $(this).val($(this).val().replace(/[^0-9\.]/g,''));
+                if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
             });
         });
 

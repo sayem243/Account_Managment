@@ -51,7 +51,7 @@ $(document).ready(function () {
             { "name": 'pStatus' },
         ],
         "order": [
-            [1, "asc"]
+            [1, "desc"]
         ],// set first column as a default sort by asc
         "columnDefs": [ {
             "targets": 8,

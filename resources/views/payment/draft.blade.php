@@ -50,7 +50,7 @@
                                 <table class="table payment_attachment_table" style="margin-top: 25px; margin-bottom: 0">
                                     <tbody>
                                     <tr>
-                                        <td><input type="file" name="payment_attachment[{{$payment->id}}][]"></td>
+                                        <td><input type="file" class="payment_attachment" name="payment_attachment[{{$payment->id}}][]"></td>
                                         <td>
                                             <button type="button" class="btn btn-info add_row">Add</button>
                                             <button type="button" class="btn btn-danger remove_row" style="display: none">Delete</button>
@@ -115,6 +115,18 @@
                 $tr.clone().insertAfter($tr);
                 $tr.find('td').find('button.remove_row').show();
                 $tr.find('td').find('button.add_row').hide();
+            });
+
+            $(document).on('change', '.payment_attachment', function() {
+
+                //this.files[0].size gets the size of your file.
+                var thisValue = this.files[0].size;
+                // alert(thisValue);
+                if(thisValue>2048000){
+                    alert('Maximum file size 2mb.');
+                    $(this).val('');
+                }
+
             });
 
             // Find and remove selected table rows

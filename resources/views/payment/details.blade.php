@@ -113,6 +113,16 @@
                                         Retrie
                                     </button>
                                 @endif
+                                @if($payment->status<6)
+                                        <button style="border-radius: .3rem" id="addAttachments" class="btn btn-info btn-lg"
+                                                data-toggle="modal" data-target="#modalAttachmentForm">
+                                            Attachments
+                                        </button>
+                                        <button style="border-radius: .3rem" id="addComments" class="btn btn-info btn-lg"
+                                                data-toggle="modal" data-target="#modalCommentForm">
+                                            Comments
+                                        </button>
+                                @endif
 
                                 @if($payment->status>3)
                                     <a style="border-radius: .3rem" target="_blank"
@@ -125,74 +135,104 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="card hidden-print">
+                    <div class="card-body hidden-print">
+                        <div class="row">
+                            <div class="col-sm-6 hidden-print">
 
-                    <div class="col-md-12 hidden-print">
-                        @if($payment->comments)
-                        <p style="color: red; font-weight: bold;font-size: 16px; margin-bottom: 5px">
-                           Comments: {{$payment->comments}}
-                        </p>
-                        @endif
+                                @if(sizeof($payment->paymentDocuments)>0)
+                                    <h3>Attachment</h3>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($payment->paymentDocuments as $document)
+                                            <tr>
+                                                <td>{{date('d-m-Y',strtotime($document->created_at))}}</td>
+                                                <td>{{$document->file_name}}</td>
+                                                <td><a target="_blank" download href="{{asset($document->file_path)}}">Download</a></td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                @endif
+                            </div>
+                            <div class="col-sm-6 hidden-print">
 
-                        @if(sizeof($payment->paymentDocuments)>0)
-                            <h3>Attachment</h3>
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Name</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($payment->paymentDocuments as $document)
-                                   <tr>
-                                       <td>{{date('d-m-Y',strtotime($document->created_at))}}</td>
-                                       <td>{{$document->file_name}}</td>
-                                       <td><a target="_blank" download href="{{asset($document->file_path)}}">Download</a></td>
-                                   </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                         @endif
+                                @if(sizeof($payment->paymentComments)>0)
+                                    <h3>Comments</h3>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($payment->paymentComments as $comment)
+                                            <tr>
+                                                <td style="vertical-align: top">{{date('d-m-Y',strtotime($comment->created_at))}}</td>
+                                                <td style="vertical-align: top">{{$comment->user->name}}</td>
+                                                <td style="vertical-align: top">
+                                                    <p style="white-space: normal; margin-bottom: 2px">{{$comment->comments}}</p>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                @endif
+                            </div>
 
-                        @if(sizeof($payment->paymentSettlements)>0||sizeof($payment->paymentTransfers)>0)
+                            <div class="col-md-12 hidden-print">
 
-                            <h3>Settlement History</h3>
+                                @if(sizeof($payment->paymentSettlements)>0||sizeof($payment->paymentTransfers)>0)
 
-                            <table class="table table-bordered">
-                                <thead>
-                                <th>SL.</th>
-                                <th>Date</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                                </thead>
+                                    <h3>Settlement History</h3>
 
-                                @php $i=0; @endphp
-                                @foreach($payment->paymentTransfers as $paymentTransfer)
-                                    @php $i++ @endphp
-                                    <tr style="color: #000000; background-color: #e0e0e0">
-                                        <td>{{$i}}</td>
-                                        <td>{{date('d-m-Y',strtotime($paymentTransfer->created_at))}}</td>
-                                        <td>TRANSFERRED FROM <a
-                                                    href="{{route('details',$paymentTransfer->referencePayment->id)}}">{{$paymentTransfer->referencePayment->payment_id}}</a>
-                                        </td>
-                                        <td>{{$paymentTransfer->transfer_amount}}</td>
-                                    </tr>
-                                @endforeach
-                                @foreach($payment->paymentSettlements as $paymentSettlement)
-                                    @php $i++ @endphp
-                                    <tr>
-                                        <td>{{$i}}</td>
-                                        <td>{{date('d-m-Y',strtotime($paymentSettlement->created_at))}}</td>
-                                        <td>{{$paymentSettlement->type}}</td>
-                                        <td>{{$paymentSettlement->settlement_amount}}</td>
-                                    </tr>
-                                @endforeach
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <th>SL.</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        </thead>
 
-                            </table>
+                                        @php $i=0; @endphp
+                                        @foreach($payment->paymentTransfers as $paymentTransfer)
+                                            @php $i++ @endphp
+                                            <tr style="color: #000000; background-color: #e0e0e0">
+                                                <td>{{$i}}</td>
+                                                <td>{{date('d-m-Y',strtotime($paymentTransfer->created_at))}}</td>
+                                                <td>TRANSFERRED FROM <a
+                                                            href="{{route('details',$paymentTransfer->referencePayment->id)}}">{{$paymentTransfer->referencePayment->payment_id}}</a>
+                                                </td>
+                                                <td>{{$paymentTransfer->transfer_amount}}</td>
+                                            </tr>
+                                        @endforeach
+                                        @foreach($payment->paymentSettlements as $paymentSettlement)
+                                            @php $i++ @endphp
+                                            <tr>
+                                                <td>{{$i}}</td>
+                                                <td>{{date('d-m-Y',strtotime($paymentSettlement->created_at))}}</td>
+                                                <td>{{$paymentSettlement->type}}</td>
+                                                <td>{{$paymentSettlement->settlement_amount}}</td>
+                                            </tr>
+                                        @endforeach
 
-                        @endif
+                                    </table>
+
+                                @endif
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
@@ -224,6 +264,81 @@
                                        max="{{$payment->total_paid_amount - $totalSettlementAmount}}"
                                        value="{{$payment->total_paid_amount - $totalSettlementAmount}}" required/>
                             </div>
+                            <div class="modal-footer btn-group btn-group-lg">
+                                <button style="border-radius: .3rem" type="button" class="btn btn-danger"
+                                        data-dismiss="modal">Close
+                                </button>
+                                <button style="border-radius: .3rem" id="tag-form-submit" type="submit"
+                                        class="btn btn-info">Save
+                                </button>
+                            </div>
+                        </form>
+                    @else
+                        <p>This payment is not permission</p>
+                    @endif
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{--comments modal--}}
+    <div id="modalCommentForm" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Comments</h4>
+                </div>
+                <div class="modal-body">
+
+                    @if($payment->status<6)
+                        <form class="tagForm" id="tag-form" action="{{ route('comments_store',$payment->id)}}"
+                              method="post">
+                            {{ csrf_field() }}
+                                <textarea style="width: 100%" name="comments" id="" cols="30" rows="10" placeholder="Enter your comments"></textarea>
+                            <div class="modal-footer btn-group btn-group-lg">
+                                <button style="border-radius: .3rem" type="button" class="btn btn-danger"
+                                        data-dismiss="modal">Close
+                                </button>
+                                <button style="border-radius: .3rem" id="tag-form-submit" type="submit"
+                                        class="btn btn-info">Save
+                                </button>
+                            </div>
+                        </form>
+                    @else
+                        <p>This payment is not permission</p>
+                    @endif
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{--comments modal--}}
+    <div id="modalAttachmentForm" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Attachments</h4>
+                </div>
+                <div class="modal-body">
+
+                    @if($payment->status<6)
+                        <form class="form-horizontal" action="{{ route('payment_attachment_store', $payment->id)}}" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <table class="table payment_attachment_table" style="margin-top: 25px; margin-bottom: 0">
+                                <tbody>
+                                <tr>
+                                    <td><input type="file" class="payment_attachment" name="payment_attachment[]"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-info add_row">Add</button>
+                                        <button type="button" class="btn btn-danger remove_row" style="display: none">Delete</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                             <div class="modal-footer btn-group btn-group-lg">
                                 <button style="border-radius: .3rem" type="button" class="btn btn-danger"
                                         data-dismiss="modal">Close
@@ -332,10 +447,30 @@
                 }
             });
 
-            jQuery('#aaddTag').click(function (e) {
-                e.preventDefault();
-                jQuery('#mymodal').modal();
+            $(document).on('click', '.add_row', function(){
+                var $tr = $(this).closest('tr');
+                $tr.clone().insertAfter($tr);
+                $tr.find('td').find('button.remove_row').show();
+                $tr.find('td').find('button.add_row').hide();
             });
+
+            // Find and remove selected table rows
+            $('body').on('click','.remove_row', function(){
+                $(this).closest("tr").remove();
+            });
+
+            $(document).on('change', '.payment_attachment', function() {
+
+                //this.files[0].size gets the size of your file.
+                var thisValue = this.files[0].size;
+                // alert(thisValue);
+                    if(thisValue>2048000){
+                        alert('Maximum file size 2mb.');
+                        $(this).val('');
+                    }
+
+            });
+
             $('.modal').on('hidden.bs.modal', function () {
                 $(this).find('form')[0].reset();
             });

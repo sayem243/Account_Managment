@@ -68,7 +68,7 @@ class PaymentSettlementController extends Controller
         $payment->save();
 
 
-        return redirect()->route('details',$payment->id);
+        return redirect()->route('details',$payment->id)->with('success','Settlement has been successfully created.');
     }
 
     private function getTotalSettlementAmount(Payment $payment){
