@@ -5,6 +5,7 @@
 /public/uploads
 /storage/app/file
 /storage/*.key
+/storage/framework
 /vendor
 /.idea
 /.vagrant
