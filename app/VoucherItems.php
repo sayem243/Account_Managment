@@ -15,4 +15,8 @@ class VoucherItems extends Model
 
         return $this->belongsTo('App\Payment');
     }
+    public function project(){
+
+        return $this->belongsTo('App\Project');
+    }
 }

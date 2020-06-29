@@ -208,6 +208,12 @@ Route::get('/voucher/create/','VocherController@create')->name('voucher_create')
 Route::post('/voucher/store','VoucherController@store')->name('voucher_store');
 Route::get('/voucher/index','VoucherController@index')->name('voucher_index');
 Route::post('/voucher/item/datatable', 'VoucherController@dataTable')->name('voucher_item_datatable');
+Route::get('/voucher/draft/view','VoucherController@draftView')->name('voucher_draft_view');
+Route::post('/voucher/draft/to/confirm','VoucherController@draftToConfirmStore')->name('voucher_store_confirm');
+
+
+
+
 Route::get('/voucher/edit/{id}','VocherController@edit')->name('voucher_edit');
 Route::post('/voucher/update/{id}','VocherController@update')->name('voucher_update');
 

@@ -109,7 +109,7 @@ $dropdown .='</select>';
             $records["data"][] = array(
                 $checkbox,
                 $dropdown,
-                $name               = $post->name,
+                $name               = '<input type="hidden" value="'.$post->name.'" name="item_name['.$post->viId.']">'.$post->name,
                 $pId                = $post->pId,
                 $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
                 $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
@@ -133,36 +133,67 @@ $dropdown .='</select>';
         $voucher_items = $request->voucher_item;
         $expenditure_sectors = $request->expenditure_sector;
         $projects_id = $request->project_id;
+        $item_name = $request->item_name;
+        $voucher_amount = $request->voucher_amount;
         $arrayData = array();
         if($voucher_items){
             foreach ($voucher_items as $voucher_item){
-                if(isset($expenditure_sectors[$voucher_item])){
-                    $arrayData[$expenditure_sectors[$voucher_item]][]= $voucher_item;
+                if(isset($expenditure_sectors[$voucher_item]) && isset($projects_id[$voucher_item])){
+                    $arrayData[$expenditure_sectors[$voucher_item]][$projects_id[$voucher_item]][]= array(
+                        'vItemId'=>$voucher_item,
+                        'project_id'=>$projects_id[$voucher_item],
+                        'item_name'=>$item_name[$voucher_item],
+                        'voucher_amount'=>$voucher_amount[$voucher_item],
+                        );
                 }
             }
         }
+
+//        var_dump($arrayData);die;
 
         if ($arrayData){
-            foreach ($arrayData as $key=>$items){
-                $voucher = new Voucher();
-                $voucher->expenditure_sector_id = $key;
-                $voucher->created_by = auth()->user()->id;
+            $returnArray = array();
+            foreach ($arrayData as $keyParent=>$vouchers){
+                foreach ($vouchers as $keyChild => $items){
+                    $voucher = new Voucher();
+                    $voucher->expenditure_sector_id = $keyParent;
+                    $voucher->created_by = auth()->user()->id;
 
-                $voucher->save();
+                    $voucher->save();
 
-                foreach ($items as $item){
-                    $voucherItem = VoucherItems::find($item);
-                    $voucherItem->voucher_id = $voucher->id;
-                    $voucherItem->status = 1;
-                    $voucherItem->save();
+                    foreach ($items as $item){
+                        $voucherItem = VoucherItems::find($item['vItemId']);
+                        $voucherItem->voucher_id = $voucher->id;
+                        $voucherItem->item_name = $item['item_name'];
+                        $voucherItem->project_id = $item['project_id'];
+                        $voucherItem->voucher_amount = $item['voucher_amount'];
+                        $voucherItem->status = 1;
+                        $voucherItem->save();
+                    }
+                    $voucher->total_amount = $voucher->getTotalAmount();
+                    $this->GenerateVocherId($voucher);
+
+                    $returnArray[]=$voucher->id;
                 }
-                $voucher->total_amount = $voucher->getTotalAmount();
-                $this->GenerateVocherId($voucher);
 
+            }
+            if ($returnArray){
+                return redirect()->route('voucher_draft_view',http_build_query(['voucher[]'=>$returnArray]))->with('success', 'Click save and confirm to create this vouchers.');
             }
         }
 
-       return redirect()->route('voucher_index');
+       return redirect()->route('voucher_index')->with('error','Error! Ops something error.');
+    }
+
+    public function draftView(Request $request){
+        $vouchers = Voucher::whereIn('id', $request->voucher)->get();
+
+        return view('voucher.draft',['vouchers'=>$vouchers]);
+    }
+
+    public function draftToConfirmStore(Request $request){
+        $vouchersId = $request->voucher_id;
+
     }
 
     private function GenerateVocherId(Voucher $voucher){
