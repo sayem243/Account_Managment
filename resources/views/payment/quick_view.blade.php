@@ -84,7 +84,7 @@
                                 </tr>
                                 </thead>
                             </table>
-                            <div class="col-md-12" style="position: absolute; left: 0; top: 300px">
+                            <div class="col-md-12">
                                 <div class="signature_area" style="border: 2px solid #000000; height: 60px; width: 250px;text-align: center;margin-bottom: 10px">
                                     Signature
 
@@ -100,6 +100,107 @@
 
 
                 </div>
+
+                <div class="card hidden-print">
+                    <div class="card-body hidden-print">
+                        <div class="row">
+                            <div class="col-sm-6 hidden-print">
+
+                                @if(sizeof($payment->paymentDocuments)>0)
+                                    <h3>Attachment</h3>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($payment->paymentDocuments as $document)
+                                            <tr>
+                                                <td>{{date('d-m-Y',strtotime($document->created_at))}}</td>
+                                                <td>{{$document->file_name}}</td>
+                                                <td><a target="_blank" download href="{{asset($document->file_path)}}">Download</a></td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                @endif
+                            </div>
+                            <div class="col-sm-6 hidden-print">
+
+                                @if(sizeof($payment->paymentComments)>0)
+                                    <h3>Comments</h3>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($payment->paymentComments as $comment)
+                                            <tr>
+                                                <td style="vertical-align: top">{{date('d-m-Y',strtotime($comment->created_at))}}</td>
+                                                <td style="vertical-align: top">{{$comment->user->name}}</td>
+                                                <td style="vertical-align: top">
+                                                    <p style="white-space: normal; margin-bottom: 2px">{{$comment->comments}}</p>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                @endif
+                            </div>
+
+                            <div class="col-md-12 hidden-print">
+
+                                @if(sizeof($payment->paymentSettlements)>0||sizeof($payment->paymentTransfers)>0)
+
+                                    <h3>Settlement History</h3>
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <th>SL.</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        </thead>
+
+                                        @php $i=0; @endphp
+                                        @foreach($payment->paymentTransfers as $paymentTransfer)
+                                            @php $i++ @endphp
+                                            <tr style="color: #000000; background-color: #e0e0e0">
+                                                <td>{{$i}}</td>
+                                                <td>{{date('d-m-Y',strtotime($paymentTransfer->created_at))}}</td>
+                                                <td>TRANSFERRED FROM <a
+                                                            href="{{route('details',$paymentTransfer->referencePayment->id)}}">{{$paymentTransfer->referencePayment->payment_id}}</a>
+                                                </td>
+                                                <td>{{$paymentTransfer->transfer_amount}}</td>
+                                            </tr>
+                                        @endforeach
+                                        @foreach($payment->paymentSettlements as $paymentSettlement)
+                                            @php $i++ @endphp
+                                            <tr>
+                                                <td>{{$i}}</td>
+                                                <td>{{date('d-m-Y',strtotime($paymentSettlement->created_at))}}</td>
+                                                <td>{{$paymentSettlement->type}}</td>
+                                                <td>{{$paymentSettlement->settlement_amount}}</td>
+                                            </tr>
+                                        @endforeach
+
+                                    </table>
+
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
             </div>
 
         </div>
