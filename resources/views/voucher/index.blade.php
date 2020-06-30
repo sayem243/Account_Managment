@@ -8,11 +8,50 @@
                     <div class="card-header">
                         <h5>Voucher Items List</h5>
                     </div>
-                    <div class="card-body voucher_item_table payment_table">
+                    <div class="card-body" style="padding-bottom: 0">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <td>Expenses Type</td>
+                                <td>Project</td>
+                                <td>Item Name</td>
+                                <td>Amount</td>
+                                <td>Action</td>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <select name="item_expenditure_sector" class="form-control item_expenditure_sector">
+                                        <option value="">Select Type</option>
+                                        @foreach ($expenditureSectors as $expenditureSector)
+                                            <option value="{{$expenditureSector->id}}">{{$expenditureSector->name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control item_project_id" name="item_project" id="item_project_id">
+                                        <option value="">All Project</option>
+                                        @foreach($projects as $project)
+                                            <option value="{{ $project->id }}">{{ $project->p_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder="Enter item name" class="form-control voucher_item_name" name="voucher_item_name"></td>
+                                <td><input type="text" placeholder="Enter amount" class="form-control amount voucher_item_amount" name="voucher_item_amount"></td>
+                                <td><button type="button" class="btn btn-info add_row">Add</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-body voucher_item_table payment_table" style="padding-top: 5px">
+
 
                         <form class="form-horizontal" action="{{ route('voucher_store')}}" method="post">
                             {{ csrf_field() }}
-                            <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
+                            <table class="table table-striped table-bordered table-hover table-checkable" id="voucher_item_table">
                                 <thead class="thead-dark">
                                 <tr role="row" class="filter">
                                     <td colspan="2">
@@ -30,7 +69,7 @@
                                     <td colspan="4"></td>
                                 </tr>
                                 <tr>
-                                    <th style="vertical-align: middle;" scope="col"><input type="checkbox" class="form-control all_item"></th>
+                                    <th style="vertical-align: middle; width: 20px" scope="col"><input type="checkbox" class="form-control all_item"></th>
                                     <th style="width: 200px" scope="col">Expenses Type</th>
                                     <th style="width: 350px" scope="col">Item Name</th>
                                     <th style="width: 120px" width="" scope="col">HS ID</th>
@@ -62,5 +101,77 @@
 
 @section('footer.scripts')
     <script src="{{ asset("assets/datatable/voucher-details.js") }}" ></script>
+
+    <script type="text/javascript">
+        $(document).on("keypress keyup blur", ".amount", function (e) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g,''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+        jQuery(document).on("click", ".add_row", function (a) {
+
+            var element = $(this);
+            var item_expenditure_sector = element.closest('tr').find('.item_expenditure_sector').val();
+            var item_project_id = element.closest('tr').find('.item_project_id').val();
+            var voucher_item_name = element.closest('tr').find('.voucher_item_name').val();
+            var voucher_item_amount = element.closest('tr').find('.voucher_item_amount').val();
+            if(item_project_id=='' || voucher_item_amount=='' || voucher_item_name==''){
+                alert('These are fields required.');
+                return false;
+            }
+
+
+            if (confirm("Do you want to add?")) {
+
+                jQuery.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '{{route("ajax_add_voucher_item")}}',
+                    data: {
+                        'expenditure_sector_id':item_expenditure_sector,
+                        'project_id':item_project_id,
+                        'item_name':voucher_item_name,
+                        'voucher_amount':voucher_item_amount,
+                    },
+                    success: function (data) {
+
+                        if(data.voucher_item_id!=''){
+                            var html = '<tr>';
+                            html +='<td><input type="checkbox" name="voucher_item[]" value="'+data.voucher_item_id+'">';
+                            html +='</td>';
+                            html +='<td>a';
+                            html +='</td>';
+                            html +='<td><input type="hidden" value="'+data.item_name+'" name="item_name['+data.voucher_item_id+']">'+data.item_name;
+                            html +='</td>';
+                            html +='<td><input type="hidden" value="'+data.project_id+'" name="project_id['+data.voucher_item_id+']">'+data.project_name;
+                            html +='</td>';
+                            html +='<td>';
+                            html +='</td>';
+                            html +='<td>';
+                            html +='</td>';
+
+                            html+='</tr>';
+
+                            $(html).insertBefore('#voucher_item_table tbody > tr:first');
+
+                            // $('#voucher_item_table tbody').append(html);
+
+
+
+                        }
+
+                        console.log(data.voucher_item_id);
+
+                    }
+
+                });
+            }
+        });
+
+
+    </script>
+
+
 @endsection
 

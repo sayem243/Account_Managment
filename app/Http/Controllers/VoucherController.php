@@ -30,7 +30,8 @@ class VoucherController extends Controller
 
     Public function index(){
         $projects=Project::all();
-        return  view('voucher.index',['projects'=>$projects]);
+        $expenditureSectors = ExpenditureSector::all();
+        return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors]);
     }
 
 
@@ -47,13 +48,7 @@ class VoucherController extends Controller
         $countRecords->join('payments', 'voucher_items.payment_id', '=', 'payments.id');
 //        $countRecords->join('companies', 'payments.company_id', '=', 'companies.id');
 
-        if (isset($query['voucher_status'])) {
-            $status = $query['voucher_status'];
-            $countRecords->where('voucher_items.status', $status);
-        }else{
-            $countRecords->where('voucher_items.status', 0);
-        }
-
+        $countRecords->where('voucher_items.status','=', 0);
         if (isset($query['payment_id'])) {
             $name = $query['payment_id'];
             $countRecords->where('payments.payment_id', 'like', "{$name}%");
@@ -84,29 +79,15 @@ class VoucherController extends Controller
 //        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
 //        $rows->join('projects', 'payment_details.project_id', '=', 'projects.id');
         $rows->join('projects', 'voucher_items.project_id', '=', 'projects.id');
-        $rows->join('payments', 'voucher_items.payment_id', '=', 'payments.id');
-        $rows->select('voucher_items.id as viId', 'voucher_items.item_name as name', 'voucher_items.status as viStatus', 'voucher_items.voucher_amount as amount');
+        $rows->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
+        $rows->select('voucher_items.id as viId', 'voucher_items.item_name as name', 'voucher_items.voucher_amount as amount');
         $rows->addSelect('projects.p_name as projectName','projects.id as projectId');
         $rows->addSelect('payments.payment_id as pId');
-        if (isset($query['voucher_status']) && $query['voucher_status']==1) {
-            $rows->join('vouchers', 'voucher_items.voucher_id', '=', 'vouchers.id');
-            $rows->join('expenditure_sectors', 'vouchers.expenditure_sector_id', '=', 'expenditure_sectors.id');
-            $rows->addSelect('expenditure_sectors.name as expName');
-        }
-
-
-        if (isset($query['voucher_status'])) {
-            $status = $query['voucher_status'];
-            $rows->where('voucher_items.status', $status);
-        }else{
-            $rows->where('voucher_items.status', 0);
-        }
-
+        $rows->where('voucher_items.status','=', 0);
         if (isset($query['payment_id'])) {
             $name = $query['payment_id'];
             $rows->where('payments.payment_id', 'like', "{$name}%");
         }
-
         if(isset($query['project_id'])){
             $project_id = $query['project_id'];
             $rows->where('payments.project_id',$project_id);
@@ -122,19 +103,15 @@ class VoucherController extends Controller
 
         foreach ($result as $post):
 
-            $dropdown=isset($post->expName)?$post->expName:'';
-            $checkbox='';
-
-            if($post->viStatus==0){
-                $dropdown='<select name="expenditure_sector['.$post->viId.']" class="form-control">
-                <option value="">Select Type</option>';
-                foreach ($expenditureSectors as $expenditureSector){
-                    $dropdown.= '<option value="'.$expenditureSector->id.'">'.$expenditureSector->name.'</option>';
-                }
-
-                $dropdown .='</select>';
-                $checkbox = '<input type="checkbox" name="voucher_item[]" value="'.$post->viId.'">';
+            $dropdown='<select name="expenditure_sector['.$post->viId.']" class="form-control">
+            <option value="">Select Type</option>';
+            foreach ($expenditureSectors as $expenditureSector){
+                $dropdown.= '<option value="'.$expenditureSector->id.'">'.$expenditureSector->name.'</option>';
             }
+
+            $dropdown .='</select>';
+
+            $checkbox = '<input type="checkbox" name="voucher_item[]" value="'.$post->viId.'">';
 
 
             $records["data"][] = array(

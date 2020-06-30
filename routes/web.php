@@ -247,6 +247,8 @@ Route::get('/generate-pdf','PaymentDetailsController@generatePDF');
 Route::get('/ajax/project/company/{id}','AjaxFunctionController@getProjectsByCompany')->name('ajax_project_by_company_id');
 Route::get('/ajax/user/project/{id}','AjaxFunctionController@getUsersByProject')->name('ajax_user_by_project_id');
 
+Route::post('/ajax/add/voucher_item/','AjaxFunctionController@addVoucherItem')->name('ajax_add_voucher_item');
+
 //report section
 
 Route::get('/report/payment', 'ReportController@paymentReport')->name('payment_report');
