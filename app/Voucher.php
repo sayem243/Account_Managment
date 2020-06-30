@@ -11,6 +11,11 @@ class Voucher extends Model
         return $this->hasMany('App\VoucherItems');
     }
 
+    public function expenditureSector(){
+
+        return $this->belongsTo('App\ExpenditureSector');
+    }
+
     public function getTotalAmount(){
         $amount=0;
         foreach ($this->VoucherItems as $voucherItem){

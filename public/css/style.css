@@ -210,3 +210,9 @@ button.btn, a.btn {
     min-width: 80px;
     border-radius: 0.25rem!important;
 }
+.payment_table button.voucher_status{
+    -webkit-transform: scale(1);
+    margin-right: 10px;
+    min-width: 80px;
+    border-radius: 0.25rem!important;
+}

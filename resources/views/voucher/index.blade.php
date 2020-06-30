@@ -15,7 +15,9 @@
                             <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
                                 <thead class="thead-dark">
                                 <tr role="row" class="filter">
-                                    <td colspan="1">
+                                    <td colspan="2">
+                                        <input  type="text" class="form-control form-filter input-sm" name="payment_id" id="payment_id" placeholder="Payment Id"> </td>
+
                                     </td>
                                     <td>
                                         <select class="form-control" name="project_id" id="project_id">
@@ -29,11 +31,11 @@
                                 </tr>
                                 <tr>
                                     <th style="vertical-align: middle;" scope="col"><input type="checkbox" class="form-control all_item"></th>
-                                    <th scope="col">Expenses Type</th>
-                                    <th scope="col">Item Name</th>
-                                    <th width="" scope="col">HS ID</th>
-                                    <th width="" scope="col">Project</th>
-                                    <th width="" scope="col">Amount</th>
+                                    <th style="width: 200px" scope="col">Expenses Type</th>
+                                    <th style="width: 350px" scope="col">Item Name</th>
+                                    <th style="width: 120px" width="" scope="col">HS ID</th>
+                                    <th style="width: 150px" width="" scope="col">Project</th>
+                                    <th style="width: 100px" width="" scope="col">Amount</th>
                                 </tr>
 
                                 </thead>
@@ -43,7 +45,7 @@
                             <div class="line aligncenter" style="float: right">
                                 <div class="form-group row">
                                     <div style="padding-right: 3px" class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
-                                        <button onclick="return confirm('Are you sure?')" style="margin-right: 0" type="submit" class="btn btn-info btn-lg" data-original-title="" title="">Next <i class="fas fa-angle-double-right"></i></button>
+                                        <button onclick="return confirm('Are you sure?')" style="margin-right: 0" type="submit" class="btn btn-info btn-lg voucher_add_button" data-original-title="" title="">Next <i class="fas fa-angle-double-right"></i></button>
                                     </div>
                                 </div>
                             </div>
