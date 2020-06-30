@@ -136,12 +136,14 @@
                         </div>
                     </div>
                 </div>
+                @if(sizeof($payment->paymentDocuments)>0 || sizeof($payment->paymentComments)>0 || sizeof($payment->paymentSettlements)>0||sizeof($payment->paymentTransfers)>0)
                 <div class="card hidden-print">
                     <div class="card-body hidden-print">
                         <div class="row">
-                            <div class="col-sm-6 hidden-print">
+
 
                                 @if(sizeof($payment->paymentDocuments)>0)
+                                <div class="col-sm-6 hidden-print">
                                     <h3>Attachment</h3>
                                     <table class="table table-bordered">
                                         <thead>
@@ -161,34 +163,35 @@
                                         @endforeach
                                         </tbody>
                                     </table>
+                                </div>
                                 @endif
-                            </div>
-                            <div class="col-sm-6 hidden-print">
 
                                 @if(sizeof($payment->paymentComments)>0)
-                                    <h3>Comments</h3>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Name</th>
-                                            <th>Comment</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($payment->paymentComments as $comment)
+                                    <div class="col-sm-6 hidden-print">
+                                        <h3>Comments</h3>
+                                        <table class="table table-bordered">
+                                            <thead>
                                             <tr>
-                                                <td style="vertical-align: top">{{date('d-m-Y',strtotime($comment->created_at))}}</td>
-                                                <td style="vertical-align: top">{{$comment->user->name}}</td>
-                                                <td style="vertical-align: top">
-                                                    <p style="white-space: normal; margin-bottom: 2px">{{$comment->comments}}</p>
-                                                </td>
+                                                <th>Date</th>
+                                                <th>Name</th>
+                                                <th>Comment</th>
                                             </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($payment->paymentComments as $comment)
+                                                <tr>
+                                                    <td style="vertical-align: top">{{date('d-m-Y',strtotime($comment->created_at))}}</td>
+                                                    <td style="vertical-align: top">{{$comment->user->name}}</td>
+                                                    <td style="vertical-align: top">
+                                                        <p style="white-space: normal; margin-bottom: 2px">{{$comment->comments}}</p>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 @endif
-                            </div>
+
 
                             <div class="col-md-12 hidden-print">
 
@@ -234,6 +237,7 @@
                     </div>
 
                 </div>
+                @endif
             </div>
 
         </div>

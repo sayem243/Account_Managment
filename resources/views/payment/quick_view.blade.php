@@ -100,6 +100,7 @@
 
 
                 </div>
+                @if(sizeof($payment->paymentDocuments)>0 || sizeof($payment->paymentComments)>0)
 
                 <div class="card hidden-print">
                     <div class="card-body hidden-print">
@@ -199,6 +200,8 @@
                     </div>
 
                 </div>
+
+                @endif
 
 
             </div>
