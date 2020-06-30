@@ -137,31 +137,37 @@
                     success: function (data) {
 
                         if(data.voucher_item_id!=''){
-                            var html = '<tr>';
+                            var dataOption='<select name="expenditure_sector['+data.voucher_item_id+']" class="form-control">';
+                            dataOption +='<option value>Select Type</option>';
+                            jQuery.each(data.expenditure_sector, function(i, item) {
+                                var selected = '';
+                                if(item.id==data.expenditure_sector_id){
+                                   selected= 'selected="selected"';
+                                }
+                                dataOption += '<option value="'+item.id+'"'+selected+'>'+item.name+'</option>';
+                            });
+                            dataOption +='</select>';
+
+                            var html = '<tr role="row">';
                             html +='<td><input type="checkbox" name="voucher_item[]" value="'+data.voucher_item_id+'">';
                             html +='</td>';
-                            html +='<td>a';
+                            html +='<td>'+dataOption;
                             html +='</td>';
                             html +='<td><input type="hidden" value="'+data.item_name+'" name="item_name['+data.voucher_item_id+']">'+data.item_name;
+                            html +='<td>';
+                            html +='</td>';
                             html +='</td>';
                             html +='<td><input type="hidden" value="'+data.project_id+'" name="project_id['+data.voucher_item_id+']">'+data.project_name;
+
                             html +='</td>';
-                            html +='<td>';
-                            html +='</td>';
-                            html +='<td>';
+                            html +='<td><input type="hidden" value="'+data.voucher_amount+'" name="voucher_amount['+data.voucher_item_id+']">'+data.voucher_amount;
                             html +='</td>';
 
                             html+='</tr>';
 
                             $(html).insertBefore('#voucher_item_table tbody > tr:first');
 
-                            // $('#voucher_item_table tbody').append(html);
-
-
-
                         }
-
-                        console.log(data.voucher_item_id);
 
                     }
 

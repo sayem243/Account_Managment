@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\ExpenditureSector;
 use App\Project;
 use App\VoucherItems;
 use Illuminate\Http\JsonResponse;
@@ -65,7 +66,11 @@ class AjaxFunctionController
         $data= array();
         $query = $request->request->all();
         if($query['item_name']!='' && $query['project_id']!='' && $query['voucher_amount']!=''){
-
+            $expenditureSectors = ExpenditureSector::all();
+            $expArray= array();
+            foreach ($expenditureSectors as $expenditureSector){
+                $expArray[]= array('id'=>$expenditureSector->id, 'name'=>$expenditureSector->name);
+            }
             $voucherItem = new VoucherItems();
 
             $voucherItem->item_name = $query['item_name'];
@@ -76,6 +81,7 @@ class AjaxFunctionController
             $voucherItem->save();
             if($voucherItem){
                 $data=array(
+                    'expenditure_sector'=>$expArray,
                     'expenditure_sector_id'=>$query['expenditure_sector_id'],
                     'voucher_item_id'=>$voucherItem->id,
                     'item_name'=>$voucherItem->item_name,
