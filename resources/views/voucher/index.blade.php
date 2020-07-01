@@ -6,15 +6,9 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Voucher Items List</h5>
+                        <h5>Voucher Items Add</h5>
                     </div>
                     <div class="card-body" style="padding-bottom: 0">
-                        <div class="dt-buttons btn-group">
-                            <a style="min-width: 100px; border-radius: .3rem; font-size: 16px" href="{{route('voucher_index')}}" class="btn btn-secondary buttons-alert btn-info" title="All"><span>All</span></a>
-                            <a style="min-width: 100px; border-radius: .3rem; font-size: 16px" href="{{route('voucher_archive_index')}}" class="btn btn-secondary buttons-alert btn-info" title="Created"><span>Archived</span></a>
-                        </div>
-
-
                         <table class="table">
                             <thead>
                             <tr>
@@ -52,6 +46,17 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Voucher Items List</h5>
+                    </div>
+                    <div class="card-body" style="padding-bottom: 0; padding-top: 0">
+                        <div class="dt-buttons btn-group">
+                            <a style="min-width: 100px; border-radius: .3rem; font-size: 16px" href="{{route('voucher_index')}}" class="btn btn-secondary buttons-alert btn-info" title="All"><span>All</span></a>
+                            <a style="min-width: 100px; border-radius: .3rem; font-size: 16px" href="{{route('voucher_archive_index')}}" class="btn btn-secondary buttons-alert btn-info" title="Created"><span>Archived</span></a>
+                        </div>                    </div>
                     <div class="card-body voucher_item_table payment_table" style="padding-top: 5px">
 
 
