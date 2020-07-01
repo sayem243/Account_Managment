@@ -211,6 +211,9 @@ Route::post('/voucher/item/datatable', 'VoucherController@dataTable')->name('vou
 Route::get('/voucher/draft/view','VoucherController@draftView')->name('voucher_draft_view');
 Route::post('/voucher/draft/to/confirm','VoucherController@draftToConfirmStore')->name('voucher_store_confirm');
 
+Route::get('/voucher/archived/index','VoucherController@archivedList')->name('voucher_archive_index');
+Route::post('/voucher/archived/datatable', 'VoucherController@dataTableArchived')->name('voucher_archived_datatable');
+Route::get('/voucher/item/remove/{id}','VoucherController@deleteVoucherItemAjax')->name('voucher_item_remove');
 
 
 

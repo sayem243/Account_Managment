@@ -9,6 +9,12 @@
                         <h5>Voucher Items List</h5>
                     </div>
                     <div class="card-body" style="padding-bottom: 0">
+                        <div class="dt-buttons btn-group">
+                            <a style="min-width: 100px; border-radius: .3rem; font-size: 16px" href="{{route('voucher_index')}}" class="btn btn-secondary buttons-alert btn-info" title="All"><span>All</span></a>
+                            <a style="min-width: 100px; border-radius: .3rem; font-size: 16px" href="{{route('voucher_archive_index')}}" class="btn btn-secondary buttons-alert btn-info" title="Created"><span>Archived</span></a>
+                        </div>
+
+
                         <table class="table">
                             <thead>
                             <tr>
@@ -41,7 +47,7 @@
                                 </td>
                                 <td><input type="text" placeholder="Enter item name" class="form-control voucher_item_name" name="voucher_item_name"></td>
                                 <td><input type="text" placeholder="Enter amount" class="form-control amount voucher_item_amount" name="voucher_item_amount"></td>
-                                <td><button type="button" class="btn btn-info add_row">Add</button></td>
+                                <td><button type="button" class="btn btn-info btn-lg add_row">Add</button></td>
                             </tr>
                             </tbody>
                         </table>
@@ -75,6 +81,7 @@
                                     <th style="width: 120px" width="" scope="col">HS ID</th>
                                     <th style="width: 150px" width="" scope="col">Project</th>
                                     <th style="width: 100px" width="" scope="col">Amount</th>
+                                    <th style="width: 50px" width="" scope="col">Action</th>
                                 </tr>
 
                                 </thead>
@@ -162,6 +169,8 @@
                             html +='</td>';
                             html +='<td><input type="hidden" value="'+data.voucher_amount+'" name="voucher_amount['+data.voucher_item_id+']">'+data.voucher_amount;
                             html +='</td>';
+                            html +='<td><button type="button" data-id="'+data.voucher_item_id+'" class="btn btn-danger remove_row">X</button>';
+                            html +='</td>';
 
                             html+='</tr>';
 
@@ -174,6 +183,30 @@
                 });
             }
         });
+
+        $('body').on('click','.remove_row', function(){
+            var element = $(this);
+            var id = element.attr('data-id');
+            var url = "{{ route('voucher_item_remove', ":id") }}";
+            url = url.replace(':id', id);
+            if (confirm("Do you want to delete?")){
+                jQuery.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: url,
+                    data: {},
+                    success: function (data) {
+                        if(data.status==200){
+                            jQuery('.alert').addClass('alert-success').show();
+                            jQuery('.alert').find('.message').html(data.message);
+                            element.closest("tr").remove();
+                        }
+                    }
+                });
+            }
+
+        });
+
 
 
     </script>

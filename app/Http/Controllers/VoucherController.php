@@ -34,6 +34,10 @@ class VoucherController extends Controller
         return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors]);
     }
 
+    Public function archivedList(){
+        $projects=Project::all();
+        return  view('voucher.archive',['projects'=>$projects]);
+    }
 
     public function dataTable(Request $request)
     {
@@ -45,7 +49,7 @@ class VoucherController extends Controller
         $countRecords->select('voucher_items.id as totalVoucherItems');
 //        $countRecords->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
         $countRecords->join('projects', 'voucher_items.project_id', '=', 'projects.id');
-        $countRecords->join('payments', 'voucher_items.payment_id', '=', 'payments.id');
+        $countRecords->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
 //        $countRecords->join('companies', 'payments.company_id', '=', 'companies.id');
 
         $countRecords->where('voucher_items.status','=', 0);
@@ -56,7 +60,7 @@ class VoucherController extends Controller
 
         if(isset($query['project_id'])){
             $project_id = $query['project_id'];
-            $countRecords->where('payments.project_id',$project_id);
+            $countRecords->where('voucher_items.project_id',$project_id);
         }
 
         $result = $countRecords->get();
@@ -90,7 +94,7 @@ class VoucherController extends Controller
         }
         if(isset($query['project_id'])){
             $project_id = $query['project_id'];
-            $rows->where('payments.project_id',$project_id);
+            $rows->where('voucher_items.project_id',$project_id);
         }
 
         $rows->offset($iDisplayStart);
@@ -112,7 +116,7 @@ class VoucherController extends Controller
             $dropdown .='</select>';
 
             $checkbox = '<input type="checkbox" name="voucher_item[]" value="'.$post->viId.'">';
-
+            $button = '<button type="button" data-id="'.$post->viId.'" class="btn btn-danger remove_row">X</button>';
 
             $records["data"][] = array(
                 $checkbox,
@@ -121,6 +125,103 @@ class VoucherController extends Controller
                 $pId                = $post->pId,
                 $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
                 $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
+                $button
+            );
+            $i++;
+
+        endforeach;
+        if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+        }
+
+        $records["draw"] = $sEcho;
+        $records["recordsTotal"] = $iTotalRecords;
+        $records["recordsFiltered"] = $iTotalRecords;
+        return new JsonResponse($records);
+    }
+
+    public function dataTableArchived(Request $request)
+    {
+        $expenditureSectors = ExpenditureSector::all();
+
+        $query = $request->request->all();
+
+        $countRecords = DB::table('vouchers');
+        $countRecords->select('vouchers.id as totalVouchers');
+        $countRecords->join('voucher_items', 'vouchers.id', '=', 'voucher_items.voucher_id');
+        $countRecords->join('projects', 'voucher_items.project_id', '=', 'projects.id');
+        $countRecords->join('companies', 'projects.company_id', '=', 'companies.id');
+        $countRecords->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
+
+        $countRecords->where('voucher_items.status','!=', 0);
+        if (isset($query['voucher_id'])) {
+            $name = $query['voucher_id'];
+            $countRecords->where('vouchers.voucher_generate_id', 'like', "{$name}%");
+        }
+
+        if(isset($query['project_id'])){
+            $project_id = $query['project_id'];
+            $countRecords->where('voucher_items.project_id',$project_id);
+        }
+        $countRecords->groupBy('totalVouchers');
+        $result = $countRecords->get();
+        $tcount = count($result);
+        $iTotalRecords = $tcount;
+        $iDisplayLength = intval($_REQUEST['length']);
+        $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+        $iDisplayStart = intval($_REQUEST['start']);
+        $sEcho = intval($_REQUEST['draw']);
+        $records = array();
+        $records["data"] = array();
+        $end = $iDisplayStart + $iDisplayLength;
+        $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+
+        $rows = DB::table('vouchers');
+
+        $rows->select('vouchers.voucher_generate_id as vId', 'vouchers.total_amount as amount');
+        $rows->addSelect( 'voucher_items.item_name as name', 'voucher_items.voucher_id as voucherId');
+        $rows->addSelect('projects.p_name as projectName');
+        $rows->addSelect('companies.name as companyName');
+        $rows->addSelect('payments.payment_id as pId');
+
+        $rows->join('voucher_items', 'vouchers.id', '=', 'voucher_items.voucher_id');
+        $rows->join('projects', 'voucher_items.project_id', '=', 'projects.id');
+        $rows->join('companies', 'projects.company_id', '=', 'companies.id');
+        $rows->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
+
+        $rows->where('voucher_items.status','!=', 0);
+
+        if (isset($query['voucher_id'])) {
+            $name = $query['voucher_id'];
+            $rows->where('vouchers.voucher_generate_id', 'like', "{$name}%");
+        }
+        if(isset($query['project_id'])){
+            $project_id = $query['project_id'];
+            $rows->where('voucher_items.project_id',$project_id);
+        }
+
+        $rows->groupBy('voucherId');
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName, $columnSortOrder);
+        $result = $rows->get();
+
+        $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
+
+        foreach ($result as $post):
+
+            $records["data"][] = array(
+                $id                 = $i,
+                $name               = $post->name,
+                $pId                = $post->vId,
+                $companyName        = $post->companyName?$post->companyName:'',
+                $projectName        = $post->projectName?$post->projectName:'',
+                $amount             = $post->amount,
             );
             $i++;
 
@@ -234,6 +335,12 @@ class VoucherController extends Controller
         $sequentialId = sprintf("%s%s",$datetime->format('my'), str_pad($voucher->id,4, '0', STR_PAD_LEFT));
         $voucher->voucher_generate_id=$sequentialId;
         $voucher->save();
+    }
+
+    public function deleteVoucherItemAjax($id){
+        $voucherItem=VoucherItems::find($id);
+        $voucherItem->delete();
+        return new JsonResponse(['message'=>'Record has been deleted.','status'=>200]);
     }
 
 
