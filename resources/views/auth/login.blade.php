@@ -33,15 +33,6 @@
             <div class="card-body text-center">
                 <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
-                    <p style="color: red; font-size: 14px">
-                        This is a "Testing environment" only <br>
-
-                        For live system <a style="color: red; font-weight: bold" href="http://cm.pul-group.com/">"CLICK HERE"</a>
-                        bookmark the new link from the address bar of your browser <br>
-
-                        Do not use this system for actual transactions
-                    </p>
-
                     <div class="mb-4">
                         <i class="feather icon-unlock auth-icon"></i>
                     </div>
