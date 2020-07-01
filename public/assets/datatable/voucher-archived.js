@@ -6,7 +6,7 @@ $(document).ready(function () {
         loadingMessage: 'Loading...',
         "processing": false,
         "serverSide": true,
-        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+        "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
         'searching': false,
         "lengthMenu": [
             [10, 20, 50, 100, 150, -1],
@@ -34,6 +34,7 @@ $(document).ready(function () {
             { "name": 'companyName' },
             { "name": 'projectName' },
             { "name": 'amount' },
+            { "name": '' },
         ],
         "order": [
             [1, "asc"]
@@ -41,6 +42,10 @@ $(document).ready(function () {
         "columnDefs": [
             {
                 "targets": 0,
+                "orderable": false
+            },
+            {
+                "targets": 6,
                 "orderable": false
             }],
     });

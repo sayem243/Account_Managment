@@ -37,6 +37,7 @@
                                 <th style="width: 150px" width="" scope="col">Company</th>
                                 <th style="width: 150px" width="" scope="col">Project</th>
                                 <th style="width: 100px" width="" scope="col">Amount</th>
+                                <th scope="col text-center"><i class="feather icon-settings"></i></th>
                             </tr>
 
                             </thead>

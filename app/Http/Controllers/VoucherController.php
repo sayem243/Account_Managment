@@ -14,6 +14,7 @@ use App\VoucherItems;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class VoucherController extends Controller
 {
@@ -22,7 +23,7 @@ class VoucherController extends Controller
         $this->middleware('auth');
         //$this->middleware('permission:Payment-create', ['only' => ['index','create','store','approve','verify']]);
         $this->middleware('permission:voucher_approved', ['only' => ['approved']]);
-        $this->middleware('permission:voucher_create', ['only' => ['index','store']]);
+        $this->middleware('permission:voucher_create', ['only' => ['index','store','voucherPdf','voucherPrint']]);
 
 
     }
@@ -143,7 +144,6 @@ class VoucherController extends Controller
 
     public function dataTableArchived(Request $request)
     {
-        $expenditureSectors = ExpenditureSector::all();
 
         $query = $request->request->all();
 
@@ -183,7 +183,7 @@ class VoucherController extends Controller
 
         $rows = DB::table('vouchers');
 
-        $rows->select('vouchers.voucher_generate_id as vId', 'vouchers.total_amount as amount');
+        $rows->select('vouchers.id as id', 'vouchers.voucher_generate_id as vId', 'vouchers.total_amount as amount');
         $rows->addSelect( 'voucher_items.item_name as name', 'voucher_items.voucher_id as voucherId');
         $rows->addSelect('projects.p_name as projectName');
         $rows->addSelect('companies.name as companyName');
@@ -213,7 +213,15 @@ class VoucherController extends Controller
 
         $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
 
+
         foreach ($result as $post):
+
+            $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                    <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
+
+            $button .='<li class="dropdown-item"><a href="/voucher/details/'.$post->id.'"><i class="feather icon-eye"></i>Details</a></li>';
+
+            $button.='</ul></div>';
 
             $records["data"][] = array(
                 $id                 = $i,
@@ -222,6 +230,7 @@ class VoucherController extends Controller
                 $companyName        = $post->companyName?$post->companyName:'',
                 $projectName        = $post->projectName?$post->projectName:'',
                 $amount             = $post->amount,
+                $button
             );
             $i++;
 
@@ -328,6 +337,31 @@ class VoucherController extends Controller
             return redirect()->route('voucher_index')->with('success', 'Voucher has been successfully created');
         }
         return redirect()->route('voucher_index')->with('error','Error! Ops something error.');
+    }
+
+    public function details($id){
+        $voucher = Voucher::find($id);
+        return view('voucher.details',['voucher'=>$voucher]);
+    }
+
+    public function voucherPdf($id){
+        $voucher = Voucher::find($id);
+        if(auth()->user()->can('voucher_create')){
+            $pdf = PDF::loadView('voucher.pdf', ['voucher'=>$voucher]);
+//        return $pdf->download(time().'_payment.pdf');
+            return $pdf->stream(time()."_voucher_".$voucher->id.".pdf",array("Attachment" => false));
+        }
+        return redirect()->route('voucher_archive_index')->with('error', 'Error! This are not permitted.');
+
+    }
+
+    public function voucherPrint($id){
+        $voucher = Voucher::find($id);
+        if(auth()->user()->can('voucher_create')) {
+            return view('voucher.print', ['voucher' => $voucher]);
+        }
+        return redirect()->route('voucher_archive_index')->with('error', 'Error! This are not permitted.');
+
     }
 
     private function GenerateVocherId(Voucher $voucher){

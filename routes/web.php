@@ -202,9 +202,6 @@ Route::group(['middleware' => ['auth']], function() {
 
 //voucher
 
-//Route::get('/Voucher/details/{id}','PaymentController@Voucher')->name('Voucher');
-
-Route::get('/voucher/create/','VocherController@create')->name('voucher_create');
 Route::post('/voucher/store','VoucherController@store')->name('voucher_store');
 Route::get('/voucher/index','VoucherController@index')->name('voucher_index');
 Route::post('/voucher/item/datatable', 'VoucherController@dataTable')->name('voucher_item_datatable');
@@ -214,22 +211,9 @@ Route::post('/voucher/draft/to/confirm','VoucherController@draftToConfirmStore')
 Route::get('/voucher/archived/index','VoucherController@archivedList')->name('voucher_archive_index');
 Route::post('/voucher/archived/datatable', 'VoucherController@dataTableArchived')->name('voucher_archived_datatable');
 Route::get('/voucher/item/remove/{id}','VoucherController@deleteVoucherItemAjax')->name('voucher_item_remove');
-
-
-
-Route::get('/voucher/edit/{id}','VocherController@edit')->name('voucher_edit');
-Route::post('/voucher/update/{id}','VocherController@update')->name('voucher_update');
-
-Route::Post('voucher/approved/{id}','VocherController@approved')->name('voucher_approved');
-
-Route::get('/voucher/delete/{id}' ,'VocherController@delete')->name('voucher_delete');
-
-//voucher details
-
-Route::get('voucher/details/{id}','VocherDetailsController@index')->name('voucherDetails_index');
-Route::get('/voucher/details/print-pdf/{id}','VocherDetailsController@printPDF')->name('voucher_printPDF');
-Route::get('voucher/details/print/{id}','VocherDetailsController@prnpriview')->name('print');
-Route::get('/voucher/details/delete/{id}','VocherDetailsController@delete')->name('voucherDetails_delete');
+Route::get('/voucher/details/{id}','VoucherController@details')->name('voucher_details');
+Route::get('/voucher/pdf/{id}','VoucherController@voucherPdf')->name('voucher_pdf');
+Route::get('/voucher/print/{id}','VoucherController@voucherPrint')->name('voucher_print');
 
 //Reports
 
