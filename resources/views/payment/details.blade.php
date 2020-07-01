@@ -12,7 +12,15 @@
                         <div class="card-header-right">
                             <div class="btn-group btn-group-lg" role="group"
                                  aria-label="Button group with nested dropdown">
-                                <a href="{{route('payment')}}" class="btn btn-sm  btn-info"><i
+                                @if($payment->status>3)
+                                    <a style="border-radius: .3rem" target="_blank"
+                                       href="{{route('printPDF',$payment->id)}}"
+                                       class="btn btn-info btn-lg hidden-print"><i class="fa fa-file-pdf fa-1x"></i> PDF</a>
+                                    <a style="border-radius: .3rem" target="_blank"
+                                       href="{{route('payment_print',$payment->id)}}"
+                                       class="btn btn-info btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
+                                @endif
+                                <a style="border-radius: .3rem" href="{{route('payment')}}" class="btn btn-sm  btn-info"><i
                                             class="fas fa-angle-double-left"></i> Back</a>
                             </div>
                         </div>
@@ -92,27 +100,10 @@
                                         words: </strong>{{$amount}} only</p>
                             </div>
                         </div>
-                        <div class="row hidden-print" style="float: right">
-                            <div style="padding-right: 3px"
-                                 class="col-sm-12 col-form-label btn-group btn-group-lg hidden-print">
+                        <div class="row hidden-print">
+                            <div style="padding-left: 3px"
+                                 class="col-sm-6 col-form-label btn-group btn-group-lg hidden-print">
 
-                                @if($payment->status==3 && auth()->user()->can('payment-paid') && !$payment->user->trashed() && !$payment->company->trashed() && !$payment->project->trashed())
-                                    <button style="border-radius: .3rem" data-id-id="{{$payment->id}}" type="button"
-                                            class="btn btn-lg btn-info payment_paid">Disburse
-                                    </button>
-                                @endif
-                                @if($payment->status>3 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
-                                    <button style="border-radius: .3rem" id="addTag" class="btn btn-green btn-lg"
-                                            data-toggle="modal" data-target="#modalForm">
-                                        Settlement
-                                    </button>
-                                @endif
-                                @if(($payment->status==4 || $payment->status==5) && $payment->total_paid_amount > $totalSettlementAmount)
-                                    <button style="border-radius: .3rem" id="addRetried" class="btn btn-danger btn-lg"
-                                            data-toggle="modal" data-target="#retriedModalForm">
-                                        Retrie
-                                    </button>
-                                @endif
                                 @if($payment->status<6)
                                         <button style="border-radius: .3rem" id="addAttachments" class="btn btn-info btn-lg"
                                                 data-toggle="modal" data-target="#modalAttachmentForm">
@@ -124,14 +115,29 @@
                                         </button>
                                 @endif
 
-                                @if($payment->status>3)
-                                    <a style="border-radius: .3rem" target="_blank"
-                                       href="{{route('printPDF',$payment->id)}}"
-                                       class="btn btn-info btn-lg hidden-print"><i class="fa fa-file-pdf fa-1x"></i> PDF</a>
-                                    <a style="border-radius: .3rem" target="_blank"
-                                       href="{{route('payment_print',$payment->id)}}"
-                                       class="btn btn-info btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
+
+                            </div>
+                            <div style="padding-right: 3px; float: right; text-align: right"
+                                 class="col-sm-6 col-form-label btn-group-lg card-header-right hidden-print">
+
+                                @if($payment->status==3 && auth()->user()->can('payment-paid') && !$payment->user->trashed() && !$payment->company->trashed() && !$payment->project->trashed())
+                                    <button style="border-radius: .3rem; margin: 0" data-id-id="{{$payment->id}}" type="button"
+                                            class="btn btn-lg btn-info payment_paid">Disburse
+                                    </button>
                                 @endif
+                                @if($payment->status>3 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
+                                    <button style="border-radius: .3rem; margin: 0" id="addTag" class="btn btn-green btn-lg"
+                                            data-toggle="modal" data-target="#modalForm">
+                                        Settlement
+                                    </button>
+                                @endif
+                                @if(($payment->status==4 || $payment->status==5) && $payment->total_paid_amount > $totalSettlementAmount)
+                                    <button style="border-radius: .3rem; margin: 0" id="addRetried" class="btn btn-danger btn-lg"
+                                            data-toggle="modal" data-target="#retriedModalForm">
+                                        Retrie
+                                    </button>
+                                @endif
+
                             </div>
                         </div>
                     </div>
