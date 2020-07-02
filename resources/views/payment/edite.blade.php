@@ -124,7 +124,7 @@
                                                 <option value="{{$detail->project->id}}">{{$detail->project->p_name}}</option>
                                                 @else
                                                 @foreach($projects as $project)
-                                                    <option value="{{$project['id']}}" {{ $project['id']==$detail->project->id?'selected="selected"':''}}>{{$project['name']}}</option>
+                                                    <option value="{{$project['id']}}">{{$project['name']}}</option>
                                                 @endforeach
                                                 @endif
 
