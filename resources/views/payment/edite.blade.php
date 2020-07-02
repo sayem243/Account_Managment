@@ -87,6 +87,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @if(sizeof($payment->Payment_details)>0)
                                 @foreach($payment->Payment_details as $detail)
                                     <tr>
                                         <td>
@@ -113,6 +114,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @endif
 
                                     <tr>
                                         <td>
