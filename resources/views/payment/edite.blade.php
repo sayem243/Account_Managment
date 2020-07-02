@@ -87,6 +87,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @if(sizeof($payment->Payment_details)>0)
                                 @foreach($payment->Payment_details as $detail)
                                     <tr>
                                         <td>
@@ -113,12 +114,19 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @endif
 
                                     <tr>
                                         <td>
                                             <select class="form-control" name="project_id[]" required>
                                                 <option value="0">Select Project</option>
+                                                @if(sizeof($payment->Payment_details)>0)
                                                 <option value="{{$detail->project->id}}">{{$detail->project->p_name}}</option>
+                                                @else
+                                                @foreach($projects as $project)
+                                                    <option value="{{$project['id']}}">{{$project['name']}}</option>
+                                                @endforeach
+                                                @endif
 
                                             </select>
                                         </td>
