@@ -120,7 +120,13 @@
                                         <td>
                                             <select class="form-control" name="project_id[]" required>
                                                 <option value="0">Select Project</option>
+                                                @if($details->project)
                                                 <option value="{{$detail->project->id}}">{{$detail->project->p_name}}</option>
+                                                @else
+                                                @foreach($projects as $project)
+                                                    <option value="{{$project['id']}}" {{ $project['id']==$detail->project->id?'selected="selected"':''}}>{{$project['name']}}</option>
+                                                @endforeach
+                                                @endif
 
                                             </select>
                                         </td>
