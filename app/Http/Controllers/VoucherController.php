@@ -30,14 +30,40 @@ class VoucherController extends Controller
 
 
     Public function index(){
-        $projects=Project::all();
+        $user = auth()->user();
+        $projects=$user->projects;
+
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= array('id'=>$project->company->id,'name'=>$project->company->name);
+        }
+
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $userProjectCompany), SORT_ASC, $userProjectCompany);
+
+        $companies=$userProjectCompany;
+
         $expenditureSectors = ExpenditureSector::all();
-        return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors]);
+        return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors, 'companies'=>$companies]);
     }
 
     Public function archivedList(){
-        $projects=Project::all();
-        return  view('voucher.archive',['projects'=>$projects]);
+
+
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= array('id'=>$project->company->id,'name'=>$project->company->name);
+        }
+
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $userProjectCompany), SORT_ASC, $userProjectCompany);
+
+        $companies=$userProjectCompany;
+        return  view('voucher.archive',['projects'=>$projects, 'companies'=>$companies]);
     }
 
     public function dataTable(Request $request)
@@ -50,8 +76,8 @@ class VoucherController extends Controller
         $countRecords->select('voucher_items.id as totalVoucherItems');
 //        $countRecords->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
         $countRecords->join('projects', 'voucher_items.project_id', '=', 'projects.id');
+        $countRecords->join('companies', 'projects.company_id', '=', 'companies.id');
         $countRecords->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
-//        $countRecords->join('companies', 'payments.company_id', '=', 'companies.id');
 
         $countRecords->where('voucher_items.status','=', 0);
         if (isset($query['payment_id'])) {
@@ -62,6 +88,11 @@ class VoucherController extends Controller
         if(isset($query['project_id'])){
             $project_id = $query['project_id'];
             $countRecords->where('voucher_items.project_id',$project_id);
+        }
+
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $countRecords->where('companies.id',$company_id);
         }
 
         $result = $countRecords->get();
@@ -84,6 +115,7 @@ class VoucherController extends Controller
 //        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
 //        $rows->join('projects', 'payment_details.project_id', '=', 'projects.id');
         $rows->join('projects', 'voucher_items.project_id', '=', 'projects.id');
+        $rows->join('companies', 'projects.company_id', '=', 'companies.id');
         $rows->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
         $rows->select('voucher_items.id as viId', 'voucher_items.item_name as name', 'voucher_items.voucher_amount as amount');
         $rows->addSelect('projects.p_name as projectName','projects.id as projectId');
@@ -96,6 +128,10 @@ class VoucherController extends Controller
         if(isset($query['project_id'])){
             $project_id = $query['project_id'];
             $rows->where('voucher_items.project_id',$project_id);
+        }
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $rows->where('companies.id',$company_id);
         }
 
         $rows->offset($iDisplayStart);
@@ -149,6 +185,7 @@ class VoucherController extends Controller
 
         $countRecords = DB::table('vouchers');
         $countRecords->select('vouchers.id as totalVouchers');
+        $countRecords->join('expenditure_sectors', 'vouchers.expenditure_sector_id', '=', 'expenditure_sectors.id');
         $countRecords->join('voucher_items', 'vouchers.id', '=', 'voucher_items.voucher_id');
         $countRecords->join('projects', 'voucher_items.project_id', '=', 'projects.id');
         $countRecords->join('companies', 'projects.company_id', '=', 'companies.id');
@@ -164,6 +201,12 @@ class VoucherController extends Controller
             $project_id = $query['project_id'];
             $countRecords->where('voucher_items.project_id',$project_id);
         }
+
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $countRecords->where('companies.id',$company_id);
+        }
+
         $countRecords->groupBy('totalVouchers');
         $result = $countRecords->get();
         $tcount = count($result);
@@ -187,8 +230,10 @@ class VoucherController extends Controller
         $rows->addSelect( 'voucher_items.item_name as name', 'voucher_items.voucher_id as voucherId');
         $rows->addSelect('projects.p_name as projectName');
         $rows->addSelect('companies.name as companyName');
+        $rows->addSelect('expenditure_sectors.name as expenseName');
         $rows->addSelect('payments.payment_id as pId');
 
+        $rows->join('expenditure_sectors', 'vouchers.expenditure_sector_id', '=', 'expenditure_sectors.id');
         $rows->join('voucher_items', 'vouchers.id', '=', 'voucher_items.voucher_id');
         $rows->join('projects', 'voucher_items.project_id', '=', 'projects.id');
         $rows->join('companies', 'projects.company_id', '=', 'companies.id');
@@ -203,6 +248,10 @@ class VoucherController extends Controller
         if(isset($query['project_id'])){
             $project_id = $query['project_id'];
             $rows->where('voucher_items.project_id',$project_id);
+        }
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $rows->where('companies.id',$company_id);
         }
 
         $rows->groupBy('voucherId');
@@ -225,7 +274,7 @@ class VoucherController extends Controller
 
             $records["data"][] = array(
                 $id                 = $i,
-                $name               = $post->name,
+                $name               = $post->expenseName,
                 $pId                = $post->vId,
                 $companyName        = $post->companyName?$post->companyName:'',
                 $projectName        = $post->projectName?$post->projectName:'',

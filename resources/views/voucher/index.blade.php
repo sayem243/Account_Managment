@@ -67,8 +67,15 @@
                                 <thead class="thead-dark">
                                 <tr role="row" class="filter">
                                     <td colspan="2">
-                                        <input  type="text" class="form-control form-filter input-sm" name="payment_id" id="payment_id" placeholder="Payment Id"> </td>
-
+                                        <input  type="text" class="form-control form-filter input-sm" name="payment_id" id="payment_id" placeholder="HS Id">
+                                    </td>
+                                    <td colspan="1">
+                                        <select class="form-control" name="company_id" id="company_id">
+                                            <option value="">All Company</option>
+                                            @foreach($companies as $company)
+                                                <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                     <td>
                                         <select class="form-control" name="project_id" id="project_id">
@@ -116,6 +123,9 @@
     <script src="{{ asset("assets/datatable/voucher-details.js") }}" ></script>
 
     <script type="text/javascript">
+
+        $(document).ready(function (){
+
         $('.voucher_add_button').prop('disabled', true);
         $(document).on( "click", ".voucher_item", function() {
             if($('#voucher_item_table').find( ".voucher_item:checked" ).length > 0)
@@ -126,6 +136,27 @@
             {
                 $('.voucher_add_button').prop('disabled', true);
             }
+        });
+
+        jQuery('body').on('change','#company_id', function () {
+            var companyId= jQuery(this).val();
+            if(companyId===0||companyId===''){
+                companyId = 0
+            }
+            jQuery.ajax({
+                type:'GET',
+                dataType : 'json',
+                url:'{{ url("/ajax/project/company") }}/'+companyId,
+                data:{},
+                success:function(data){
+                    var dataOption='<option value>All Project</option>';
+                    jQuery.each(data, function(i, item) {
+                        dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
+                    });
+                    jQuery('#project_id').html(dataOption);
+                }
+            });
+
         });
 
         $(document).on("keypress keyup blur", ".amount", function (e) {
@@ -174,7 +205,7 @@
                             dataOption +='</select>';
 
                             var html = '<tr role="row">';
-                            html +='<td><input type="checkbox" name="voucher_item[]" value="'+data.voucher_item_id+'">';
+                            html +='<td><input type="checkbox" class="voucher_item" name="voucher_item[]" value="'+data.voucher_item_id+'">';
                             html +='</td>';
                             html +='<td>'+dataOption;
                             html +='</td>';
@@ -225,7 +256,7 @@
 
         });
 
-
+        });
 
     </script>
 

@@ -21,10 +21,12 @@ $(document).ready(function () {
                 // Read values
                 var project_id = $('#project_id').val();
                 var voucher_id = $('#voucher_id').val();
+                var company_id = $('#company_id').val();
 
                 data._token = CSRF_TOKEN;
                 data.voucher_id = voucher_id;
                 data.project_id = project_id;
+                data.company_id = company_id;
             }
         },
         'columns': [
@@ -52,7 +54,9 @@ $(document).ready(function () {
     $('#voucher_id').keyup(function(){
         dataTable.draw();
     });
-
+    $('#company_id').change(function(){
+        dataTable.draw();
+    });
     $('#project_id').change(function(){
         dataTable.draw();
     });

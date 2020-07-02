@@ -18,7 +18,15 @@
                             <thead class="thead-dark">
                             <tr role="row" class="filter">
                                 <td colspan="2">
-                                    <input  type="text" class="form-control form-filter input-sm" name="voucher_id" id="voucher_id" placeholder="Voucher Id"> </td>
+                                    <input  type="text" class="form-control form-filter input-sm" name="voucher_id" id="voucher_id" placeholder="Voucher Id">
+                                </td>
+                                <td colspan="1">
+                                    <select class="form-control" name="company_id" id="company_id" aria-describedby="validationTooltipPackagePrepend" required>
+                                        <option value="">All Company</option>
+                                        @foreach($companies as $company)
+                                            <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="project_id" id="project_id">
@@ -31,8 +39,8 @@
                                 <td colspan="4"></td>
                             </tr>
                             <tr>
-                                <th style="width: 20px" scope="col">SL.</th>
-                                <th style="width: 350px" scope="col">Item Name</th>
+                                <th style="width: 30px" scope="col">SL.</th>
+                                <th style="width: 250px" scope="col">Expenses Type</th>
                                 <th style="width: 150px" scope="col">Voucher Id</th>
                                 <th style="width: 150px" width="" scope="col">Company</th>
                                 <th style="width: 150px" width="" scope="col">Project</th>
@@ -54,5 +62,29 @@
 
 @section('footer.scripts')
     <script src="{{ asset("assets/datatable/voucher-archived.js") }}" ></script>
+    <script type="text/javascript">
+        $(document).ready(function (){
+            jQuery('body').on('change','#company_id', function () {
+                var companyId= jQuery(this).val();
+                if(companyId===0||companyId===''){
+                    companyId = 0
+                }
+                jQuery.ajax({
+                    type:'GET',
+                    dataType : 'json',
+                    url:'{{ url("/ajax/project/company") }}/'+companyId,
+                    data:{},
+                    success:function(data){
+                        var dataOption='<option value>All Project</option>';
+                        jQuery.each(data, function(i, item) {
+                            dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
+                        });
+                        jQuery('#project_id').html(dataOption);
+                    }
+                });
+
+            });
+        });
+    </script>
 @endsection
 

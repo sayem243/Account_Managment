@@ -137,7 +137,7 @@ Like: www.facebook.com/terminalbd
                         <ul class="pcoded-submenu {{ Request::is('voucher/*') ? 'active' : ''}}">
 
                             <li class="nav-item {{ Request::is('voucher/list') ? 'active' : ''}}"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Voucher Item</span></a></li>
-                            <li class="nav-item {{ Request::is('voucher/archived/list') ? 'active' : ''}}"><a href="{{route('voucher_archive_index')}}" class="nav-link"><span class="pcoded-mtext">Archived</span></a></li>
+                            <li class="nav-item {{ Request::is('voucher/archived/list') ? 'active' : ''}}"><a href="{{route('voucher_archive_index')}}" class="nav-link"><span class="pcoded-mtext">Vouchers</span></a></li>
 
                         </ul>
                     </li>
