@@ -52,11 +52,21 @@ class PaymentController extends Controller
                 $pUser[$user->id]= array('id'=>$user->id,'name'=>$user->name);
             }
         }
+
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $pUser), SORT_ASC, $pUser);
+
         $users=$pUser;
         $userProjectCompany = array();
         foreach ($projects as $project){
             $userProjectCompany[$project->company->id]= array('id'=>$project->company->id,'name'=>$project->company->name);
         }
+
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $userProjectCompany), SORT_ASC, $userProjectCompany);
+
         $companies=$userProjectCompany;
 
         return view('payment.payment_index',['payments'=>$payments,'users'=>$users,'companies'=>$companies,'projects'=>$projects])->with('i', (request()->input('page', 1) - 1) * 25);

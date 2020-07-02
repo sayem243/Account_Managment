@@ -8,6 +8,7 @@ $(document).ready(function () {
         "serverSide": true,
         "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
         'searching': false,
+        "lengthChange": false,
         "lengthMenu": [
             [10, 20, 50, 100, 150, -1],
             [10, 20, 50, 100, 150, "All"] // change per page values here

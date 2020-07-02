@@ -9,10 +9,10 @@
                         <h5>Vouchers List</h5>
                     </div>
                     <div class="card-body voucher_item_table payment_table" style="padding-top: 5px">
-                        <div class="dt-buttons btn-group">
+                        {{--<div class="dt-buttons btn-group">
                             <a style="min-width: 100px; border-radius: .3rem; font-size: 16px" href="{{route('voucher_index')}}" class="btn btn-secondary buttons-alert btn-info" title="All"><span>All</span></a>
                             <a style="min-width: 100px; border-radius: .3rem; font-size: 16px" href="{{route('voucher_archive_index')}}" class="btn btn-secondary buttons-alert btn-info" title="Created"><span>Archived</span></a>
-                        </div>
+                        </div>--}}
 
                         <table class="table table-striped table-bordered table-hover table-checkable" id="voucher_table">
                             <thead class="thead-dark">

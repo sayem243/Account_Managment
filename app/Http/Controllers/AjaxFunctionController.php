@@ -25,6 +25,10 @@ class AjaxFunctionController
             foreach ($projects as $project){
                 $data[]= array('id'=>$project->id,'name'=>$project->p_name);
             }
+            array_multisort(array_map(function($element) {
+                return $element['name'];
+            }, $data), SORT_ASC, $data);
+
             return new JsonResponse($data);
         }
         $projects = Project::withTrashed()->where('company_id', $companyId)->get();
@@ -37,6 +41,9 @@ class AjaxFunctionController
                 );
             }
         }
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $data), SORT_ASC, $data);
 
         return new JsonResponse($data);
     }
@@ -51,13 +58,19 @@ class AjaxFunctionController
                     $data[$user->id]= array('id'=>$user->id,'name'=>$user->name);
                 }
             }
+            array_multisort(array_map(function($element) {
+                return $element['name'];
+            }, $data), SORT_ASC, $data);
+
             return new JsonResponse($data);
         }
         $project= Project::withTrashed()->find($projectId);
         foreach ($project->users as $user){
             $data[$user->id]= array('id'=>$user->id,'name'=>$user->name);
         }
-
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $data), SORT_ASC, $data);
 
         return new JsonResponse($data);
     }

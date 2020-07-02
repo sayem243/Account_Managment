@@ -116,7 +116,7 @@ class VoucherController extends Controller
 
             $dropdown .='</select>';
 
-            $checkbox = '<input type="checkbox" name="voucher_item[]" value="'.$post->viId.'">';
+            $checkbox = '<input type="checkbox" class="voucher_item" name="voucher_item[]" value="'.$post->viId.'">';
             $button = '<button type="button" data-id="'.$post->viId.'" class="btn btn-danger remove_row">X</button>';
 
             $records["data"][] = array(
