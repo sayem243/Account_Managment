@@ -120,7 +120,7 @@
                                         <td>
                                             <select class="form-control" name="project_id[]" required>
                                                 <option value="0">Select Project</option>
-                                                @if($details->project)
+                                                @if(sizeof($payment->Payment_details)>0)
                                                 <option value="{{$detail->project->id}}">{{$detail->project->p_name}}</option>
                                                 @else
                                                 @foreach($projects as $project)
