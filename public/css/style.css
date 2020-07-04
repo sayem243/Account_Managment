@@ -182,16 +182,16 @@ button.btn, a.btn {
     width: 100%;
     display: block;
 }
-.payment_table table.dataTable thead .sorting:before,
-.payment_table table.dataTable thead .sorting:after,
-.payment_table table.dataTable thead .sorting_asc:before,
-.payment_table table.dataTable thead .sorting_asc:after,
-.payment_table table.dataTable thead .sorting_desc:before,
-.payment_table table.dataTable thead .sorting_desc:after,
-.payment_table table.dataTable thead .sorting_asc_disabled:before,
-.payment_table table.dataTable thead .sorting_asc_disabled:after,
-.payment_table table.dataTable thead .sorting_desc_disabled:before,
-.payment_table table.dataTable thead .sorting_desc_disabled:after{
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before,
+table.dataTable thead .sorting_desc_disabled:after{
     bottom: 0;
 }
 
@@ -215,4 +215,8 @@ button.btn, a.btn {
     margin-right: 10px;
     min-width: 80px;
     border-radius: 0.25rem!important;
+}
+.deleted_item{
+    background-color: red;
+    color: #FFFFFF;
 }

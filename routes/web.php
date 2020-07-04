@@ -248,3 +248,14 @@ Route::post('/expenditure_sector/store','ExpenditureSectorController@store')->na
 Route::get('/expenditure_sector/edit/{id}','ExpenditureSectorController@edit')->name('expenditure_sector_edit');
 Route::post('/expenditure_sector/update/{id}','ExpenditureSectorController@update')->name('expenditure_sector_update');
 Route::get('/expenditure_sector/delete/{id}' ,'ExpenditureSectorController@destroy')->name('expenditure_sector_delete');
+
+//Bank and Branch
+Route::get('/bank/index','BankAndBranchController@indexBank')->name('bank_index');
+Route::post('/bank/datatable','BankAndBranchController@dataTableBank')->name('bank_datatable');
+Route::get('/bank/create','BankAndBranchController@createBank')->name('bank_create');
+Route::post('/bank/store','BankAndBranchController@storeBank')->name('bank_store');
+Route::get('/bank/edit/{id}','BankAndBranchController@editBank')->name('bank_edit');
+Route::post('/bank/update/{id}','BankAndBranchController@updateBank')->name('bank_update');
+Route::get('/bank/delete/{id}' ,'BankAndBranchController@deleteBank')->name('bank_delete');
+Route::get('/bank/restore/{id}' ,'BankAndBranchController@bankRestore')->name('bank_restore');
+
