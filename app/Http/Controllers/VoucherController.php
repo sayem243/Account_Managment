@@ -275,7 +275,7 @@ class VoucherController extends Controller
             $records["data"][] = array(
                 $id                 = $i,
                 $name               = $post->expenseName,
-                $pId                = $post->vId,
+                $pId                = '<a data-toggle="modal" data-target-id="'.$post->id.'" data-target="#myModal" href="">'.$post->vId.'</a>',
                 $companyName        = $post->companyName?$post->companyName:'',
                 $projectName        = $post->projectName?$post->projectName:'',
                 $amount             = $post->amount,
@@ -293,6 +293,15 @@ class VoucherController extends Controller
         $records["recordsTotal"] = $iTotalRecords;
         $records["recordsFiltered"] = $iTotalRecords;
         return new JsonResponse($records);
+    }
+
+
+    public function quickView($id){
+
+        $voucher=Voucher::find($id);
+
+        $returnHTML = view('voucher.quick_view',['voucher'=>$voucher])->render();
+        return response()->json( ['html'=>$returnHTML]);
     }
 
 
