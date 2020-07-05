@@ -250,7 +250,7 @@ Route::get('/expenditure_sector/edit/{id}','ExpenditureSectorController@edit')->
 Route::post('/expenditure_sector/update/{id}','ExpenditureSectorController@update')->name('expenditure_sector_update');
 Route::get('/expenditure_sector/delete/{id}' ,'ExpenditureSectorController@destroy')->name('expenditure_sector_delete');
 
-//Bank and Branch
+//Bank
 Route::get('/bank/index','BankAndBranchController@indexBank')->name('bank_index');
 Route::post('/bank/datatable','BankAndBranchController@dataTableBank')->name('bank_datatable');
 Route::get('/bank/create','BankAndBranchController@createBank')->name('bank_create');
@@ -259,4 +259,13 @@ Route::get('/bank/edit/{id}','BankAndBranchController@editBank')->name('bank_edi
 Route::post('/bank/update/{id}','BankAndBranchController@updateBank')->name('bank_update');
 Route::get('/bank/delete/{id}' ,'BankAndBranchController@deleteBank')->name('bank_delete');
 Route::get('/bank/restore/{id}' ,'BankAndBranchController@bankRestore')->name('bank_restore');
+//Branch
+Route::get('/branch/index','BankAndBranchController@indexBranch')->name('branch_index');
+Route::post('/branch/datatable','BankAndBranchController@dataTableBranch')->name('branch_datatable');
+Route::get('/branch/create','BankAndBranchController@createBranch')->name('branch_create');
+Route::post('/branch/store','BankAndBranchController@storeBranch')->name('branch_store');
+Route::get('/branch/edit/{id}','BankAndBranchController@editBranch')->name('branch_edit');
+Route::post('/branch/update/{id}','BankAndBranchController@updateBranch')->name('branch_update');
+Route::get('/branch/delete/{id}' ,'BankAndBranchController@deleteBranch')->name('branch_delete');
+Route::get('/branch/restore/{id}' ,'BankAndBranchController@branchRestore')->name('branch_restore');
 

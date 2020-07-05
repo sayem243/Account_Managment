@@ -36,6 +36,21 @@ class BankAndBranchController extends Controller
         $bank->type="BANK";
         $bank->save();
 
+        if($request->branch_name){
+            foreach ($request->branch_name as $key=>$value){
+                $branch =new BankAndBranch();
+                $branch->name=$value;
+                $branch->phone=$request->branch_phone[$key];
+                $branch->email=$request->branch_email[$key];
+                $branch->address=$request->branch_address[$key];
+                $branch->bank_id=$bank->id;
+                $branch->type="BRANCH";
+                $branch->save();
+            }
+        }
+
+
+
         return redirect()->route('bank_index')->with('success','Bank has been successfully created.');
     }
 
@@ -130,6 +145,98 @@ class BankAndBranchController extends Controller
                 $name               = $post->name,
                 $button,
                 $status               = $post->bankDeletedAt,
+            );
+            $i++;
+
+        endforeach;
+        if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+        }
+
+        $records["draw"] = $sEcho;
+        $records["recordsTotal"] = $iTotalRecords;
+        $records["recordsFiltered"] = $iTotalRecords;
+        return new JsonResponse($records);
+    }
+
+//    Branch section start
+
+    public function indexBranch(){
+        return view('branch.index');
+    }
+
+    public function deleteBranch($id){
+        $branch=BankAndBranch::find($id);
+        $branch->delete();
+        return redirect()->route('branch_index')->with('success','Branch has been successfully Updated.');
+    }
+    public function branchRestore($id){
+        BankAndBranch::withTrashed()
+            ->where('id', $id)
+            ->restore();
+        return redirect()->route('branch_index')->with('success','Branch has been successfully restored.');
+    }
+
+    public function dataTableBranch(Request $request)
+    {
+
+        $query = $request->request->all();
+
+        $countRecords = DB::table('bank_and_branches');
+        $countRecords->select('bank_and_branches.id as totalBranch');
+        $countRecords->where('bank_and_branches.type','=', "BRANCH");
+
+        $result = $countRecords->get();
+        $tcount = count($result);
+        $iTotalRecords = $tcount;
+        $iDisplayLength = intval($_REQUEST['length']);
+        $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+        $iDisplayStart = intval($_REQUEST['start']);
+        $sEcho = intval($_REQUEST['draw']);
+        $records = array();
+        $records["data"] = array();
+        $end = $iDisplayStart + $iDisplayLength;
+        $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+
+        $rows = DB::table('bank_and_branches');
+        $rows->select('bank_and_branches.id as bId','bank_and_branches.name as name','bank_and_branches.deleted_at as branchDeletedAt');
+        $rows->where('bank_and_branches.type','=', "BRANCH");
+
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName, $columnSortOrder);
+//        $rows->groupBy('payment_details.payment_id');
+        $result = $rows->get();
+
+        $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
+
+        foreach ($result as $post):
+
+            $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                    <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
+            if (auth()->user()->can('superadmin')) {
+                if ($post->branchDeletedAt==null){
+                    $button .= '<li class="dropdown-item"><a href="/branch/edit/' . $post->bId . '"><i class="feather icon-eye"></i>Edit</a></li>';
+                    $button .= '<li class="dropdown-item" ><a onclick="return confirm(\'Are you sure you want to delete this item\')" href = "/branch/delete/' . $post->bId . '" ><i class="feather icon-trash-2" ></i >Remove</a ></li >';
+                }else{
+                    $button .= '<li class="dropdown-item"><a href="/branch/restore/' . $post->bId . '">
+                                           <i class="fa fa-undo" aria-hidden="true"></i>
+                                           Restore</a>
+                                   </li>';
+                }
+            }
+            $button.='</ul></div>';
+
+            $records["data"][] = array(
+                $id                 = $i,
+                $name               = $post->name,
+                $button,
+                $status               = $post->branchDeletedAt,
             );
             $i++;
 

@@ -40,6 +40,32 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-md-12">
+                                    <table class="table table-bordered" style="margin-top: 25px; margin-bottom: 0">
+                                        <thead>
+                                        <tr>
+                                            <th>Branch Name</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Address</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><input type="text" class="form-control branch_name" name="branch_name[]" required></td>
+                                            <td><input type="text" class="form-control branch_phone" name="branch_phone[]"></td>
+                                            <td><input type="text" class="form-control branch_email" name="branch_email[]"></td>
+                                            <td><input type="text" class="form-control branch_address" name="branch_address[]"></td>
+                                            <td>
+                                                <button type="button" class="btn btn-info add_row">Add</button>
+                                                <button type="button" class="btn btn-danger remove_row" style="display: none">Delete</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="line aligncenter" style="float: right">
                                 <div class="form-group row">
@@ -62,4 +88,21 @@
     </div>
 
 @endsection
+@section('footer.scripts')
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+        $(document).on('click', '.add_row', function(){
+            var $tr = $(this).closest('tr');
+            $tr.clone().insertAfter($tr);
+            $tr.find('td').find('button.remove_row').show();
+            $tr.find('td').find('button.add_row').hide();
+        });
 
+        // Find and remove selected table rows
+        $('body').on('click','.remove_row', function(){
+            $(this).closest("tr").remove();
+        });
+
+        });
+    </script>
+@endsection

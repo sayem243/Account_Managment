@@ -10,7 +10,7 @@
           <div class="card-header">
               <h5>Bank </h5>
               <div class="card-header-right">
-                  @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('expenditure-sector-create'))
+                  @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin'))
                   <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested">
                       <a href="{{route('bank_create')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
                   </div>
@@ -49,9 +49,5 @@
     </div>
 @endsection
 @section('footer.scripts')
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>--}}
     <script src="{{ asset("assets/datatable/bank.js") }}" ></script>
-    <script type="text/javascript">
-        $("p.deleted").closest("tr").addClass('yourClass');
-    </script>
 @endsection
