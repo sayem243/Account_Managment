@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\BankAndBranch;
 use App\ExpenditureSector;
 use App\Project;
 use App\VoucherItems;
@@ -105,6 +106,19 @@ class AjaxFunctionController
             }
         }
         return new JsonResponse($data);
+    }
+
+    public function getBranchByBank($id){
+
+        $bank = BankAndBranch::find($id);
+
+        $branches = $bank->branches;
+        $arrayData = array();
+        foreach ($branches as $branch){
+            $arrayData[]=array('id'=>$branch->id, 'name'=>$branch->name);
+        }
+        return new JsonResponse($arrayData);
+
     }
 
 }

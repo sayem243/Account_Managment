@@ -235,6 +235,8 @@ Route::get('/generate-pdf','PaymentDetailsController@generatePDF');
 Route::get('/ajax/project/company/{id}','AjaxFunctionController@getProjectsByCompany')->name('ajax_project_by_company_id');
 Route::get('/ajax/user/project/{id}','AjaxFunctionController@getUsersByProject')->name('ajax_user_by_project_id');
 
+Route::get('/ajax/bank/{id}','AjaxFunctionController@getBranchByBank')->name('ajax_branch_by_bank_id');
+
 Route::post('/ajax/add/voucher_item/','AjaxFunctionController@addVoucherItem')->name('ajax_add_voucher_item');
 
 //report section
@@ -268,4 +270,9 @@ Route::get('/branch/edit/{id}','BankAndBranchController@editBranch')->name('bran
 Route::post('/branch/update/{id}','BankAndBranchController@updateBranch')->name('branch_update');
 Route::get('/branch/delete/{id}' ,'BankAndBranchController@deleteBranch')->name('branch_delete');
 Route::get('/branch/restore/{id}' ,'BankAndBranchController@branchRestore')->name('branch_restore');
+//Bank account section
+Route::get('/account/index','BankAccountController@index')->name('account_index');
+Route::get('/account/create','BankAccountController@create')->name('account_create');
+Route::post('/account/store','BankAccountController@store')->name('account_store');
+
 
