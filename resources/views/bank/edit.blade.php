@@ -56,17 +56,38 @@
                                             <tbody>
                                             @if(sizeof($bank->branches)>0)
                                                 @foreach($bank->branches as $branch)
-                                                <tr>
-                                                    <td><input type="text" class="form-control branch_name" name="branch_name[]" value="{{$branch->name}}" required></td>
+
+                                                <tr class="{{$branch->deleted_at!=null?'deleted_item':''}}">
+                                                    <td>
+                                                        <input type="hidden" class="form-control branch_phone" name="branch_id[]" value="{{$branch->id}}">
+                                                        <input type="text" class="form-control branch_name" name="branch_name[]" value="{{$branch->name}}" required>
+                                                    </td>
                                                     <td><input type="text" class="form-control branch_phone" name="branch_phone[]" value="{{$branch->phone}}"></td>
                                                     <td><input type="text" class="form-control branch_email" name="branch_email[]" value="{{$branch->email}}"></td>
                                                     <td><input type="text" class="form-control branch_address" name="branch_address[]" value="{{$branch->address}}"></td>
                                                     <td>
-                                                        <button type="button" class="btn btn-danger remove_row">Delete</button>
+                                                        @if($branch->deleted_at==null)
+                                                        <button type="button" data-id="{{$branch->id}}" class="btn btn-danger remove_row">Delete</button>
+                                                       @else
+                                                            <a class="btn btn-danger" href="{{route('branch_restore',$branch->id)}}">
+                                                                <i class="fa fa-undo" aria-hidden="true"></i>
+                                                                </a>
+                                                        @endif
                                                     </td>
                                                 </tr>
+
                                             @endforeach
                                             @endif
+                                            <tr>
+                                                <td><input type="text" class="form-control branch_name" name="branch_name[]"></td>
+                                                <td><input type="text" class="form-control branch_phone" name="branch_phone[]"></td>
+                                                <td><input type="text" class="form-control branch_email" name="branch_email[]"></td>
+                                                <td><input type="text" class="form-control branch_address" name="branch_address[]"></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-info add_row">Add</button>
+                                                    <button type="button" data-id="" class="btn btn-danger remove_row" style="display: none">Delete</button>
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -107,7 +128,31 @@
 
             // Find and remove selected table rows
             $('body').on('click','.remove_row', function(){
-                $(this).closest("tr").remove();
+                var elements = jQuery(this);
+                var id = jQuery(this).attr('data-id');
+                if(id==''){
+                    $(this).closest("tr").remove();
+                    return false;
+                }
+                if(confirm("Do You want to Delete?")) {
+                    jQuery.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        url: '/branch/delete/' + id,
+                        data: {},
+                        success: function (data) {
+                            if (data.status == 200) {
+                                jQuery('.alert').addClass('alert-success').show();
+                                jQuery('.alert').find('.message').html(data.message);
+                                jQuery(elements).closest("tr").remove();
+                            }
+
+                        },
+                        error: function(data) {
+                            console.log(data);
+                        },
+                    });
+                }
             });
 
         });

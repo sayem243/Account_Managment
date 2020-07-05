@@ -31,6 +31,8 @@
                             <div class="col-md-3" style="text-align: right">
                                 <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
                                 <h4 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h4>
+                               Disbursed Schedule Date: {{ date('d-m-Y', strtotime($payment->disbursed_schedule_date))}} <input type="date" class="form-control" name="disbursed_schedule_date[{{$payment->id}}]" value="{{ date('d-m-Y', strtotime($payment->disbursed_schedule_date))}}">
+                                <span style="color: red">To change please select date</span>
                             </div>
                         </div>
                         <hr style="margin-top: 1px; margin-bottom: 10px">

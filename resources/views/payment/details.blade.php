@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','Confirm Payment')
+@section('title','Payment details')
 @section('template')
 
     <div class="col-sm-12">
@@ -120,10 +120,22 @@
                             <div style="padding-right: 3px; float: right; text-align: right"
                                  class="col-sm-6 col-form-label btn-group-lg card-header-right hidden-print">
 
-                                @if($payment->status==3 && auth()->user()->can('payment-paid') && !$payment->user->trashed() && !$payment->company->trashed() && !$payment->project->trashed())
+                                @if($payment->status==3
+                                 && auth()->user()->can('payment-paid')
+                                 && !$payment->user->trashed()
+                                 && !$payment->company->trashed()
+                                 && !$payment->project->trashed())
+
+                                    @if(date("Y-m-d", strtotime("now"))>=date("Y-m-d", strtotime($payment->disbursed_schedule_date)))
                                     <button style="border-radius: .3rem; margin: 0" data-id-id="{{$payment->id}}" type="button"
                                             class="btn btn-lg btn-info payment_paid">Disburse
                                     </button>
+                                        @else
+                                        <button disabled style="border-radius: .3rem; margin: 0" type="button"
+                                                class="btn btn-lg btn-info">Disburse
+                                        </button>
+
+                                        @endif
                                 @endif
                                 @if($payment->status>3 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
                                     <button style="border-radius: .3rem; margin: 0" id="addTag" class="btn btn-green btn-lg"
@@ -433,7 +445,7 @@
                 var elements = a.target;
                 a.preventDefault();
                 var id = jQuery(this).attr('data-id-id');
-                if (confirm("Do You want to Payment Paid ?")) {
+                if (confirm("Do You want to Payment Disbursed?")) {
 
                     jQuery.ajax({
                         type: 'POST',

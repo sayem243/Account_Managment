@@ -128,6 +128,7 @@ class PaymentController extends Controller
             $payment->company_id=$request->company_id;
             $payment->project_id=$newKey;
             $payment->created_by=$user->id;
+            $payment->disbursed_schedule_date = new \DateTime();
             $payment->total_demand_amount=0;
             $payment->total_paid_amount=0;
             $payment->status=0;
@@ -216,6 +217,7 @@ class PaymentController extends Controller
 
     public function draftToConfirmStore(Request $request){
         $paymentsId = $request->payment_id;
+        $disbursed_schedule_date = $request->disbursed_schedule_date;
 
         $msg = 'created.';
         $total_transfer_amount = 0;
@@ -232,6 +234,7 @@ class PaymentController extends Controller
             }else{
                 $payment->status = 1;
             }
+            $payment->disbursed_schedule_date= new \DateTime($disbursed_schedule_date[$paymentId]);
             $payment->save();
 
             if($request->session()->get('reference_payment_id')){
@@ -415,6 +418,7 @@ class PaymentController extends Controller
 //        $payment->comments=$request->comments;
 
         $payment->created_by=$user->id;
+        $payment->disbursed_schedule_date= new \DateTime($request->disbursed_schedule_date);
         $payment->save();
         $projects=$request->project_id;
         $itemName=$request->item_name;

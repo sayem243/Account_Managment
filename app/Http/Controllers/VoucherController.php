@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\ExpenditureSector;
 use App\Payment;
 use App\Payment_details;
@@ -348,7 +349,7 @@ class VoucherController extends Controller
                     }
                     $voucher->total_amount = $voucher->getTotalAmount();
                     $voucher->status = 0;
-                    $this->GenerateVocherId($voucher);
+
 
                     $returnArray[]=$voucher->id;
                 }
@@ -380,16 +381,18 @@ class VoucherController extends Controller
                 if(isset($vouchers_amount[$voucherId])){
 
                     foreach ($vouchers_amount[$voucherId] as $voucherItemId=>$amount){
+                        /** @var VoucherItems $voucherItem */
                         $voucherItem = VoucherItems::find($voucherItemId);
                         $voucherItem->voucher_amount = $amount;
                         $voucherItem->status=1;
                         $voucherItem->save();
+
                     }
                 }
 
                 $voucher->status=1;
                 $voucher->total_amount=$voucher->getTotalAmount();
-                $voucher->save();
+                $this->GenerateVoucherId($voucher);
 
             }
             return redirect()->route('voucher_index')->with('success', 'Voucher has been successfully created');
@@ -422,11 +425,32 @@ class VoucherController extends Controller
 
     }
 
-    private function GenerateVocherId(Voucher $voucher){
+    private function GenerateVoucherId(Voucher $voucher){
+        $company = $voucher->VoucherItems[0]->project->company;
+        $companyCode = $company->code;
+        $voucherId = $company->last_voucher_id;
+
+        $firstJuly = new \DateTime(date("Y")."-07-01");
+
+        $firstJuly = $firstJuly->format("Y-m-d");
+
         $datetime = new \DateTime("now");
-        $sequentialId = sprintf("%s%s",$datetime->format('my'), str_pad($voucher->id,4, '0', STR_PAD_LEFT));
+
+        $currentDate = $datetime->format('Y-m_d');
+
+        if($firstJuly==$currentDate){
+            $voucherId = 1;
+        }else{
+            $voucherId= $voucherId+1;
+        }
+
+        $sequentialId = sprintf("%s%s%s",$companyCode,$datetime->format('my'), str_pad($voucherId,4, '0', STR_PAD_LEFT));
         $voucher->voucher_generate_id=$sequentialId;
         $voucher->save();
+
+        $company = Company::find($company->id);
+        $company->last_voucher_id=$voucherId;
+        $company->save();
     }
 
     public function deleteVoucherItemAjax($id){

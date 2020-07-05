@@ -71,6 +71,26 @@ class BankAndBranchController extends Controller
         $bank->type="BANK";
         $bank->save();
 
+
+        if($request->branch_name){
+            foreach ($request->branch_name as $key=>$value){
+                if ($value!=''){
+                    $branch =new BankAndBranch();
+                    if(isset($request->branch_id[$key])){
+                        $branch = BankAndBranch::find($request->branch_id[$key]);
+                    }
+
+                    $branch->name=$value;
+                    $branch->phone=$request->branch_phone[$key];
+                    $branch->email=$request->branch_email[$key];
+                    $branch->address=$request->branch_address[$key];
+                    $branch->bank_id=$bank->id;
+                    $branch->type="BRANCH";
+                    $branch->save();
+                }
+            }
+        }
+
         return redirect()->route('bank_index')->with('success','Bank has been successfully Updated.');
     }
 
@@ -169,13 +189,13 @@ class BankAndBranchController extends Controller
     public function deleteBranch($id){
         $branch=BankAndBranch::find($id);
         $branch->delete();
-        return redirect()->route('branch_index')->with('success','Branch has been successfully Updated.');
+        return new JsonResponse(['message'=>'Branch has been deleted.','status'=>200]);
     }
     public function branchRestore($id){
         BankAndBranch::withTrashed()
             ->where('id', $id)
             ->restore();
-        return redirect()->route('branch_index')->with('success','Branch has been successfully restored.');
+        return redirect()->route('bank_index')->with('success','Branch has been successfully restored.');
     }
 
     public function dataTableBranch(Request $request)

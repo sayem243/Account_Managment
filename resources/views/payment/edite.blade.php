@@ -39,7 +39,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group" style="text-align: right">
-                                        <label for="exampleInputEmail1"><h4>Date: {{ date('d-m-Y') }}</h4></label>
+                                        <label for="exampleInputEmail1"><h4 style="margin-bottom: 0">Date: {{ date('d-m-Y') }}</h4></label>
+                                        <br>
+                                        <label for="exampleInputEmail1">Disbursed Schedule Date: {{ date('d-m-Y', strtotime($payment->disbursed_schedule_date))}}<input type="date" class="form-control" name="disbursed_schedule_date" value="{{ date('d-m-Y', strtotime($payment->disbursed_schedule_date))}}"><span style="color: red">To change please select date</span>
+                                            </label>
                                     </div>
                                 </div>
                             </div>
