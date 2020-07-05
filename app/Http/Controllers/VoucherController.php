@@ -444,7 +444,7 @@ class VoucherController extends Controller
             $voucherId= $voucherId+1;
         }
 
-        $sequentialId = sprintf("%s%s%s",$companyCode,$datetime->format('my'), str_pad($voucherId,4, '0', STR_PAD_LEFT));
+        $sequentialId = sprintf("%s%s%s",$companyCode,$datetime->format('mY'), str_pad($voucherId,4, '0', STR_PAD_LEFT));
         $voucher->voucher_generate_id=$sequentialId;
         $voucher->save();
 
