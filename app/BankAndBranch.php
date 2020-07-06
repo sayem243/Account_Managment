@@ -17,4 +17,13 @@ class BankAndBranch extends Model
 
         return $this->belongsTo('App\BankAndBranch','bank_id')->withTrashed();
     }
+
+    public function bankAccount(){
+        return $this->hasMany('App\BankAccount','bank_id');
+
+    }
+
+    public function branchAccount(){
+        return $this->hasMany('App\BankAccount','branch_id');
+    }
 }

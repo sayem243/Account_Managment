@@ -13,6 +13,9 @@ class Company extends Model
         return $this->hasMany('App\Account');
     
     }
+    public function companyBankAccount(){
+        return $this->hasMany('App\BankAccount','company_id');
+    }
 
     public  function  project(){
         return $this->hasMany('App\Project');

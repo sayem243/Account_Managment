@@ -6,7 +6,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Bank</h5>
+                        <h5>Bank Account</h5>
                         <div class="card-header-right">
                             <div class="btn-group btn-group-lg" role="group"
                                  aria-label="Button group with nested dropdown">

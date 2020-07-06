@@ -24,7 +24,11 @@
 
                <tr>
                    <th style="width: 5%">SL</th>
-                   <th style="width: 90%">Name</th>
+                   <th>Name</th>
+                   <th>Number</th>
+                   <th>Company</th>
+                   <th>Bank</th>
+                   <th>Branch</th>
                    <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 5%;">
                             <i class="feather icon-settings"></i>
                    </th>
@@ -49,5 +53,5 @@
     </div>
 @endsection
 @section('footer.scripts')
-{{--    <script src="{{ asset("assets/datatable/bank.js") }}" ></script>--}}
+    <script src="{{ asset("assets/datatable/bank-account.js") }}" ></script>
 @endsection

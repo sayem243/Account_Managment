@@ -97,7 +97,7 @@ class BankAndBranchController extends Controller
     public function deleteBank($id){
         $bank=BankAndBranch::find($id);
         $bank->delete();
-        return redirect()->route('bank_index')->with('success','Bank has been successfully Updated.');
+        return redirect()->route('bank_index')->with('success','Bank has been successfully deleted.');
     }
     public function bankRestore($id){
         BankAndBranch::withTrashed()

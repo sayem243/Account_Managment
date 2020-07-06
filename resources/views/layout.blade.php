@@ -144,9 +144,9 @@ Like: www.facebook.com/terminalbd
                 @endif
 
                 @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO')||auth()->user()->hasRole('Director')|| auth()->user()->hasRole('Manager'))
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('bank/*') ? 'pcoded-trigger' : ''}}{{ Request::is('expenditure_sector/*') ? 'pcoded-trigger' : ''}}{{ Request::is('company/*') ? 'pcoded-trigger' : ''}}{{ Request::is('project/*') ? 'pcoded-trigger' : ''}}{{ Request::is('usertype/*') ? 'pcoded-trigger' : ''}}">
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('account/*') ? 'pcoded-trigger' : ''}}{{ Request::is('bank/*') ? 'pcoded-trigger' : ''}}{{ Request::is('expenditure_sector/*') ? 'pcoded-trigger' : ''}}{{ Request::is('company/*') ? 'pcoded-trigger' : ''}}{{ Request::is('project/*') ? 'pcoded-trigger' : ''}}{{ Request::is('usertype/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>
-                        <ul class="pcoded-submenu {{ Request::is('bank/*') ? 'active' : ''}}{{ Request::is('expenditure_sector/*') ? 'active' : ''}}{{ Request::is('usertype/*') ? 'active' : ''}}{{ Request::is('company/*') ? 'active' : ''}}{{ Request::is('project/*') ? 'active' : ''}}">
+                        <ul class="pcoded-submenu {{ Request::is('account/*') ? 'active' : ''}}{{ Request::is('bank/*') ? 'active' : ''}}{{ Request::is('expenditure_sector/*') ? 'active' : ''}}{{ Request::is('usertype/*') ? 'active' : ''}}{{ Request::is('company/*') ? 'active' : ''}}{{ Request::is('project/*') ? 'active' : ''}}">
 
                             <li class="nav-item {{ Request::is('company/index') ? 'active' : ''}}"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
                             @if(auth()->user()->can('projects'))
@@ -161,6 +161,9 @@ Like: www.facebook.com/terminalbd
                             @endif
                             @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin'))
                                 <li class="nav-item {{ Request::is('bank/index') ? 'active' : ''}}"><a href="{{route('bank_index')}}" class="nav-link"><span class="pcoded-mtext">Bank</span></a></li>
+                            @endif
+                            @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin'))
+                                <li class="nav-item {{ Request::is('account/index') ? 'active' : ''}}"><a href="{{route('account_index')}}" class="nav-link"><span class="pcoded-mtext">Bank Account</span></a></li>
                             @endif
                             {{--<li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-mtext">Add New</span></a></li>--}}
                         </ul>

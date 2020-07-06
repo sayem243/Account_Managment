@@ -274,5 +274,11 @@ Route::get('/branch/restore/{id}' ,'BankAndBranchController@branchRestore')->nam
 Route::get('/account/index','BankAccountController@index')->name('account_index');
 Route::get('/account/create','BankAccountController@create')->name('account_create');
 Route::post('/account/store','BankAccountController@store')->name('account_store');
+Route::get('/account/edit/{id}','BankAccountController@edit')->name('account_edit');
+Route::post('/account/update/{id}','BankAccountController@update')->name('account_update');
+Route::post('/account/datatable','BankAccountController@dataTableAccount')->name('account_datatable');
+Route::get('/account/delete/{id}' ,'BankAccountController@deleteAccount')->name('account_delete');
+Route::get('/account/restore/{id}' ,'BankAccountController@accountRestore')->name('account_restore');
+
 
 
