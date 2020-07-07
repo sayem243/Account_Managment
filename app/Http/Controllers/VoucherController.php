@@ -45,7 +45,7 @@ class VoucherController extends Controller
 
         $companies=$userProjectCompany;
 
-        $expenditureSectors = ExpenditureSector::all();
+        $expenditureSectors = ExpenditureSector::all()->sortBy('name');
         return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors, 'companies'=>$companies]);
     }
 
