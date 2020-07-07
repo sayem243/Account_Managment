@@ -34,7 +34,7 @@
 
                                Disbursed Schedule Date: {{ date('d-m-Y', strtotime($payment->disbursed_schedule_date))}}
                                 <span style="color: red">To change please select date</span>
-                                <input type="date" class="form-control" name="disbursed_schedule_date[{{$payment->id}}]" value="{{ date('d-m-Y', strtotime($payment->disbursed_schedule_date))}}">
+                                <input type="date" class="form-control" min="{{date("Y-m-d")}}" name="disbursed_schedule_date[{{$payment->id}}]" value="{{ date('d-m-Y', strtotime($payment->disbursed_schedule_date))}}">
 
                             </div>
                         </div>

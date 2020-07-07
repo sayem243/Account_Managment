@@ -37,10 +37,23 @@
                                             <label class="col-form-label" for="name">Company Name <span
                                                         class="required">*</span></label>
                                             <div class="col-form-label">
-                                                <input type="text" class="form-control" name="name" id="name"
-                                                       aria-describedby="validationTooltipUsernamePrepend" required="">
+                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Company Name" required="">
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="code">Company Code <span
+                                                        class="required">*</span></label>
+                                            <div class="col-form-label">
+                                                <input type="text" class="form-control" name="code" id="code" placeholder="Enter Company Code" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+
 
                                         <div class="form-group">
                                             <label class="col-form-label" for="email">Email Address<span
@@ -68,7 +81,7 @@
                                             <label class="col-form-label" for="name">Company Address <span
                                                         class="required">*</span></label>
                                             <div class="col-form-label">
-                                                <textarea type="text" class="form-control" rows="11" name="c_address"
+                                                <textarea type="text" class="form-control" rows="6" name="c_address"
                                                           id="c_address"
                                                           aria-describedby="validationTooltipUsernamePrepend"
                                                           required=""></textarea>

@@ -30,24 +30,17 @@ class CompanyController extends Controller
         //dd('ok');
 
         $this->validate($request, [
-
-            'image' => 'nullable|image'
+            'name' => ['required', 'unique:companies'],
+            'code' => ['required', 'unique:companies'],
         ]);
 
 
         $company =new Company;
         $company->name=$request->name;
+        $company->code=$request->code;
         $company->c_email=$request->c_email;
         $company->c_mobile=$request->c_mobile;
         $company->c_address=$request->c_address;
-
-        //image uploder
-
-
-        if($request->hasFile('c_img')){
-
-            $company->c_img=$request->c_img->store('public/images');
-        }
 
         $company->save();
         return redirect()->route('comp_profile');
@@ -70,6 +63,10 @@ class CompanyController extends Controller
 
 
     public  function update(Request $request,$id){
+
+        $this->validate($request, [
+            "name" => 'required|unique:companies,name,'.$id,
+        ]);
 
         $company=Company::find($id);
 

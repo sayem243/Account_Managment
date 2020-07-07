@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Payment;
 use App\PaymentSettlement;
 use App\VoucherItems;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentSettlementController extends Controller
 {
@@ -24,10 +26,120 @@ class PaymentSettlementController extends Controller
 
 
     public function index(){
+
+        $user = auth()->user();
+
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= array('id'=>$project->company->id,'name'=>$project->company->name);
+        }
+
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $userProjectCompany), SORT_ASC, $userProjectCompany);
+
+        $companies=$userProjectCompany;
+
         $settlements=PaymentSettlement::all();
 
-        return view('settlement.index',['settlements'=>$settlements]);
+        return view('settlement.index',['settlements'=>$settlements,'companies'=>$companies,'projects'=>$projects]);
 
+    }
+
+    public function dataTablePaymentSettlement(Request $request)
+    {
+
+        $query = $request->request->all();
+
+        $countRecords = DB::table('payment_settlements');
+        $countRecords->select('payment_settlements.id as totalSettlement');
+        $countRecords->join('projects', 'payment_settlements.project_id', '=', 'projects.id');
+        $countRecords->join('companies', 'projects.company_id', '=', 'companies.id');
+        $countRecords->join('payments', 'payment_settlements.payment_id', '=', 'payments.id');
+
+        if(isset($query['project_id'])){
+            $project_id = $query['project_id'];
+            $countRecords->where('payment_settlements.project_id',$project_id);
+        }
+
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $countRecords->where('companies.id',$company_id);
+        }
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'];
+            $to_date = $query['to_date'];
+            $countRecords->whereBetween('payment_settlements.created_at', [$from_date, $to_date]);
+        }
+
+        $result = $countRecords->get();
+        $tcount = count($result);
+        $iTotalRecords = $tcount;
+        $iDisplayLength = intval($_REQUEST['length']);
+        $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+        $iDisplayStart = intval($_REQUEST['start']);
+        $sEcho = intval($_REQUEST['draw']);
+        $records = array();
+        $records["data"] = array();
+        $end = $iDisplayStart + $iDisplayLength;
+        $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+
+        $rows = DB::table('payment_settlements');
+        $rows->select('payment_settlements.id as id', 'payment_settlements.settlement_amount as amount');
+        $rows->addSelect('projects.p_name as projectName');
+        $rows->addSelect('companies.name as companyName');
+        $rows->addSelect('payments.payment_id as pId');
+        $rows->join('projects', 'payment_settlements.project_id', '=', 'projects.id');
+        $rows->join('companies', 'projects.company_id', '=', 'companies.id');
+        $rows->leftJoin('payments', 'payment_settlements.payment_id', '=', 'payments.id');
+
+        if(isset($query['project_id'])){
+            $project_id = $query['project_id'];
+            $rows->where('payment_settlements.project_id',$project_id);
+        }
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $rows->where('companies.id',$company_id);
+        }
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'];
+            $to_date = $query['to_date'];
+            $rows->whereBetween('payment_settlements.created_at', [$from_date, $to_date]);
+        }
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName, $columnSortOrder);
+        $result = $rows->get();
+
+        $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
+
+
+        foreach ($result as $post):
+
+            $records["data"][] = array(
+                $id                 = $i,
+                $pId                = $post->pId,
+                $companyName        = $post->companyName?$post->companyName:'',
+                $projectName        = $post->projectName?$post->projectName:'',
+                $amount             = $post->amount,
+            );
+            $i++;
+
+        endforeach;
+        if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+        }
+
+        $records["draw"] = $sEcho;
+        $records["recordsTotal"] = $iTotalRecords;
+        $records["recordsFiltered"] = $iTotalRecords;
+        return new JsonResponse($records);
     }
 
 

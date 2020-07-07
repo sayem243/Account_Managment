@@ -35,14 +35,23 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
-
                                         <div class="form-group">
                                             <label class="col-form-label" for="name">Company Name <span class="required">*</span></label>
                                             <div class="col-form-label">
                                                 <input type="text" class="form-control" name="name" id="name" aria-describedby="validationTooltipUsernamePrepend" value="{{$company->name}}" required="">
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="col-form-label" for="name">Company Code <span class="required">*</span></label>
+                                        <div class="col-form-label">
+                                            <input type="text" disabled class="form-control" name="code" id="code" value="{{$company->code}}">
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label" for="email">Email Address<span class="required">*</span></label>
                                             <div class="col-form-label">
@@ -63,15 +72,11 @@
                                         </div>
 
                                     </div>
-
-
-
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label" for="name">Company Address <span class="required">*</span></label>
                                             <div class="col-form-label">
-                                                <textarea type="text" class="form-control"  rows="11" name="c_address" id="c_address" aria-describedby="validationTooltipUsernamePrepend" required="">{{$company->c_address}}</textarea>
+                                                <textarea type="text" class="form-control"  rows="6" name="c_address" id="c_address" aria-describedby="validationTooltipUsernamePrepend" required="">{{$company->c_address}}</textarea>
                                             </div>
                                         </div>
 

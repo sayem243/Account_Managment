@@ -36,7 +36,12 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td colspan="4"></td>
+                                <td colspan="1">
+                                    From <input style="display: inline; width: auto;"  type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="from_date" id="from_date">
+                                </td>
+                                <td colspan="1">
+                                    To <input style="display: inline; width: auto;" type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="to_date" id="to_date">
+                                </td>
                             </tr>
                             <tr>
                                 <th style="width: 30px" scope="col">SL.</th>

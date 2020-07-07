@@ -117,19 +117,6 @@ Like: www.facebook.com/terminalbd
 
                     </ul>
                 </li>
-
-                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('CEO') || auth()->user()->hasRole('Director'))
-
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('settlement/*') ? 'pcoded-trigger' : ''}}">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Settlement</span></a>
-                        <ul class="pcoded-submenu {{ Request::is('settlement/*') ? 'active' : ''}}">
-
-                            <li class="nav-item {{ Request::is('settlement/list') ? 'active' : ''}}"><a href="{{route('settlement_list')}}" class="nav-link"><span class="pcoded-mtext">Settlement</span></a></li>
-
-                        </ul>
-                    </li>
-                @endif
-
                 @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->can('voucher_create'))
 
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('voucher/*') ? 'pcoded-trigger' : ''}}">
@@ -185,10 +172,13 @@ Like: www.facebook.com/terminalbd
 
 {{--                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('CEO')|| auth()->user()->hasRole('Director')|| auth()->user()->hasRole('Manager'))--}}
 
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('report/*') ? 'pcoded-trigger' : ''}}">
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('report/*') ? 'pcoded-trigger' : ''}}{{ Request::is('settlement/*') ? 'active' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-bar-chart" aria-hidden="true"></i></span><span class="pcoded-mtext">Reports</span></a>
-                        <ul class="pcoded-submenu {{ Request::is('report/*') ? 'active' : ''}}">
+                        <ul class="pcoded-submenu {{ Request::is('report/*') ? 'active' : ''}}{{ Request::is('settlement/*') ? 'active' : ''}}">
                             <li class="nav-item {{ Request::is('report/payment') ? 'active' : ''}}"><a href="{{route('payment_report')}}" class="nav-link"><i class="fa fa-bar-chart" aria-hidden="true"></i>Payment Report</a></li>
+                            @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('CEO')|| auth()->user()->hasRole('Director')|| auth()->user()->hasRole('Manager'))
+                            <li class="nav-item {{ Request::is('settlement/list') ? 'active' : ''}}"><a href="{{route('settlement_list')}}" class="nav-link"><span class="pcoded-mtext">Settlement Report</span></a></li>
+                            @endif
                         </ul>
                     </li>
                 {{--@endif--}}

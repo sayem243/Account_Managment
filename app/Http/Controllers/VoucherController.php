@@ -207,6 +207,11 @@ class VoucherController extends Controller
             $company_id = $query['company_id'];
             $countRecords->where('companies.id',$company_id);
         }
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'];
+            $to_date = $query['to_date'];
+            $countRecords->whereBetween('vouchers.created_at', [$from_date, $to_date]);
+        }
 
         $countRecords->groupBy('totalVouchers');
         $result = $countRecords->get();
@@ -253,6 +258,11 @@ class VoucherController extends Controller
         if(isset($query['company_id'])){
             $company_id = $query['company_id'];
             $rows->where('companies.id',$company_id);
+        }
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'];
+            $to_date = $query['to_date'];
+            $rows->whereBetween('vouchers.created_at', [$from_date, $to_date]);
         }
 
         $rows->groupBy('voucherId');

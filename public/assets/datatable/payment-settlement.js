@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-    var dataTable= $('#voucher_table').DataTable( {
+    var dataTable= $('#payment_settlement_table').DataTable( {
 
         loadingMessage: 'Loading...',
         "processing": false,
@@ -16,17 +16,15 @@ $(document).ready(function () {
         "ajax": {
             "type"   : "POST",
             "cache": false,
-            "url": '/voucher/archived/datatable', // ajax source
+            "url": '/payment/settlement/datatable', // ajax source
             'data': function(data){
                 // Read values
                 var project_id = $('#project_id').val();
-                var voucher_id = $('#voucher_id').val();
                 var company_id = $('#company_id').val();
                 var from_date = $('#from_date').val();
                 var to_date = $('#to_date').val();
 
                 data._token = CSRF_TOKEN;
-                data.voucher_id = voucher_id;
                 data.project_id = project_id;
                 data.company_id = company_id;
                 data.from_date = from_date;
@@ -35,12 +33,10 @@ $(document).ready(function () {
         },
         'columns': [
             { "name": 'id' },
-            { "name": 'name' },
             { "name": 'pId' },
             { "name": 'companyName' },
             { "name": 'projectName' },
             { "name": 'amount' },
-            { "name": '' },
         ],
         "order": [
             [1, "asc"]
@@ -49,14 +45,8 @@ $(document).ready(function () {
             {
                 "targets": 0,
                 "orderable": false
-            },
-            {
-                "targets": 6,
-                "orderable": false
-            }],
-    });
-    $('#voucher_id').keyup(function(){
-        dataTable.draw();
+            }
+            ],
     });
     $('#company_id').change(function(){
         dataTable.draw();

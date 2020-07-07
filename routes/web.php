@@ -92,6 +92,7 @@ Route::post('/payment/datatable', 'PaymentController@dataTable')->name('payment_
 //Payment Settlement Route
 Route::get('/settlement/list','PaymentSettlementController@index')->name('settlement_list');
 Route::post('/settlement/payment/{id}','PaymentSettlementController@store')->name('settlement_store');
+Route::post('/payment/settlement/datatable','PaymentSettlementController@dataTablePaymentSettlement')->name('settlement_datatable');
 
 Route::post('/comments/payment/{id}','PaymentController@commentStore')->name('comments_store');
 Route::post('/attachments/payment/{id}','PaymentController@paymentAttachmentStore')->name('payment_attachment_store');
