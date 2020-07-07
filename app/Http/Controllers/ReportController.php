@@ -159,8 +159,8 @@ class ReportController extends Controller
         }
 
         if (isset($query['from_date']) && isset($query['to_date'])) {
-            $from_date = $query['from_date'];
-            $to_date = $query['to_date'];
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
             $countRecords->whereBetween('payments.created_at', [$from_date, $to_date]);
         }
 //        $countRecords->groupBy('payment_details.payment_id');
@@ -235,8 +235,8 @@ class ReportController extends Controller
             $rows->whereIn('payments.project_id', $projectId);
         }
         if (isset($query['from_date']) && isset($query['to_date'])) {
-            $from_date = $query['from_date'];
-            $to_date = $query['to_date'];
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
             $rows->whereBetween('payments.created_at', [$from_date, $to_date]);
         }
 

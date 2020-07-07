@@ -208,8 +208,8 @@ class VoucherController extends Controller
             $countRecords->where('companies.id',$company_id);
         }
         if (isset($query['from_date']) && isset($query['to_date'])) {
-            $from_date = $query['from_date'];
-            $to_date = $query['to_date'];
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
             $countRecords->whereBetween('vouchers.created_at', [$from_date, $to_date]);
         }
 
@@ -232,7 +232,7 @@ class VoucherController extends Controller
 
         $rows = DB::table('vouchers');
 
-        $rows->select('vouchers.id as id', 'vouchers.voucher_generate_id as vId', 'vouchers.total_amount as amount');
+        $rows->select('vouchers.id as id', 'vouchers.voucher_generate_id as vId', 'vouchers.total_amount as amount', 'vouchers.created_at as createdAt');
         $rows->addSelect( 'voucher_items.item_name as name', 'voucher_items.voucher_id as voucherId');
         $rows->addSelect('projects.p_name as projectName');
         $rows->addSelect('companies.name as companyName');
@@ -260,8 +260,8 @@ class VoucherController extends Controller
             $rows->where('companies.id',$company_id);
         }
         if (isset($query['from_date']) && isset($query['to_date'])) {
-            $from_date = $query['from_date'];
-            $to_date = $query['to_date'];
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
             $rows->whereBetween('vouchers.created_at', [$from_date, $to_date]);
         }
 
@@ -290,6 +290,7 @@ class VoucherController extends Controller
                 $companyName        = $post->companyName?$post->companyName:'',
                 $projectName        = $post->projectName?$post->projectName:'',
                 $amount             = $post->amount,
+                $createdAt               = $post->createdAt,
                 $button
             );
             $i++;

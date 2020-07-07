@@ -68,8 +68,8 @@ class PaymentSettlementController extends Controller
             $countRecords->where('companies.id',$company_id);
         }
         if (isset($query['from_date']) && isset($query['to_date'])) {
-            $from_date = $query['from_date'];
-            $to_date = $query['to_date'];
+            $from_date = $query['from_date'].'00:00:00';
+            $to_date = $query['to_date'].'23:59:59';
             $countRecords->whereBetween('payment_settlements.created_at', [$from_date, $to_date]);
         }
 
@@ -107,8 +107,8 @@ class PaymentSettlementController extends Controller
             $rows->where('companies.id',$company_id);
         }
         if (isset($query['from_date']) && isset($query['to_date'])) {
-            $from_date = $query['from_date'];
-            $to_date = $query['to_date'];
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
             $rows->whereBetween('payment_settlements.created_at', [$from_date, $to_date]);
         }
         $rows->offset($iDisplayStart);

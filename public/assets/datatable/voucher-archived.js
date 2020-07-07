@@ -40,6 +40,7 @@ $(document).ready(function () {
             { "name": 'companyName' },
             { "name": 'projectName' },
             { "name": 'amount' },
+            { "name": 'createdAt' },
             { "name": '' },
         ],
         "order": [
@@ -51,7 +52,7 @@ $(document).ready(function () {
                 "orderable": false
             },
             {
-                "targets": 6,
+                "targets": 7,
                 "orderable": false
             }],
     });
