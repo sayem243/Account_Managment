@@ -184,28 +184,6 @@ Like: www.facebook.com/terminalbd
                     </li>
                 {{--@endif--}}
 
-
-
-
-                {{--<li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">--}}
-                {{--<a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>--}}
-                {{--<ul class="pcoded-submenu">--}}
-
-                {{--<li class="nav-item"><a href="{{route('setting')}}" class="nav-link"><span class="pcoded-mtext">Setting</span></a></li>--}}
-
-                {{--<li class="nav-item"><a href="{{route('setting_create')}}" class="nav-link"><span class="pcoded-mtext">New Setting</span></a></li>--}}
-
-
-                {{--</ul>--}}
-                {{--</li>--}}
-
-
-
-                {{--roles--}}
-
-
-
-
             </ul>
         </div>
     </div>
