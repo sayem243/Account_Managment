@@ -45,12 +45,12 @@
                             </tr>
                             <tr>
                                 <th style="width: 30px" scope="col">SL.</th>
+                                <th style="width: 100px" width="" scope="col">Date</th>
                                 <th style="width: 250px" scope="col">Expenses Type</th>
                                 <th style="width: 150px" scope="col">Voucher Id</th>
                                 <th style="width: 150px" width="" scope="col">Company</th>
                                 <th style="width: 150px" width="" scope="col">Project</th>
                                 <th style="width: 100px" width="" scope="col">Amount</th>
-                                <th style="width: 100px" width="" scope="col">Date</th>
                                 <th scope="col text-center"><i class="feather icon-settings"></i></th>
                             </tr>
 

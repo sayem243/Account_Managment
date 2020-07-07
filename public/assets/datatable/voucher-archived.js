@@ -35,16 +35,16 @@ $(document).ready(function () {
         },
         'columns': [
             { "name": 'id' },
+            { "name": 'createdAt' },
             { "name": 'name' },
             { "name": 'pId' },
             { "name": 'companyName' },
             { "name": 'projectName' },
             { "name": 'amount' },
-            { "name": 'createdAt' },
             { "name": '' },
         ],
         "order": [
-            [1, "asc"]
+            [1, "desc"]
         ],// set first column as a default sort by asc
         "columnDefs": [
             {

@@ -285,12 +285,12 @@ class VoucherController extends Controller
 
             $records["data"][] = array(
                 $id                 = $i,
+                $createdAt               = $post->createdAt,
                 $name               = $post->expenseName,
                 $pId                = '<a data-toggle="modal" data-target-id="'.$post->id.'" data-target="#myModal" href="">'.$post->vId.'</a>',
                 $companyName        = $post->companyName?$post->companyName:'',
                 $projectName        = $post->projectName?$post->projectName:'',
                 $amount             = $post->amount,
-                $createdAt               = $post->createdAt,
                 $button
             );
             $i++;
