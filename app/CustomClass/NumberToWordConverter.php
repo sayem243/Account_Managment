@@ -63,7 +63,7 @@ class NumberToWordConverter
         $string = '';
         switch (true) {
             case $number < 21:
-                $string = self::$dictionary[$number];
+                $string = self::$dictionary[$num_arr[0]];
                 break;
             case $number < 100:
                 $tens   = ((int) ($number / 10)) * 10;
@@ -119,7 +119,6 @@ class NumberToWordConverter
                 }
 //
             }
-            $string = $string." only";
         }
 
 
