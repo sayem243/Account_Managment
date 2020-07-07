@@ -51,7 +51,7 @@
                                    </a>
                                </li>
                                @endif
-                               @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('expenditure-sector-create'))
+                               @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('expenditure-sector-delete'))
                                <li class="dropdown-item">
                                    <a onclick="return confirm('Are you sure want to delete?')" href="{{route('expenditure_sector_delete',$expenditure->id)}}">
                                        <i class="feather icon-trash-2"></i> Remove
