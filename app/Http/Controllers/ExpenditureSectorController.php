@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class ExpenditureSectorController extends Controller
 {
+   function __construct()
+    {
+        $this->middleware('permission:expenditure-sector-create', ['only' => ['create','store']]);
+        $this->middleware('permission:expenditure-sector-list', ['only' => ['index']]);
+        $this->middleware('permission:expenditure-sector-edit',['only'=>['edit','update']]);
+        $this->middleware('permission:expenditure-sector-delete',['only'=>['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
