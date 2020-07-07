@@ -360,7 +360,7 @@ class VoucherController extends Controller
                     }
                     $voucher->total_amount = $voucher->getTotalAmount();
                     $voucher->status = 0;
-
+                    $voucher->save();
 
                     $returnArray[]=$voucher->id;
                 }
