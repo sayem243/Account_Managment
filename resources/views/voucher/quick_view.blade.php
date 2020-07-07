@@ -47,6 +47,15 @@
                         </tfoot>
 
                     </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @php use App\CustomClass\NumberToWordConverter;
+                               $amount = NumberToWordConverter::convert($voucher->total_amount);
+                            @endphp
+                            <p style="color: red; padding: 10px 5px; margin-bottom: 5px"><strong style="font-weight: bold">Write in
+                                    words: </strong>{{$amount}} only</p>
+                        </div>
+                    </div>
                 </div>
 
             </div>
