@@ -191,6 +191,8 @@
                         'voucher_amount':voucher_item_amount,
                     },
                     success: function (data) {
+                        element.closest('tr').find("input[type=text]").val("");
+                        element.closest('tr').find("select").val("");
 
                         if(data.voucher_item_id!=''){
                             var dataOption='<select name="expenditure_sector['+data.voucher_item_id+']" class="form-control">';

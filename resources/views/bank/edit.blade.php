@@ -43,7 +43,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <table class="table table-bordered" style="margin-top: 25px; margin-bottom: 0">
+                                        <table class="table table-bordered branch_table" style="margin-top: 25px; margin-bottom: 0">
                                             <thead>
                                             <tr>
                                                 <th>Branch Name</th>
@@ -124,6 +124,7 @@
                 $tr.clone().insertAfter($tr);
                 $tr.find('td').find('button.remove_row').show();
                 $tr.find('td').find('button.add_row').hide();
+                $('.branch_table tr:last').find("input[type=text]").val("");
             });
 
             // Find and remove selected table rows
