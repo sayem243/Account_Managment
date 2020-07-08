@@ -48,6 +48,7 @@ class NumberToWordConverter
         90                  => 'ninety',
         100                 => 'hundred',
         1000                => 'thousand',
+        100000              => 'lac',
         1000000             => 'million',
         1000000000          => 'billion',
         1000000000000       => 'trillion',
@@ -81,8 +82,18 @@ class NumberToWordConverter
                     $string .= self::$conjunction . self::convert($remainder);
                 }
                 break;
-            default:
+            case $number < 100000:
                 $baseUnit = pow(1000, floor(log($number, 1000)));
+                $numBaseUnits = (int) ($number / $baseUnit);
+                $remainder = $number % $baseUnit;
+                $string = self::convert($numBaseUnits) . ' ' . self::$dictionary[$baseUnit];
+                if ($remainder) {
+                    $string .= $remainder < 100 ? self::$conjunction : self::$separator;
+                    $string .= self::convert($remainder);
+                }
+                break;
+            default:
+                $baseUnit = pow(100000, floor(log($number, 100000)));
                 $numBaseUnits = (int) ($number / $baseUnit);
                 $remainder = $number % $baseUnit;
                 $string = self::convert($numBaseUnits) . ' ' . self::$dictionary[$baseUnit];
