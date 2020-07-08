@@ -26,6 +26,7 @@
            <th>Email</th>
           <th>Mobile Number</th>
           <th>Address</th>
+          <th>Code</th>
 
               <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                         <i class="feather icon-settings"></i>
@@ -43,6 +44,7 @@
                         <td>{{$company->c_email}}</td>
                         <td>{{$company->c_mobile}}</td>
                         <td>{{$company->c_address}}</td>
+                        <td>{{$company->code}}</td>
 
 
                         <td>

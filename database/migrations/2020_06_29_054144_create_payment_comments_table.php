@@ -24,12 +24,12 @@ class CreatePaymentCommentsTable extends Migration
         });
 
         Schema::table('payment_comments', function($table) {
-            $table->foreign('payment_id')->references('id')->on('payments');
+            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
 
         });
 
         Schema::table('payment_comments', function($table) {
-            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
         });
     }
