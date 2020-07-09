@@ -351,7 +351,11 @@ class PaymentController extends Controller
 
         $payment=Payment::find($id);
 
-        if($payment->status>1 || !$this->checkAuthUserProjects($payment)){
+        if(!$this->checkAuthUserProjects($payment)){
+            return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+        }elseif ($payment->status>1 && auth()->user()->can('payment-edit') && !auth()->user()->hasRole('superadmin') ){
+            return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+        }elseif ($payment->status>3 && auth()->user()->can('payment-edit') && auth()->user()->hasRole('superadmin') ){
             return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
         }
         if ($payment->user->trashed() || $payment->company->trashed() || $payment->project->trashed()) {
@@ -406,7 +410,11 @@ class PaymentController extends Controller
     public function update(Request $request,$id){
 
         $payment=Payment::find($id);
-        if($payment->status>1 || !$this->checkAuthUserProjects($payment)){
+        if(!$this->checkAuthUserProjects($payment)){
+            return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+        }elseif ($payment->status>1 && auth()->user()->can('payment-edit') && !auth()->user()->hasRole('superadmin') ){
+            return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
+        }elseif ($payment->status>3 && auth()->user()->can('payment-edit') && auth()->user()->hasRole('superadmin') ){
             return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
         }
         $user = auth()->user();
@@ -726,6 +734,9 @@ class PaymentController extends Controller
                     <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
             if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null) {
 
+                if (($post->pStatus == 2 || $post->pStatus == 3 ) && auth()->user()->can('payment-edit') && auth()->user()->hasRole('superadmin')) {
+                    $button .= '<li class="dropdown-item"> <a href="/payment/edit/' . $post->pId . '"> <i class="feather icon-edit"></i> Edit</a></li>';
+                }
                 if ($post->pStatus == 1 && auth()->user()->can('payment-edit')) {
                     $button .= '<li class="dropdown-item"> <a href="/payment/edit/' . $post->pId . '"> <i class="feather icon-edit"></i> Edit</a></li>';
                 }
