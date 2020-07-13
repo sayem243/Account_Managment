@@ -425,7 +425,6 @@ class PaymentController extends Controller
         $payment->project_id=$request->exit_project_id[0];
 //        $payment->comments=$request->comments;
 
-        $payment->created_by=$user->id;
         $payment->disbursed_schedule_date= new \DateTime($request->disbursed_schedule_date);
         $payment->save();
         $projects=$request->project_id;
