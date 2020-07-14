@@ -40,6 +40,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        $request->session()->put('logged_in_user_password',$request->get('password'));
         return redirect()->route('payment');
     }
     public function username(){

@@ -63,6 +63,7 @@
             </div>
 
         </div>
+        <input type="hidden" class="auth_plain_pass" value="{{$auth_plain_pass}}">
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -119,6 +120,38 @@
                     }
                 });
 
+            });
+
+            jQuery('body').on('click','.remove_voucher', function () {
+                var element = jQuery(this);
+                var voucherId= jQuery(this).attr('data-id');
+                var auth_plain_pass = jQuery('.auth_plain_pass').val();
+                if(voucherId===0||voucherId===''){
+                    return false;
+                }
+                var getPassword = prompt("Please enter your password", "");
+                if (getPassword != null && getPassword===auth_plain_pass) {
+                    jQuery.ajax({
+                        type:'GET',
+                        dataType : 'json',
+                        url:'{{ url("/ajax/voucher/delete") }}/'+voucherId,
+                        data:{},
+                        success:function(data){
+                            if(data.status==200){
+                                jQuery('.alert').addClass('alert-success').show();
+                                jQuery('.alert').find('.message').html(data.message);
+                                element.closest("tr").remove();
+                            }
+                            if(data.status==400){
+                                jQuery('.alert').addClass('alert-danger').show();
+                                jQuery('.alert').find('.message').html(data.message);
+                            }
+                        }
+                    });
+                }else {
+                    jQuery('.alert').addClass('alert-danger').show();
+                    jQuery('.alert').find('.message').html('you are not permitted');
+                }
             });
 
             jQuery("#myModal").on("show.bs.modal", function(e) {

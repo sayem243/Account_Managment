@@ -216,6 +216,7 @@ Route::get('/voucher/details/{id}','VoucherController@details')->name('voucher_d
 Route::get('/voucher/pdf/{id}','VoucherController@voucherPdf')->name('voucher_pdf');
 Route::get('/voucher/print/{id}','VoucherController@voucherPrint')->name('voucher_print');
 Route::get('/voucher/quick/view/{id}','VoucherController@quickView')->name('voucher_quick_view');
+Route::get('/ajax/voucher/delete/{id}' ,'VoucherController@delete')->name('voucher_delete');
 
 //Reports
 

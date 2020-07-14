@@ -24,7 +24,8 @@ class VoucherController extends Controller
         $this->middleware('auth');
         //$this->middleware('permission:Payment-create', ['only' => ['index','create','store','approve','verify']]);
         $this->middleware('permission:voucher_approved', ['only' => ['approved']]);
-        $this->middleware('permission:voucher_create', ['only' => ['index','store','voucherPdf','voucherPrint']]);
+        $this->middleware('permission:voucher_create', ['only' => ['index','store','voucherPdf','voucherPrint','archivedList']]);
+        $this->middleware('permission:superadmin', ['only' => ['delete']]);
 
 
     }
@@ -49,9 +50,9 @@ class VoucherController extends Controller
         return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors, 'companies'=>$companies]);
     }
 
-    Public function archivedList(){
+    Public function archivedList(Request $request){
 
-
+        $auth_plain_pass= $request->session()->get('logged_in_user_password');
         $user = auth()->user();
         $projects=$user->projects;
         $userProjectCompany = array();
@@ -64,7 +65,7 @@ class VoucherController extends Controller
         }, $userProjectCompany), SORT_ASC, $userProjectCompany);
 
         $companies=$userProjectCompany;
-        return  view('voucher.archive',['projects'=>$projects, 'companies'=>$companies]);
+        return  view('voucher.archive',['auth_plain_pass'=>$auth_plain_pass, 'projects'=>$projects, 'companies'=>$companies]);
     }
 
     public function dataTable(Request $request)
@@ -192,6 +193,7 @@ class VoucherController extends Controller
         $countRecords->join('companies', 'projects.company_id', '=', 'companies.id');
         $countRecords->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
 
+        $countRecords->whereNull('vouchers.deleted_at');
         $countRecords->where('voucher_items.status','!=', 0);
         if (isset($query['voucher_id'])) {
             $name = $query['voucher_id'];
@@ -245,6 +247,7 @@ class VoucherController extends Controller
         $rows->join('companies', 'projects.company_id', '=', 'companies.id');
         $rows->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
 
+        $rows->whereNull('vouchers.deleted_at');
         $rows->where('voucher_items.status','!=', 0);
 
         if (isset($query['voucher_id'])) {
@@ -280,7 +283,9 @@ class VoucherController extends Controller
                     <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
 
             $button .='<li class="dropdown-item"><a href="/voucher/details/'.$post->id.'"><i class="feather icon-eye"></i>Details</a></li>';
-
+            if (auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin')) {
+                $button .= '<li class="dropdown-item"><a class="remove_voucher" href="javascript:void(0)" data-id="' . $post->id . '"><i class="feather icon-trash-2" ></i >Remove</a></li>';
+            }
             $button.='</ul></div>';
 
             $records["data"][] = array(
@@ -468,6 +473,17 @@ class VoucherController extends Controller
         $voucherItem=VoucherItems::find($id);
         $voucherItem->delete();
         return new JsonResponse(['message'=>'Record has been deleted.','status'=>200]);
+    }
+
+    public function delete($id){
+
+        $voucher=Voucher::find($id);
+        if(auth()->user()->hasRole('superadmin')||auth()->user()->can('superadmin')) {
+            $voucher->delete();
+            return new JsonResponse(['message'=>'Voucher has been deleted.','status'=>200]);
+        }
+        return new JsonResponse(['message'=>'Error! Ops something wrong.','status'=>400]);
+
     }
 
 
