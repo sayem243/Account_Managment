@@ -43,7 +43,7 @@
                                         <br>
                                         <label for="exampleInputEmail1">Disbursed Schedule Date: {{ date('d-m-Y', strtotime($payment->disbursed_schedule_date))}}
                                             <p style="color: red;margin-bottom: 0px;">To change please select date</p>
-                                            <input type="date" class="form-control" name="disbursed_schedule_date" min="{{date("Y-m-d")}}" value="{{ date('d-m-Y', strtotime($payment->disbursed_schedule_date))}}">
+                                            <input type="date" class="form-control" name="disbursed_schedule_date" min="{{date("Y-m-d")}}" value="{{ date('Y-m-d', strtotime($payment->disbursed_schedule_date))}}">
                                             </label>
                                     </div>
                                 </div>

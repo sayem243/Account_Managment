@@ -139,7 +139,7 @@
 
                                         @endif
                                 @endif
-                                @if($payment->status>3 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
+                                @if($payment->status>3 && $payment->status!=7 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
                                     <button style="border-radius: .3rem; margin: 0" id="addTag" class="btn btn-green btn-lg"
                                             data-toggle="modal" data-target="#modalForm">
                                         Settlement

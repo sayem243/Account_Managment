@@ -235,6 +235,9 @@ class PaymentController extends Controller
                 $payment->status = 1;
             }
             $payment->disbursed_schedule_date= new \DateTime($disbursed_schedule_date[$paymentId]);
+            if(date("Y-m-d", strtotime("now"))<date("Y-m-d", strtotime($disbursed_schedule_date[$paymentId]))){
+                $payment->status = 7;
+            }
             $payment->save();
 
             if($request->session()->get('reference_payment_id')){
@@ -425,7 +428,10 @@ class PaymentController extends Controller
         $payment->project_id=$request->exit_project_id[0];
 //        $payment->comments=$request->comments;
 
-        $payment->disbursed_schedule_date= new \DateTime($request->disbursed_schedule_date);
+        $payment->disbursed_schedule_date = new \DateTime($request->disbursed_schedule_date);
+        if(date("Y-m-d", strtotime("now"))<date("Y-m-d", strtotime($request->disbursed_schedule_date))){
+            $payment->status = 7;
+        }
         $payment->save();
         $projects=$request->project_id;
         $itemName=$request->item_name;
@@ -471,7 +477,7 @@ class PaymentController extends Controller
         $status = $request->post('payment_status');
 
         $payment=Payment::find($id);
-        if($user->id!=''&&$payment->status==1 ||$payment->status==2){
+        if($user->id!=''&& $payment->status==1 ||$payment->status==2){
             if($status==1){
                 $msg="un verified.";
             }else{
@@ -483,6 +489,22 @@ class PaymentController extends Controller
             //$payment->status=2;
             $payment->save();
             return response()->json(['message'=>'Payment has been successfully '.$msg,'status'=>200]);
+
+        }
+        return response()->json(['message'=>'Error! This are not permitted.','status'=>301]);
+
+    }
+    //un park
+    public function unPark(Request $request, $id){
+        $user = auth()->user();
+        $status = $request->post('payment_status');
+
+        $payment=Payment::find($id);
+        if($user->id!=''&& $payment->status==7){
+
+            $payment->status=$status;
+            $payment->save();
+            return response()->json(['message'=>'Payment has been successfully un park','status'=>200]);
 
         }
         return response()->json(['message'=>'Error! This are not permitted.','status'=>301]);
@@ -567,6 +589,7 @@ class PaymentController extends Controller
             $status = $query['payment_status'];
             if($status=='all'){
                 $countRecords->where('payments.status','!=', 6);
+                $countRecords->where('payments.status','!=', 7);
             }else{
                 $countRecords->where('payments.status','=', $status);
             }
@@ -644,6 +667,7 @@ class PaymentController extends Controller
             $status = $query['payment_status'];
             if($status=='all'){
                 $rows->where('payments.status','!=', 6);
+                $rows->where('payments.status','!=', 7);
             }else{
                 $rows->where('payments.status','=', $status);
             }
@@ -709,6 +733,8 @@ class PaymentController extends Controller
                 $paymentStatus = '<span class="label label-light-grey">Settled partial</span>';
             } elseif ($post->pStatus == 6) {
                 $paymentStatus = '<span class="label label-grey">Archived</span>';
+            } elseif ($post->pStatus == 7) {
+                $paymentStatus = '<span class="label label-yellow">Park</span>';
             }
 
 
@@ -717,7 +743,10 @@ class PaymentController extends Controller
             if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null){
                 if($post->pStatus==1 && auth()->user()->can('payment-verify')){
                     $action.='<button data-id="'.$post->pId.'" data-status="2" type="button" class="btn btn-sm  btn-primary verify" style="min-width: 75px;-webkit-transform: scale(1);">Verify </button>';
-                }elseif($post->pStatus==2){
+                }elseif($post->pStatus==7 && auth()->user()->can('payment-verify')){
+                    $action.='<button data-id="'.$post->pId.'" data-status="1" type="button" class="btn btn-sm  btn-primary un_park" style="min-width: 75px;-webkit-transform: scale(1);">Un Park </button>';
+                }
+                elseif($post->pStatus==2){
                     if (auth()->user()->can('payment-approve')){
                         $action.='<button data-id-id="'.$post->pId.'" type="button" class="btn btn-sm  btn-primary approved" style="-webkit-transform: scale(1);">Approve </button>';
                     }

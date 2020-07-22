@@ -216,6 +216,14 @@ table.dataTable thead .sorting_desc_disabled:after{
     min-width: 80px;
     border-radius: 0.25rem!important;
 }
+.payment_table .btn-group{
+    width: 100%;
+}
+.payment_table .btn-group button.park_button{
+    position: absolute;
+    right: 0;
+    margin-right: 0;
+}
 .deleted_item{
     background-color: red;
     color: #FFFFFF;

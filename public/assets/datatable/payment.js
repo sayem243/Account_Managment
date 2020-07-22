@@ -124,6 +124,15 @@ $(document).ready(function () {
                     title: 'Archived',
                     'data-status': 6
                 }
+            },
+            {
+                extend: 'all_payment',
+                text: 'Park',
+                className: 'buttons-alert payment_status btn-info park_button',
+                attr:  {
+                    title: 'Park',
+                    'data-status': 7
+                }
             }
         ]
         /*"buttons": [
@@ -202,6 +211,32 @@ $(document).ready(function () {
                 type: 'POST',
                 dataType: 'json',
                 url: '/payment/status/' + id,
+                data: {'payment_status':payment_status},
+                success: function (data) {
+                    if (data.status == 200) {
+                        jQuery('.alert').addClass('alert-success').show();
+                        jQuery('.alert').find('.message').html(data.message);
+                        dataTable.draw();
+                    }else{
+                        jQuery('.alert').addClass('alert-danger').show();
+                        jQuery('.alert').find('.message').html(data.message);
+                        dataTable.draw();
+                    }
+                }
+            });
+        }
+    });
+
+    jQuery("body").on("click",".un_park",function(e){
+        var element = e.target;
+        e.preventDefault();
+        var id = jQuery(this).attr('data-id');
+        var payment_status = jQuery(this).attr('data-status');
+        if (confirm("Are you sure ?")) {
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/payment/status/unpark/' + id,
                 data: {'payment_status':payment_status},
                 success: function (data) {
                     if (data.status == 200) {
