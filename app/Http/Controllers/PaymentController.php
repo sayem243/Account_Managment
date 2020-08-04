@@ -38,6 +38,7 @@ class PaymentController extends Controller
         $this->middleware('permission:payment-edit',['only'=>['edite']]);
         $this->middleware('permission:payment-delete',['only'=>['delete']]);
         $this->middleware('permission:payment-paid',['only'=>['payment_paid']]);
+        $this->middleware('permission:payment-unpark',['only'=>['unPark']]);
     }
 
 
@@ -563,7 +564,7 @@ class PaymentController extends Controller
 
     public function delete($id){
         $payment=Payment::find($id);
-        if($payment->status>1 || !$this->checkAuthUserProjects($payment)){
+        if($payment->status>1 || !$this->checkAuthUserProjects($payment) || !$this->checkAuthUserOwnPayment($payment)){
             return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
         }
         $payment->delete();
@@ -666,6 +667,7 @@ class PaymentController extends Controller
         $rows->addSelect('projects.deleted_at as projectDeletedAt');
         $rows->addSelect('employee.name as employeeName','employee.deleted_at as employeeDeletedAt');
         $rows->addSelect('createdBy.name as creatorName');
+        $rows->addSelect('createdBy.id as creatorId');
         $rows->where('payments.status','!=', 0);
 
         if (isset($query['payment_status'])) {
@@ -751,7 +753,7 @@ class PaymentController extends Controller
             if ($post->employeeDeletedAt==null && $post->companyDeletedAt==null && $post->projectDeletedAt==null){
                 if($post->pStatus==1 && auth()->user()->can('payment-verify')){
                     $action.='<button data-id="'.$post->pId.'" data-status="2" type="button" class="btn btn-sm  btn-primary verify" style="min-width: 75px;-webkit-transform: scale(1);">Verify </button>';
-                }elseif($post->pStatus==7 && auth()->user()->can('payment-verify')){
+                }elseif($post->pStatus==7 && auth()->user()->can('payment-unpark')){
                     $action.='<button data-id="'.$post->pId.'" data-status="1" type="button" class="btn btn-sm  btn-primary un_park" style="min-width: 75px;-webkit-transform: scale(1);">Un Park </button>';
                 }
                 elseif($post->pStatus==2){
@@ -777,7 +779,13 @@ class PaymentController extends Controller
                     $button .= '<li class="dropdown-item"> <a href="/payment/edit/' . $post->pId . '"> <i class="feather icon-edit"></i> Edit</a></li>';
                 }
                 if ($post->pStatus < 2 && auth()->user()->can('payment-delete')) {
-                    $button .= '<li class="dropdown-item" ><a onclick="return confirm(\'Are you sure you want to delete this item\')" href = "/payment/delete/' . $post->pId . '" ><i class="feather icon-trash-2" ></i >Remove</a ></li >';
+                    if(auth()->user()->hasRole('Line Manager')){
+                        if(auth()->id()==$post->creatorId){
+                            $button .= '<li class="dropdown-item" ><a onclick="return confirm(\'Are you sure you want to delete this item\')" href = "/payment/delete/' . $post->pId . '" ><i class="feather icon-trash-2" ></i >Remove</a ></li >';
+                        }
+                    }else{
+                        $button .= '<li class="dropdown-item" ><a onclick="return confirm(\'Are you sure you want to delete this item\')" href = "/payment/delete/' . $post->pId . '" ><i class="feather icon-trash-2" ></i >Remove</a ></li >';
+                    }
                 }
             }
 
@@ -823,6 +831,16 @@ class PaymentController extends Controller
             return true;
         }
         return false;
+    }
+
+    private function checkAuthUserOwnPayment($payment){
+        if(auth()->user()->hasRole('Line Manager')){
+            if(auth()->id()==$payment->created_by){
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 
 }
