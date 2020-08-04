@@ -52,9 +52,14 @@
               <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
                   <thead class="thead-dark">
                   <tr role="row" class="filter">
+                      <td colspan="5"></td>
+                      <td colspan="4">
+                          <input type="text" id="item_search" class="form-control item_search" placeholder="Search item name ....">
+                      </td>
+                  </tr>
+                  <tr role="row" class="filter">
                       <td colspan="2">
-                          <input  type="text" class="form-control form-filter input-sm" name="payment_id" id="payment_id" placeholder="Payment Id"> </td>
-
+                          <input  type="text" class="form-control form-filter input-sm" name="payment_id" id="payment_id" placeholder="Payment Id">
                       </td>
 
                       <td colspan="2">

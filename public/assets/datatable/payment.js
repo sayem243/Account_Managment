@@ -22,6 +22,7 @@ $(document).ready(function () {
             "url": "/payment/datatable", // ajax source
             'data': function(data){
                 // Read values
+                var item_search = $('#item_search').val();
                 var payment_id = $('#payment_id').val();
                 var company_id = $('#company_id').val();
                 var user_id = $('#user_id').val();
@@ -40,6 +41,7 @@ $(document).ready(function () {
                 data.payment_status = payment_status?payment_status:'all';
                 data.from_date = from_date;
                 data.to_date = to_date;
+                data.item_search = item_search;
             }
         },
         'columns': [
@@ -156,6 +158,10 @@ $(document).ready(function () {
                 }
             }
         ]*/
+    });
+
+    $('#item_search').keyup(function(){
+        dataTable.draw();
     });
 
     $('#payment_id').keyup(function(){

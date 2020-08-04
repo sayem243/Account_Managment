@@ -577,7 +577,7 @@ class PaymentController extends Controller
 
         $countRecords = DB::table('payments');
         $countRecords->select('payments.id as totalPayment');
-//        $countRecords->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
+        $countRecords->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
         $countRecords->join('projects', 'payments.project_id', '=', 'projects.id');
         $countRecords->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $countRecords->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
@@ -598,6 +598,11 @@ class PaymentController extends Controller
         if (isset($query['payment_id'])) {
             $name = $query['payment_id'];
             $countRecords->where('payments.payment_id', 'like', "{$name}%");
+        }
+
+        if (isset($query['item_search'])) {
+            $name = $query['item_search'];
+            $countRecords->where('payment_details.item_name', 'like', "%{$name}%");
         }
 
         if(isset($query['company_id'])){
@@ -631,7 +636,7 @@ class PaymentController extends Controller
             $to_date = $query['to_date'].' 23:59:59';
             $countRecords->whereBetween('payments.created_at', [$from_date, $to_date]);
         }
-//        $countRecords->groupBy('payment_details.payment_id');
+        $countRecords->groupBy('payment_details.payment_id');
 
         $result = $countRecords->get();
         $tcount = count($result);
@@ -650,7 +655,7 @@ class PaymentController extends Controller
         $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 
         $rows = DB::table('payments');
-//        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
+        $rows->join('payment_details', 'payments.id', '=', 'payment_details.payment_id');
         $rows->join('projects', 'payments.project_id', '=', 'projects.id');
         $rows->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $rows->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
@@ -677,7 +682,10 @@ class PaymentController extends Controller
             $name = $query['payment_id'];
             $rows->where('payments.payment_id', 'like', "{$name}%");
         }
-
+        if (isset($query['item_search'])) {
+            $name = $query['item_search'];
+            $rows->where('payment_details.item_name', 'like', "%{$name}%");
+        }
 
         if(isset($query['company_id'])){
             $company_id = $query['company_id'];
@@ -712,7 +720,7 @@ class PaymentController extends Controller
         $rows->offset($iDisplayStart);
         $rows->limit($iDisplayLength);
         $rows->orderBy($columnName, $columnSortOrder);
-//        $rows->groupBy('payment_details.payment_id');
+        $rows->groupBy('payment_details.payment_id');
         $result = $rows->get();
 
         $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
