@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CashTransaction;
 use App\Company;
 use App\ExpenditureSector;
 use App\Payment;
@@ -409,6 +410,19 @@ class VoucherController extends Controller
                 $voucher->status=1;
                 $voucher->total_amount=$voucher->getTotalAmount();
                 $this->GenerateVoucherId($voucher);
+
+                $arrayData= array(
+                    'transaction_type'=>'DR',
+                    'transaction_via'=>'VOUCHER',
+                    'transaction_via_ref_id'=>$voucher->id,
+                    'amount'=>$voucher->total_amount,
+                    'company_id'=>$voucher->VoucherItems[0]->project->company->id,
+                    'project_id'=>$voucher->VoucherItems[0]->project?$voucher->VoucherItems[0]->project->id:null,
+                    'created_by'=>auth()->id(),
+                    'created_at'=>new \DateTime(),
+                );
+
+                CashTransaction::insertData($arrayData);
 
             }
             return redirect()->route('voucher_index')->with('success', 'Voucher has been successfully created');

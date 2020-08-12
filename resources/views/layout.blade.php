@@ -129,6 +129,28 @@ Like: www.facebook.com/terminalbd
                         </ul>
                     </li>
                 @endif
+                @if(auth()->user()->can('check-registry-create'))
+
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('check/registry/*') ? 'pcoded-trigger' : ''}}">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Check Registry</span></a>
+                        <ul class="pcoded-submenu {{ Request::is('check/registry/*') ? 'active' : ''}}">
+
+                            <li class="nav-item {{ Request::is('check/registry/index') ? 'active' : ''}}"><a href="{{route('check_registry_index')}}" class="nav-link"><span class="pcoded-mtext">Check Registry</span></a></li>
+
+                        </ul>
+                    </li>
+                @endif
+                @if(auth()->user()->can('check-registry-create') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO'))
+
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('check/registry/*') ? 'pcoded-trigger' : ''}}">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Check Registry</span></a>
+                        <ul class="pcoded-submenu {{ Request::is('check/registry/*') ? 'active' : ''}}">
+
+                            <li class="nav-item {{ Request::is('check/registry/index') ? 'active' : ''}}"><a href="{{route('check_registry_index')}}" class="nav-link"><span class="pcoded-mtext">Check Registry</span></a></li>
+
+                        </ul>
+                    </li>
+                @endif
 
                 @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO')||auth()->user()->hasRole('Director')|| auth()->user()->hasRole('Manager') || auth()->user()->can('expenditure-sector-list'))
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('account/*') ? 'pcoded-trigger' : ''}}{{ Request::is('bank/*') ? 'pcoded-trigger' : ''}}{{ Request::is('expenditure_sector/*') ? 'pcoded-trigger' : ''}}{{ Request::is('company/*') ? 'pcoded-trigger' : ''}}{{ Request::is('project/*') ? 'pcoded-trigger' : ''}}{{ Request::is('usertype/*') ? 'pcoded-trigger' : ''}}">

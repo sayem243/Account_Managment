@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','Branch List')
+@section('title','Bank List')
 @section('template')
 
 
@@ -8,23 +8,27 @@
     <div class="col-sm-12">
        <div class="card">
           <div class="card-header">
-              <h5>Branch </h5>
+              <h5>Check Registry </h5>
               <div class="card-header-right">
-                  {{--@if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin'))
+                  @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin'))
                   <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested">
-                      <a href="{{route('branch_create')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
+                      <a href="{{route('check_registry_create')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
                   </div>
-                  @endif--}}
+                  @endif
               </div>
 
                 </div>
       <div class="card-body">
-         <table class= "table table-bordered branch_datatable">
+         <table class= "table table-bordered">
              <thead class="thead-dark">
 
                <tr>
                    <th style="width: 5%">SL</th>
-                   <th style="width: 90%">Name</th>
+                   <th>Name</th>
+                   <th>Number</th>
+                   <th>Company</th>
+                   <th>Bank</th>
+                   <th>Branch</th>
                    <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 5%;">
                             <i class="feather icon-settings"></i>
                    </th>
@@ -49,5 +53,5 @@
     </div>
 @endsection
 @section('footer.scripts')
-    <script src="{{ asset("assets/datatable/branch.js") }}" ></script>
+    {{--<script src="{{ asset("assets/datatable/bank-account.js") }}" ></script>--}}
 @endsection

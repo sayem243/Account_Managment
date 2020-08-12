@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CashTransaction;
 use App\Payment;
 use App\PaymentSettlement;
 use App\VoucherItems;
@@ -178,6 +179,18 @@ class PaymentSettlementController extends Controller
             $payment->status = 6;
         }
         $payment->save();
+
+        $arrayData= array(
+            'transaction_type'=>'CR',
+            'transaction_via'=>'HAND_SLIP_SETTLE',
+            'transaction_via_ref_id'=>$payment->id,
+            'amount'=>$settlement->settlement_amount,
+            'company_id'=>$payment->company_id,
+            'project_id'=>$settlement->project_id?$settlement->project_id:null,
+            'created_by'=>auth()->id(),
+            'created_at'=>new \DateTime(),
+        );
+        CashTransaction::insertData($arrayData);
 
 
         return redirect()->route('details',$payment->id)->with('success','Settlement has been successfully created.');

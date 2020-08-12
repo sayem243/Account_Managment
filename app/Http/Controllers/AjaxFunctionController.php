@@ -10,11 +10,13 @@ namespace App\Http\Controllers;
 
 
 use App\BankAndBranch;
+use App\CustomClass\NumberToWordConverter;
 use App\ExpenditureSector;
 use App\Project;
 use App\VoucherItems;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AjaxFunctionController
 {
@@ -118,6 +120,66 @@ class AjaxFunctionController
             $arrayData[]=array('id'=>$branch->id, 'name'=>$branch->name);
         }
         return new JsonResponse($arrayData);
+
+    }
+
+    public function getBanksByCompany($id){
+
+        $rows = DB::table('bank_and_branches');
+        $rows->join('bank_accounts', 'bank_and_branches.id', '=', 'bank_accounts.bank_id');
+        $rows->join('companies', 'bank_accounts.company_id', '=', 'companies.id');
+        $rows->select('bank_and_branches.id as bId', 'bank_and_branches.name as bName');
+        $rows->where('bank_and_branches.type','=', 'BANK');
+        $rows->where('companies.id','=', $id);
+        $rows->orderBy('bank_and_branches.name', 'ASC');
+        $rows->groupBy('bank_and_branches.id');
+        $banks = $rows->get();
+        $arrayData = array();
+        foreach ($banks as $bank){
+            $arrayData[]=array('id'=>$bank->bId, 'name'=>$bank->bName);
+        }
+        return new JsonResponse($arrayData);
+    }
+
+    public function getBranchesByCompanyBank($companyId, $bankId){
+
+        $rows = DB::table('bank_and_branches');
+        $rows->join('bank_accounts', 'bank_and_branches.id', '=', 'bank_accounts.branch_id');
+        $rows->join('companies', 'bank_accounts.company_id', '=', 'companies.id');
+        $rows->select('bank_and_branches.id as bId', 'bank_and_branches.name as bName');
+        $rows->where('bank_and_branches.type','=', 'BRANCH');
+        $rows->where('companies.id','=', $companyId);
+        $rows->where('bank_accounts.bank_id','=', $bankId);
+        $rows->orderBy('bank_and_branches.name', 'ASC');
+        $branches = $rows->get();
+        $arrayData = array();
+        foreach ($branches as $branch){
+            $arrayData[]=array('id'=>$branch->bId, 'name'=>$branch->bName);
+        }
+        return new JsonResponse($arrayData);
+    }
+
+    public function getAccountsByCompanyBankBranch($companyId, $bankId, $branchId){
+
+        $rows = DB::table('bank_accounts');
+        $rows->select('bank_accounts.id as aId', 'bank_accounts.account_number as aNumber');
+        $rows->where('bank_accounts.company_id','=', $companyId);
+        $rows->where('bank_accounts.bank_id','=', $bankId);
+        $rows->where('bank_accounts.branch_id','=', $branchId);
+        $rows->orderBy('bank_accounts.account_number', 'ASC');
+        $banks = $rows->get();
+        $arrayData = array();
+        foreach ($banks as $bank){
+            $arrayData[]=array('id'=>$bank->aId, 'name'=>$bank->aNumber);
+        }
+        return new JsonResponse($arrayData);
+    }
+//    for Ajax
+    public function numberToWordConvert($number){
+
+        $amount = NumberToWordConverter::convert($number);
+
+        return new JsonResponse(array('amount'=>$amount));
 
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ammendment;
+use App\CashTransaction;
 use App\Documents;
 use App\Payment_details;
 use App\PaymentComments;
@@ -284,6 +285,18 @@ class PaymentController extends Controller
 
             $settlement->save();
 
+            $arrayData= array(
+                'transaction_type'=>'CR',
+                'transaction_via'=>'HAND_SLIP_TRANSFER',
+                'transaction_via_ref_id'=>$settlement->payment_id,
+                'amount'=>$settlement->settlement_amount,
+                'company_id'=>$payment->company_id,
+                'project_id'=>$settlement->project_id?$settlement->project_id:null,
+                'created_by'=>auth()->id(),
+                'created_at'=>new \DateTime(),
+            );
+            CashTransaction::insertData($arrayData);
+
             $msg = 'transferred.';
 
             $totalSettleAmount = $this->getTotalSettlementAmount($refPayment);
@@ -535,6 +548,19 @@ class PaymentController extends Controller
             $payment->disbursed_at = new \DateTime();
             $payment->status = 4;
             $payment->save();
+
+            $arrayData= array(
+                'transaction_type'=>'DR',
+                'transaction_via'=>'HAND_SLIP_ISSUE',
+                'transaction_via_ref_id'=>$payment->id,
+                'amount'=>$payment->total_paid_amount,
+                'company_id'=>$payment->company_id,
+                'project_id'=>$payment->project_id?$payment->project_id:null,
+                'created_by'=>auth()->id(),
+                'created_at'=>new \DateTime(),
+            );
+            CashTransaction::insertData($arrayData);
+
             return response()->json(['success' => 'Payment has been successfully disbursed.', 'status' => 200]);
         }
         return response()->json(['message'=>'Error! This are not permitted.','status'=>301]);
@@ -554,7 +580,7 @@ class PaymentController extends Controller
         return $payment->getTotalPaymentSettlementAmount();
     }
 
-       public function  Voucher($id){
+    public function  Voucher($id){
 
        $payment=Payment::find($id);
        $amendment = $payment->ammendment;

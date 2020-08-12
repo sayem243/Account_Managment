@@ -25,7 +25,7 @@ $(document).ready(function () {
         'columns': [
             { "name": 'id' },
             { "name": 'name' },
-            { "name": 'number' },
+            { "name": 'accountNumber' },
             { "name": 'companyName' },
             { "name": 'bankName' },
             { "name": 'branchName' },

@@ -180,7 +180,7 @@ class BankAccountController extends Controller
             $records["data"][] = array(
                 $id                 = $i,
                 $name               = $post->name,
-                $number             = $post->accountNumber,
+                $accountNumber             = $post->accountNumber,
                 $company            = $post->companyName,
                 $bank               = $post->bankName,
                 $branch             = $post->branchName,

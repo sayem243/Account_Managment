@@ -238,7 +238,12 @@ Route::get('/generate-pdf','PaymentDetailsController@generatePDF');
 Route::get('/ajax/project/company/{id}','AjaxFunctionController@getProjectsByCompany')->name('ajax_project_by_company_id');
 Route::get('/ajax/user/project/{id}','AjaxFunctionController@getUsersByProject')->name('ajax_user_by_project_id');
 
+Route::get('/number/to/word/convert/{text}','AjaxFunctionController@numberToWordConvert')->name('ajax_number_to_word_convert');
+
 Route::get('/ajax/bank/{id}','AjaxFunctionController@getBranchByBank')->name('ajax_branch_by_bank_id');
+Route::get('/ajax/company/bank/{id}','AjaxFunctionController@getBanksByCompany')->name('ajax_bank_by_company_id');
+Route::get('/ajax/company/bank/branch/{cId}/{bId}','AjaxFunctionController@getBranchesByCompanyBank')->name('ajax_branch_by_company_bank');
+Route::get('/ajax/company/bank/branch/account/{cId}/{bId}/{brId}','AjaxFunctionController@getAccountsByCompanyBankBranch')->name('ajax_branch_by_company_bank_branch');
 
 Route::post('/ajax/add/voucher_item/','AjaxFunctionController@addVoucherItem')->name('ajax_add_voucher_item');
 
@@ -284,4 +289,9 @@ Route::get('/account/delete/{id}' ,'BankAccountController@deleteAccount')->name(
 Route::get('/account/restore/{id}' ,'BankAccountController@accountRestore')->name('account_restore');
 
 
+//Check Registry section
+Route::get('/check/registry/index','CheckRegistryController@index')->name('check_registry_index');
+Route::get('/check/registry/create','CheckRegistryController@create')->name('check_registry_create');
+Route::post('/check/registry/store','CheckRegistryController@store')->name('check_registry_store');
 
+Route::get('/daily/cash/balance','DailyCashBalanceController@dailyCashBalance')->name('daily_cash_balance');

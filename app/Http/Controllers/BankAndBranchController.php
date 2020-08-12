@@ -255,7 +255,7 @@ class BankAndBranchController extends Controller
             $records["data"][] = array(
                 $id                 = $i,
                 $name               = $post->name,
-                $button,
+//                $button,
                 $status               = $post->branchDeletedAt,
             );
             $i++;
