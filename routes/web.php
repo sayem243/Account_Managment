@@ -294,4 +294,4 @@ Route::get('/check/registry/index','CheckRegistryController@index')->name('check
 Route::get('/check/registry/create','CheckRegistryController@create')->name('check_registry_create');
 Route::post('/check/registry/store','CheckRegistryController@store')->name('check_registry_store');
 
-Route::get('/daily/cash/balance','DailyCashBalanceController@dailyCashBalance')->name('daily_cash_balance');
+Route::get('/daily/cash/balance','DailyCashBalanceController@dailyCashTransaction')->name('daily_cash_balance');

@@ -84,45 +84,58 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-check">
-                                        <input type="checkbox" name="check_type" class="form-check-input" value="A/C PAY" id="check_type">
-                                        <label class="form-check-label" for="check_type">A/C Pay</label>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="check_number">Check Number <span
+                                                    class="required">*</span></label>
+                                        <div class="col-form-label">
+                                            <input type="text" class="form-control" id="check_number" name="check_number" placeholder="Enter check number...">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group row">
-                                        <label for="check_mode" class="col-sm-6 col-form-label col-form-label-sm">Check Mode <span
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="check_date">Check Date <span
                                                     class="required">*</span></label>
-                                        <div class="col-sm-6">
-                                            <select id="check_mode" name="check_mode" class="form-control check_mode" required>
-                                                <option value="IN">IN</option>
-                                                <option value="OUT">OUT</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group row">
-                                        <label for="check_date" class="col-sm-4 col-form-label col-form-label-sm">Check Date <span
-                                                    class="required">*</span></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-form-label">
                                             <input type="date" id="check_date" name="check_date" class="form-control">
                                             <span>Note: date format( mm-dd-yyyy )</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" name="check_number" placeholder="Enter check number...">
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="check_type">Check Type <span
+                                                    class="required">*</span></label>
+                                        <div class="col-form-label">
+                                            <label class="radio-inline" style="margin-right: 15px">
+                                                <input required type="radio" name="check_type" value="A/C PAY" id="check_type_ac_pay"> A/C Pay Check
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input required checked type="radio" name="check_type" value="CASH" id="check_type_cash"> Cash Check
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="check_mode">Transaction Type <span
+                                                    class="required">*</span></label>
+                                        <div class="col-form-label">
+                                            <select id="check_mode" name="check_mode" class="form-control check_mode" required>
+                                                <option value="IN">Credit</option>
+                                                <option value="OUT">Debit</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group row">
-                                        <label for="from_to_type" class="col-sm-4 col-form-label col-form-label-sm">From/To <span
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="from_to_type" class="col-form-label">From/To <span
                                                     class="required">*</span></label>
-                                        <div class="col-sm-6">
+                                        <div class="col-form-label">
                                             <select id="from_to_type" name="from_to_type" class="form-control from_to_type" required>
                                                 <option value="USER">User</option>
                                                 <option value="COMPANY">Company</option>
@@ -133,12 +146,12 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="user_section">
-                                        <div class="form-group row">
-                                            <label for="from_to_value_user" class="col-sm-3 col-form-label col-form-label-sm">User <span
+                                        <div class="form-group">
+                                            <label for="from_to_value_user" class="col-form-label">User <span
                                                         class="required">*</span></label>
-                                            <div class="col-sm-8">
+                                            <div class="col-form-label">
                                                 <select id="from_to_value_user" name="from_to_value_user" class="form-control">
                                                     <option value="">Select User</option>
                                                     @foreach($users as $user)
@@ -149,10 +162,10 @@
                                         </div>
                                     </div>
                                     <div class="company_section" style="display: none">
-                                        <div class="form-group row">
-                                            <label for="from_to_value_company" class="col-sm-4 col-form-label col-form-label-sm">Company <span
+                                        <div class="form-group">
+                                            <label for="from_to_value_company" class="col-form-label">Company <span
                                                         class="required">*</span></label>
-                                            <div class="col-sm-8">
+                                            <div class="col-form-label">
                                                 <select id="from_to_value_company" name="from_to_value_company" class="form-control">
                                                     <option value="">Select Company</option>
                                                     @foreach($companies as $company)
@@ -164,10 +177,10 @@
 
                                     </div>
                                     <div class="project_section" style="display: none">
-                                        <div class="form-group row">
-                                            <label for="from_to_value_project" class="col-sm-3 col-form-label col-form-label-sm">Project <span
+                                        <div class="form-group">
+                                            <label for="from_to_value_project" class="col-form-label">Project <span
                                                         class="required">*</span></label>
-                                            <div class="col-sm-8">
+                                            <div class="col-form-label">
                                                 <select id="from_to_value_project" name="from_to_value_project" class="form-control from_to_value_project">
                                                     <option value="">Select Project</option>
                                                     @foreach($projects as $project)
@@ -178,22 +191,33 @@
                                         </div>
                                     </div>
                                     <div class="other_section" style="display: none">
-                                        <div class="form-group row">
-                                            <label for="from_to_value_other" class="col-sm-3 col-form-label col-form-label-sm">Provider Name <span
+                                        <div class="form-group">
+                                            <label for="from_to_value_other" class="col-form-label">Provider Name <span
                                                         class="required">*</span></label>
-                                            <div class="col-sm-8">
+                                            <div class="col-form-label">
                                                 <input id="from_to_value_other" type="text" name="from_to_value_other" class="form-control">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group row">
-                                        <label for="check_amount" class="col-sm-4 col-form-label col-form-label-sm">Amount <span
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="check_amount" class="col-form-label">Amount <span
                                                     class="required">*</span></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-form-label">
                                             <input id="check_amount" type="text" name="check_amount" class="form-control check_amount">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="check_description">Description </label>
+                                            <div class="col-form-label">
+                                                <textarea class="form-control" id="check_description" name="check_description"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -202,16 +226,6 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h4>Write in words: <span class="to_word"></span></h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="check_description">Description </label>
-                                        <div class="col-form-label">
-                                            <textarea class="form-control" id="check_description" name="check_description"></textarea>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 

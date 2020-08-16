@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','Bank List')
+@section('title','Daily Cash Balance')
 @section('template')
 
 
@@ -12,6 +12,43 @@
           </div>
       <div class="card-body">
          <table class= "table table-bordered">
+             <thead>
+             <tr>
+                 <td colspan="5">
+                     <form action="">
+                         <table class="table" style="margin: 0">
+                             <tr>
+                                 <td colspan="1">
+                                     <div class="form-group row" style="margin: 0">
+                                         <label for="filter_company_id" class="col-sm-2 col-form-label">Company</label>
+                                         <div class="col-sm-7">
+                                             <select name="filter_company_id" id="filter_company_id" class="form-control">
+                                                 <option value="">All</option>
+                                                 @foreach($company as $key=>$value)
+                                                     <option value="{{$key}}" {{(isset($_GET['filter_company_id'])&&$_GET['filter_company_id']==$key)?'selected="selected"':''}}>{{$value}}</option>
+                                                 @endforeach
+                                             </select>
+                                         </div>
+                                     </div>
+
+                                 </td>
+                                 <td colspan="1">
+                                     <div class="form-group row" style="margin: 0">
+                                         <label for="filter_date" class="col-sm-2 col-form-label">Date</label>
+                                         <div class="col-sm-7">
+                                             <input type="date" id="filter_date" name="filter_date" value="{{isset($_GET['filter_date'])?$_GET['filter_date']:''}}" class="form-control">
+                                         </div>
+                                     </div>
+                                 </td>
+                                 <td>
+                                     <button type="submit" class="btn btn-primary" >Filter</button>
+                                 </td>
+                             </tr>
+                         </table>
+                     </form>
+                 </td>
+             </tr>
+             </thead>
             <tbody>
 
             @foreach($cashTransactions as $step1Key=>$value)
@@ -19,11 +56,11 @@
                     <td style="background-color: darkgrey; color: #FFFFFF;font-weight: bold; font-size: medium" align="center" colspan="5">{{$company[$step1Key]}}</td>
                 </tr>
                 <tr style="color: #FFFFFF; background-color: darkblue; font-weight: bold">
-                    <th>Transaction Type</th>
-                    <th>Description</th>
-                    <th>Debit (TK.)</th>
-                    <th>Credit (TK.)</th>
-                    <th>Balance</th>
+                    <th style="width: 20%">Transaction Type</th>
+                    <th style="width: 30%">Description</th>
+                    <th style="width: 15%">Debit (TK.)</th>
+                    <th style="width: 15%">Credit (TK.)</th>
+                    <th style="width: 20%">Balance</th>
                 </tr>
                 <tr>
                     <td>
@@ -31,27 +68,38 @@
                     </td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td>0000</td>
+                    <td>{{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key], 0,'.',''):0}}</td>
+                    <td>{{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key], 0,'.',''):0}}</td>
                 </tr>
                 @php
-                    $balance = 0;
-                    $crTotal = 0;
+                    $balance = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]:0;
+                    $crTotal = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]:0;
                     $drTotal = 0;
                 @endphp
                 @foreach($value as $step2Key=>$transType)
                     @if($step2Key=='CR')
+                        @php $checkOut=0 @endphp
                         @foreach($transType as $data)
                             @if($data->transaction_via=='CHECK_OUT')
                                 @php
                                     $balance = $balance+$data->amount;
                                     $crTotal=$crTotal+$data->amount;
                                 @endphp
+                                @php $checkOut++ @endphp
+                                @if ($checkOut==1)
+                                    <tr>
+                                        <td>Credit</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                @endif
                                 <tr>
                                     <td></td>
                                     <td>{{'Cash through cheque'}}</td>
                                     <td></td>
-                                    <td>{{$data->amount}}</td>
+                                    <td>{{number_format($data->amount,0,'.','')}}</td>
                                     <td>{{$balance}}</td>
                                 </tr>
                             @endif
@@ -60,22 +108,31 @@
                 @endforeach
                 @foreach($value as $step2Key=>$transType)
                     @if($step2Key=='CR')
-                        <tr>
-                            <td>H/S Settle</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        @php $hsSettle=0 @endphp
                         @foreach($transType as $data)
                             @if($data->transaction_via!='CHECK_OUT')
                                 @php
                                     $balance = $balance+$data->amount;
                                     $crTotal=$crTotal+$data->amount;
                                 @endphp
+                                @php $hsSettle++ @endphp
+                                @if ($hsSettle==1)
+                                    <tr>
+                                        <td>H/S Settle</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                @endif
                                 <tr>
                                     <td></td>
-                                    <td>{{$data->transaction_via}}</td>
+                                    <td>
+                                        @php
+                                            $payment= \App\Payment::find($data->transaction_via_ref_id)
+                                        @endphp
+                                        {{$payment->user->name}} (H/S # <a data-toggle="modal" data-target-id="{{$payment->id}}" data-target="#myModal" href="javascript:void(0)">{{$payment->payment_id}}</a>)
+                                    </td>
                                     <td></td>
                                     <td>{{$data->amount}}</td>
                                     <td>{{$balance}}</td>
@@ -87,13 +144,7 @@
                 {{--DR section--}}
                 @foreach($value as $step2Key=>$transType)
                     @if($step2Key=='DR')
-                        <tr>
-                            <td>H/S Issued</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        @php $hsIssue=0 @endphp
                         @foreach($transType as $data)
 
                             @if($data->transaction_via=='HAND_SLIP_ISSUE')
@@ -101,44 +152,59 @@
                                     $balance = $balance-$data->amount;
                                     $drTotal = $drTotal+$data->amount;
                                 @endphp
+                                @php $hsIssue++ @endphp
+                                @if ($hsIssue==1)
+                                <tr>
+                                    <td>H/S Issued</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                @endif
                                 <tr>
                                     <td></td>
                                     <td>
                                         @php
                                        $payment= \App\Payment::find($data->transaction_via_ref_id)
                                         @endphp
-                                        {{$payment->user->name}} (H/S # {{$payment->payment_id}})
+                                        {{$payment->user->name}} (H/S # <a data-toggle="modal" data-target-id="{{$payment->id}}" data-target="#myModal" href="javascript:void(0)">{{$payment->payment_id}}</a>)
                                     </td>
                                     <td>{{$data->amount}}</td>
                                     <td></td>
                                     <td>{{$balance}}</td>
                                 </tr>
                             @endif
+
                         @endforeach
                     @endif
                 @endforeach
                 @foreach($value as $step2Key=>$transType)
                     @if($step2Key=='DR')
-                        <tr>
-                            <td>Voucher</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        @foreach($transType as $data)
+                        @php $vIndex=0 @endphp
+                        @foreach($transType as $vIndex=>$data)
                             @if($data->transaction_via=='VOUCHER')
                                 @php
                                     $balance = $balance-$data->amount;
                                     $drTotal = $drTotal+$data->amount;
                                 @endphp
+                                @php $vIndex++ @endphp
+                                @if ($vIndex==1)
+                                <tr>
+                                    <td>Voucher</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                @endif
                                 <tr>
                                     <td></td>
                                     <td>
                                         @php
                                        $voucher= \App\Voucher::find($data->transaction_via_ref_id)
                                         @endphp
-                                        {{$voucher->expenditureSector->name}} (Voucher # {{$voucher->voucher_generate_id}})
+                                        {{$voucher->expenditureSector->name}} (Voucher # <a data-toggle="modal" data-target-voucher-id="{{$voucher->id}}" data-target="#myModalVoucher" href="">{{$voucher->voucher_generate_id}}</a>)
                                     </td>
                                     <td>{{$data->amount}}</td>
                                     <td></td>
@@ -182,6 +248,75 @@
 
     </div>
     </div>
+
+ <!-- Modal -->
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header" style="display: block">
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                 <h4 class="modal-title" id="myModalLabel">Payment Details</h4>
+             </div>
+
+             <div class="modal-body">
+
+             </div>
+
+
+         </div>
+     </div>
+ </div>
+
+ <div class="modal fade" id="myModalVoucher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header" style="display: block">
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                 <h4 class="modal-title" id="myModalLabel">Voucher Details</h4>
+             </div>
+
+             <div class="modal-body">
+
+             </div>
+
+
+         </div>
+     </div>
+ </div>
+ <style>
+     .modal-dialog {
+         width: 95%;
+         max-width: 95%;
+         height: 100%;
+         padding: 0;
+     }
+
+     .modal-content {
+         height: auto;
+         min-height: 100%;
+         border-radius: 0;
+     }
+ </style>
 @endsection
 @section('footer.scripts')
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery("#myModal").on("show.bs.modal", function(e) {
+                var id = jQuery(e.relatedTarget).data('target-id');
+                jQuery.get( "/payment/quick/view/" + id, function( data ) {
+                    jQuery(".modal-body").html(data.html);
+                });
+
+            });
+
+            jQuery("#myModalVoucher").on("show.bs.modal", function(e) {
+                jQuery(".modal-body").html('');
+                var id = jQuery(e.relatedTarget).data('target-voucher-id');
+                jQuery.get( "/voucher/quick/view/" + id, function( data ) {
+                    jQuery(".modal-body").html(data.html);
+                });
+
+            });
+        });
+    </script>
 @endsection
