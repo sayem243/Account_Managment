@@ -41,7 +41,7 @@ class DailyCashBalanceController extends Controller
         $company_id = $request->input('filter_company_id');
 
         $from_date = $date? $date.' 00:00:00': date('Y-m-d').' 00:00:00';
-        $to_date = $date? $date.' 23:59:59': date('Y-m-d').' 00:00:00';
+        $to_date = $date? $date.' 23:59:59': date('Y-m-d').' 23:59:59';
         $rows = DB::table('cash_transactions');
         if ($company_id!=''){
             $rows->where('company_id', $company_id);
