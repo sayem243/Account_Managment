@@ -72,7 +72,7 @@ class DailyCashBalanceController extends Controller
         $returnData = array();
 
         foreach ($result as $value){
-            $returnData[$value->company_id]=$value->opening_balance;
+            $returnData[$value->company_id]=$value;
         }
         return $returnData;
     }
