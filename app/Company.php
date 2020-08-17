@@ -30,6 +30,11 @@ class Company extends Model
         return $this->hasMany('App\UserProfile');
     }
 
+    public function checkRegistry(){
+
+        return $this->hasMany('App\CheckRegistry');
+    }
+
 
 
      use SoftDeletes;

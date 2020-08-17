@@ -27,7 +27,16 @@ class CheckRegistryController extends Controller
     }
 
     public function index(){
-        return view('check_registry.index');
+        $companies= Company::all();
+        $arrayCompanies=array();
+        foreach ($companies as $company){
+            $arrayCompanies[]=array('id'=>$company->id,'name'=>$company->name);
+        }
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $arrayCompanies), SORT_ASC, $arrayCompanies);
+
+        return view('check_registry.index',['companies'=>$arrayCompanies ]);
     }
 
     public function create(){
@@ -151,6 +160,18 @@ class CheckRegistryController extends Controller
 
     }
 
+    public function details($id){
+
+        $checkRegistry=CheckRegistry::find($id);
+        return view('check_registry.view')->with('checkRegistry' ,$checkRegistry);
+    }
+    public function quickView($id){
+
+        $checkRegistry=CheckRegistry::find($id);
+
+        $returnHTML = view('check_registry.quick_view',['checkRegistry'=>$checkRegistry])->render();
+        return response()->json( ['html'=>$returnHTML]);
+    }
 
     public function deleteAccount($id){
         $account=BankAccount::find($id);
@@ -162,6 +183,116 @@ class CheckRegistryController extends Controller
             ->where('id', $id)
             ->restore();
         return redirect()->route('account_index')->with('success','Bank Account has been successfully restored.');
+    }
+
+    public function dataTable(Request $request)
+    {
+
+        $query = $request->request->all();
+
+        $countRecords = DB::table('check_registries');
+        $countRecords->select('check_registries.id as totalCheckRegistry');
+        $countRecords->join('companies', 'check_registries.company_id', '=', 'companies.id');
+
+//        $countRecords->where('check_registries.status','!=', 0);
+
+        if (isset($query['check_number'])) {
+            $name = $query['check_number'];
+            $countRecords->where('check_registries.check_number', 'like', "{$name}%");
+        }
+
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $countRecords->where('check_registries.company_id',$company_id);
+        }
+
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
+            $countRecords->whereBetween('check_registries.created_at', [$from_date, $to_date]);
+        }
+//        $countRecords->groupBy('payment_details.payment_id');
+
+        $result = $countRecords->get();
+        $tCount = count($result);
+        $iTotalRecords = $tCount;
+        $iDisplayLength = intval($_REQUEST['length']);
+        $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+        $iDisplayStart = intval($_REQUEST['start']);
+        $sEcho = intval($_REQUEST['draw']);
+        $records = array();
+        $records["data"] = array();
+        $end = $iDisplayStart + $iDisplayLength;
+        $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+
+        $rows = DB::table('check_registries');
+        $rows->join('companies', 'check_registries.company_id', '=', 'companies.id');
+        $rows->select('check_registries.id as crId', 'check_registries.check_number as name', 'check_registries.amount as amount', 'check_registries.check_date as checkDate', 'check_registries.check_mode as checkMode', 'check_registries.check_type as checkType');
+        $rows->addSelect('companies.name as companyName');
+
+//        $rows->where('check_registries.status','!=', 0);
+
+
+        if (isset($query['check_number'])) {
+            $name = $query['check_number'];
+            $rows->where('check_registries.check_number', 'like', "%{$name}%");
+        }
+
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $rows->where('check_registries.company_id',$company_id);
+        }
+
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
+            $rows->whereBetween('check_registries.created_at', [$from_date, $to_date]);
+        }
+
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName, $columnSortOrder);
+//        $rows->groupBy('payment_details.payment_id');
+        $result = $rows->get();
+
+        $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
+
+        foreach ($result as $post):
+
+            $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                    <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
+
+
+            $button .='<li class="dropdown-item"><a href="/check/registry/details/'.$post->crId.'"><i class="feather icon-eye"></i>Details</a></li>';
+
+            $button.='</ul></div>';
+
+            $records["data"][] = array(
+                $id                 = $i,
+                $name               = '<a data-toggle="modal" data-target-id="'.$post->crId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
+                $checkDate          = date('d-m-Y',strtotime($post->checkDate)),
+                $companyName        = $post->companyName?$post->companyName:'',
+                $amount             = $post->amount,
+                $checkType          = $post->checkType,
+                $checkMode          = $post->checkMode=='IN'?'Credit':'Debit',
+
+                $button);
+            $i++;
+
+        endforeach;
+        if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+        }
+
+        $records["draw"] = $sEcho;
+        $records["recordsTotal"] = $iTotalRecords;
+        $records["recordsFiltered"] = $iTotalRecords;
+        return new JsonResponse($records);
     }
 
 }

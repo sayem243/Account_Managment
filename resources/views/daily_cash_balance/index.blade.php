@@ -97,7 +97,10 @@
                                 @endif
                                 <tr>
                                     <td></td>
-                                    <td>{{'Cash through cheque'}}</td>
+                                    <td>{{'Cash through cheque # '}} @php
+                                            $checkRegistry= \App\CheckRegistry::find($data->transaction_via_ref_id)
+                                        @endphp
+                                         <a data-toggle="modal" data-target-check-registry-id="{{$checkRegistry->id}}" data-target="#myModalCheckRegistry" href="javascript:void(0)">{{$checkRegistry->check_number}}</a></td>
                                     <td></td>
                                     <td>{{number_format($data->amount,0,'.','')}}</td>
                                     <td>{{$balance}}</td>
@@ -283,6 +286,23 @@
          </div>
      </div>
  </div>
+
+ <div class="modal fade" id="myModalCheckRegistry" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header" style="display: block">
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                 <h4 class="modal-title" id="myModalLabel">Check Registry Details</h4>
+             </div>
+
+             <div class="modal-body">
+
+             </div>
+
+
+         </div>
+     </div>
+ </div>
  <style>
      .modal-dialog {
          width: 95%;
@@ -313,6 +333,13 @@
                 jQuery(".modal-body").html('');
                 var id = jQuery(e.relatedTarget).data('target-voucher-id');
                 jQuery.get( "/voucher/quick/view/" + id, function( data ) {
+                    jQuery(".modal-body").html(data.html);
+                });
+
+            });
+            jQuery("#myModalCheckRegistry").on("show.bs.modal", function(e) {
+                var id = jQuery(e.relatedTarget).data('target-check-registry-id');
+                jQuery.get( "/check/registry/quick/view/" + id, function( data ) {
                     jQuery(".modal-body").html(data.html);
                 });
 

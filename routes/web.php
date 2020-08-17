@@ -293,5 +293,9 @@ Route::get('/account/restore/{id}' ,'BankAccountController@accountRestore')->nam
 Route::get('/check/registry/index','CheckRegistryController@index')->name('check_registry_index');
 Route::get('/check/registry/create','CheckRegistryController@create')->name('check_registry_create');
 Route::post('/check/registry/store','CheckRegistryController@store')->name('check_registry_store');
+Route::post('/check/registry/datatable','CheckRegistryController@dataTable')->name('check_registry_datatable');
+Route::get('/check/registry/details/{id}','CheckRegistryController@details')->name('check_registry_details');
+Route::get('/check/registry/quick/view/{id}','CheckRegistryController@quickView')->name('check_registry_quick_view');
+
 
 Route::get('/daily/cash/balance','DailyCashBalanceController@dailyCashTransaction')->name('daily_cash_balance');
