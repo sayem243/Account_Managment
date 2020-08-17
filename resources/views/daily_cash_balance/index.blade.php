@@ -182,7 +182,7 @@
                 @foreach($value as $step2Key=>$transType)
                     @if($step2Key=='DR')
                         @php $vIndex=0 @endphp
-                        @foreach($transType as $vIndex=>$data)
+                        @foreach($transType as $data)
                             @if($data->transaction_via=='VOUCHER')
                                 @php
                                     $balance = $balance-$data->amount;
