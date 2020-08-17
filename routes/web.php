@@ -137,6 +137,7 @@ Route::get('/amendment/print-pdf/{id}','AmmendmentController@amendmentPDF')->nam
 //Admin route and Template
 
 Route::get('/','AdminController@index')->name('admin_index');
+Route::post('/cash/daily/opening/balance/session/start/','AdminController@generate')->name('opening_balance_start');
 
 //Route::post('register', 'Auth\RegisterController@register')->name('register');
 //UserType
