@@ -54,6 +54,7 @@
 
             <tr>
                 <td colspan="5">
+                    @if(sizeof($cashTransactions)>0)
                     <form action="{{route('closing_balance_update')}}" method="post">
                         {{ csrf_field() }}
                         <table class="table table-bordered" style="margin: 0">
@@ -260,6 +261,8 @@
                             </div>
                         </div>
                     </form>
+
+                    @endif
 
                 </td>
             </tr>

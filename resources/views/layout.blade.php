@@ -140,14 +140,16 @@ Like: www.facebook.com/terminalbd
                         </ul>
                     </li>
                 @endif
-                @if(auth()->user()->can('check-registry-create') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO'))
+                @if(auth()->user()->can('daily-cash-balance-session') || auth()->user()->can('check-registry-create') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO'))
 
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('/daily/cash/*') ? 'pcoded-trigger' : ''}}">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Daily Cash Balance</span></a>
-                        <ul class="pcoded-submenu {{ Request::is('/daily/cash/*') ? 'active' : ''}}">
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('daily/cash/*') ? 'pcoded-trigger' : ''}}{{ Request::is('cash/daily/opening/*') ? 'pcoded-trigger' : ''}}">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Daily Cash </span></a>
+                        <ul class="pcoded-submenu {{ Request::is('daily/cash/*') ? 'active' : ''}}{{ Request::is('cash/daily/opening/*') ? 'active' : ''}}">
 
-                            <li class="nav-item {{ Request::is('/daily/cash/balance') ? 'active' : ''}}"><a href="{{route('daily_cash_balance')}}" class="nav-link"><span class="pcoded-mtext">Daily Cash Balance</span></a></li>
-
+                            <li class="nav-item {{ Request::is('daily/cash/balance') ? 'active' : ''}}"><a href="{{route('daily_cash_balance')}}" class="nav-link"><span class="pcoded-mtext">Daily Cash Balance</span></a></li>
+                            @if(auth()->user()->can('daily-cash-balance-session')|| auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO'))
+                                <li class="nav-item {{ Request::is('cash/daily/opening/balance/session/list') ? 'active' : ''}}"><a href="{{route('opening_balance_session_list')}}" class="nav-link"><span class="pcoded-mtext">Daily Cash Session</span></a></li>
+                            @endif
                         </ul>
                     </li>
                 @endif

@@ -137,9 +137,6 @@ Route::get('/amendment/print-pdf/{id}','AmmendmentController@amendmentPDF')->nam
 //Admin route and Template
 
 Route::get('/','AdminController@index')->name('admin_index');
-Route::post('/cash/daily/opening/balance/session/start/','AdminController@generate')->name('opening_balance_start');
-Route::post('/cash/daily/closing/balance/session/update/','AdminController@closingBalanceUpdate')->name('closing_balance_update');
-
 //Route::post('register', 'Auth\RegisterController@register')->name('register');
 //UserType
 
@@ -301,3 +298,10 @@ Route::get('/check/registry/quick/view/{id}','CheckRegistryController@quickView'
 
 
 Route::get('/daily/cash/balance','DailyCashBalanceController@dailyCashTransaction')->name('daily_cash_balance');
+
+Route::get('/cash/daily/opening/balance/session/list','DailyCashBalanceSessionController@index')->name('opening_balance_session_list');
+Route::post('/cash/daily/opening/balance/session/start/','DailyCashBalanceSessionController@generate')->name('opening_balance_start');
+Route::get('/cash/daily/opening/balance/session/draft/view','DailyCashBalanceSessionController@draftView')->name('cash_balance_session_draft_view');
+Route::post('/cash/daily/opening/balance/session/draft/to/confirm','DailyCashBalanceSessionController@draftToConfirmStore')->name('cash_balance_session_store_confirm');
+
+Route::post('/cash/daily/closing/balance/session/update/','DailyCashBalanceSessionController@closingBalanceUpdate')->name('closing_balance_update');

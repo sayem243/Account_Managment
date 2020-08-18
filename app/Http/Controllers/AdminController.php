@@ -10,86 +10,9 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     public function index(){
-        if(auth()->user()->can('check-registry-create')){
-            return view('admin.dashboard');
-        }
+
         return redirect()->route('payment');
 //        return view('layout');
-    }
-
-    public function generate(Request $request){
-        $submit = $request->generate;
-//        $from_date =  date('Y-m-d').' 00:00:00';
-        $date =  date('Y-m-d');
-
-        $companies = Company::all();
-        $insertId = array();
-        if(isset($submit)){
-            foreach ($companies as $company){
-
-                $rows = DB::table('cash_daily_balance_sessions');
-                $rows->where('company_id', $company->id);
-                $rows->where('created_at','<', $date);
-                $rows->limit(1);
-                $rows->orderBy('id', 'DESC');
-                $result = $rows->get();
-
-                $existData = DB::table('cash_daily_balance_sessions');
-                $existData->where('company_id', $company->id);
-                $existData->where('created_at','=', $date);
-                $existData->limit(2);
-                $exResult = $existData->get();
-
-
-                if (!isset($exResult[0])){
-                    $dailyCashBalanceSession = new CashDailyBalanceSession();
-                    $dailyCashBalanceSession->opening_balance = $result[0]->closing_balance;
-                    $dailyCashBalanceSession->company_id = $company->id;
-                    $dailyCashBalanceSession->created_at = $date;
-                    $dailyCashBalanceSession->save();
-                    $insertId[]= $dailyCashBalanceSession->id;
-                }
-            }
-        }
-        if(!empty($insertId)){
-            return redirect()->route('admin_index')->with('success','Daily cash opening balance generate successfully.');
-
-        }
-        return redirect()->route('admin_index')->with('error','Error! Today cash opening balance already generate.');
-    }
-
-    public function closingBalanceUpdate(Request $request){
-        $submit = $request->closing_update;
-        $cash_balance_session_id = $request->cash_balance_session_id;
-//        $from_date =  date('Y-m-d').' 00:00:00';
-        $date =  date('Y-m-d');
-//var_dump($cash_balance_session_id);die;
-        $companies = Company::all();
-        $insertId = array();
-        if(isset($submit)){
-            foreach ($companies as $company){
-
-                $existData = DB::table('cash_daily_balance_sessions');
-                $existData->where('company_id', $company->id);
-                $existData->where('created_at','=', $date);
-                $existData->limit(1);
-                $exResult = $existData->get();
-
-
-                if (isset($exResult[0])){
-                    $dailyCashBalanceSession = CashDailyBalanceSession::find($exResult[0]->id);
-                    $dailyCashBalanceSession->closing_balance = isset($cash_balance_session_id[$dailyCashBalanceSession->id])?$cash_balance_session_id[$dailyCashBalanceSession->id]:$dailyCashBalanceSession->opening_balance;
-                    $dailyCashBalanceSession->updated_at = new \DateTime();
-                    $dailyCashBalanceSession->save();
-                    $insertId[]= $dailyCashBalanceSession->id;
-                }
-            }
-        }
-        if(!empty($insertId)){
-            return redirect()->route('daily_cash_balance')->with('success','Daily cash closing balance store successfully.');
-
-        }
-        return redirect()->route('daily_cash_balance');
     }
 
     public function __construct()
