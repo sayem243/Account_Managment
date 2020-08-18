@@ -103,7 +103,7 @@ tr {
 }
 
 .table td, .table th {
-    border-top: 1px solid #f3f6f9;
+    border-top: 1px solid #000000;
     white-space: nowrap;
     padding: 1px 2px 0px 4px;
     vertical-align: middle;
