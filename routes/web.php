@@ -303,5 +303,6 @@ Route::get('/cash/daily/opening/balance/session/list','DailyCashBalanceSessionCo
 Route::post('/cash/daily/opening/balance/session/start/','DailyCashBalanceSessionController@generate')->name('opening_balance_start');
 Route::get('/cash/daily/opening/balance/session/draft/view','DailyCashBalanceSessionController@draftView')->name('cash_balance_session_draft_view');
 Route::post('/cash/daily/opening/balance/session/draft/to/confirm','DailyCashBalanceSessionController@draftToConfirmStore')->name('cash_balance_session_store_confirm');
+Route::get('/cash/daily/session/quick/view','DailyCashBalanceSessionController@quickView')->name('cash_balance_session_quick_view');
 
 Route::post('/cash/daily/closing/balance/session/update/','DailyCashBalanceSessionController@closingBalanceUpdate')->name('closing_balance_update');

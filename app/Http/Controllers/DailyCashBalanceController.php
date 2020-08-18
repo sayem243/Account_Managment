@@ -56,7 +56,7 @@ class DailyCashBalanceController extends Controller
         foreach ($result as $cashTransaction){
             $returnArray[$cashTransaction->company_id][$cashTransaction->transaction_type][]=$cashTransaction;
         }
-        return view('daily_cash_balance.index',['openingBalance'=>$openingBalance, 'cashTransactions'=>$returnArray, 'company'=>$returnCompany, 'user'=>$returnUser]);
+        return view('daily_cash_balance.index',['openingBalance'=>$openingBalance, 'cashTransactions'=>$returnArray, 'company'=>$returnCompany, 'user'=>$returnUser, 'selected_date'=>$date?$date:date('Y-m-d')]);
 
 
     }

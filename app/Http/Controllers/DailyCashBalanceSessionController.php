@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CashDailyBalanceSession;
 use App\Company;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -58,10 +59,7 @@ class DailyCashBalanceSessionController extends Controller
             }
         }
         if(!empty($insertId)){
-//            return redirect()->route('admin_index')->with('success','Daily cash opening balance generate successfully.');
             return redirect()->route('cash_balance_session_draft_view',http_build_query(['date'=>$date]))->with('success', 'Click save and confirm to generate opening balance.');
-
-
         }
         return redirect()->route('cash_balance_session_draft_view',http_build_query(['date'=>$date]))->with('error','Error! Today cash opening balance already generate.');
     }
@@ -86,12 +84,66 @@ class DailyCashBalanceSessionController extends Controller
         return redirect()->route('opening_balance_session_list');
     }
 
+    public function quickView(Request $request){
+
+        $companies = Company::all();
+        $returnCompany = array();
+        foreach ($companies as $company){
+            $returnCompany[$company->id]= $company->name;
+        }
+
+        $users = User::all();
+
+        $returnUser = array();
+
+        foreach ($users as $user){
+            $returnUser[$user->id]= $user->name;
+        }
+        $date = $request->input('filter_date');
+        $company_id = $request->input('filter_company_id');
+
+        $from_date = $date? $date.' 00:00:00': '';
+        $to_date = $date? $date.' 23:59:59': '';
+        $rows = DB::table('cash_transactions');
+        if ($company_id!=''){
+            $rows->where('company_id', $company_id);
+        }
+        $rows->whereBetween('created_at', [$from_date, $to_date]);
+        $result = $rows->get();
+        $returnArray = array();
+
+        $openingBalance=$this->getDailyOpeningBalance($from_date,$to_date,$company_id);
+
+        foreach ($result as $cashTransaction){
+            $returnArray[$cashTransaction->company_id][$cashTransaction->transaction_type][]=$cashTransaction;
+        }
+
+        $returnHTML = view('daily_cash_balance_session.quick-view',['openingBalance'=>$openingBalance, 'cashTransactions'=>$returnArray, 'company'=>$returnCompany, 'user'=>$returnUser, 'selected_date'=>$date])->render();
+        return response()->json( ['html'=>$returnHTML]);
+    }
+
+    public function getDailyOpeningBalance($from_date,$to_date, $company_id){
+        $rows = DB::table('cash_daily_balance_sessions');
+        if ($company_id!=''){
+            $rows->where('company_id', $company_id);
+        }
+        $rows->whereBetween('created_at', [$from_date, $to_date]);
+        $rows->orderBy('id', 'ASC');
+        $result = $rows->get();
+        $returnData = array();
+
+        foreach ($result as $value){
+            $returnData[$value->company_id]=$value;
+        }
+        return $returnData;
+    }
+
+
     public function closingBalanceUpdate(Request $request){
         $submit = $request->closing_update;
         $cash_balance_session_id = $request->cash_balance_session_id;
-//        $from_date =  date('Y-m-d').' 00:00:00';
-        $date =  date('Y-m-d');
-//var_dump($cash_balance_session_id);die;
+        $selected_date = $request->selected_date;
+        $date = isset($selected_date)?$selected_date: date('Y-m-d');
         $companies = Company::all();
         $insertId = array();
         if(isset($submit)){

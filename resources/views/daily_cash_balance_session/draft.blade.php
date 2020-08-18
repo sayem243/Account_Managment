@@ -74,32 +74,3 @@
 
 @endsection
 
-@section('footer.scripts')
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(document).on('click', '.add_row', function () {
-                var $tr = $(this).closest('tr');
-                $tr.clone().insertAfter($tr);
-                $tr.find('td').find('button.remove_row').show();
-                $tr.find('td').find('button.add_row').hide();
-            });
-
-            $(document).on('change', '.payment_attachment', function () {
-
-                //this.files[0].size gets the size of your file.
-                var thisValue = this.files[0].size;
-                // alert(thisValue);
-                if (thisValue > 2048000) {
-                    alert('Maximum file size 2mb.');
-                    $(this).val('');
-                }
-
-            });
-
-            // Find and remove selected table rows
-            $('body').on('click', '.remove_row', function () {
-                $(this).closest("tr").remove();
-            });
-        });
-    </script>
-@endsection
