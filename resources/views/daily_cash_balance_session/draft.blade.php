@@ -41,8 +41,8 @@
                                         <td>
                                             {{$cashDailyBalanceSession->company->name}}
                                         </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="opening_balance[{{$cashDailyBalanceSession->id}}]" value="{{$cashDailyBalanceSession->opening_balance}}">
+                                        <td>{{$cashDailyBalanceSession->opening_balance}}
+                                            <input type="hidden" class="form-control" name="opening_balance[{{$cashDailyBalanceSession->id}}]" value="{{$cashDailyBalanceSession->opening_balance}}">
                                         </td>
                                     </tr>
 
