@@ -255,7 +255,7 @@
                                 <div style="padding-right: 3px"
                                      class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
                                     <button style="margin-right: 0" name="closing_update" value="closing_update" type="submit" class="btn btn-info"><i
-                                                class="feather icon-save"></i> End of the close
+                                                class="feather icon-save"></i> End of the day
                                     </button>
                                 </div>
                             </div>
