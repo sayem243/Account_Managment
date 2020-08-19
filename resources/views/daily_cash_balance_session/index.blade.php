@@ -35,7 +35,7 @@
                             @foreach($cashBalanceSessions as $cashBalanceSession)
 
                                 <tr>
-                                    <td><a data-toggle="modal" data-target-date="{{ date('Y-m-d', strtotime($cashBalanceSession->createdDate))}}" data-target="#myModal" href="javascript:void(0)">{{ date('d-m-Y', strtotime($cashBalanceSession->createdDate))}}</a></td>
+                                    <td><a data-target-date="{{ date('Y-m-d', strtotime($cashBalanceSession->createdDate))}}" href="{{route('daily_cash_balance', ['filter_date' => date('Y-m-d', strtotime($cashBalanceSession->createdDate))])}}">{{ date('d-m-Y', strtotime($cashBalanceSession->createdDate))}}</a></td>
                                     <td>{{$cashBalanceSession->totalOpeningBalance}}</td>
                                     <td>{{$cashBalanceSession->totalClosingBalance}}</td>
                                     <td></td>
@@ -86,7 +86,7 @@
 @endsection
 
 @section('footer.scripts')
-    <script type="text/javascript">
+    {{--<script type="text/javascript">
         jQuery(document).ready(function(){
             jQuery("#myModal").on("show.bs.modal", function(e) {
                 var date = jQuery(e.relatedTarget).data('target-date');
@@ -98,5 +98,5 @@
             });
 
         });
-    </script>
+    </script>--}}
 @endsection

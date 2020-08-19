@@ -262,6 +262,9 @@
                             </div>
                         </div>
                     </form>
+                        @else
+
+                        <p style="text-align: center;font-size: 16px; margin-top: 10px">No record found.</p>
 
                     @endif
 
