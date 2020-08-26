@@ -131,11 +131,12 @@ Like: www.facebook.com/terminalbd
                 @endif
                 @if(auth()->user()->can('check-registry-create'))
 
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('check/registry/*') ? 'pcoded-trigger' : ''}}">
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('check/registry/*') ? 'pcoded-trigger' : ''}} {{ Request::is('/loanOrIncome/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Check Registry</span></a>
-                        <ul class="pcoded-submenu {{ Request::is('check/registry/*') ? 'active' : ''}}">
+                        <ul class="pcoded-submenu {{ Request::is('check/registry/*') ? 'active' : ''}} {{ Request::is('/loanOrIncome/*') ? 'active' : ''}}">
 
                             <li class="nav-item {{ Request::is('check/registry/index') ? 'active' : ''}}"><a href="{{route('check_registry_index')}}" class="nav-link"><span class="pcoded-mtext">Check Registry</span></a></li>
+                            <li class="nav-item {{ Request::is('/loanOrIncome/create') ? 'active' : ''}}"><a href="{{route('loan_income_create')}}" class="nav-link"><span class="pcoded-mtext">Loan & Income</span></a></li>
 
                         </ul>
                     </li>

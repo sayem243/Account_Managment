@@ -306,3 +306,8 @@ Route::post('/cash/daily/opening/balance/session/draft/to/confirm','DailyCashBal
 Route::get('/cash/daily/session/quick/view','DailyCashBalanceSessionController@quickView')->name('cash_balance_session_quick_view');
 
 Route::post('/cash/daily/closing/balance/session/update/','DailyCashBalanceSessionController@closingBalanceUpdate')->name('closing_balance_update');
+
+//Loan and Income section
+Route::get('/loanOrIncome/create','LoanIncomeController@createLoanAndIncome')->name('loan_income_create');
+Route::post('/loan/check/store','LoanIncomeController@checkLoanStore')->name('check_loan_store');
+Route::post('/income/check/store','LoanIncomeController@checkIncomeStore')->name('check_income_store');
