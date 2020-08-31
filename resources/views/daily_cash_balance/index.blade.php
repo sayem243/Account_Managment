@@ -123,7 +123,7 @@
                                     @if($step2Key=='CR')
                                         @php $hsSettle=0 @endphp
                                         @foreach($transType as $data)
-                                            @if($data->transaction_via!='CHECK_OUT')
+                                            @if(in_array($data->transaction_via, array('HAND_SLIP_SETTLE','HAND_SLIP_TRANSFER','HAND_SLIP_CASH_RETURN')))
                                                 @php
                                                     $balance = $balance+$data->amount;
                                                     $crTotal=$crTotal+$data->amount;
@@ -154,6 +154,7 @@
                                         @endforeach
                                     @endif
                                 @endforeach
+
                                 {{--DR section--}}
                                 @foreach($value as $step2Key=>$transType)
                                     @if($step2Key=='DR')
