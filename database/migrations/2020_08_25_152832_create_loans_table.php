@@ -19,18 +19,26 @@ class CreateLoansTable extends Migration
             $table->decimal('amount',10, 2)->default(0);
             $table->enum('loan_from',array('USER','COMPANY','PROJECT','CLIENT','OTHERS'));
             $table->string('loan_from_ref_id');
+            $table->integer('check_registry_id_for_loan_from')->unsigned()->nullable();
+            $table->integer('cash_transaction_id_for_loan_from')->unsigned()->nullable();
             $table->enum('loan_to',array('USER','COMPANY','PROJECT','CLIENT','OTHERS'));
             $table->string('loan_to_ref_id');
-            $table->integer('check_registry_id')->unsigned()->nullable();
-            $table->integer('cash_transaction_id')->unsigned()->nullable();
+            $table->integer('check_registry_id_for_loan_to')->unsigned()->nullable();
+            $table->integer('cash_transaction_id_for_loan_to')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->timestamps();
         });
         Schema::table('loans', function($table) {
-            $table->foreign('cash_transaction_id')->references('id')->on('cash_transactions');
+            $table->foreign('check_registry_id_for_loan_from')->references('id')->on('check_registries');
         });
         Schema::table('loans', function($table) {
-            $table->foreign('check_registry_id')->references('id')->on('check_registries');
+            $table->foreign('check_registry_id_for_loan_to')->references('id')->on('check_registries');
+        });
+        Schema::table('loans', function($table) {
+            $table->foreign('cash_transaction_id_for_loan_from')->references('id')->on('cash_transactions');
+        });
+        Schema::table('loans', function($table) {
+            $table->foreign('cash_transaction_id_for_loan_to')->references('id')->on('cash_transactions');
         });
 
         Schema::table('loans', function($table) {

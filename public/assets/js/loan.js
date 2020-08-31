@@ -71,12 +71,12 @@ jQuery(document).ready(function () {
 
     });
 
-    jQuery('body').on('change','.loan_from', function () {
+    jQuery('body').on('change','.check_loan_from', function () {
         var from_to_type= jQuery(this).val();
-        var user_section = jQuery('.user_section');
-        var company_section = jQuery('.company_section');
-        var project_section = jQuery('.project_section');
-        var other_section = jQuery('.other_section');
+        var user_section = jQuery('.check_loan_user_section');
+        var company_section = jQuery('.check_loan_company_section');
+        var project_section = jQuery('.check_loan_project_section');
+        var other_section = jQuery('.check_loan_other_section');
 
         if (from_to_type==="USER"){
             user_section.show();

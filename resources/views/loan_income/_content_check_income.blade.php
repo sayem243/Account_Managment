@@ -20,7 +20,7 @@
                 <label class="col-form-label" for="check_income_company_id">Company Name
                     <span class="required">*</span></label>
                 <div class="col-form-label">
-                    <select id="check_income_company_id" name="company_id" class="form-control check_income_company_id" required>
+                    <select id="check_income_company_id" name="check_income_company_id" class="form-control check_income_company_id" required>
                         <option value="">Select Company</option>
                         @foreach($companies as $company)
                             <option value="{{$company['id']}}">{{$company['name']}}</option>
@@ -92,7 +92,7 @@
                             class="required">*</span></label>
                 <div class="col-form-label">
                     <label class="radio-inline" style="margin-right: 15px">
-                        <input required type="radio" name="check_type" value="A/C PAY" id="check_type_ac_pay"> A/C Pay Check
+                        <input required type="radio" name="check_type" value="ACCOUNT_PAY" id="check_type_ac_pay"> A/C Pay Check
                     </label>
                     <label class="radio-inline">
                         <input required checked type="radio" name="check_type" value="CASH" id="check_type_cash"> Cash Check
@@ -100,26 +100,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="col-form-label" for="check_mode">Transaction Type <span
-                            class="required">*</span></label>
-                <div class="col-form-label">
-                    <select id="check_mode" name="check_mode" class="form-control check_mode" required>
-                        <option value="IN">Credit</option>
-                        <option value="OUT">Debit</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+
     </div>
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
-                <label for="from_to_type" class="col-form-label">From/To <span
+                <label for="check_income_from_to_type" class="col-form-label">From/To <span
                             class="required">*</span></label>
                 <div class="col-form-label">
-                    <select id="from_to_type" name="from_to_type" class="form-control from_to_type" required>
+                    <select id="check_income_from_to_type" name="income_from" class="form-control check_income_from_to_type" required>
                         <option value="USER">User</option>
                         <option value="COMPANY">Company</option>
                         <option value="PROJECT">Project</option>
@@ -130,12 +119,12 @@
 
         </div>
         <div class="col-md-3">
-            <div class="user_section">
+            <div class="check_income_user_section">
                 <div class="form-group">
                     <label for="from_to_value_user" class="col-form-label">User <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="from_to_value_user" name="from_to_value_user" class="form-control">
+                        <select id="from_to_value_user" name="income_from_value_user" class="form-control">
                             <option value="">Select User</option>
                             @foreach($users as $user)
                                 <option value="{{$user['id']}}">{{$user['name']}}</option>
@@ -144,12 +133,12 @@
                     </div>
                 </div>
             </div>
-            <div class="company_section" style="display: none">
+            <div class="check_income_company_section" style="display: none">
                 <div class="form-group">
                     <label for="from_to_value_company" class="col-form-label">Company <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="from_to_value_company" name="from_to_value_company" class="form-control">
+                        <select id="from_to_value_company" name="income_from_value_company" class="form-control">
                             <option value="">Select Company</option>
                             @foreach($companies as $company)
                                 <option value="{{$company['id']}}">{{$company['name']}}</option>
@@ -159,12 +148,12 @@
                 </div>
 
             </div>
-            <div class="project_section" style="display: none">
+            <div class="check_income_project_section" style="display: none">
                 <div class="form-group">
                     <label for="from_to_value_project" class="col-form-label">Project <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="from_to_value_project" name="from_to_value_project" class="form-control from_to_value_project">
+                        <select id="from_to_value_project" name="income_from_value_project" class="form-control from_to_value_project">
                             <option value="">Select Project</option>
                             @foreach($projects as $project)
                                 <option value="{{$project['id']}}">{{$project['p_name']}}</option>
@@ -173,12 +162,12 @@
                     </div>
                 </div>
             </div>
-            <div class="other_section" style="display: none">
+            <div class="check_income_other_section" style="display: none">
                 <div class="form-group">
                     <label for="from_to_value_other" class="col-form-label">Provider Name <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <input id="from_to_value_other" type="text" name="from_to_value_other" class="form-control">
+                        <input id="from_to_value_other" type="text" name="income_from_value_other" class="form-control">
                     </div>
                 </div>
             </div>
@@ -208,7 +197,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h4>Write in words: <span class="to_word"></span></h4>
+            <h4>In words: <span class="to_word"></span></h4>
         </div>
     </div>
 

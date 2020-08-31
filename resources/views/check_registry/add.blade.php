@@ -109,7 +109,7 @@
                                                     class="required">*</span></label>
                                         <div class="col-form-label">
                                             <label class="radio-inline" style="margin-right: 15px">
-                                                <input required type="radio" name="check_type" value="A/C PAY" id="check_type_ac_pay"> A/C Pay Check
+                                                <input required type="radio" name="check_type" value="ACCOUNT_PAY" id="check_type_ac_pay"> A/C Pay Check
                                             </label>
                                             <label class="radio-inline">
                                                 <input required checked type="radio" name="check_type" value="CASH" id="check_type_cash"> Cash Check

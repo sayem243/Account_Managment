@@ -74,12 +74,12 @@ jQuery(document).ready(function () {
 
     });
 
-    jQuery('body').on('change','.from_to_type', function () {
+    jQuery('body').on('change','.check_income_from_to_type', function () {
         var from_to_type= jQuery(this).val();
-        var user_section = jQuery('.user_section');
-        var company_section = jQuery('.company_section');
-        var project_section = jQuery('.project_section');
-        var other_section = jQuery('.other_section');
+        var user_section = jQuery('.check_income_user_section');
+        var company_section = jQuery('.check_income_company_section');
+        var project_section = jQuery('.check_income_project_section');
+        var other_section = jQuery('.check_income_other_section');
 
         if (from_to_type==="USER"){
             user_section.show();

@@ -3,14 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class CashTransaction extends Model
 {
 
 
     public static function insertData($data){
-        $cashTransaction = self::insert($data);
+        self::insert($data);
 
-        return $cashTransaction;
+        return DB::getPDO()->lastInsertId();
     }
 }

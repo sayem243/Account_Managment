@@ -16,7 +16,7 @@ class CreateCheckRegistriesTable extends Migration
         Schema::create('check_registries', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('check_mode', array('IN','OUT'));
-            $table->enum('check_type', array('CASH','A/C PAY'));
+            $table->enum('check_type', array('CASH','ACCOUNT_PAY'));
             $table->string('check_number')->nullable();
             $table->date('check_date')->nullable();
             $table->decimal('amount',10, 2)->default(0);

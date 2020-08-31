@@ -310,4 +310,6 @@ Route::post('/cash/daily/closing/balance/session/update/','DailyCashBalanceSessi
 //Loan and Income section
 Route::get('/loanOrIncome/create','LoanIncomeController@createLoanAndIncome')->name('loan_income_create');
 Route::post('/loan/check/store','LoanIncomeController@checkLoanStore')->name('check_loan_store');
+Route::post('/loan/cash/store','LoanIncomeController@cashLoanStore')->name('cash_loan_store');
 Route::post('/income/check/store','LoanIncomeController@checkIncomeStore')->name('check_income_store');
+Route::post('/income/cash/store','LoanIncomeController@cashIncomeStore')->name('cash_income_store');

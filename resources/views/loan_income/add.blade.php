@@ -129,5 +129,7 @@
 @endsection
 @section('footer.scripts')
     <script src="{{ asset("assets/js/loan.js") }}" ></script>
+    <script src="{{ asset("assets/js/loan-cash.js") }}" ></script>
     <script src="{{ asset("assets/js/income.js") }}" ></script>
+    <script src="{{ asset("assets/js/income-cash.js") }}" ></script>
 @endsection

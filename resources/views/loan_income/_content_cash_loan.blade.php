@@ -1,4 +1,4 @@
-<form class="form-horizontal" action="{{ route('check_loan_store')}}" method="post"
+<form class="form-horizontal" action="{{ route('cash_loan_store')}}" method="post"
       enctype="multipart/form-data">
     {{ csrf_field() }}
     {{--error showing --}}
@@ -16,13 +16,12 @@
         <legend>From Information</legend>
 
         <div class="row">
-            <input type="hidden" name="transaction_type" value="LOAN_CHECK">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="loan_from" class="col-form-label">From <span
+                    <label for="cash_loan_from" class="col-form-label">From <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="loan_from" name="loan_from" class="form-control loan_from" required>
+                        <select id="cash_loan_from" name="cash_loan_from" class="form-control cash_loan_from" required>
                             <option value="USER">User</option>
                             <option value="COMPANY">Company</option>
                             <option value="PROJECT">Project</option>
@@ -33,12 +32,12 @@
 
             </div>
             <div class="col-md-3">
-                <div class="user_section">
+                <div class="cash_loan_user_section">
                     <div class="form-group">
-                        <label for="loan_from_value_user" class="col-form-label">User <span
+                        <label for="cash_loan_from_value_user" class="col-form-label">User <span
                                     class="required">*</span></label>
                         <div class="col-form-label">
-                            <select id="loan_from_value_user" name="loan_from_value_user" class="form-control">
+                            <select id="cash_loan_from_value_user" name="loan_from_value_user" class="form-control cash_loan_from_value_user">
                                 <option value="">Select User</option>
                                 @foreach($users as $user)
                                     <option value="{{$user['id']}}">{{$user['name']}}</option>
@@ -47,12 +46,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="company_section" style="display: none">
+                <div class="cash_loan_company_section" style="display: none">
                     <div class="form-group">
-                        <label for="loan_from_value_company" class="col-form-label">Company <span
+                        <label for="cash_loan_from_value_company" class="col-form-label">Company <span
                                     class="required">*</span></label>
                         <div class="col-form-label">
-                            <select id="loan_from_value_company" name="loan_from_value_company" class="form-control loan_from_value_company">
+                            <select id="cash_loan_from_value_company" name="loan_from_value_company" class="form-control cash_loan_from_value_company">
                                 <option value="">Select Company</option>
                                 @foreach($companies as $company)
                                     <option value="{{$company['id']}}">{{$company['name']}}</option>
@@ -62,12 +61,12 @@
                     </div>
 
                 </div>
-                <div class="project_section" style="display: none">
+                <div class="cash_loan_project_section" style="display: none">
                     <div class="form-group">
-                        <label for="loan_from_value_project" class="col-form-label">Project <span
+                        <label for="cash_loan_from_value_project" class="col-form-label">Project <span
                                     class="required">*</span></label>
                         <div class="col-form-label">
-                            <select id="loan_from_value_project" name="loan_from_value_project" class="form-control loan_from_value_project">
+                            <select id="cash_loan_from_value_project" name="loan_from_value_project" class="form-control cash_loan_from_value_project">
                                 <option value="">Select Project</option>
                                 @foreach($projects as $project)
                                     <option value="{{$project['id']}}">{{$project['p_name']}}</option>
@@ -76,12 +75,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="other_section" style="display: none">
+                <div class="cash_loan_other_section" style="display: none">
                     <div class="form-group">
-                        <label for="loan_from_value_other" class="col-form-label">Provider Name <span
+                        <label for="cash_loan_from_value_other" class="col-form-label">Provider Name <span
                                     class="required">*</span></label>
                         <div class="col-form-label">
-                            <input id="loan_from_value_other" type="text" name="loan_from_value_other" class="form-control">
+                            <input id="cash_loan_from_value_other" type="text" name="loan_from_value_other" class="form-control cash_loan_from_value_other">
                         </div>
                     </div>
                 </div>
@@ -96,10 +95,10 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="loan_to" class="col-form-label">To <span
+                    <label for="cash_loan_to" class="col-form-label">To <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="loan_to" name="loan_to" class="form-control loan_to" required>
+                        <select id="cash_loan_to" name="cash_loan_to" class="form-control cash_loan_to" required>
                             <option value="USER">User</option>
                             <option value="COMPANY">Company</option>
                             <option value="PROJECT">Project</option>
@@ -109,7 +108,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="to_user_section">
+                <div class="cash_loan_to_user_section">
                     <div class="form-group">
                         <label for="loan_to_value_user" class="col-form-label">User <span
                                     class="required">*</span></label>
@@ -123,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="to_company_section" style="display: none">
+                <div class="cash_loan_to_company_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_to_value_company" class="col-form-label">Company <span
                                     class="required">*</span></label>
@@ -138,7 +137,7 @@
                     </div>
 
                 </div>
-                <div class="to_project_section" style="display: none">
+                <div class="cash_loan_to_project_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_to_value_project" class="col-form-label">Project <span
                                     class="required">*</span></label>
@@ -152,7 +151,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="to_other_section" style="display: none">
+                <div class="cash_loan_to_other_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_to_value_other" class="col-form-label">Provider Name <span
                                     class="required">*</span></label>
@@ -171,13 +170,11 @@
                 <label for="check_amount" class="col-form-label">Amount <span
                             class="required">*</span></label>
                 <div class="col-form-label">
-                    <input id="check_amount" type="text" name="check_amount" class="form-control check_amount">
+                    <input id="check_amount" type="text" name="cash_amount" class="form-control check_amount">
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div class="form-group">
                 <label class="col-form-label" for="check_description">Description </label>
                 <div class="col-form-label">
@@ -186,6 +183,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <h4>Write in words: <span class="to_word"></span></h4>

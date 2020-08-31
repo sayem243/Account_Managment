@@ -19,10 +19,10 @@
             <input type="hidden" name="transaction_type" value="LOAN_CHECK">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="loan_from" class="col-form-label">From <span
+                    <label for="check_loan_from" class="col-form-label">From <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="loan_from" name="loan_from" class="form-control loan_from" required>
+                        <select id="check_loan_from" name="loan_from" class="form-control check_loan_from" required>
                             <option value="USER">User</option>
                             <option value="COMPANY">Company</option>
                             <option value="PROJECT">Project</option>
@@ -33,7 +33,7 @@
 
             </div>
             <div class="col-md-3">
-                <div class="user_section">
+                <div class="check_loan_user_section">
                     <div class="form-group">
                         <label for="loan_from_value_user" class="col-form-label">User <span
                                     class="required">*</span></label>
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="company_section" style="display: none">
+                <div class="check_loan_company_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_from_value_company" class="col-form-label">Company <span
                                     class="required">*</span></label>
@@ -62,7 +62,7 @@
                     </div>
 
                 </div>
-                <div class="project_section" style="display: none">
+                <div class="check_loan_project_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_from_value_project" class="col-form-label">Project <span
                                     class="required">*</span></label>
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="other_section" style="display: none">
+                <div class="check_loan_other_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_from_value_other" class="col-form-label">Provider Name <span
                                     class="required">*</span></label>
@@ -146,7 +146,7 @@
                         <label for="loan_to_value_user" class="col-form-label">User <span
                                     class="required">*</span></label>
                         <div class="col-form-label">
-                            <select id="loan_to_value_user" name="loan_to_value_user" class="form-control">
+                            <select id="loan_to_value_user" name="loan_to_value_user" class="form-control loan_to_value_user">
                                 <option value="">Select User</option>
                                 @foreach($users as $user)
                                     <option value="{{$user['id']}}">{{$user['name']}}</option>
@@ -255,7 +255,7 @@
                             class="required">*</span></label>
                 <div class="col-form-label">
                     <label class="radio-inline" style="margin-right: 15px">
-                        <input required type="radio" name="check_type" value="A/C PAY" id="check_type_ac_pay"> A/C Pay Check
+                        <input required type="radio" name="check_type" value="ACCOUNT_PAY" id="check_type_ac_pay"> A/C Pay Check
                     </label>
                     <label class="radio-inline">
                         <input required checked type="radio" name="check_type" value="CASH" id="check_type_cash"> Cash Check
