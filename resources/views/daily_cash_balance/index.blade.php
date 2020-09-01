@@ -76,9 +76,9 @@
                                     </td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',''):0}}</td>
+                                    <td>{{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',','):0}}</td>
                                     <td>
-                                        {{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',''):0}}
+                                        {{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',','):0}}
                                     </td>
                                 </tr>
                                 @php
@@ -112,8 +112,8 @@
                                                         @endphp
                                                         <a data-toggle="modal" data-target-check-registry-id="{{$checkRegistry->id}}" data-target="#myModalCheckRegistry" href="javascript:void(0)">{{$checkRegistry->check_number}}</a></td>
                                                     <td></td>
-                                                    <td>{{number_format($data->amount,0,'.','')}}</td>
-                                                    <td>{{$balance}}</td>
+                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -122,15 +122,42 @@
 
                                 @foreach($value as $step2Key=>$transType)
                                     @if($step2Key=='CR')
-                                        @php $income=0 @endphp
+                                        @php $incomeCr=0 @endphp
                                         @foreach($transType as $data)
                                             @if(in_array($data->transaction_via, array('INCOME_CASH')))
                                                 @php
                                                     $balance = $balance+$data->amount;
                                                     $crTotal=$crTotal+$data->amount;
                                                 @endphp
-                                                @php $income++ @endphp
-                                                @if ($income==1)
+                                                @php $incomeCr++ @endphp
+                                                @if ($incomeCr==1)
+                                                    <tr>
+                                                        <td>Income</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <td></td>
+                                                    <td>{{'Income through cash # '}} @php
+                                                            $income= \App\Income::find($data->transaction_via_ref_id)
+                                                        @endphp
+                                                        <a data-toggle="modal" data-target-income-id="{{$income->id}}" data-target="#myModalIncome" href="javascript:void(0)">{{$income->income_generate_id}}</a></td>
+                                                    <td></td>
+                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                </tr>
+                                            @endif
+
+                                            @if(in_array($data->transaction_via, array('INCOME_CHECK_CASH')))
+                                                @php
+                                                    $balance = $balance+$data->amount;
+                                                    $crTotal=$crTotal+$data->amount;
+                                                @endphp
+                                                @php $incomeCr++ @endphp
+                                                @if ($incomeCr==1)
                                                     <tr>
                                                         <td>Income</td>
                                                         <td></td>
@@ -144,15 +171,82 @@
                                                     <td>{{'Income through cheque # '}} @php
                                                             $income= \App\Income::find($data->transaction_via_ref_id)
                                                         @endphp
-                                                        <a data-toggle="modal" data-target-income-id="{{$income->id}}" data-target="#myModalIncome" href="javascript:void(0)">{{$income->id}}</a></td>
+                                                        <a data-toggle="modal" data-target-income-id="{{$income->id}}" data-target="#myModalIncome" href="javascript:void(0)">{{$income->income_generate_id}}</a></td>
                                                     <td></td>
-                                                    <td>{{number_format($data->amount,0,'.','')}}</td>
-                                                    <td>{{$balance}}</td>
+                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
                                     @endif
                                 @endforeach
+
+                                @foreach($value as $step2Key=>$transType)
+                                    @php $loanCr=0 @endphp
+                                    @if($step2Key=='CR')
+
+                                        @foreach($transType as $data)
+
+                                            @if(in_array($data->transaction_via, array('LOAN_CASH')))
+                                                @php
+                                                    $balance = $balance+$data->amount;
+                                                    $crTotal=$crTotal+$data->amount;
+                                                @endphp
+                                                @php $loanCr++ @endphp
+                                                @if ($loanCr==1)
+                                                    <tr>
+                                                        <td>Loan (Credit)</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <td></td>
+                                                    <td>{{'Loan through cash # '}}
+                                                        @php
+                                                            $loan= \App\Loan::find($data->transaction_via_ref_id)
+                                                        @endphp
+                                                        <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                </tr>
+                                            @endif
+
+                                            @if(in_array($data->transaction_via, array('LOAN_CHECK_CASH')))
+                                                @php
+                                                    $balance = $balance+$data->amount;
+                                                    $crTotal=$crTotal+$data->amount;
+                                                @endphp
+                                                @php $loanCr++ @endphp
+                                                @if ($loanCr==1)
+                                                    <tr>
+                                                        <td>Loan (Credit)</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <td></td>
+                                                    <td>{{'Loan through check # '}} @php
+                                                            $loan= \App\Loan::find($data->transaction_via_ref_id)
+                                                        @endphp
+                                                        <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
+
 
                                 @foreach($value as $step2Key=>$transType)
                                     @if($step2Key=='CR')
@@ -182,8 +276,8 @@
                                                         {{$payment->user->name}} (H/S # <a data-toggle="modal" data-target-id="{{$payment->id}}" data-target="#myModal" href="javascript:void(0)">{{$payment->payment_id}}</a>)
                                                     </td>
                                                     <td></td>
-                                                    <td>{{$data->amount}}</td>
-                                                    <td>{{$balance}}</td>
+                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -191,6 +285,73 @@
                                 @endforeach
 
                                 {{--DR section--}}
+                                @foreach($value as $step2Key=>$transType)
+                                    @if($step2Key=='DR')
+                                        @php $loanDr=0 @endphp
+                                        @foreach($transType as $data)
+
+                                            @if($data->transaction_via=='LOAN_CASH')
+                                                @php
+                                                    $balance = $balance-$data->amount;
+                                                    $drTotal = $drTotal+$data->amount;
+                                                @endphp
+                                                @php $loanDr++ @endphp
+                                                @if ($loanDr==1)
+                                                    <tr>
+                                                        <td>Loan (Debit)</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        {{'Loan through cash # '}} @php
+                                                            $loan= \App\Loan::find($data->transaction_via_ref_id)
+                                                        @endphp
+                                                        <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
+                                                    </td>
+                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
+                                                    <td></td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                </tr>
+                                            @endif
+
+                                            @if($data->transaction_via=='LOAN_CHECK_CASH')
+                                                @php
+                                                    $balance = $balance-$data->amount;
+                                                    $drTotal = $drTotal+$data->amount;
+                                                @endphp
+                                                @php $loanDr++ @endphp
+                                                @if ($loanDr==1)
+                                                    <tr>
+                                                        <td>Loan (Debit)</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        {{'Loan through check # '}} @php
+                                                            $loan= \App\Loan::find($data->transaction_via_ref_id)
+                                                        @endphp
+                                                        <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
+                                                    </td>
+                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
+                                                    <td></td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                </tr>
+                                            @endif
+
+                                        @endforeach
+                                    @endif
+                                @endforeach
+
                                 @foreach($value as $step2Key=>$transType)
                                     @if($step2Key=='DR')
                                         @php $hsIssue=0 @endphp
@@ -219,15 +380,16 @@
                                                         @endphp
                                                         {{$payment->user->name}} (H/S # <a data-toggle="modal" data-target-id="{{$payment->id}}" data-target="#myModal" href="javascript:void(0)">{{$payment->payment_id}}</a>)
                                                     </td>
-                                                    <td>{{$data->amount}}</td>
+                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
                                                     <td></td>
-                                                    <td>{{$balance}}</td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
                                                 </tr>
                                             @endif
 
                                         @endforeach
                                     @endif
                                 @endforeach
+
                                 @foreach($value as $step2Key=>$transType)
                                     @if($step2Key=='DR')
                                         @php $vIndex=0 @endphp
@@ -255,9 +417,9 @@
                                                         @endphp
                                                         {{$voucher->expenditureSector->name}} (Voucher # <a data-toggle="modal" data-target-voucher-id="{{$voucher->id}}" data-target="#myModalVoucher" href="">{{$voucher->voucher_generate_id}}</a>)
                                                     </td>
-                                                    <td>{{$data->amount}}</td>
+                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
                                                     <td></td>
-                                                    <td>{{$balance}}</td>
+                                                    <td>{{number_format($balance,'0','',',')}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -273,10 +435,10 @@
                                 <tr style="font-weight: bold">
                                     <td>Closing Balance</td>
                                     <td></td>
-                                    <td>{{$drTotal}}</td>
-                                    <td>{{$crTotal}}</td>
+                                    <td>{{number_format($drTotal,'0','',',')}}</td>
+                                    <td>{{number_format($crTotal,'0','',',')}}</td>
                                     <td>
-                                        {{$balance}}
+                                        {{number_format($balance,'0','',',')}}
                                         <input type="hidden" name="cash_balance_session_id[{{isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->id:null}}]" value="{{$balance}}">
                                     </td>
                                 </tr>
@@ -374,6 +536,40 @@
          </div>
      </div>
  </div>
+ <div class="modal fade" id="myModalLoan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header" style="display: block">
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                 <h4 class="modal-title" id="myModalLabel">Loan Details</h4>
+             </div>
+
+             <div class="modal-body">
+
+             </div>
+
+
+         </div>
+     </div>
+ </div>
+ <div class="modal fade" id="myModalIncome" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header" style="display: block">
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                 <h4 class="modal-title" id="myModalLabel">Income Details</h4>
+             </div>
+
+             <div class="modal-body">
+
+             </div>
+
+
+         </div>
+     </div>
+ </div>
+
+
  <style>
      .modal-dialog {
          width: 95%;
@@ -411,6 +607,20 @@
             jQuery("#myModalCheckRegistry").on("show.bs.modal", function(e) {
                 var id = jQuery(e.relatedTarget).data('target-check-registry-id');
                 jQuery.get( "/check/registry/quick/view/" + id, function( data ) {
+                    jQuery(".modal-body").html(data.html);
+                });
+
+            });
+            jQuery("#myModalLoan").on("show.bs.modal", function(e) {
+                var id = jQuery(e.relatedTarget).data('target-loan-id');
+                jQuery.get( "/loan/quick/view/" + id, function( data ) {
+                    jQuery(".modal-body").html(data.html);
+                });
+
+            });
+            jQuery("#myModalIncome").on("show.bs.modal", function(e) {
+                var id = jQuery(e.relatedTarget).data('target-income-id');
+                jQuery.get( "/income/quick/view/" + id, function( data ) {
                     jQuery(".modal-body").html(data.html);
                 });
 

@@ -89,6 +89,8 @@ class LoanIncomeController extends Controller
 
         $loan->save();
 
+        $this->GenerateLoanId($loan);
+
         if($loan->loan_from=='COMPANY'||$loan->loan_from=='PROJECT'){
             $companyId=null;
             $projectId=null;
@@ -290,6 +292,7 @@ class LoanIncomeController extends Controller
 
         $loan->save();
 
+        $this->GenerateLoanId($loan);
 
         if( $loan->loan_from=='COMPANY'||$loan->loan_from=='PROJECT'){
             $companyId=null;
@@ -362,6 +365,14 @@ class LoanIncomeController extends Controller
 
     }
 
+    public function loanQuickView($id){
+
+        $loan=Loan::find($id);
+
+        $returnHTML = view('loan_income.loan_quick_view',['loan'=>$loan])->render();
+        return response()->json( ['html'=>$returnHTML]);
+    }
+
 //    Loan section end
 
 //    Income section start
@@ -396,7 +407,7 @@ class LoanIncomeController extends Controller
 
         $income->created_by = auth()->id();
         $income->save();
-
+        $this->GenerateIncomeId($income);
 
         if($income->id){
             $checkRegistry = new CheckRegistry();
@@ -483,6 +494,8 @@ class LoanIncomeController extends Controller
         $income->created_by = auth()->id();
         $income->save();
 
+        $this->GenerateIncomeId($income);
+
 
         $arrayData= array(
             'transaction_type'=>'CR',
@@ -505,6 +518,90 @@ class LoanIncomeController extends Controller
         }
 
         return redirect()->route('check_registry_index')->with('error','Error! Ops somethings wrong.');
+
+    }
+
+
+    public function incomeQuickView($id){
+
+        $income=Income::find($id);
+
+        $returnHTML = view('loan_income.income_quick_view',['income'=>$income])->render();
+        return response()->json( ['html'=>$returnHTML]);
+    }
+
+
+
+    private function GenerateLoanId(Loan $loan){
+
+        if( $loan->loan_to=='COMPANY'||$loan->loan_to=='PROJECT'){
+            $companyId=null;
+            if($loan->loan_to=='COMPANY'){
+                $companyId = $loan->loan_to_ref_id;
+            }
+
+            if($loan->loan_to=='PROJECT'){
+                $project = Project::find($loan->loan_to_ref_id);
+                $companyId = $project->company->id;
+            }
+
+            $company= Company::find($companyId);
+            $companyCode = $company->code;
+            $voucherId = $company->last_voucher_id;
+
+            $firstJuly = new \DateTime(date("Y")."-07-01");
+
+            $firstJuly = $firstJuly->format("Y-m-d");
+
+            $datetime = new \DateTime("now");
+
+            $currentDate = $datetime->format('Y-m_d');
+
+            if($firstJuly==$currentDate){
+                $voucherId = 1;
+            }else{
+                $voucherId= $voucherId+1;
+            }
+
+            $sequentialId = sprintf("%s%s%s",$companyCode,$datetime->format('mY'), str_pad($voucherId,4, '0', STR_PAD_LEFT));
+            $loan->loan_generate_id=$sequentialId;
+            $loan->save();
+
+            $company = Company::find($company->id);
+            $company->last_voucher_id=$voucherId;
+            $company->save();
+        }
+
+    }
+
+    private function GenerateIncomeId(Income $income){
+
+
+            $company= Company::find($income->company_id);
+            $companyCode = $company->code;
+            $voucherId = $company->last_voucher_id;
+
+            $firstJuly = new \DateTime(date("Y")."-07-01");
+
+            $firstJuly = $firstJuly->format("Y-m-d");
+
+            $datetime = new \DateTime("now");
+
+            $currentDate = $datetime->format('Y-m_d');
+
+            if($firstJuly==$currentDate){
+                $voucherId = 1;
+            }else{
+                $voucherId= $voucherId+1;
+            }
+
+            $sequentialId = sprintf("%s%s%s",$companyCode,$datetime->format('mY'), str_pad($voucherId,4, '0', STR_PAD_LEFT));
+            $income->income_generate_id=$sequentialId;
+            $income->save();
+
+            $company = Company::find($company->id);
+            $company->last_voucher_id=$voucherId;
+            $company->save();
 
     }
 
