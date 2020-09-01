@@ -95,7 +95,7 @@
                                 @php use App\CustomClass\NumberToWordConverter;
                                $amount = NumberToWordConverter::convert($payment->total_paid_amount);
                                 @endphp
-                                <p style="color: red;"><strong style="font-weight: bold">Write in words: </strong>{{$amount}} only</p>
+                                <p style="color: red;"><strong style="font-weight: bold">In words: </strong>{{$amount}} only</p>
                             </div>
                         </div>
 

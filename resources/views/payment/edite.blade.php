@@ -211,6 +211,7 @@
                         success: function (data) {
                             if (data.status == 200) {
                                 jQuery(elements).closest("tr").remove();
+                                calculateSum();
                             }
 
                         },

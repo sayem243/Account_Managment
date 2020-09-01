@@ -186,7 +186,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h4>Write in words: <span class="to_word"></span></h4>
+            <h4>In words: <span class="to_word"></span></h4>
         </div>
     </div>
 

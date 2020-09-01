@@ -119,6 +119,41 @@
                                         @endforeach
                                     @endif
                                 @endforeach
+
+                                @foreach($value as $step2Key=>$transType)
+                                    @if($step2Key=='CR')
+                                        @php $income=0 @endphp
+                                        @foreach($transType as $data)
+                                            @if(in_array($data->transaction_via, array('INCOME_CASH')))
+                                                @php
+                                                    $balance = $balance+$data->amount;
+                                                    $crTotal=$crTotal+$data->amount;
+                                                @endphp
+                                                @php $income++ @endphp
+                                                @if ($income==1)
+                                                    <tr>
+                                                        <td>Income</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <td></td>
+                                                    <td>{{'Income through cheque # '}} @php
+                                                            $income= \App\Income::find($data->transaction_via_ref_id)
+                                                        @endphp
+                                                        <a data-toggle="modal" data-target-income-id="{{$income->id}}" data-target="#myModalIncome" href="javascript:void(0)">{{$income->id}}</a></td>
+                                                    <td></td>
+                                                    <td>{{number_format($data->amount,0,'.','')}}</td>
+                                                    <td>{{$balance}}</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
+
                                 @foreach($value as $step2Key=>$transType)
                                     @if($step2Key=='CR')
                                         @php $hsSettle=0 @endphp
