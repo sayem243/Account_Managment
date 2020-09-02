@@ -291,9 +291,9 @@ class IncomeController extends Controller
                 $id                 = $i,
                 $name               = '<a data-toggle="modal" data-target-id="'.$post->iId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
                 $incomeDate          = date('d-m-Y',strtotime($post->incomeDate)),
-                $paymentType          = $post->pMode,
+                $pMode          = $post->pMode,
                 $companyName        = $post->companyName,
-                $incomeGetFrom        = $incomeFrom,
+                $incomeFromRefId        = $incomeFrom,
                 $amount             = $post->amount,
 
                 $button);

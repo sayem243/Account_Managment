@@ -513,9 +513,9 @@ class LoanController extends Controller
                 $id                 = $i,
                 $name               = '<a data-toggle="modal" data-target-id="'.$post->lId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
                 $loanDate          = date('d-m-Y',strtotime($post->loanDate)),
-                $paymentType          = $post->pMode,
-                $loanGetFrom        = $loanFrom,
-                $loanSetTo        = $loanTo,
+                $pMode          = $post->pMode,
+                $loanFromRefId        = $loanFrom,
+                $loanToRefId        = $loanTo,
                 $amount             = $post->amount,
 
                 $button);
