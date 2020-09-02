@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-md-3">
                                 <h4>HS ID: {{$payment->payment_id}}</h4>
-                                <h4 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h4>
+                                <h4 style="color: red">Total Amount: {{number_format($payment->total_paid_amount,0,'.',',')}}</h4>
                             </div>
                             <div class="col-md-4" style="text-align: right">
                                 <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
@@ -72,22 +72,22 @@
                                     @foreach($payment->Payment_details as $paymentDetail)
                                         <tr>
                                             <td>{{$paymentDetail->item_name}}</td>
-                                            <td style="text-align: right;padding-right: 10px">{{$paymentDetail->paid_amount}}</td>
+                                            <td style="text-align: right;padding-right: 10px">{{number_format($paymentDetail->paid_amount,0,'.',',')}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr style="font-weight: bold; font-size: 18px; color: red">
                                         <td style="text-align: right;padding-right: 10px">Total</td>
-                                        <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount}}</td>
+                                        <td style="text-align: right;padding-right: 10px">{{number_format($payment->total_paid_amount,0,'.',',')}}</td>
                                     </tr>
                                     <tr style="font-weight: bold; font-size: 18px; color: #000000; background-color: #e0e0e0">
                                         <td style="text-align: right;padding-right: 10px">Total Settlement</td>
-                                        <td style="text-align: right;padding-right: 10px">{{$totalSettlementAmount}}</td>
+                                        <td style="text-align: right;padding-right: 10px">{{number_format($totalSettlementAmount,0,'.',',')}}</td>
                                     </tr>
                                     <tr style="font-weight: bold; font-size: 18px; color: red">
                                         <td style="text-align: right;padding-right: 10px">Due</td>
-                                        <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount-$totalSettlementAmount}}</td>
+                                        <td style="text-align: right;padding-right: 10px">{{number_format($payment->total_paid_amount-$totalSettlementAmount,0,'.',',')}}</td>
                                     </tr>
                                     </tfoot>
                                 </table>

@@ -21,7 +21,7 @@
                                     </td>
                                     <td style="vertical-align: top" align="right">
                                         <h4>Date: {{ date('d-m-Y', strtotime($payment->created_at))}}</h4>
-                                        <h4 style="color: red">Total Amount: {{$payment->total_paid_amount}}</h4>
+                                        <h4 style="color: red">Total Amount: {{number_format($payment->total_paid_amount,0,'.',',')}}</h4>
                                     </td>
                                 </tr>
                                 </thead>
@@ -46,8 +46,8 @@
                                         <table class="table table-bordered">
                                             <thead>
                                             <tr>
-                                                <th style="padding: 5px 10px 10px" align="left" width="75%">Item</th>
-                                                <th style="text-align: right;padding-right: 10px; padding-bottom: 10px">Amount </th>
+                                                <th style="padding: 5px 10px 10px; border: none;" align="left" width="75%">Item</th>
+                                                <th style="border: none;text-align: right;padding-right: 10px; padding-bottom: 10px">Amount </th>
                                             </tr>
                                             </thead>
 
@@ -56,7 +56,7 @@
                                             @foreach($payment->Payment_details as $paymentDetail)
                                                 <tr>
                                                     <td style="padding: 2px 5px">{{$paymentDetail->item_name}}</td>
-                                                    <td style="text-align: right;padding-right: 10px">{{$paymentDetail->paid_amount}}</td>
+                                                    <td style="text-align: right;padding-right: 10px">{{number_format($paymentDetail->paid_amount,0,'.',',')}}</td>
                                                 </tr>
                                                 @php $i++; @endphp
                                                 @if($i==10)
@@ -71,15 +71,15 @@
                                             <tfoot>
                                             <tr style="font-weight: bold; font-size: 18px; color: red">
                                                 <td style="text-align: right;padding-right: 10px">Total</td>
-                                                <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount}}</td>
+                                                <td style="text-align: right;padding-right: 10px">{{number_format($payment->total_paid_amount,0,'.',',')}}</td>
                                             </tr>
                                             <tr style="font-weight: bold; font-size: 18px; color: red">
                                                 <td style="text-align: right;padding-right: 10px">Total Settlement</td>
-                                                <td style="text-align: right;padding-right: 10px">{{$totalSettlementAmount}}</td>
+                                                <td style="text-align: right;padding-right: 10px">{{number_format($totalSettlementAmount,0,'.',',')}}</td>
                                             </tr>
                                             <tr style="font-weight: bold; font-size: 18px; color: red">
                                                 <td style="text-align: right;padding-right: 10px">Due</td>
-                                                <td style="text-align: right;padding-right: 10px">{{$payment->total_paid_amount-$totalSettlementAmount}}</td>
+                                                <td style="text-align: right;padding-right: 10px">{{number_format($payment->total_paid_amount-$totalSettlementAmount,0,'.',',')}}</td>
                                             </tr>
                                             </tfoot>
                                         </table>
