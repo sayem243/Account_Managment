@@ -11,6 +11,7 @@ use App\Payment;
 use App\PaymentSettlement;
 use App\Project;
 use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,11 +27,21 @@ class LoanController extends Controller
         $this->middleware('auth');
     }
 
-//    Loan section start
+    public function index(){
+        $companies= Company::all();
+        $arrayCompanies=array();
+        foreach ($companies as $company){
+            $arrayCompanies[]=array('id'=>$company->id,'name'=>$company->name);
+        }
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $arrayCompanies), SORT_ASC, $arrayCompanies);
+
+        return view('loan_income.index_loan',['companies'=>$arrayCompanies ]);
+    }
 
     public function checkLoanStore(Request $request){
 
-//        var_dump($request);die;
 
         if ($request->loan_from=='COMPANY'){
             $this->validate($request, [
@@ -422,5 +433,103 @@ class LoanController extends Controller
             $company->save();
         }
 
+    }
+
+    public function dataTable(Request $request)
+    {
+
+        $countRecords = DB::table('loans');
+        $countRecords->select('loans.id as totalLoan');
+
+        $result = $countRecords->get();
+        $tCount = count($result);
+        $iTotalRecords = $tCount;
+        $iDisplayLength = intval($_REQUEST['length']);
+        $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+        $iDisplayStart = intval($_REQUEST['start']);
+        $sEcho = intval($_REQUEST['draw']);
+        $records = array();
+        $records["data"] = array();
+        $end = $iDisplayStart + $iDisplayLength;
+        $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+
+        $rows = DB::table('loans');
+        $rows->select('loans.id as lId', 'loans.loan_generate_id as name', 'loans.amount as amount', 'loans.payment_mode as pMode', 'loans.loan_from as loanFrom', 'loans.loan_from_ref_id as loanFromRefId', 'loans.loan_to as loanTo', 'loans.loan_to_ref_id as loanToRefId', 'loans.created_at as loanDate');
+
+//        $rows->where('check_registries.status','!=', 0);
+
+
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName, $columnSortOrder);
+//        $rows->groupBy('payment_details.payment_id');
+        $result = $rows->get();
+
+        $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
+
+        foreach ($result as $post):
+
+            $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                    <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
+
+
+            $button .='<li class="dropdown-item"><a href="/check/registry/details/'.$post->lId.'"><i class="feather icon-eye"></i>Details</a></li>';
+
+            $button.='</ul></div>';
+
+            $loanFrom = '';
+            if($post->loanFrom=='USER'){
+                $user = User::find($post->loanFromRefId);
+                $loanFrom = $user->name;
+            }elseif ($post->loanFrom=='COMPANY'){
+                $company = Company::find($post->loanFromRefId);
+                $loanFrom = $company->name;
+            }elseif ($post->loanFrom=='PROJECT'){
+                $project = Project::find($post->loanFromRefId);
+                $loanFrom = $project->p_name;
+            }elseif ($post->loanFrom=='OTHERS'){
+                $loanFrom = $post->loanFromRefId;
+            }
+            $loanTo = '';
+            if($post->loanTo=='USER'){
+                $user = User::find($post->loanToRefId);
+                $loanTo = $user->name;
+            }elseif ($post->loanTo=='COMPANY'){
+                $company = Company::find($post->loanToRefId);
+                $loanTo = $company->name;
+            }elseif ($post->loanTo=='PROJECT'){
+                $project = Project::find($post->loanToRefId);
+                $loanTo = $project->p_name;
+            }elseif ($post->loanTo=='OTHERS'){
+                $loanTo = $post->loanToRefId;
+            }
+
+
+            $records["data"][] = array(
+                $id                 = $i,
+                $name               = '<a data-toggle="modal" data-target-id="'.$post->lId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
+                $loanDate          = date('d-m-Y',strtotime($post->loanDate)),
+                $paymentType          = $post->pMode,
+                $loanGetFrom        = $loanFrom,
+                $loanSetTo        = $loanTo,
+                $amount             = $post->amount,
+
+                $button);
+            $i++;
+
+        endforeach;
+        if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+        }
+
+        $records["draw"] = $sEcho;
+        $records["recordsTotal"] = $iTotalRecords;
+        $records["recordsFiltered"] = $iTotalRecords;
+        return new JsonResponse($records);
     }
 }

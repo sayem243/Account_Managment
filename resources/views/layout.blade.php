@@ -131,16 +131,27 @@ Like: www.facebook.com/terminalbd
                 @endif
                 @if(auth()->user()->can('check-registry-create'))
 
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('check/registry/*') ? 'pcoded-trigger' : ''}} {{ Request::is('/loanOrIncome/*') ? 'pcoded-trigger' : ''}}">
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('check/registry/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Check Registry</span></a>
-                        <ul class="pcoded-submenu {{ Request::is('check/registry/*') ? 'active' : ''}} {{ Request::is('/loanOrIncome/*') ? 'active' : ''}}">
-
+                        <ul class="pcoded-submenu {{ Request::is('check/registry/*') ? 'active' : ''}}">
                             <li class="nav-item {{ Request::is('check/registry/index') ? 'active' : ''}}"><a href="{{route('check_registry_index')}}" class="nav-link"><span class="pcoded-mtext">Check Registry</span></a></li>
-                            <li class="nav-item {{ Request::is('/loanOrIncome/create') ? 'active' : ''}}"><a href="{{route('loan_income_create')}}" class="nav-link"><span class="pcoded-mtext">Loan & Income</span></a></li>
+                        </ul>
+                    </li>
+                @endif
+
+                @if(auth()->user()->can('loan-income-list'))
+
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('loanOrIncome/*') ? 'pcoded-trigger' : ''}} {{ Request::is('loan/*') ? 'pcoded-trigger' : ''}} {{ Request::is('income/*') ? 'pcoded-trigger' : ''}}">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Loan & Income</span></a>
+                        <ul class="pcoded-submenu {{ Request::is('loanOrIncome/*') ? 'active' : ''}} {{ Request::is('loan/*') ? 'active' : ''}} {{ Request::is('income/*') ? 'active' : ''}}">
+
+                            <li class="nav-item {{ Request::is('loan/index') ? 'active' : ''}}"><a href="{{route('loan_index')}}" class="nav-link"><span class="pcoded-mtext">Loan</span></a></li>
+                            <li class="nav-item {{ Request::is('income/index') ? 'active' : ''}}"><a href="{{route('income_index')}}" class="nav-link"><span class="pcoded-mtext">Income</span></a></li>
 
                         </ul>
                     </li>
                 @endif
+
                 @if(auth()->user()->can('daily-cash-balance-session') || auth()->user()->can('check-registry-create') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO'))
 
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('daily/cash/*') ? 'pcoded-trigger' : ''}}{{ Request::is('cash/daily/opening/*') ? 'pcoded-trigger' : ''}}">

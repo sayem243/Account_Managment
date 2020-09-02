@@ -11,6 +11,7 @@ use App\Payment;
 use App\PaymentSettlement;
 use App\Project;
 use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +27,19 @@ class IncomeController extends Controller
         $this->middleware('auth');
     }
 
-//    Income section start
+    public function index(){
+        $companies= Company::all();
+        $arrayCompanies=array();
+        foreach ($companies as $company){
+            $arrayCompanies[]=array('id'=>$company->id,'name'=>$company->name);
+        }
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $arrayCompanies), SORT_ASC, $arrayCompanies);
+
+        return view('loan_income.index_income',['companies'=>$arrayCompanies ]);
+    }
+
 
     public function checkIncomeStore(Request $request){
         $this->validate($request, [
@@ -209,6 +222,93 @@ class IncomeController extends Controller
             $company->last_voucher_id=$voucherId;
             $company->save();
 
+    }
+
+    public function dataTable(Request $request)
+    {
+
+        $countRecords = DB::table('incomes');
+        $countRecords->select('incomes.id as totalIncome');
+        $countRecords->join('companies', 'incomes.company_id', '=', 'companies.id');
+
+        $result = $countRecords->get();
+        $tCount = count($result);
+        $iTotalRecords = $tCount;
+        $iDisplayLength = intval($_REQUEST['length']);
+        $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+        $iDisplayStart = intval($_REQUEST['start']);
+        $sEcho = intval($_REQUEST['draw']);
+        $records = array();
+        $records["data"] = array();
+        $end = $iDisplayStart + $iDisplayLength;
+        $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+
+        $rows = DB::table('incomes');
+        $rows->join('companies', 'incomes.company_id', '=', 'companies.id');
+        $rows->select('incomes.id as iId', 'incomes.income_generate_id as name', 'incomes.amount as amount', 'incomes.payment_mode as pMode', 'incomes.income_from as incomeFrom', 'incomes.income_from_ref_id as incomeFromRefId', 'incomes.created_at as incomeDate');
+        $rows->addSelect('companies.name as companyName');
+//        $rows->where('check_registries.status','!=', 0);
+
+
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName, $columnSortOrder);
+//        $rows->groupBy('payment_details.payment_id');
+        $result = $rows->get();
+
+        $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
+
+        foreach ($result as $post):
+
+            $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                    <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
+
+
+            $button .='<li class="dropdown-item"><a href="/check/registry/details/'.$post->iId.'"><i class="feather icon-eye"></i>Details</a></li>';
+
+            $button.='</ul></div>';
+
+            $incomeFrom = '';
+            if($post->incomeFrom=='USER'){
+                $user = User::find($post->incomeFromRefId);
+                $incomeFrom = $user->name;
+            }elseif ($post->incomeFrom=='COMPANY'){
+                $company = Company::find($post->incomeFromRefId);
+                $incomeFrom = $company->name;
+            }elseif ($post->incomeFrom=='PROJECT'){
+                $project = Project::find($post->incomeFromRefId);
+                $incomeFrom = $project->p_name;
+            }elseif ($post->incomeFrom=='OTHERS'){
+                $incomeFrom = $post->incomeFromRefId;
+            }
+
+
+            $records["data"][] = array(
+                $id                 = $i,
+                $name               = '<a data-toggle="modal" data-target-id="'.$post->iId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
+                $incomeDate          = date('d-m-Y',strtotime($post->incomeDate)),
+                $paymentType          = $post->pMode,
+                $companyName        = $post->companyName,
+                $incomeGetFrom        = $incomeFrom,
+                $amount             = $post->amount,
+
+                $button);
+            $i++;
+
+        endforeach;
+        if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+        }
+
+        $records["draw"] = $sEcho;
+        $records["recordsTotal"] = $iTotalRecords;
+        $records["recordsFiltered"] = $iTotalRecords;
+        return new JsonResponse($records);
     }
 
 }

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','Add Bank')
+@section('title','Add Loan & Income')
 @section('template')
     <div class="col-sm-12">
         <div class="row">
