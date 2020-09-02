@@ -211,7 +211,7 @@
                 <div class="form-group">
                     <label class="col-form-label" for="loan_to_branch_id">Branch Name</label>
                     <div class="col-form-label">
-                        <select id="loan_to_branch_id" name="loan_to_branch_id" class="form-control loan_to_branch_id" required>
+                        <select id="loan_to_branch_id" name="loan_to_branch_id" class="form-control loan_to_branch_id">
                             <option value="">Select Branch</option>
                         </select>
                     </div>
@@ -221,7 +221,7 @@
                 <div class="form-group">
                     <label class="col-form-label" for="loan_to_bank_account_id">Bank Account</label>
                     <div class="col-form-label">
-                        <select id="loan_to_bank_account_id" name="loan_to_bank_account_id" class="form-control loan_to_bank_account_id" required>
+                        <select id="loan_to_bank_account_id" name="loan_to_bank_account_id" class="form-control loan_to_bank_account_id">
                             <option value="">Select Account</option>
                         </select>
                     </div>
