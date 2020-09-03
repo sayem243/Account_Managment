@@ -10,7 +10,7 @@
           <div class="card-header">
               <h5>Check Registry </h5>
               <div class="card-header-right">
-                  @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin'))
+                  @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin') || auth()->user()->can('check-registry-create'))
                   <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested">
                       <a href="{{route('check_registry_create')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
                   </div>
