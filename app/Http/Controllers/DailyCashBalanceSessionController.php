@@ -157,12 +157,14 @@ class DailyCashBalanceSessionController extends Controller
 
 
                 if (isset($exResult[0])){
-                    $dailyCashBalanceSession = CashDailyBalanceSession::find($exResult[0]->id);
-                    $dailyCashBalanceSession->closing_balance = isset($cash_balance_session_id[$dailyCashBalanceSession->id])?$cash_balance_session_id[$dailyCashBalanceSession->id]:$dailyCashBalanceSession->opening_balance;
-                    $dailyCashBalanceSession->updated_at = new \DateTime();
-                    $dailyCashBalanceSession->status = 2;
-                    $dailyCashBalanceSession->save();
-                    $insertId[]= $dailyCashBalanceSession->id;
+                    if(array_key_exists($exResult[0]->id, $cash_balance_session_id)){
+                        $dailyCashBalanceSession = CashDailyBalanceSession::find($exResult[0]->id);
+                        $dailyCashBalanceSession->closing_balance = isset($cash_balance_session_id[$dailyCashBalanceSession->id])?$cash_balance_session_id[$dailyCashBalanceSession->id]:$dailyCashBalanceSession->opening_balance;
+                        $dailyCashBalanceSession->updated_at = new \DateTime();
+                        $dailyCashBalanceSession->status = 2;
+                        $dailyCashBalanceSession->save();
+                        $insertId[]= $dailyCashBalanceSession->id;
+                    }
                 }
             }
         }

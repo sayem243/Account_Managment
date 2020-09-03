@@ -313,11 +313,13 @@ Route::get('/loanOrIncome/create','LoanIncomeController@createLoanAndIncome')->n
 Route::get('/loan/index','LoanController@index')->name('loan_index');
 Route::post('/loan/check/store','LoanController@checkLoanStore')->name('check_loan_store');
 Route::post('/loan/cash/store','LoanController@cashLoanStore')->name('cash_loan_store');
+Route::get('/loan/details/{id}','LoanController@loanDetailsView')->name('loan_details_view');
 Route::get('/loan/quick/view/{id}','LoanController@loanQuickView')->name('loan_quick_view');
 Route::post('/loan/datatable','LoanController@dataTable')->name('loan_datatable');
 
 Route::get('/income/index','IncomeController@index')->name('income_index');
 Route::post('/income/check/store','IncomeController@checkIncomeStore')->name('check_income_store');
 Route::post('/income/cash/store','IncomeController@cashIncomeStore')->name('cash_income_store');
+Route::get('/income/details/{id}','IncomeController@incomeDetailsView')->name('income_details_view');
 Route::get('/income/quick/view/{id}','IncomeController@incomeQuickView')->name('income_quick_view');
 Route::post('/income/datatable','IncomeController@dataTable')->name('income_datatable');

@@ -129,7 +129,7 @@ Like: www.facebook.com/terminalbd
                         </ul>
                     </li>
                 @endif
-                @if(auth()->user()->can('check-registry-create'))
+                @if(auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO') || auth()->user()->can('check-registry-create'))
 
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('check/registry/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Check Registry</span></a>
@@ -139,7 +139,7 @@ Like: www.facebook.com/terminalbd
                     </li>
                 @endif
 
-                @if(auth()->user()->can('loan-income-list'))
+                @if(auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO') || auth()->user()->can('loan-income-list'))
 
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('loanOrIncome/*') ? 'pcoded-trigger' : ''}} {{ Request::is('loan/*') ? 'pcoded-trigger' : ''}} {{ Request::is('income/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Loan & Income</span></a>
@@ -152,7 +152,7 @@ Like: www.facebook.com/terminalbd
                     </li>
                 @endif
 
-                @if(auth()->user()->can('daily-cash-balance-session') || auth()->user()->can('check-registry-create') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO'))
+                @if(auth()->user()->can('daily-cash-balance-session') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO'))
 
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('daily/cash/*') ? 'pcoded-trigger' : ''}}{{ Request::is('cash/daily/opening/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Daily Cash </span></a>

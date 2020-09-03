@@ -24,7 +24,7 @@
                                          <div class="col-sm-7">
                                              <select name="filter_company_id" id="filter_company_id" class="form-control">
                                                  <option value="">All</option>
-                                                 @foreach($company as $key=>$value)
+                                                 @foreach($companies as $key=>$value)
                                                      <option value="{{$key}}" {{(isset($_GET['filter_company_id'])&&$_GET['filter_company_id']==$key)?'selected="selected"':''}}>{{$value}}</option>
                                                  @endforeach
                                              </select>
@@ -54,14 +54,28 @@
 
             <tr>
                 <td colspan="5">
-                    @if(sizeof($cashTransactions)>0)
+                    @if(sizeof($openingBalance)>0)
+
                     <form action="{{route('closing_balance_update')}}" method="post">
                         {{ csrf_field() }}
                         <table class="table table-bordered" style="margin: 0">
+                            <thead>
+                            <tr style="background-color: red; color: #FFFFFF; font-weight: bold; font-size: large">
+                                <td style="text-align: center" colspan="3">Total Opening Balance</td>
+                                <td>{{number_format($openingBalanceTotal, 0,'.',',')}}</td>
+                                <td>{{number_format($openingBalanceTotal, 0,'.',',')}}</td>
+                            </tr>
+                            </thead>
                             <tbody>
-                            @foreach($cashTransactions as $step1Key=>$value)
+                            @php
+                                $totalBalance = 0;
+                                $grandCrTotal = 0;
+                                $grandDrTotal = 0;
+                            @endphp
+                            @foreach($company as $step1Key=>$value)
+
                                 <tr>
-                                    <td style="background-color: darkgrey; color: #FFFFFF;font-weight: bold; font-size: medium" align="center" colspan="5">{{$company[$step1Key]}}</td>
+                                    <td style="background-color: darkgrey; color: #FFFFFF;font-weight: bold; font-size: medium" align="center" colspan="5">{{$value}}</td>
                                 </tr>
                                 <tr style="color: #FFFFFF; background-color: darkblue; font-weight: bold">
                                     <th style="width: 20%">Transaction Type</th>
@@ -81,12 +95,16 @@
                                         {{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',','):0}}
                                     </td>
                                 </tr>
+
                                 @php
                                     $balance = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->opening_balance:0;
                                     $crTotal = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->opening_balance:0;
                                     $drTotal = 0;
                                 @endphp
-                                @foreach($value as $step2Key=>$transType)
+
+                                @if(isset($cashTransactions[$step1Key]))
+
+                                @foreach($cashTransactions[$step1Key] as $step2Key=>$transType)
                                     @if($step2Key=='CR')
                                         @php $checkOut=0 @endphp
                                         @foreach($transType as $data)
@@ -120,7 +138,7 @@
                                     @endif
                                 @endforeach
 
-                                @foreach($value as $step2Key=>$transType)
+                                @foreach($cashTransactions[$step1Key] as $step2Key=>$transType)
                                     @if($step2Key=='CR')
                                         @php $incomeCr=0 @endphp
                                         @foreach($transType as $data)
@@ -181,7 +199,7 @@
                                     @endif
                                 @endforeach
 
-                                @foreach($value as $step2Key=>$transType)
+                                @foreach($cashTransactions[$step1Key] as $step2Key=>$transType)
                                     @php $loanCr=0 @endphp
                                     @if($step2Key=='CR')
 
@@ -248,7 +266,7 @@
                                 @endforeach
 
 
-                                @foreach($value as $step2Key=>$transType)
+                                @foreach($cashTransactions[$step1Key] as $step2Key=>$transType)
                                     @if($step2Key=='CR')
                                         @php $hsSettle=0 @endphp
                                         @foreach($transType as $data)
@@ -285,7 +303,7 @@
                                 @endforeach
 
                                 {{--DR section--}}
-                                @foreach($value as $step2Key=>$transType)
+                                @foreach($cashTransactions[$step1Key] as $step2Key=>$transType)
                                     @if($step2Key=='DR')
                                         @php $loanDr=0 @endphp
                                         @foreach($transType as $data)
@@ -352,7 +370,7 @@
                                     @endif
                                 @endforeach
 
-                                @foreach($value as $step2Key=>$transType)
+                                @foreach($cashTransactions[$step1Key] as $step2Key=>$transType)
                                     @if($step2Key=='DR')
                                         @php $hsIssue=0 @endphp
                                         @foreach($transType as $data)
@@ -390,7 +408,7 @@
                                     @endif
                                 @endforeach
 
-                                @foreach($value as $step2Key=>$transType)
+                                @foreach($cashTransactions[$step1Key] as $step2Key=>$transType)
                                     @if($step2Key=='DR')
                                         @php $vIndex=0 @endphp
                                         @foreach($transType as $data)
@@ -425,6 +443,8 @@
                                         @endforeach
                                     @endif
                                 @endforeach
+
+                                @endif
                                 <tr>
                                     <td style="height: 25px"></td>
                                     <td></td>
@@ -445,8 +465,23 @@
                                 <tr>
                                     <td colspan="5" style="height: 15px"></td>
                                 </tr>
+
+                                @php
+                                    $grandDrTotal = $grandDrTotal+$drTotal;
+                                    $grandCrTotal = $grandCrTotal+$crTotal;
+                                    $totalBalance = $totalBalance+$balance;
+                                @endphp
+
                             @endforeach
                             </tbody>
+                            <tfoot>
+                            <tr style="background-color: red; color: #FFFFFF; font-weight: bold; font-size: large">
+                                <td style="text-align: center" colspan="2">Total Closing Balance</td>
+                                <td>{{number_format($grandDrTotal, 0,'.',',')}}</td>
+                                <td>{{number_format($grandCrTotal, 0,'.',',')}}</td>
+                                <td>{{number_format($totalBalance, 0,'.',',')}}</td>
+                            </tr>
+                            </tfoot>
                         </table>
                         <div class="line aligncenter" style="float: right">
                             <div class="form-group row">
@@ -460,9 +495,9 @@
                             </div>
                         </div>
                     </form>
-                        @else
 
-                        <p style="text-align: center;font-size: 16px; margin-top: 10px">No record found.</p>
+                        @else
+                        <p style="text-align: center">No record found.</p>
 
                     @endif
 

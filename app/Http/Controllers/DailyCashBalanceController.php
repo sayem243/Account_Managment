@@ -24,10 +24,22 @@ class DailyCashBalanceController extends Controller
 
     public function dailyCashTransaction(Request $request){
 
+
+        $date = $request->input('filter_date');
+        $company_id = $request->input('filter_company_id');
         $companies = Company::all();
+        $allCompanies = $companies;
+        if ($company_id){
+            $companies = DB::table('companies')->where('id', $company_id)->get();
+        }
         $returnCompany = array();
         foreach ($companies as $company){
             $returnCompany[$company->id]= $company->name;
+        }
+
+        $returnAllCompanies = array();
+        foreach ($allCompanies as $company){
+            $returnAllCompanies[$company->id]= $company->name;
         }
 
         $users = User::all();
@@ -37,8 +49,6 @@ class DailyCashBalanceController extends Controller
         foreach ($users as $user){
             $returnUser[$user->id]= $user->name;
         }
-        $date = $request->input('filter_date');
-        $company_id = $request->input('filter_company_id');
 
         $from_date = $date? $date.' 00:00:00': date('Y-m-d').' 00:00:00';
         $to_date = $date? $date.' 23:59:59': date('Y-m-d').' 23:59:59';
@@ -51,12 +61,18 @@ class DailyCashBalanceController extends Controller
         $result = $rows->get();
         $returnArray = array();
 
+        $openingBalanceTotal = 0;
+
         $openingBalance=$this->getDailyOpeningBalance($from_date,$to_date,$company_id);
+
+        foreach ($openingBalance as $value){
+            $openingBalanceTotal+= $value->opening_balance;
+        }
 
         foreach ($result as $cashTransaction){
             $returnArray[$cashTransaction->company_id][$cashTransaction->transaction_type][]=$cashTransaction;
         }
-        return view('daily_cash_balance.index',['openingBalance'=>$openingBalance, 'cashTransactions'=>$returnArray, 'company'=>$returnCompany, 'user'=>$returnUser, 'selected_date'=>$date?$date:date('Y-m-d')]);
+        return view('daily_cash_balance.index',['openingBalance'=>$openingBalance, 'openingBalanceTotal'=>$openingBalanceTotal, 'cashTransactions'=>$returnArray, 'companies'=>$returnAllCompanies,  'company'=>$returnCompany, 'user'=>$returnUser, 'selected_date'=>$date?$date:date('Y-m-d')]);
 
 
     }

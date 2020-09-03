@@ -14,26 +14,26 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-md-12 col-form-label" for="company_id">Bank Name : {{$income->checkRegistry->bank->name}}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
 
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-md-12 col-form-label" for="company_id">Branch Name : {{$income->checkRegistry->branch->name}}</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-md-12 col-form-label" for="company_id">Bank Account : {{$income->checkRegistry->bankAccount->account_number}}</label>
-                            </div>
-                        </div>
                     </div>
-
+                    @if($income->payment_mode=='CHECK')
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-form-label" for="company_id">Bank Name : {{$income->checkRegistry->bank->name}}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-form-label" for="company_id">Branch Name : {{$income->checkRegistry->branch->name}}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-form-label" for="company_id">Bank Account : {{$income->checkRegistry->bankAccount->account_number}}</label>
+                                </div>
+                            </div>
+                        </div>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group row">
@@ -50,12 +50,14 @@
                                 <label class="col-md-12 col-form-label" for="company_id">Check Type : {{$income->checkRegistry->check_type}}</label>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group row">
-                                <label class="col-md-12 col-form-label" for="company_id">Transaction Type : {{$income->checkRegistry->check_mode=='IN'?'Credit':'Debit'}}</label>
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-form-label" for="company_id">Transaction Type : {{$income->checkRegistry->check_mode=='IN'?'Credit':'Debit'}}</label>
+                                </div>
                             </div>
-                        </div>
                     </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group row">
@@ -98,7 +100,7 @@
                         <div class="col-md-3">
                             <div class="col-md-12">
                                 <div class="form-group row">
-                                    <label class="col-md-12 col-form-label" for="company_id">Description : {{$income->checkRegistry->description}}</label>
+                                    <label class="col-md-12 col-form-label" for="company_id">Description : {{$income->description}}</label>
                                 </div>
                             </div>
                         </div>

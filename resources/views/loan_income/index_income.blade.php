@@ -70,12 +70,12 @@
     </div>
     </div>
  <!-- Modal -->
- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+ <div class="modal fade" id="myModalIncome" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
      <div class="modal-dialog" role="document">
          <div class="modal-content">
              <div class="modal-header" style="display: block">
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                 <h4 class="modal-title" id="myModalLabel">Check Registry Details</h4>
+                 <h4 class="modal-title" id="myModalLabel">Income Details</h4>
              </div>
 
              <div class="modal-body">
@@ -90,13 +90,13 @@
      .modal-dialog {
          width: 95%;
          max-width: 95%;
-         height: 100%;
+         height: 95%;
          padding: 0;
      }
 
      .modal-content {
          height: auto;
-         min-height: 100%;
+         min-height: 95%;
          border-radius: 0;
      }
  </style>
@@ -106,9 +106,10 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function(){
-            jQuery("#myModal").on("show.bs.modal", function(e) {
-                var id = jQuery(e.relatedTarget).data('target-id');
-                jQuery.get( "/check/registry/quick/view/" + id, function( data ) {
+
+            jQuery("#myModalIncome").on("show.bs.modal", function(e) {
+                var id = jQuery(e.relatedTarget).data('target-income-id');
+                jQuery.get( "/income/quick/view/" + id, function( data ) {
                     jQuery(".modal-body").html(data.html);
                 });
 

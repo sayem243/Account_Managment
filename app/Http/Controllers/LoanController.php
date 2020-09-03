@@ -105,7 +105,7 @@ class LoanController extends Controller
 
 
         $loan->created_by = auth()->id();
-
+        $loan->description = $request->check_description;
         $loan->save();
 
         $this->GenerateLoanId($loan);
@@ -308,7 +308,7 @@ class LoanController extends Controller
 
 
         $loan->created_by = auth()->id();
-
+        $loan->description = $request->check_description;
         $loan->save();
 
         $this->GenerateLoanId($loan);
@@ -381,6 +381,14 @@ class LoanController extends Controller
         return redirect()->route('loan_index')->with('error','Error! Ops somethings wrong.');
 
 
+
+    }
+
+    public function loanDetailsView($id){
+
+        $loan=Loan::find($id);
+
+        return view('loan_income.loan.loan_view',['loan'=>$loan]);
 
     }
 
@@ -477,7 +485,7 @@ class LoanController extends Controller
                     <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
 
 
-            $button .='<li class="dropdown-item"><a href="/check/registry/details/'.$post->lId.'"><i class="feather icon-eye"></i>Details</a></li>';
+            $button .='<li class="dropdown-item"><a href="/loan/details/'.$post->lId.'"><i class="feather icon-eye"></i>Details</a></li>';
 
             $button.='</ul></div>';
 
@@ -511,7 +519,7 @@ class LoanController extends Controller
 
             $records["data"][] = array(
                 $id                 = $i,
-                $name               = '<a data-toggle="modal" data-target-id="'.$post->lId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
+                $name               = '<a data-toggle="modal" data-target-loan-id="'.$post->lId.'" data-target="#myModalLoan" href="javascript:void(0)">'.$post->name.'</a>',
                 $loanDate          = date('d-m-Y',strtotime($post->loanDate)),
                 $pMode          = $post->pMode,
                 $loanFromRefId        = $loanFrom,

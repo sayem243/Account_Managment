@@ -70,6 +70,7 @@ class IncomeController extends Controller
         $income->company_id = isset($request->check_income_company_id)?$request->check_income_company_id:null;
 
         $income->created_by = auth()->id();
+        $income->description = $request->check_description;
         $income->save();
         $this->GenerateIncomeId($income);
 
@@ -154,7 +155,7 @@ class IncomeController extends Controller
         $income->income_from_ref_id = $income_from_ref_id;
 
         $income->company_id = isset($request->cash_income_company_id)?$request->cash_income_company_id:null;
-
+        $income->description = $request->check_description;
         $income->created_by = auth()->id();
         $income->save();
 
@@ -183,6 +184,13 @@ class IncomeController extends Controller
 
         return redirect()->route('income_index')->with('error','Error! Ops somethings wrong.');
 
+    }
+
+    public function incomeDetailsView($id){
+
+        $income=Income::find($id);
+
+        return view('loan_income.income.income_view',['income'=>$income]);
     }
 
     public function incomeQuickView($id){
@@ -268,7 +276,7 @@ class IncomeController extends Controller
                     <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
 
 
-            $button .='<li class="dropdown-item"><a href="/check/registry/details/'.$post->iId.'"><i class="feather icon-eye"></i>Details</a></li>';
+            $button .='<li class="dropdown-item"><a href="/income/details/'.$post->iId.'"><i class="feather icon-eye"></i>Details</a></li>';
 
             $button.='</ul></div>';
 
@@ -289,7 +297,7 @@ class IncomeController extends Controller
 
             $records["data"][] = array(
                 $id                 = $i,
-                $name               = '<a data-toggle="modal" data-target-id="'.$post->iId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
+                $name               = '<a data-toggle="modal" data-target-income-id="'.$post->iId.'" data-target="#myModalIncome" href="javascript:void(0)">'.$post->name.'</a>',
                 $incomeDate          = date('d-m-Y',strtotime($post->incomeDate)),
                 $pMode          = $post->pMode,
                 $companyName        = $post->companyName,
