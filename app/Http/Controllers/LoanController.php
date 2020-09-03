@@ -261,11 +261,11 @@ class LoanController extends Controller
         }
 
         if($loan->id){
-            return redirect()->route('check_registry_index')->with('success','Loan has been successfully created.');
+            return redirect()->route('loan_index')->with('success','Loan has been successfully created.');
 
         }
 
-        return redirect()->route('check_registry_index')->with('error','Error! Ops somethings wrong.');
+        return redirect()->route('loan_index')->with('error','Error! Ops somethings wrong.');
 
 
     }
@@ -374,11 +374,11 @@ class LoanController extends Controller
         }
 
         if($loan->id){
-            return redirect()->route('check_registry_index')->with('success','Loan has been successfully created.');
+            return redirect()->route('loan_index')->with('success','Loan has been successfully created.');
 
         }
 
-        return redirect()->route('check_registry_index')->with('error','Error! Ops somethings wrong.');
+        return redirect()->route('loan_index')->with('error','Error! Ops somethings wrong.');
 
 
 

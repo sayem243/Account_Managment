@@ -154,7 +154,7 @@ class AjaxFunctionController
         $branches = $rows->get();
         $arrayData = array();
         foreach ($branches as $branch){
-            $arrayData[]=array('id'=>$branch->bId, 'name'=>$branch->bName);
+            $arrayData[$branch->bId]=array('id'=>$branch->bId, 'name'=>$branch->bName);
         }
         return new JsonResponse($arrayData);
     }

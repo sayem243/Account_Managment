@@ -122,10 +122,10 @@ class IncomeController extends Controller
         }
 
         if($income->id){
-            return redirect()->route('check_registry_index')->with('success','Income has been successfully entry.');
+            return redirect()->route('income_index')->with('success','Income has been successfully entry.');
         }
 
-        return redirect()->route('check_registry_index')->with('error','Error! Ops somethings wrong.');
+        return redirect()->route('income_index')->with('error','Error! Ops somethings wrong.');
 
     }
 
@@ -178,10 +178,10 @@ class IncomeController extends Controller
         $income->save();
 
         if($income->id){
-            return redirect()->route('check_registry_index')->with('success','Income has been successfully entry.');
+            return redirect()->route('income_index')->with('success','Income has been successfully entry.');
         }
 
-        return redirect()->route('check_registry_index')->with('error','Error! Ops somethings wrong.');
+        return redirect()->route('income_index')->with('error','Error! Ops somethings wrong.');
 
     }
 
