@@ -16,12 +16,48 @@
                     </div>
                     {{--Advance Payment Information--}}
 
-                    <div class="card-body">
+                    <div class="card-body"
+                         style="border: 1px solid #000; margin-bottom: 5px; position: relative; min-height: 430px; padding: 15px">
+                        <h5 style="position: absolute; right: 10px; top: 10px">Cr. No. {{$loan->loan_generate_id}}</h5>
+                        <h5 style="text-align: center; margin-bottom: 5px">Loan Voucher</h5>
+                        <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">
+                            @if($loan->loan_to=='USER')
+                                @php
+                                    $user= \App\User::find($loan->loan_to_ref_id)
+                                @endphp
+                                {{$user->name}}
+
+                            @endif
+                            @if($loan->loan_to=='COMPANY')
+                                @php
+                                    $company= \App\Company::find($loan->loan_to_ref_id)
+                                @endphp
+                                {{$company->name}}
+
+                            @endif
+                            @if($loan->loan_to=='PROJECT')
+                                @php
+                                    $project= \App\Project::find($loan->loan_to_ref_id)
+                                @endphp
+                                {{$project->p_name}}
+
+                            @endif
+                            @if($loan->loan_to=='OTHERS')
+                                {{$loan->loan_to_ref_id}}
+                            @endif
+                        </h4>
+                        <p style="text-align: center;margin-bottom: 5px">
+                            @if($loan->loan_to=='COMPANY')
+                                @php
+                                    $company= \App\Company::find($loan->loan_to_ref_id)
+                                @endphp
+                                {{$company->c_address}}
+
+                            @endif
+                        </p>
                         <div class="row">
-                            <div class="col-md-6">
-                                <h4 style="text-align: center">ID : {{$loan->loan_generate_id}}</h4>
-                            </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-12">
                                 <h4 style="text-align: right">Date: {{ date('d-m-Y', strtotime($loan->created_at))}}</h4>
                             </div>
                         </div>
@@ -29,7 +65,7 @@
                             <legend>From Information</legend>
 
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="row">
                                         <label class="col-md-12 col-form-label" for="company_id">From :
                                             @if($loan->loan_from=='USER')
@@ -63,7 +99,7 @@
                                 </div>
                             </div>
 
-                            @if($loan->payment_mode=='CHECK')
+                            @if($loan->payment_mode=='CHECK' && $loan->loan_from=='COMPANY')
 
                                 <div class="row">
                                     <div class="col-md-4">
@@ -78,51 +114,18 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="row">
-                                            <label class="col-md-12 col-form-label" for="loan_to_bank_account_id">Bank Account Number: {{$loan->checkRegistryLoanFrom->bankAccount->account_number}}</label>
+                                            <label class="col-md-12 col-form-label" for="loan_to_bank_account_id">A/C Number: {{$loan->checkRegistryLoanFrom->bankAccount->account_number}}</label>
                                         </div>
                                     </div>
                                 </div>
                             @endif
                         </fieldset>
 
-                        <fieldset>
-                            <legend>To Information</legend>
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="row">
-                                        <label class="col-md-12 col-form-label" for="company_id">To :
-                                            @if($loan->loan_to=='USER')
-                                                @php
-                                                    $user= \App\User::find($loan->loan_to_ref_id)
-                                                @endphp
-                                                {{$user->name}}
 
-                                            @endif
-                                            @if($loan->loan_to=='COMPANY')
-                                                @php
-                                                    $company= \App\Company::find($loan->loan_to_ref_id)
-                                                @endphp
-                                                {{$company->name}}
-
-                                            @endif
-                                            @if($loan->loan_to=='PROJECT')
-                                                @php
-                                                    $project= \App\Project::find($loan->loan_to_ref_id)
-                                                @endphp
-                                                {{$project->p_name}}
-
-                                            @endif
-                                            @if($loan->loan_to=='OTHERS')
-                                                {{$loan->loan_to_ref_id}}
-                                            @endif
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            @if($loan->payment_mode=='CHECK')
-
+                        @if($loan->payment_mode=='CHECK' && $loan->loan_to=='COMPANY')
+                            <fieldset>
+                                <legend>To Information</legend>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="row">
@@ -136,13 +139,13 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="row">
-                                            <label class="col-md-12 col-form-label" for="loan_to_bank_account_id">Bank Account Number: {{$loan->checkRegistryLoanTo->bankAccount->account_number}}</label>
+                                            <label class="col-md-12 col-form-label" for="loan_to_bank_account_id">A/C Number: {{$loan->checkRegistryLoanTo->bankAccount->account_number}}</label>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            </fieldset>
+                        @endif
 
-                        </fieldset>
                         <div class="row">
                             @if($loan->payment_mode=='CHECK')
 

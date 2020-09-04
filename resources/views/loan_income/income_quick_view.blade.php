@@ -5,17 +5,13 @@
             <div class="card">
                 {{--Advance Payment Information--}}
 
-                <div class="card-body">
+                <div class="card-body"
+                     style="border: 1px solid #000; margin-bottom: 5px; position: relative; min-height: 430px; padding: 15px">
+                    <h5 style="position: absolute; right: 10px; top: 10px">Cr. No. {{$income->income_generate_id}}</h5>
+                    <h5 style="text-align: center; margin-bottom: 5px">Income Voucher</h5>
+                    <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$income->company->name}}</h4>
+                    <p style="text-align: center;margin-bottom: 5px">{{$income->company->c_address}}</p>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-md-12 col-form-label" for="company_id">Company Name : {{$income->company->name}}
-                                </label>
-                            </div>
-                        </div>
-
-                    </div>
                     @if($income->payment_mode=='CHECK')
                         <div class="row">
                             <div class="col-md-4">
@@ -30,7 +26,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group row">
-                                    <label class="col-md-12 col-form-label" for="company_id">Bank Account : {{$income->checkRegistry->bankAccount->account_number}}</label>
+                                    <label class="col-md-12 col-form-label" for="company_id">A/C Number : {{$income->checkRegistry->bankAccount->account_number}}</label>
                                 </div>
                             </div>
                         </div>
