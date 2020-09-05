@@ -152,8 +152,40 @@
                         @endif
 
                         <div class="row">
-                            @if($loan->payment_mode=='CHECK')
+                            @if($loan->payment_mode=='CHECK' && $loan->loan_to=='COMPANY' && $loan->loan_from!='COMPANY')
 
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <label class="col-md-12 col-form-label" for="check_number">Check Number: {{$loan->checkRegistryLoanTo->check_number}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <label class="col-md-12 col-form-label" for="check_number">Check Date: {{ date('d-m-Y', strtotime($loan->checkRegistryLoanTo->check_date))}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <label class="col-md-12 col-form-label" for="check_number">Check Type: {{$loan->checkRegistryLoanTo->check_type}}</label>
+                                    </div>
+                                </div>
+                                @elseif($loan->payment_mode=='CHECK' && $loan->loan_to!='COMPANY' && $loan->loan_from=='COMPANY')
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <label class="col-md-12 col-form-label" for="check_number">Check Number: {{$loan->checkRegistryLoanFrom->check_number}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <label class="col-md-12 col-form-label" for="check_number">Check Date: {{ date('d-m-Y', strtotime($loan->checkRegistryLoanFrom->check_date))}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <label class="col-md-12 col-form-label" for="check_number">Check Type: {{$loan->checkRegistryLoanFrom->check_type}}</label>
+                                    </div>
+                                </div>
+                                @elseif($loan->payment_mode=='CHECK' && $loan->loan_to=='COMPANY' && $loan->loan_from=='COMPANY')
                                 <div class="col-md-3">
                                     <div class="row">
                                         <label class="col-md-12 col-form-label" for="check_number">Check Number: {{$loan->checkRegistryLoanTo->check_number}}</label>

@@ -42,6 +42,9 @@ class LoanController extends Controller
 
     public function checkLoanStore(Request $request){
 
+        if ($request->loan_from!='COMPANY'&& $request->loan_to!='COMPANY'){
+            return redirect()->route('loan_income_create')->with('error','Error! Ops somethings wrong.');
+        }
 
         if ($request->loan_from=='COMPANY'){
             $this->validate($request, [
@@ -108,9 +111,7 @@ class LoanController extends Controller
         $loan->description = $request->check_description;
         $loan->save();
 
-        $this->GenerateLoanId($loan);
-
-        if($loan->loan_from=='COMPANY'||$loan->loan_from=='PROJECT'){
+        if($loan->loan_from=='COMPANY'|| $loan->loan_from=='PROJECT'){
             $companyId=null;
             $projectId=null;
             if($loan->loan_from=='COMPANY'){
@@ -122,6 +123,22 @@ class LoanController extends Controller
                 $companyId = $project->company->id;
                 $projectId = $loan->loan_from_ref_id;
             }
+
+            $arrayData= array(
+                'transaction_type'=>'DR',
+                'transaction_via'=>'LOAN_CHECK_'.$request->check_type,
+                'transaction_via_ref_id'=>$loan->id,
+                'amount'=>$loan->amount,
+                'company_id'=>$companyId,
+                'project_id'=>$projectId,
+                'remarks'=>$request->check_description,
+                'created_by'=>$loan->created_by?$loan->created_by:null,
+                'created_at'=>$loan->created_at?$loan->created_at:null,
+            );
+            $cashTransactionFrom = CashTransaction::insertData($arrayData);
+
+            $loan->cash_transaction_id_for_loan_from=$cashTransactionFrom;
+
             $checkRegistry = new CheckRegistry();
             $checkRegistry->check_mode = "OUT";
             $checkRegistry->check_type = $request->check_type?$request->check_type:'CASH';
@@ -147,41 +164,12 @@ class LoanController extends Controller
             $checkRegistry->bank_account_id = $request->loan_from_bank_account_id?$request->loan_from_bank_account_id:null;
             $checkRegistry->created_by = auth()->id();
             $checkRegistry->description = $request->check_description;
+            $checkRegistry->cash_transaction_id = $cashTransactionFrom;
             $checkRegistry->save();
 
 
             $loan->check_registry_id_for_loan_from=$checkRegistry->id;
             $loan->save();
-        }
-
-        if( $loan->loan_from=='COMPANY'||$loan->loan_from=='PROJECT'){
-            $companyId=null;
-            $projectId=null;
-            if($loan->loan_from=='COMPANY'){
-                $companyId = $loan->loan_from_ref_id;
-            }
-
-            if($loan->loan_from=='PROJECT'){
-                $project = Project::find($loan->loan_from_ref_id);
-                $companyId = $project->company->id;
-                $projectId = $loan->loan_from_ref_id;
-            }
-
-            $arrayData= array(
-                'transaction_type'=>'DR',
-                'transaction_via'=>'LOAN_CHECK_'.$request->check_type,
-                'transaction_via_ref_id'=>$loan->id,
-                'amount'=>$loan->amount,
-                'company_id'=>$companyId,
-                'project_id'=>$projectId,
-                'created_by'=>$loan->created_by?$loan->created_by:null,
-                'created_at'=>$loan->created_at?$loan->created_at:null,
-            );
-            $cashTransactionFrom = CashTransaction::insertData($arrayData);
-
-            $loan->cash_transaction_id_for_loan_from=$cashTransactionFrom;
-            $loan->save();
-
         }
 
 
@@ -197,6 +185,23 @@ class LoanController extends Controller
                 $companyId = $project->company->id;
                 $projectId = $loan->loan_to_ref_id;
             }
+
+
+            $arrayData= array(
+                'transaction_type'=>'CR',
+                'transaction_via'=>'LOAN_CHECK_'.$request->check_type,
+                'transaction_via_ref_id'=>$loan->id,
+                'amount'=>$loan->amount,
+                'company_id'=>$companyId,
+                'project_id'=>$projectId,
+                'remarks'=>$request->check_description,
+                'created_by'=>$loan->created_by?$loan->created_by:null,
+                'created_at'=>$loan->created_at?$loan->created_at:null,
+            );
+            $cashTransactionTo = CashTransaction::insertData($arrayData);
+
+            $loan->cash_transaction_id_for_loan_to=$cashTransactionTo;
+            $loan->save();
 
             $checkRegistryIn = new CheckRegistry();
             $checkRegistryIn->check_mode = "IN";
@@ -223,6 +228,7 @@ class LoanController extends Controller
             $checkRegistryIn->bank_account_id = $request->loan_to_bank_account_id?$request->loan_to_bank_account_id:null;
             $checkRegistryIn->created_by = auth()->id();
             $checkRegistryIn->description = $request->check_description;
+            $checkRegistryIn->cash_transaction_id = $cashTransactionTo;
             $checkRegistryIn->save();
 
             $loan->check_registry_id_for_loan_to=$checkRegistryIn->id;
@@ -230,35 +236,7 @@ class LoanController extends Controller
 
         }
 
-        if( $loan->loan_to=='COMPANY'||$loan->loan_to=='PROJECT'){
-            $companyId=null;
-            $projectId=null;
-            if($loan->loan_to=='COMPANY'){
-                $companyId = $loan->loan_to_ref_id;
-            }
-
-            if($loan->loan_to=='PROJECT'){
-                $project = Project::find($loan->loan_to_ref_id);
-                $companyId = $project->company->id;
-                $projectId = $loan->loan_to_ref_id;
-            }
-
-            $arrayData= array(
-                'transaction_type'=>'CR',
-                'transaction_via'=>'LOAN_CHECK_'.$request->check_type,
-                'transaction_via_ref_id'=>$loan->id,
-                'amount'=>$loan->amount,
-                'company_id'=>$companyId,
-                'project_id'=>$projectId,
-                'created_by'=>$loan->created_by?$loan->created_by:null,
-                'created_at'=>$loan->created_at?$loan->created_at:null,
-            );
-           $cashTransactionTo = CashTransaction::insertData($arrayData);
-
-           $loan->cash_transaction_id_for_loan_to=$cashTransactionTo;
-           $loan->save();
-
-        }
+        $this->GenerateLoanId($loan);
 
         if($loan->id){
             return redirect()->route('loan_index')->with('success','Loan has been successfully created.');
@@ -311,8 +289,6 @@ class LoanController extends Controller
         $loan->description = $request->check_description;
         $loan->save();
 
-        $this->GenerateLoanId($loan);
-
         if( $loan->loan_from=='COMPANY'||$loan->loan_from=='PROJECT'){
             $companyId=null;
             $projectId=null;
@@ -333,6 +309,7 @@ class LoanController extends Controller
                 'amount'=>$loan->amount,
                 'company_id'=>$companyId,
                 'project_id'=>$projectId,
+                'remarks'=>$request->check_description,
                 'created_by'=>$loan->created_by?$loan->created_by:null,
                 'created_at'=>$loan->created_at?$loan->created_at:null,
             );
@@ -363,6 +340,7 @@ class LoanController extends Controller
                 'amount'=>$loan->amount,
                 'company_id'=>$companyId,
                 'project_id'=>$projectId,
+                'remarks'=>$request->check_description,
                 'created_by'=>$loan->created_by?$loan->created_by:null,
                 'created_at'=>$loan->created_at?$loan->created_at:null,
             );
@@ -372,6 +350,8 @@ class LoanController extends Controller
             $loan->save();
 
         }
+
+        $this->GenerateLoanId($loan);
 
         if($loan->id){
             return redirect()->route('loan_index')->with('success','Loan has been successfully created.');
@@ -411,6 +391,14 @@ class LoanController extends Controller
 
     private function GenerateLoanId(Loan $loan){
 
+        $firstJuly = new \DateTime(date("Y")."-07-01");
+
+        $firstJuly = $firstJuly->format("Y-m-d");
+
+        $datetime = new \DateTime("now");
+
+        $currentDate = $datetime->format('Y-m_d');
+
         if( $loan->loan_to=='COMPANY'||$loan->loan_to=='PROJECT'){
             $companyId=null;
             if($loan->loan_to=='COMPANY'){
@@ -427,13 +415,6 @@ class LoanController extends Controller
 //            $voucherId = $company->last_voucher_id;
             $voucherId = $company->last_voucher_id?$company->last_voucher_id:0;
 
-            $firstJuly = new \DateTime(date("Y")."-07-01");
-
-            $firstJuly = $firstJuly->format("Y-m-d");
-
-            $datetime = new \DateTime("now");
-
-            $currentDate = $datetime->format('Y-m_d');
 
             if($firstJuly==$currentDate){
                 $voucherId = 1;
@@ -448,6 +429,10 @@ class LoanController extends Controller
             $company = Company::find($company->id);
             $company->last_voucher_id=$voucherId;
             $company->save();
+        }else{
+            $sequentialId = sprintf("%s%s%s",$loan->loan_to,$datetime->format('mY'), str_pad(00,4, '0', STR_PAD_LEFT));
+            $loan->loan_generate_id=$sequentialId;
+            $loan->save();
         }
 
     }

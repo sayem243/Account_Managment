@@ -24,4 +24,8 @@ class CheckRegistry extends Model
 
         return $this->belongsTo('App\BankAndBranch','branch_id')->withTrashed();
     }
+    public function cashTransaction(){
+
+        return $this->belongsTo('App\CashTransaction','cash_transaction_id');
+    }
 }

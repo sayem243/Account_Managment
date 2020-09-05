@@ -75,6 +75,21 @@ class IncomeController extends Controller
         $this->GenerateIncomeId($income);
 
         if($income->id){
+            $arrayData= array(
+                'transaction_type'=>'CR',
+                'transaction_via'=>'INCOME_CHECK_'.$request->check_type,
+                'transaction_via_ref_id'=>$income->id,
+                'amount'=>$request->check_amount,
+                'company_id'=>$request->check_income_company_id,
+                'project_id'=>$request->project_id?$request->project_id:null,
+                'remarks'=>$request->check_description,
+                'created_by'=>auth()->id(),
+                'created_at'=>$income->created_at?$income->created_at:null,
+            );
+
+            $cashTransaction = CashTransaction::insertData($arrayData);
+
+
             $checkRegistry = new CheckRegistry();
             $checkRegistry->check_mode = "IN";
             $checkRegistry->check_type = $request->check_type?$request->check_type:'CASH';
@@ -101,21 +116,9 @@ class IncomeController extends Controller
             $checkRegistry->bank_account_id = $request->check_income_bank_account_id?$request->check_income_bank_account_id:null;
             $checkRegistry->created_by = auth()->id();
             $checkRegistry->description = $request->check_description;
+            $checkRegistry->cash_transaction_id = $cashTransaction;
             $checkRegistry->save();
 
-
-            $arrayData= array(
-                'transaction_type'=>'CR',
-                'transaction_via'=>'INCOME_CHECK_'.$request->check_type,
-                'transaction_via_ref_id'=>$income->id,
-                'amount'=>$checkRegistry->amount,
-                'company_id'=>$checkRegistry->company_id,
-                'project_id'=>$checkRegistry->project_id?$checkRegistry->project_id:null,
-                'created_by'=>$checkRegistry->created_by?$checkRegistry->created_by:null,
-                'created_at'=>$checkRegistry->created_at?$checkRegistry->created_at:null,
-            );
-
-            $cashTransaction = CashTransaction::insertData($arrayData);
 
             $income->cash_transaction_id=$cashTransaction;
             $income->check_registry_id=$checkRegistry->id;
@@ -239,7 +242,6 @@ class IncomeController extends Controller
             $company = Company::find($company->id);
             $company->last_voucher_id=$voucherId;
             $company->save();
-
     }
 
     public function dataTable(Request $request)

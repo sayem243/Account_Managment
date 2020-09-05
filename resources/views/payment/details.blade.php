@@ -278,7 +278,7 @@
                         Total Settlement Amount: {{$totalSettlementAmount}}
                     </div>
                     @if($payment->status==4||$payment->status==5)
-                        <form class="tagForm" id="tag-form" action="{{ route('settlement_store',$payment->id)}}"
+                        <form class="tagForm" id="payment-settlement-form" action="{{ route('settlement_store',$payment->id)}}"
                               method="post">
                             {{ csrf_field() }}
                             <div class="modal-body">
@@ -293,7 +293,7 @@
                                         data-dismiss="modal">Close
                                 </button>
                                 <button style="border-radius: .3rem" id="tag-form-submit" type="submit"
-                                        class="btn btn-info">Save
+                                        class="btn btn-info payment_settlement_add">Save
                                 </button>
                             </div>
                         </form>
@@ -424,7 +424,7 @@
                                         data-dismiss="modal">Close
                                 </button>
                                 <button style="border-radius: .3rem" id="tag-form-submit" type="submit"
-                                        class="btn btn-info">Save
+                                        class="btn btn-info retried-button">Save
                                 </button>
                             </div>
                         </form>
@@ -494,9 +494,19 @@
                     }
 
             });
+            $(document).on('click', '.payment_settlement_add', function() {
+                $(this).attr("disabled", true);
+                $('#payment-settlement-form').submit();
+            });
+
+            $(document).on('click', '.retried-button', function() {
+                $(this).attr("disabled", true);
+                $('#retried-form').submit();
+            });
 
             $('.modal').on('hidden.bs.modal', function () {
                 $(this).find('form')[0].reset();
+                $('.payment_settlement_add').attr("disabled", false);
             });
         })
     </script>
