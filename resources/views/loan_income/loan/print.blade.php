@@ -1,5 +1,5 @@
-@extends('layout')
-@section('title','Loan Details')
+@extends('admin.index-pdf')
+@section('title','loan_voucher_'.time())
 @section('template')
     <div class="col-sm-12">
         <div class="row">
@@ -107,21 +107,29 @@
                             @if($loan->payment_mode=='CHECK' && $loan->loan_from=='COMPANY')
 
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <label class="col-md-12 col-form-label" for="loan_to_bank_id">Bank Name: {{$loan->checkRegistryLoanFrom->bank->name}}</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <label class="col-md-12 col-form-label" for="loan_to_branch_id">Branch Name: {{$loan->checkRegistryLoanFrom->branch->name}}</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <label class="col-md-12 col-form-label" for="loan_to_bank_account_id">A/C Number: {{$loan->checkRegistryLoanFrom->bankAccount->account_number}}</label>
-                                        </div>
-                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <td>Bank Name</td>
+                                                <td>Branch Name</td>
+                                                <td>A/C Number</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    {{$loan->checkRegistryLoanFrom->bank->name}}
+                                                </td>
+                                                <td>
+                                                    {{$loan->checkRegistryLoanFrom->branch->name}}
+                                                </td>
+                                                <td>
+                                                    {{$loan->checkRegistryLoanFrom->bankAccount->account_number}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
                                 </div>
                             @endif
                         </fieldset>
@@ -132,49 +140,52 @@
                             <fieldset>
                                 <legend>To Information</legend>
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <label class="col-md-12 col-form-label" for="loan_to_bank_id">Bank Name: {{$loan->checkRegistryLoanTo->bank->name}}</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <label class="col-md-12 col-form-label" for="loan_to_branch_id">Branch Name: {{$loan->checkRegistryLoanTo->branch->name}}</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <label class="col-md-12 col-form-label" for="loan_to_bank_account_id">A/C Number: {{$loan->checkRegistryLoanTo->bankAccount->account_number}}</label>
-                                        </div>
-                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <td>Bank Name</td>
+                                            <td>Branch Name</td>
+                                            <td>A/C Number</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                {{$loan->checkRegistryLoanTo->bank->name}}
+                                            </td>
+                                            <td>
+                                                {{$loan->checkRegistryLoanTo->branch->name}}
+                                            </td>
+                                            <td>
+                                                {{$loan->checkRegistryLoanTo->bankAccount->account_number}}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </fieldset>
                         @endif
 
                         <div class="row">
-                            @if($loan->payment_mode=='CHECK')
+                            <table class="table">
 
-                                <div class="col-md-3">
-                                    <div class="row">
-                                        <label class="col-md-12 col-form-label" for="check_number">Check Number: {{$loan->checkRegistryLoanTo->check_number}}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="row">
-                                        <label class="col-md-12 col-form-label" for="check_number">Check Date: {{ date('d-m-Y', strtotime($loan->checkRegistryLoanTo->check_date))}}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="row">
-                                        <label class="col-md-12 col-form-label" for="check_number">Check Type: {{$loan->checkRegistryLoanTo->check_type}}</label>
-                                    </div>
-                                </div>
+                            @if($loan->payment_mode=='CHECK')
+                                <tr>
+                                    <td>Check Number: {{$loan->checkRegistryLoanTo->check_number}}</td>
+                                    <td>Check Date: {{ date('d-m-Y', strtotime($loan->checkRegistryLoanTo->check_date))}}</td>
+                                    <td>Check Type: {{$loan->checkRegistryLoanTo->check_type}}</td>
+                                </tr>
                             @endif
-                            <div class="col-md-3">
-                                <div class="row">
-                                    <label class="col-md-12 col-form-label" for="check_number">Amount: {{number_format($loan->amount,'0','.',',')}}</label>
-                                </div>
-                            </div>
+                                <tr>
+                                    <td>
+                                        Payment Type: {{$loan->payment_mode}}
+                                    </td>
+                                    <td colspan="2">
+                                        Amount: {{number_format($loan->amount,'0','.',',')}}
+                                    </td>
+                                </tr>
+
+                            </table>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -222,7 +233,15 @@
             }
         </style>
     </div>
-
 @endsection
 
+@section('footer.scripts')
 
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            window.print();
+            setTimeout(function() { window.close(); }, 100);
+        });
+
+    </script>
+@endsection

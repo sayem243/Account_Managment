@@ -193,6 +193,15 @@ class IncomeController extends Controller
         return view('loan_income.income.income_view',['income'=>$income]);
     }
 
+    public function incomePrint($id){
+        $income=Income::find($id);
+        if(auth()->user()->can('loan-income-create')) {
+            return view('loan_income.income.print', ['income' => $income]);
+        }
+        return redirect()->route('loan_index')->with('error', 'Error! This are not permitted.');
+
+    }
+
     public function incomeQuickView($id){
 
         $income=Income::find($id);
@@ -206,7 +215,8 @@ class IncomeController extends Controller
 
             $company= Company::find($income->company_id);
             $companyCode = $company->code;
-            $voucherId = $company->last_voucher_id;
+//            $voucherId = $company->last_voucher_id;
+            $voucherId = $company->last_voucher_id?$company->last_voucher_id:0;
 
             $firstJuly = new \DateTime(date("Y")."-07-01");
 

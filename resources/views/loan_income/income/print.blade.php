@@ -1,5 +1,5 @@
-@extends('layout')
-@section('title','Income Details')
+@extends('admin.index-pdf')
+@section('title','income_voucher_'.time())
 @section('template')
     <div class="col-sm-12">
         <div class="row">
@@ -10,11 +10,7 @@
                         <h5>Income Details</h5>
                         <div class="card-header-right">
                             <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
-                                <a style="border-radius: .3rem" target="_blank"
-                                   href="{{route('income_print',$income->id)}}"
-                                   class="btn btn-info btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
-
-                                <a style="border-radius: .3rem" href="{{route('income_index')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
+                                <a href="{{route('income_index')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
                             </div>
                         </div>
                     </div>
@@ -135,33 +131,15 @@
 
         </div>
     </div>
-    <style>
-        fieldset {
-            min-width: 0;
-            padding: 5px 10px;
-            margin: 0;
-            border: 1px solid #000;
-        }
-        legend {
-            display: block;
-            width: auto;
-            max-width: 100%;
-            padding: 0px 10px;
-            margin-bottom: .5rem;
-            font-size: 1.5rem;
-            line-height: inherit;
-            color: inherit;
-            white-space: normal;
-            border: 1px solid #000;
-            border-radius: 10px;
-        }
-        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
-            border: none;
-            color: #fff;
-            -webkit-box-shadow: 0 -3px 10px 0 rgba(0, 0, 0, 0.05);
-            box-shadow: 0 -3px 10px 0 rgba(0, 0, 0, 0.05);
-            background-color: blue;
-        }
-    </style>
+@endsection
 
+@section('footer.scripts')
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            window.print();
+            setTimeout(function() { window.close(); }, 100);
+        });
+
+    </script>
 @endsection

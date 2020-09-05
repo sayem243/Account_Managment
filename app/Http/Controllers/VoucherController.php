@@ -458,7 +458,7 @@ class VoucherController extends Controller
     private function GenerateVoucherId(Voucher $voucher){
         $company = $voucher->VoucherItems[0]->project->company;
         $companyCode = $company->code;
-        $voucherId = $company->last_voucher_id;
+        $voucherId = $company->last_voucher_id?$company->last_voucher_id:0;
 
         $firstJuly = new \DateTime(date("Y")."-07-01");
 

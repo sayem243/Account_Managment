@@ -283,11 +283,11 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    {{--<div class="row">
         <div class="col-md-12">
             <h4>In words: <span class="to_word"></span></h4>
         </div>
-    </div>
+    </div>--}}
 
     <div class="line aligncenter" style="float: right">
         <div class="form-group row">

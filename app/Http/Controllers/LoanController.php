@@ -400,6 +400,14 @@ class LoanController extends Controller
         return response()->json( ['html'=>$returnHTML]);
     }
 
+    public function loanPrint($id){
+        $loan=Loan::find($id);
+        if(auth()->user()->can('loan-income-create')) {
+            return view('loan_income.loan.print', ['loan' => $loan]);
+        }
+        return redirect()->route('loan_index')->with('error', 'Error! This are not permitted.');
+
+    }
 
     private function GenerateLoanId(Loan $loan){
 
@@ -416,7 +424,8 @@ class LoanController extends Controller
 
             $company= Company::find($companyId);
             $companyCode = $company->code;
-            $voucherId = $company->last_voucher_id;
+//            $voucherId = $company->last_voucher_id;
+            $voucherId = $company->last_voucher_id?$company->last_voucher_id:0;
 
             $firstJuly = new \DateTime(date("Y")."-07-01");
 
