@@ -15,7 +15,7 @@ class AddFromToColumnCheckRegistryTable extends Migration
     {
         Schema::table('check_registries', function($table)
         {
-            $table->enum('from_to_type',array('USER','COMPANY','PROJECT','OTHERS'))->after('amount');
+            $table->enum('from_to_type',array('USER','COMPANY','PROJECT','CLIENT','OTHERS'))->after('amount');
             $table->string('from_to_value')->after('amount');
         });
 

@@ -325,3 +325,14 @@ Route::get('/income/details/{id}','IncomeController@incomeDetailsView')->name('i
 Route::get('/income/quick/view/{id}','IncomeController@incomeQuickView')->name('income_quick_view');
 Route::post('/income/datatable','IncomeController@dataTable')->name('income_datatable');
 Route::get('/income/print/{id}','IncomeController@incomePrint')->name('income_print');
+
+//Client section
+
+Route::get('/client/index','ClientController@index')->name('client_index');
+Route::get('/client/create','ClientController@create')->name('client_create');
+Route::post('/client/store','ClientController@store')->name('client_store');
+Route::get('/client/view/{id}','ClientController@view')->name('client_view');
+Route::get('/client/edit/{id}','ClientController@edit')->name('client_edit');
+Route::post('/client/update/{id}','ClientController@update')->name('client_update');
+Route::get('/client/delete/{id}','ClientController@delete')->name('client_delete');
+Route::get('/client/restore/{id}','ClientController@clientRestore')->name('client_restore');

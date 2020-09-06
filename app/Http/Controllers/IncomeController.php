@@ -11,6 +11,7 @@ use App\Payment;
 use App\PaymentSettlement;
 use App\Project;
 use App\User;
+use App\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,6 +62,8 @@ class IncomeController extends Controller
             $income_from_ref_id = $request->income_from_value_company;
         }elseif ($request->income_from=='PROJECT'){
             $income_from_ref_id = $request->income_from_value_project;
+        }elseif ($request->income_from=='CLIENT'){
+            $income_from_ref_id = $request->income_from_value_client;
         }elseif ($request->income_from=='OTHERS'){
             $income_from_ref_id = $request->income_from_value_other;
         }
@@ -68,6 +71,7 @@ class IncomeController extends Controller
         $income->income_from_ref_id = $income_from_ref_id;
 
         $income->company_id = isset($request->check_income_company_id)?$request->check_income_company_id:null;
+        $income->project_id = isset($request->check_income_project_id)?$request->check_income_project_id:null;
 
         $income->created_by = auth()->id();
         $income->description = $request->check_description;
@@ -81,7 +85,7 @@ class IncomeController extends Controller
                 'transaction_via_ref_id'=>$income->id,
                 'amount'=>$request->check_amount,
                 'company_id'=>$request->check_income_company_id,
-                'project_id'=>$request->project_id?$request->project_id:null,
+                'project_id'=>isset($request->check_income_project_id)?$request->check_income_project_id:null,
                 'remarks'=>$request->check_description,
                 'created_by'=>auth()->id(),
                 'created_at'=>$income->created_at?$income->created_at:null,
@@ -104,13 +108,15 @@ class IncomeController extends Controller
                 $fromToValue = $request->income_from_value_company;
             }elseif ($request->income_from=='PROJECT'){
                 $fromToValue = $request->income_from_value_project;
+            }elseif ($request->income_from=='CLIENT'){
+                $fromToValue = $request->income_from_value_client;
             }elseif ($request->income_from=='OTHERS'){
                 $fromToValue = $request->income_from_value_other;
             }
             $checkRegistry->from_to_value = $fromToValue;
 
             $checkRegistry->company_id = $request->check_income_company_id;
-            $checkRegistry->project_id = $request->project_id?$request->project_id:null;
+            $checkRegistry->project_id = isset($request->check_income_project_id)?$request->check_income_project_id:null;
             $checkRegistry->bank_id = $request->check_income_bank_id?$request->check_income_bank_id:null;
             $checkRegistry->branch_id = $request->check_income_branch_id?$request->check_income_branch_id:null;
             $checkRegistry->bank_account_id = $request->check_income_bank_account_id?$request->check_income_bank_account_id:null;
@@ -151,6 +157,8 @@ class IncomeController extends Controller
             $income_from_ref_id = $request->from_to_value_company;
         }elseif ($request->cash_income_from_to_type=='PROJECT'){
             $income_from_ref_id = $request->from_to_value_project;
+        }elseif ($request->cash_income_from_to_type=='CLIENT'){
+            $income_from_ref_id = $request->from_to_value_client;
         }elseif ($request->cash_income_from_to_type=='OTHERS'){
             $income_from_ref_id = $request->from_to_value_other;
         }
@@ -158,6 +166,7 @@ class IncomeController extends Controller
         $income->income_from_ref_id = $income_from_ref_id;
 
         $income->company_id = isset($request->cash_income_company_id)?$request->cash_income_company_id:null;
+        $income->project_id = isset($request->cash_income_project_id)?$request->cash_income_project_id:null;
         $income->description = $request->check_description;
         $income->created_by = auth()->id();
         $income->save();
@@ -171,6 +180,7 @@ class IncomeController extends Controller
             'transaction_via_ref_id'=>$income->id,
             'amount'=>$income->amount,
             'company_id'=>$income->company_id,
+            'project_id'=>isset($request->cash_income_project_id)?$request->cash_income_project_id:null,
             'created_by'=>$income->created_by?$income->created_by:null,
             'created_at'=>$income->created_at?$income->created_at:null,
         );
@@ -302,6 +312,9 @@ class IncomeController extends Controller
             }elseif ($post->incomeFrom=='PROJECT'){
                 $project = Project::find($post->incomeFromRefId);
                 $incomeFrom = $project->p_name;
+            }elseif ($post->incomeFrom=='CLIENT'){
+                $client = Client::find($post->incomeFromRefId);
+                $incomeFrom = $client->name;
             }elseif ($post->incomeFrom=='OTHERS'){
                 $incomeFrom = $post->incomeFromRefId;
             }

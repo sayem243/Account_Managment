@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CashTransaction;
 use App\CheckRegistry;
+use App\Client;
 use App\Company;
 use App\Income;
 use App\Loan;
@@ -38,7 +39,8 @@ class LoanIncomeController extends Controller
 
         $projects = Project::orderBy('p_name', 'ASC')->get();
         $users = User::orderBy('name', 'ASC')->get();
-        return view('loan_income.add',['companies'=>$arrayCompanies ,'projects'=>$projects, 'users'=>$users]);
+        $clients = Client::orderBy('name', 'ASC')->get();
+        return view('loan_income.add',['companies'=>$arrayCompanies ,'projects'=>$projects, 'users'=>$users, 'clients'=>$clients]);
     }
 
 }

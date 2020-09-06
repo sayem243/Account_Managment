@@ -74,21 +74,24 @@
                                                 $user= \App\User::find($income->income_from_ref_id)
                                             @endphp
                                             {{$user->name}}
-
                                         @endif
                                         @if($income->income_from=='COMPANY')
                                             @php
                                                 $company= \App\Company::find($income->income_from_ref_id)
                                             @endphp
                                             {{$company->name}}
-
                                         @endif
                                         @if($income->income_from=='PROJECT')
                                             @php
                                                 $project= \App\Project::find($income->income_from_ref_id)
                                             @endphp
                                             {{$project->p_name}}
-
+                                        @endif
+                                        @if($income->income_from=='CLIENT')
+                                            @php
+                                                $client= \App\Client::find($income->income_from_ref_id)
+                                            @endphp
+                                            {{$client->name}}
                                         @endif
                                         @if($income->income_from=='OTHERS')
                                             {{$income->income_from_ref_id}}

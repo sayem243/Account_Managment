@@ -28,19 +28,30 @@
                 </div>
             </div>
         </div>
-
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-form-label" for="cash_income_project_id">Project Name
+                    </label>
+                <div class="col-form-label">
+                    <select id="cash_income_project_id" name="cash_income_project_id" class="form-control cash_income_project_id">
+                        <option value="">Select Project</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
-                <label for="cash_income_from_to_type" class="col-form-label">From/To <span
+                <label for="cash_income_from_to_type" class="col-form-label">From<span
                             class="required">*</span></label>
                 <div class="col-form-label">
                     <select id="cash_income_from_to_type" name="cash_income_from_to_type" class="form-control cash_income_from_to_type" required>
                         <option value="USER">User</option>
                         <option value="COMPANY">Company</option>
                         <option value="PROJECT">Project</option>
+                        <option value="CLIENT">Client</option>
                         <option value="OTHERS">Others</option>
                     </select>
                 </div>
@@ -91,6 +102,20 @@
                     </div>
                 </div>
             </div>
+            <div class="cash_income_client_section" style="display: none">
+                <div class="form-group">
+                    <label for="from_to_value_client" class="col-form-label">Client <span
+                                class="required">*</span></label>
+                    <div class="col-form-label">
+                        <select id="from_to_value_client" name="from_to_value_client" class="form-control from_to_value_client">
+                            <option value="">Select Client</option>
+                            @foreach($clients as $client)
+                                <option value="{{$client['id']}}">{{$client['name']}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="cash_income_other_section" style="display: none">
                 <div class="form-group">
                     <label for="from_to_value_other" class="col-form-label">Provider Name <span
@@ -124,11 +149,6 @@
         </div>
 
     </div>
-    {{--<div class="row">
-        <div class="col-md-12">
-            <h4>In words: <span class="to_word"></span></h4>
-        </div>
-    </div>--}}
 
     <div class="line aligncenter" style="float: right">
         <div class="form-group row">

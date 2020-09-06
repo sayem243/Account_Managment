@@ -6,6 +6,10 @@ jQuery(document).ready(function () {
         if(companyId===0||companyId===''){
             var dataOption='<option value="">Select Bank</option>';
             jQuery('.check_income_bank_id').html(dataOption);
+
+            var dataOption1='<option value="">Select Project</option>';
+            jQuery('.check_income_project_id').html(dataOption1);
+
             return false;
         }
         jQuery.ajax({
@@ -19,6 +23,19 @@ jQuery(document).ready(function () {
                     dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
                 });
                 jQuery('.check_income_bank_id').html(dataOption);
+            }
+        });
+        jQuery.ajax({
+            type:'GET',
+            dataType : 'json',
+            url:'/ajax/project/company/'+companyId,
+            data:{},
+            success:function(data){
+                var dataOption='<option value="">Select Project</option>';
+                jQuery.each(data, function(i, item) {
+                    dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
+                });
+                jQuery('.check_income_project_id').html(dataOption);
             }
         });
 
@@ -79,28 +96,39 @@ jQuery(document).ready(function () {
         var user_section = jQuery('.check_income_user_section');
         var company_section = jQuery('.check_income_company_section');
         var project_section = jQuery('.check_income_project_section');
+        var client_section = jQuery('.check_income_client_section');
         var other_section = jQuery('.check_income_other_section');
 
         if (from_to_type==="USER"){
             user_section.show();
             company_section.hide();
             project_section.hide();
+            client_section.hide();
             other_section.hide();
         }else if (from_to_type==="COMPANY"){
             user_section.hide();
             company_section.show();
             project_section.hide();
+            client_section.hide();
             other_section.hide();
         }else if (from_to_type==="PROJECT"){
             user_section.hide();
             company_section.hide();
             project_section.show();
+            client_section.hide();
             other_section.hide();
         }else if (from_to_type==="OTHERS"){
             user_section.hide();
             company_section.hide();
             project_section.hide();
+            client_section.hide();
             other_section.show();
+        }else if (from_to_type==="CLIENT"){
+            user_section.hide();
+            company_section.hide();
+            project_section.hide();
+            client_section.show();
+            other_section.hide();
         }
 
     });

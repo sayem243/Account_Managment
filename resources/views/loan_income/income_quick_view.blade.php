@@ -79,6 +79,13 @@
                                         {{$project->p_name}}
 
                                     @endif
+                                    @if($income->income_from=='CLIENT')
+                                        @php
+                                            $client= \App\Client::find($income->income_from_ref_id)
+                                        @endphp
+                                        {{$client->name}}
+
+                                    @endif
                                     @if($income->income_from=='OTHERS')
                                         {{$income->income_from_ref_id}}
                                     @endif
