@@ -38,7 +38,7 @@ class IncomeController extends Controller
             return $element['name'];
         }, $arrayCompanies), SORT_ASC, $arrayCompanies);
 
-        return view('loan_income.index_income',['companies'=>$arrayCompanies ]);
+        return view('loan_income.income.index_income',['companies'=>$arrayCompanies ]);
     }
 
 
@@ -219,7 +219,7 @@ class IncomeController extends Controller
 
         $income=Income::find($id);
 
-        $returnHTML = view('loan_income.income_quick_view',['income'=>$income])->render();
+        $returnHTML = view('loan_income.income.income_quick_view',['income'=>$income])->render();
         return response()->json( ['html'=>$returnHTML]);
     }
 

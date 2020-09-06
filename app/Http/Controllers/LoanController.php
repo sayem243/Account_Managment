@@ -37,7 +37,7 @@ class LoanController extends Controller
             return $element['name'];
         }, $arrayCompanies), SORT_ASC, $arrayCompanies);
 
-        return view('loan_income.index_loan',['companies'=>$arrayCompanies ]);
+        return view('loan_income.loan.index_loan',['companies'=>$arrayCompanies ]);
     }
 
     public function checkLoanStore(Request $request){
@@ -368,7 +368,7 @@ class LoanController extends Controller
 
         $loan=Loan::find($id);
 
-        return view('loan_income.loan.loan_view',['loan'=>$loan]);
+        return view('loan_income.loan.loan.loan_view',['loan'=>$loan]);
 
     }
 
@@ -376,7 +376,7 @@ class LoanController extends Controller
 
         $loan=Loan::find($id);
 
-        $returnHTML = view('loan_income.loan_quick_view',['loan'=>$loan])->render();
+        $returnHTML = view('loan_income.loan.loan_quick_view',['loan'=>$loan])->render();
         return response()->json( ['html'=>$returnHTML]);
     }
 
