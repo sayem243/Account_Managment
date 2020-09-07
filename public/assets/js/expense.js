@@ -69,7 +69,7 @@ jQuery(document).ready(function () {
         var companyId= main_element.find('.company_id').val();
         var bankId= main_element.find('.expense_bank_id').val();
         var branchId= jQuery(this).val();
-        alert(bankId);
+
         if(companyId===0||companyId===''|| bankId===0|| bankId===''|| branchId===0|| branchId===''){
             var dataOption='<option value="">Select Account</option>';
             main_element.find('.bank_account_id').html(dataOption);
