@@ -90,6 +90,7 @@ class CheckRegistryController extends Controller
         $checkRegistry->bank_account_id = $request->bank_account_id;
         $checkRegistry->created_by = auth()->id();
         $checkRegistry->description = $request->check_description;
+        $checkRegistry->ref_type = 'EXPENSE';
         $checkRegistry->save();
 
         if($checkRegistry->check_mode==='OUT'){
@@ -104,8 +105,10 @@ class CheckRegistryController extends Controller
                 'created_at'=>$checkRegistry->created_at?$checkRegistry->created_at:null,
                 'remarks' => $request->check_description
             );
-            CashTransaction::insertData($arrayData);
+            $cashTransaction = CashTransaction::insertData($arrayData);
 
+            $checkRegistry->cash_transaction_id = $cashTransaction;
+            $checkRegistry->save();
         }
 
         if($checkRegistry->id){
@@ -132,35 +135,6 @@ class CheckRegistryController extends Controller
         return view('bank_account.edit',['account'=>$account ,'companies'=>$arrayCompanies ,'banks'=>$banks]);
     }
 
-    public function update(Request $request, $id){
-        $this->validate($request, [
-
-            'account_name' => ['required'],
-            'account_number' => ['required'],
-            'company_id' => ['required'],
-            'bank_id' => ['required'],
-            'branch_id' => ['required'],
-        ]);
-
-        $account = BankAccount::find($id);
-        $account->account_name = $request->account_name;
-        $account->account_number = $request->account_number;
-        $account->company_id = $request->company_id;
-        $account->bank_id = $request->bank_id;
-        $account->branch_id = $request->branch_id;
-        $account->account_type = $request->account_type;
-        $account->save();
-
-        if($account->id){
-            return redirect()->route('account_index')->with('success','Bank Account has been successfully Updated.');
-
-        }
-
-        return redirect()->route('account_index')->with('error','Error! Ops somethings wrong.');
-
-
-    }
-
     public function details($id){
 
         $checkRegistry=CheckRegistry::find($id);
@@ -172,18 +146,6 @@ class CheckRegistryController extends Controller
 
         $returnHTML = view('check_registry.quick_view',['checkRegistry'=>$checkRegistry])->render();
         return response()->json( ['html'=>$returnHTML]);
-    }
-
-    public function deleteAccount($id){
-        $account=BankAccount::find($id);
-        $account->delete();
-        return redirect()->route('account_index')->with('success','Bank Account has been successfully deleted.');
-    }
-    public function accountRestore($id){
-        BankAccount::withTrashed()
-            ->where('id', $id)
-            ->restore();
-        return redirect()->route('account_index')->with('success','Bank Account has been successfully restored.');
     }
 
     public function dataTable(Request $request)
@@ -232,7 +194,7 @@ class CheckRegistryController extends Controller
 
         $rows = DB::table('check_registries');
         $rows->join('companies', 'check_registries.company_id', '=', 'companies.id');
-        $rows->select('check_registries.id as crId', 'check_registries.check_number as name', 'check_registries.amount as amount', 'check_registries.check_date as checkDate', 'check_registries.check_mode as checkMode', 'check_registries.check_type as checkType');
+        $rows->select('check_registries.id as crId', 'check_registries.check_number as name', 'check_registries.amount as amount', 'check_registries.check_date as checkDate', 'check_registries.check_mode as checkMode', 'check_registries.check_type as checkType', 'check_registries.ref_type as refType', 'check_registries.ref_id as refId');
         $rows->addSelect('companies.name as companyName');
 
 //        $rows->where('check_registries.status','!=', 0);
@@ -269,7 +231,9 @@ class CheckRegistryController extends Controller
 
 
             $button .='<li class="dropdown-item"><a href="/check/registry/details/'.$post->crId.'"><i class="feather icon-eye"></i>Details</a></li>';
-
+            if($post->refId=='' && $post->refType=='EXPENSE' && $post->checkType=='ACCOUNT_PAY' && (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->can('voucher_create'))){
+                $button .='<li class="dropdown-item"><a href="'.route('voucher_index').'?check_id='.$post->crId.'"><i class="feather icon-eye"></i>Voucher Create</a></li>';
+            }
             $button.='</ul></div>';
 
             $records["data"][] = array(

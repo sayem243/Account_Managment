@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CashTransaction;
+use App\CheckRegistry;
 use App\Company;
 use App\ExpenditureSector;
 use App\Payment;
@@ -32,7 +33,7 @@ class VoucherController extends Controller
     }
 
 
-    Public function index(){
+    Public function index(Request $request){
         $user = auth()->user();
         $projects=$user->projects;
 
@@ -48,7 +49,8 @@ class VoucherController extends Controller
         $companies=$userProjectCompany;
 
         $expenditureSectors = ExpenditureSector::all()->sortBy('name');
-        return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors, 'companies'=>$companies]);
+        $check_id = $request->get('check_id');
+        return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors, 'companies'=>$companies, 'check_id'=>$check_id]);
     }
 
     Public function archivedList(Request $request){
@@ -324,6 +326,9 @@ class VoucherController extends Controller
 
 
     public function store(Request $request){
+        $check_id = $request->check_id?$request->check_id:'';
+//        var_dump($check_id);die;
+//
         $voucher_items = $request->voucher_item;
         $expenditure_sectors = $request->expenditure_sector;
         $projects_id = $request->project_id;
@@ -373,7 +378,7 @@ class VoucherController extends Controller
 
             }
             if ($returnArray){
-                return redirect()->route('voucher_draft_view',http_build_query(['vId[]'=>$returnArray]))->with('success', 'Click save and confirm to create this vouchers.');
+                return redirect()->route('voucher_draft_view',http_build_query(['vId[]'=>$returnArray,'check_id'=>$check_id]))->with('success', 'Click save and confirm to create this vouchers.');
             }
         }
 
@@ -382,13 +387,14 @@ class VoucherController extends Controller
 
     public function draftView(Request $request){
         $vouchers = Voucher::whereIn('id', $request->vId)->get();
-
-        return view('voucher.draft',['vouchers'=>$vouchers]);
+        $check_id = $request->check_id?$request->check_id:'';
+        return view('voucher.draft',['vouchers'=>$vouchers,'check_id'=>$check_id]);
     }
 
     public function draftToConfirmStore(Request $request){
         $vouchersId = $request->voucher_id;
         $vouchers_amount = $request->voucher_amount;
+        $check_id = $request->check_id?$request->check_id:'';
         if ($vouchersId){
             foreach ($vouchersId as $voucherId){
                 /** @var Voucher $voucher */
@@ -413,7 +419,7 @@ class VoucherController extends Controller
 
                 $arrayData= array(
                     'transaction_type'=>'DR',
-                    'transaction_via'=>'VOUCHER',
+                    'transaction_via'=>$check_id?'VOUCHER_CHECK_ACCOUNT_PAY':'VOUCHER',
                     'transaction_via_ref_id'=>$voucher->id,
                     'amount'=>$voucher->total_amount,
                     'company_id'=>$voucher->VoucherItems[0]->project->company->id,
@@ -424,6 +430,12 @@ class VoucherController extends Controller
 
                 CashTransaction::insertData($arrayData);
 
+            }
+            if($check_id){
+                $checkRegistry = CheckRegistry::find($check_id);
+
+                $checkRegistry->ref_id = json_encode($vouchersId);
+                $checkRegistry->save();
             }
             return redirect()->route('voucher_index')->with('success', 'Voucher has been successfully created');
         }

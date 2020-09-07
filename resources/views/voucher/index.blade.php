@@ -63,6 +63,7 @@
 
                         <form class="form-horizontal" action="{{ route('voucher_store')}}" method="post">
                             {{ csrf_field() }}
+                            <input type="hidden" name="check_id" value="{{$check_id?$check_id:''}}">
                             <table class="table table-striped table-bordered table-hover table-checkable" id="voucher_item_table">
                                 <thead class="thead-dark">
                                 <tr role="row" class="filter">

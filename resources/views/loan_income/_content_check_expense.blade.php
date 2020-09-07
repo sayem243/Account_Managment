@@ -54,10 +54,10 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label class="col-form-label" for="branch_id">Branch Name <span
+                <label class="col-form-label" for="expense_branch_id">Branch Name <span
                             class="required">*</span></label>
                 <div class="col-form-label">
-                    <select id="branch_id" name="branch_id" class="form-control branch_id" required>
+                    <select id="expense_branch_id" name="branch_id" class="form-control expense_branch_id" required>
                         <option value="">Select Branch</option>
                     </select>
                 </div>
@@ -65,10 +65,10 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label class="col-form-label" for="bank_account_id">Bank Account <span
+                <label class="col-form-label" for="expense_bank_account_id">Bank Account <span
                             class="required">*</span></label>
                 <div class="col-form-label">
-                    <select id="bank_account_id" name="bank_account_id" class="form-control bank_account_id" required>
+                    <select id="expense_bank_account_id" name="bank_account_id" class="form-control expense_bank_account_id" required>
                         <option value="">Select Account</option>
                     </select>
                 </div>

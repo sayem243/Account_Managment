@@ -123,6 +123,8 @@ class IncomeController extends Controller
             $checkRegistry->created_by = auth()->id();
             $checkRegistry->description = $request->check_description;
             $checkRegistry->cash_transaction_id = $cashTransaction;
+            $checkRegistry->ref_type = 'INCOME';
+            $checkRegistry->ref_id = $income->id;
             $checkRegistry->save();
 
 

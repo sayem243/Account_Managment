@@ -46,7 +46,7 @@ jQuery(document).ready(function () {
         var bankId= jQuery(this).val();
         if(companyId===0||companyId===''||bankId===0||bankId===''){
             var dataOption='<option value="">Select Branch</option>';
-            main_element.find('.branch_id').html(dataOption);
+            main_element.find('.expense_branch_id').html(dataOption);
             return false;
         }
         jQuery.ajax({
@@ -59,20 +59,20 @@ jQuery(document).ready(function () {
                 jQuery.each(data, function(i, item) {
                     dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
                 });
-                main_element.find('.branch_id').html(dataOption);
+                main_element.find('.expense_branch_id').html(dataOption);
             }
         });
 
     });
 
-    main_element.on('change','.branch_id', function () {
+    main_element.on('change','.expense_branch_id', function () {
         var companyId= main_element.find('.company_id').val();
         var bankId= main_element.find('.expense_bank_id').val();
         var branchId= jQuery(this).val();
 
         if(companyId===0||companyId===''|| bankId===0|| bankId===''|| branchId===0|| branchId===''){
             var dataOption='<option value="">Select Account</option>';
-            main_element.find('.bank_account_id').html(dataOption);
+            main_element.find('.expense_bank_account_id').html(dataOption);
 
             return false;
         }
@@ -86,7 +86,7 @@ jQuery(document).ready(function () {
                 jQuery.each(data, function(i, item) {
                     dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
                 });
-                main_element.find('.bank_account_id').html(dataOption);
+                main_element.find('.expense_bank_account_id').html(dataOption);
             }
         });
 
