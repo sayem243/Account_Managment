@@ -92,23 +92,24 @@ class CheckRegistryController extends Controller
         $checkRegistry->description = $request->check_description;
         $checkRegistry->save();
 
-        if($checkRegistry->check_mode==='OUT' && $checkRegistry->check_type==='CASH'){
+        if($checkRegistry->check_mode==='OUT'){
             $arrayData= array(
                 'transaction_type'=>'CR',
-                'transaction_via'=>'CHECK_OUT',
+                'transaction_via'=> $checkRegistry->check_type==='CASH'?'CHECK_OUT':'CHECK_OUT_ACCOUNT_PAY',
                 'transaction_via_ref_id'=>$checkRegistry->id,
                 'amount'=>$checkRegistry->amount,
                 'company_id'=>$checkRegistry->company_id,
                 'project_id'=>$checkRegistry->project_id?$checkRegistry->project_id:null,
                 'created_by'=>$checkRegistry->created_by?$checkRegistry->created_by:null,
                 'created_at'=>$checkRegistry->created_at?$checkRegistry->created_at:null,
+                'remarks' => $request->check_description
             );
             CashTransaction::insertData($arrayData);
 
         }
 
         if($checkRegistry->id){
-            return redirect()->route('check_registry_index')->with('success','Check registry has been successfully entry.');
+            return redirect()->route('check_registry_index')->with('success','Expense has been successfully entry.');
 
         }
 

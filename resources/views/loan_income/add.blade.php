@@ -41,6 +41,9 @@
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="check-income-tab" data-toggle="tab" href="#check_income" role="tab" aria-controls="Income" aria-selected="false">Income</a>
                                                         </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="check-expense-tab" data-toggle="tab" href="#check_expense" role="tab" aria-controls="Expense" aria-selected="false">Expense</a>
+                                                        </li>
                                                     </ul>
                                                 </div>
 
@@ -53,6 +56,11 @@
                                                     <div class="tab-pane fade p-3" id="check_income" role="tabpanel" aria-labelledby="check-income-tab">
 
                                                         @include('loan_income._content_check_income')
+
+                                                    </div>
+                                                    <div class="tab-pane fade p-3" id="check_expense" role="tabpanel" aria-labelledby="check-expense-tab">
+
+                                                        @include('loan_income._content_check_expense')
 
                                                     </div>
                                                 </div>
@@ -132,4 +140,5 @@
     <script src="{{ asset("assets/js/loan-cash.js") }}" ></script>
     <script src="{{ asset("assets/js/income.js") }}" ></script>
     <script src="{{ asset("assets/js/income-cash.js") }}" ></script>
+    <script src="{{ asset("assets/js/expense.js") }}" ></script>
 @endsection
