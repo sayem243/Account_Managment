@@ -19,8 +19,13 @@ $(document).ready(function () {
             "url": "/income/datatable", // ajax source
             'data': function(data){
 
+                var income_generate_id = $('#income_generate_id').val();
+                var company_id = $('#company_id').val();
+
                 // Read values
                 data._token = CSRF_TOKEN;
+                data.income_generate_id = income_generate_id;
+                data.company_id = company_id;
 
             }
         },
@@ -51,7 +56,7 @@ $(document).ready(function () {
     });
 
 
-    $('#check_number').keyup(function(){
+    $('#income_generate_id').keyup(function(){
         dataTable.draw();
     });
 

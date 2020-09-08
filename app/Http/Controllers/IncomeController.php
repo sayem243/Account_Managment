@@ -258,10 +258,19 @@ class IncomeController extends Controller
 
     public function dataTable(Request $request)
     {
-
+        $query = $request->request->all();
         $countRecords = DB::table('incomes');
         $countRecords->select('incomes.id as totalIncome');
         $countRecords->join('companies', 'incomes.company_id', '=', 'companies.id');
+
+        if (isset($query['income_generate_id'])) {
+            $name = $query['income_generate_id'];
+            $countRecords->where('incomes.income_generate_id', 'like', "{$name}%");
+        }
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $countRecords->where('incomes.company_id',$company_id);
+        }
 
         $result = $countRecords->get();
         $tCount = count($result);
@@ -284,7 +293,14 @@ class IncomeController extends Controller
         $rows->select('incomes.id as iId', 'incomes.income_generate_id as name', 'incomes.amount as amount', 'incomes.payment_mode as pMode', 'incomes.income_from as incomeFrom', 'incomes.income_from_ref_id as incomeFromRefId', 'incomes.created_at as incomeDate');
         $rows->addSelect('companies.name as companyName');
 //        $rows->where('check_registries.status','!=', 0);
-
+        if (isset($query['income_generate_id'])) {
+            $name = $query['income_generate_id'];
+            $rows->where('incomes.income_generate_id', 'like', "{$name}%");
+        }
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $rows->where('incomes.company_id',$company_id);
+        }
 
         $rows->offset($iDisplayStart);
         $rows->limit($iDisplayLength);

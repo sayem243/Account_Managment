@@ -23,7 +23,7 @@
              <thead class="thead-dark">
                  <tr role="row" class="filter">
                      <td colspan="2">
-                         <input  type="text" class="form-control form-filter input-sm" name="check_number" id="check_number" placeholder="Check Number....">
+                         <input  type="text" class="form-control form-filter input-sm income_generate_id" name="income_generate_id" id="income_generate_id" placeholder="Income Voucher Id">
                      </td>
 
                      <td colspan="2">
