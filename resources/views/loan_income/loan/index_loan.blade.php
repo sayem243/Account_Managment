@@ -23,19 +23,25 @@
              <thead class="thead-dark">
                  <tr role="row" class="filter">
                      <td colspan="2">
-                         <input  type="text" class="form-control form-filter input-sm" name="check_number" id="check_number" placeholder="Check Number....">
+                         <input  type="text" class="form-control form-filter input-sm loan_generate_id" name="loan_generate_id" id="loan_generate_id" placeholder="Loan Voucher Id">
                      </td>
 
-                     <td colspan="2">
-                         <select class="form-control" name="company_id" id="company_id" aria-describedby="validationTooltipPackagePrepend" required>
+                     <td colspan="2">From
+                         <select style="width: auto;display: inline" class="form-control" name="from_company_id" id="from_company_id" aria-describedby="validationTooltipPackagePrepend" required>
                              <option value="">All Company</option>
                              @foreach($companies as $company)
                                  <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
                              @endforeach
                          </select>
                      </td>
-                     <td></td>
-                     <td></td>
+                     <td colspan="2">To
+                         <select style="width: auto;display: inline" class="form-control" name="to_company_id" id="to_company_id" aria-describedby="validationTooltipPackagePrepend" required>
+                             <option value="">All Company</option>
+                             @foreach($companies as $company)
+                                 <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
+                             @endforeach
+                         </select>
+                     </td>
                      <td></td>
                      <td></td>
                  </tr>

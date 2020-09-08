@@ -19,9 +19,16 @@ $(document).ready(function () {
             "url": "/loan/datatable", // ajax source
             'data': function(data){
 
+                var loan_generate_id = $('#loan_generate_id').val();
+                var from_company_id = $('#from_company_id').val();
+                var to_company_id = $('#to_company_id').val();
+
+
                 // Read values
                 data._token = CSRF_TOKEN;
-
+                data.loan_generate_id = loan_generate_id;
+                data.from_company_id = from_company_id;
+                data.to_company_id = to_company_id;
             }
         },
         'columns': [
@@ -51,11 +58,14 @@ $(document).ready(function () {
     });
 
 
-    $('#check_number').keyup(function(){
+    $('#loan_generate_id').keyup(function(){
         dataTable.draw();
     });
 
-    $('#company_id').change(function(){
+    $('#from_company_id').change(function(){
+        dataTable.draw();
+    });
+    $('#to_company_id').change(function(){
         dataTable.draw();
     });
 

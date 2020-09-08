@@ -447,9 +447,26 @@ class LoanController extends Controller
 
     public function dataTable(Request $request)
     {
+        $query = $request->request->all();
 
         $countRecords = DB::table('loans');
         $countRecords->select('loans.id as totalLoan');
+
+        if (isset($query['loan_generate_id'])) {
+            $name = $query['loan_generate_id'];
+            $countRecords->where('loans.loan_generate_id', 'like', "{$name}%");
+        }
+        if(isset($query['from_company_id'])){
+            $from_company_id = $query['from_company_id'];
+            $countRecords->where('loans.loan_from_ref_id',$from_company_id);
+            $countRecords->where('loans.loan_from','like','COMPANY');
+        }
+        if(isset($query['to_company_id'])){
+            $to_company_id = $query['to_company_id'];
+            $countRecords->where('loans.loan_to_ref_id',$to_company_id);
+            $countRecords->where('loans.loan_to','like','COMPANY');
+        }
+
 
         $result = $countRecords->get();
         $tCount = count($result);
@@ -470,7 +487,21 @@ class LoanController extends Controller
         $rows = DB::table('loans');
         $rows->select('loans.id as lId', 'loans.loan_generate_id as name', 'loans.amount as amount', 'loans.payment_mode as pMode', 'loans.loan_from as loanFrom', 'loans.loan_from_ref_id as loanFromRefId', 'loans.loan_to as loanTo', 'loans.loan_to_ref_id as loanToRefId', 'loans.created_at as loanDate');
 
-//        $rows->where('check_registries.status','!=', 0);
+        if (isset($query['loan_generate_id'])) {
+            $name = $query['loan_generate_id'];
+            $rows->where('loans.loan_generate_id', 'like', "{$name}%");
+        }
+        if(isset($query['from_company_id'])){
+            $from_company_id = $query['from_company_id'];
+            $rows->where('loans.loan_from_ref_id',$from_company_id);
+            $rows->where('loans.loan_from','like','COMPANY');
+        }
+        if(isset($query['to_company_id'])){
+            $to_company_id = $query['to_company_id'];
+            $rows->where('loans.loan_to_ref_id',$to_company_id);
+            $rows->where('loans.loan_to','like','COMPANY');
+        }
+
 
 
         $rows->offset($iDisplayStart);
