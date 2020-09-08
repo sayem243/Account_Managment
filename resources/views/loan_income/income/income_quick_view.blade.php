@@ -162,4 +162,34 @@
         </div>
 
     </div>
+    <style>
+        fieldset {
+            min-width: 0;
+            padding: 5px 10px;
+            margin: 0;
+            border: none;
+        }
+
+        legend {
+            display: block;
+            width: auto;
+            max-width: 100%;
+            padding: 0px;
+            margin-bottom: 0;
+            font-size: 1.2rem;
+            line-height: normal;
+            color: inherit;
+            white-space: normal;
+            border-bottom: 1px solid;
+            border-radius: 0;
+        }
+
+        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+            border: none;
+            color: #fff;
+            -webkit-box-shadow: 0 -3px 10px 0 rgba(0, 0, 0, 0.05);
+            box-shadow: 0 -3px 10px 0 rgba(0, 0, 0, 0.05);
+            background-color: blue;
+        }
+    </style>
 </div>

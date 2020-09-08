@@ -89,15 +89,15 @@
  </div>
  <style>
      .modal-dialog {
-         width: 95%;
-         max-width: 95%;
+         width: 75%;
+         max-width: 75%;
          height: 100%;
          padding: 0;
      }
 
      .modal-content {
          height: auto;
-         min-height: 100%;
+         min-height: 90%;
          border-radius: 0;
      }
  </style>

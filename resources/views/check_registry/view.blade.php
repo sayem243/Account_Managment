@@ -18,7 +18,14 @@
                     </div>
                     <div class="card-body"
                          style="border: 1px solid #000; margin-bottom: 5px; position: relative; min-height: 430px; padding: 15px">
-                        <h5 style="position: absolute; right: 25px; top: 15px">Dr. No. </h5>
+                        @if($checkRegistry->ref_type=='EXPENSE' && $checkRegistry->ref_id !='')
+                            @php
+                                $voucher= \App\Voucher::find($checkRegistry->ref_id)
+                            @endphp
+
+                        <h5 style="position: absolute; right: 25px; top: 15px">Dr. No. {{$voucher->voucher_generate_id}}</h5>
+
+                        @endif
                         <h5 style="position: absolute; left: 25px; top: 15px">
                             Date: {{ date('d-m-Y', strtotime($checkRegistry->created_at))}}</h5>
                         <h5 style="text-align: center; margin-bottom: 5px; font-size: 20px">Expenses Voucher</h5>
