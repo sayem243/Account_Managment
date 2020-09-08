@@ -253,6 +253,10 @@ class LoanController extends Controller
     }
 
     public function cashLoanStore(Request $request){
+
+        if ($request->cash_loan_from!='COMPANY'&& $request->cash_loan_to!='COMPANY'){
+            return redirect()->route('loan_income_create')->with('error','Error! Ops somethings wrong.');
+        }
         $this->validate($request, [
             'cash_amount' => ['required'],
         ]);

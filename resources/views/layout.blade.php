@@ -105,27 +105,40 @@ Like: www.facebook.com/terminalbd
                     <a href="{{route('admin_index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
 
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('payment')|| Request::is('payment/*') ? 'pcoded-trigger' : ''}}">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fa fa-credit-card" style="color:green"></i></span><span class="pcoded-mtext">Payements</span></a>
-                    <ul class="pcoded-submenu {{ Request::is('payment') || Request::is('payment/*')? 'active' : ''}}">
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('payment')|| Request::is('payment/*') ? 'pcoded-trigger' : ''}}{{ Request::is('daily/cash/*') ? 'pcoded-trigger' : ''}}{{ Request::is('cash/daily/opening/*') ? 'pcoded-trigger' : ''}}">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="fa fa-credit-card" style="color:green"></i></span><span class="pcoded-mtext">Cash Payments</span></a>
+                    <ul class="pcoded-submenu {{ Request::is('payment') || Request::is('payment/*')? 'active' : ''}}{{ Request::is('daily/cash/*') ? 'active' : ''}}{{ Request::is('cash/daily/opening/*') ? 'active' : ''}}">
 
                         <li class="nav-item {{ Request::is('payment') ? 'active' : ''}}"><a href="{{route('payment')}}" class="nav-link"><span class="pcoded-mtext">Advance Payment</span></a></li>
-                        @if(auth()->user()->can('Payment-create'))
-                            {{--<li class="nav-item {{ Request::is('payment/create') ? 'active' : ''}}"><a href="{{route('payment_create')}}" class="nav-link"><span class="pcoded-mtext">Add Payment</span></a></li>--}}
+
+
+                        @if(auth()->user()->can('daily-cash-balance-session')|| auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('Admin')|| auth()->user()->hasRole('CEO'))
+                            <li class="nav-item {{ Request::is('daily/cash/balance') ? 'active' : ''}}"><a href="{{route('daily_cash_balance')}}" class="nav-link"><span class="pcoded-mtext">Cash Balance</span></a></li>
+                            <li class="nav-item {{ Request::is('cash/daily/opening/balance/session/list') ? 'active' : ''}}"><a href="{{route('opening_balance_session_list')}}" class="nav-link"><span class="pcoded-mtext">Cash Session</span></a></li>
                         @endif
-                        {{--<li class="nav-item"><a href="{{route('amendment')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-credit-card" aria-hidden="true"></i></span><span class="pcoded-mtext">Amendment</span></a></li>--}}
 
                     </ul>
                 </li>
-                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->can('voucher_create'))
 
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('voucher/*') ? 'pcoded-trigger' : ''}}">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Voucher</span></a>
-                        <ul class="pcoded-submenu {{ Request::is('voucher/*') ? 'active' : ''}}">
 
+                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('CEO') || auth()->user()->can('voucher_create') || auth()->user()->can('loan-income-list'))
+
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('voucher/*') ? 'pcoded-trigger' : ''}}{{ Request::is('loanOrIncome/*') ? 'pcoded-trigger' : ''}} {{ Request::is('loan/*') ? 'pcoded-trigger' : ''}} {{ Request::is('income/*') ? 'pcoded-trigger' : ''}}">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Vouchers</span></a>
+                        <ul class="pcoded-submenu {{ Request::is('voucher/*') ? 'active' : ''}}{{ Request::is('loanOrIncome/*') ? 'active' : ''}}{{ Request::is('loan/*') ? 'active' : ''}}{{ Request::is('income/*') ? 'active' : ''}}">
+
+                            @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO') || auth()->user()->can('voucher_create'))
                             <li class="nav-item {{ Request::is('voucher/list') ? 'active' : ''}}"><a href="{{route('voucher_index')}}" class="nav-link"><span class="pcoded-mtext">Voucher Item</span></a></li>
-                            <li class="nav-item {{ Request::is('voucher/archived/list') ? 'active' : ''}}"><a href="{{route('voucher_archive_index')}}" class="nav-link"><span class="pcoded-mtext">Vouchers</span></a></li>
+                            <li class="nav-item {{ Request::is('voucher/archived/list') ? 'active' : ''}}"><a href="{{route('voucher_archive_index')}}" class="nav-link"><span class="pcoded-mtext">Expense Voucher</span></a></li>
 
+                            @endif
+
+                            @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO') || auth()->user()->can('loan-income-list'))
+
+                            <li class="nav-item {{ Request::is('loan/index') ? 'active' : ''}}"><a href="{{route('loan_index')}}" class="nav-link"><span class="pcoded-mtext">Loan</span></a></li>
+                            <li class="nav-item {{ Request::is('income/index') ? 'active' : ''}}"><a href="{{route('income_index')}}" class="nav-link"><span class="pcoded-mtext">Income</span></a></li>
+
+                            @endif
                         </ul>
                     </li>
                 @endif
@@ -135,33 +148,6 @@ Like: www.facebook.com/terminalbd
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Check Registry</span></a>
                         <ul class="pcoded-submenu {{ Request::is('check/registry/*') ? 'active' : ''}}">
                             <li class="nav-item {{ Request::is('check/registry/index') ? 'active' : ''}}"><a href="{{route('check_registry_index')}}" class="nav-link"><span class="pcoded-mtext">Check Registry</span></a></li>
-                        </ul>
-                    </li>
-                @endif
-
-                @if(auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO') || auth()->user()->can('loan-income-list'))
-
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('loanOrIncome/*') ? 'pcoded-trigger' : ''}} {{ Request::is('loan/*') ? 'pcoded-trigger' : ''}} {{ Request::is('income/*') ? 'pcoded-trigger' : ''}}">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Loan & Income</span></a>
-                        <ul class="pcoded-submenu {{ Request::is('loanOrIncome/*') ? 'active' : ''}} {{ Request::is('loan/*') ? 'active' : ''}} {{ Request::is('income/*') ? 'active' : ''}}">
-
-                            <li class="nav-item {{ Request::is('loan/index') ? 'active' : ''}}"><a href="{{route('loan_index')}}" class="nav-link"><span class="pcoded-mtext">Loan</span></a></li>
-                            <li class="nav-item {{ Request::is('income/index') ? 'active' : ''}}"><a href="{{route('income_index')}}" class="nav-link"><span class="pcoded-mtext">Income</span></a></li>
-
-                        </ul>
-                    </li>
-                @endif
-
-                @if(auth()->user()->can('daily-cash-balance-session') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO'))
-
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('daily/cash/*') ? 'pcoded-trigger' : ''}}{{ Request::is('cash/daily/opening/*') ? 'pcoded-trigger' : ''}}">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Daily Cash </span></a>
-                        <ul class="pcoded-submenu {{ Request::is('daily/cash/*') ? 'active' : ''}}{{ Request::is('cash/daily/opening/*') ? 'active' : ''}}">
-
-                            <li class="nav-item {{ Request::is('daily/cash/balance') ? 'active' : ''}}"><a href="{{route('daily_cash_balance')}}" class="nav-link"><span class="pcoded-mtext">Daily Cash Balance</span></a></li>
-                            @if(auth()->user()->can('daily-cash-balance-session')|| auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO'))
-                                <li class="nav-item {{ Request::is('cash/daily/opening/balance/session/list') ? 'active' : ''}}"><a href="{{route('opening_balance_session_list')}}" class="nav-link"><span class="pcoded-mtext">Daily Cash Session</span></a></li>
-                            @endif
                         </ul>
                     </li>
                 @endif
