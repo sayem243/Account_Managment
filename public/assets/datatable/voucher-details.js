@@ -55,6 +55,15 @@ $(document).ready(function () {
                 "targets": 6,
                 "orderable": false
             }],
+        rowCallback: function (row, data) {
+            console.log(data[7]);
+            if(data[7]==='CASH'){
+                $(row).addClass('cash_check_voucher_item');
+            }
+            if(data[7]==='ACCOUNT_PAY'){
+                $(row).addClass('account_pay_check_voucher_item');
+            }
+        }
     });
     $('#payment_id').keyup(function(){
         dataTable.draw();

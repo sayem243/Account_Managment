@@ -63,7 +63,7 @@
 
                         <form class="form-horizontal" action="{{ route('voucher_store')}}" method="post">
                             {{ csrf_field() }}
-                            <input type="hidden" name="check_id" value="{{$check_id?$check_id:''}}">
+                            {{--<input type="hidden" name="check_id" value="{{$check_id?$check_id:''}}">--}}
                             <table class="table table-striped table-bordered table-hover table-checkable" id="voucher_item_table">
                                 <thead class="thead-dark">
                                 <tr role="row" class="filter">
@@ -92,7 +92,7 @@
                                     <th style="vertical-align: middle; width: 20px" scope="col"><input type="checkbox" class="form-control all_item"></th>
                                     <th style="width: 200px" scope="col">Expenses Type</th>
                                     <th style="width: 350px" scope="col">Item Name</th>
-                                    <th style="width: 120px" width="" scope="col">HS ID</th>
+                                    <th style="width: 120px" width="" scope="col">HS ID/Check Number</th>
                                     <th style="width: 150px" width="" scope="col">Project</th>
                                     <th style="width: 100px" width="" scope="col">Amount</th>
                                     <th style="width: 50px" width="" scope="col">Action</th>

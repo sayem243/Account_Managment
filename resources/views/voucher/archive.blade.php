@@ -7,6 +7,13 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Vouchers List</h5>
+                        <div class="card-header-right">
+                            @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('loan-income-create'))
+                                <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested">
+                                    <a href="{{route('loan_income_create')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     <div class="card-body voucher_item_table payment_table" style="padding-top: 5px">
                         {{--<div class="dt-buttons btn-group">

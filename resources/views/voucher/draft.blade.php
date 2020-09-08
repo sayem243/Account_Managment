@@ -13,7 +13,7 @@
 
                     <form class="form-horizontal" action="{{ route('voucher_store_confirm')}}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <input type="hidden" name="check_id" value="{{$check_id?$check_id:''}}">
+                        {{--<input type="hidden" name="check_id" value="{{$check_id?$check_id:''}}">--}}
 
                     {{--Advance Payment Information--}}
                     @foreach($vouchers as $voucher)

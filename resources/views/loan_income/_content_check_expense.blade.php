@@ -30,9 +30,9 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label class="col-form-label" for="check_expense_project_id">Project Name</label>
+                <label class="col-form-label" for="check_expense_project_id">Project Name<span class="required">*</span></label>
                 <div class="col-form-label">
-                    <select id="check_expense_project_id" name="project_id" class="form-control check_expense_project_id">
+                    <select id="check_expense_project_id" name="project_id" class="form-control check_expense_project_id" required>
                         <option value="">Select Project</option>
 
                     </select>
@@ -81,7 +81,7 @@
                 <label class="col-form-label" for="check_number">Check Number <span
                             class="required">*</span></label>
                 <div class="col-form-label">
-                    <input type="text" class="form-control" id="check_number" name="check_number" placeholder="Enter check number...">
+                    <input type="text" class="form-control" id="check_number" name="check_number" placeholder="Enter check number..." required>
                 </div>
             </div>
         </div>
@@ -90,7 +90,7 @@
                 <label class="col-form-label" for="check_date">Check Date <span
                             class="required">*</span></label>
                 <div class="col-form-label">
-                    <input type="date" id="check_date" name="check_date" class="form-control">
+                    <input type="date" id="check_date" name="check_date" class="form-control" required>
                     <span>Note: date format( mm-dd-yyyy )</span>
                 </div>
             </div>
@@ -199,7 +199,7 @@
                 <label for="check_amount" class="col-form-label">Amount <span
                             class="required">*</span></label>
                 <div class="col-form-label">
-                    <input id="check_amount" type="text" name="check_amount" class="form-control check_amount">
+                    <input id="check_amount" type="text" name="check_amount" class="form-control check_amount" required>
                 </div>
             </div>
         </div>
@@ -207,9 +207,9 @@
         <div class="col-md-3">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="col-form-label" for="check_description">Description </label>
+                    <label class="col-form-label" for="check_description">Description<span class="required">*</span></label>
                     <div class="col-form-label">
-                        <textarea class="form-control" id="check_description" name="check_description"></textarea>
+                        <textarea class="form-control" id="check_description" name="check_description" required></textarea>
                     </div>
                 </div>
             </div>

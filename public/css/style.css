@@ -228,3 +228,20 @@ table.dataTable thead .sorting_desc_disabled:after{
     background-color: red;
     color: #FFFFFF;
 }
+.table tbody tr.account_pay_check_voucher_item{
+    background-color: red;
+    color: #FFFFFF;
+}
+.table-hover tbody  tr.account_pay_check_voucher_item:hover{
+    background-color: red;
+    color: #FFFFFF;
+}
+.table tbody tr.cash_check_voucher_item{
+    background-color: yellow!important;
+    color: #000;
+}
+
+.table-hover tbody  tr.cash_check_voucher_item:hover{
+    background-color: yellow!important;
+    color: #000;
+}

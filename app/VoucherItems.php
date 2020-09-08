@@ -19,4 +19,8 @@ class VoucherItems extends Model
 
         return $this->belongsTo('App\Project');
     }
+    public function checkRegistry(){
+
+        return $this->belongsTo('App\CheckRegistry');
+    }
 }

@@ -49,8 +49,7 @@ class VoucherController extends Controller
         $companies=$userProjectCompany;
 
         $expenditureSectors = ExpenditureSector::all()->sortBy('name');
-        $check_id = $request->get('check_id');
-        return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors, 'companies'=>$companies, 'check_id'=>$check_id]);
+        return  view('voucher.index',['projects'=>$projects, 'expenditureSectors'=>$expenditureSectors, 'companies'=>$companies]);
     }
 
     Public function archivedList(Request $request){
@@ -73,7 +72,7 @@ class VoucherController extends Controller
 
     public function dataTable(Request $request)
     {
-        $expenditureSectors = ExpenditureSector::all();
+        $expenditureSectors = ExpenditureSector::all()->sortBy('name');
 
         $query = $request->request->all();
 
@@ -122,9 +121,11 @@ class VoucherController extends Controller
         $rows->join('projects', 'voucher_items.project_id', '=', 'projects.id');
         $rows->join('companies', 'projects.company_id', '=', 'companies.id');
         $rows->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
+        $rows->leftJoin('check_registries', 'voucher_items.check_registry_id', '=', 'check_registries.id');
         $rows->select('voucher_items.id as viId', 'voucher_items.item_name as name', 'voucher_items.voucher_amount as amount');
         $rows->addSelect('projects.p_name as projectName','projects.id as projectId');
         $rows->addSelect('payments.payment_id as pId');
+        $rows->addSelect('check_registries.id as crId','check_registries.check_number as checkNumber','check_registries.check_type as checkType');
         $rows->where('voucher_items.status','=', 0);
         if (isset($query['payment_id'])) {
             $name = $query['payment_id'];
@@ -164,10 +165,11 @@ class VoucherController extends Controller
                 $checkbox,
                 $dropdown,
                 $name               = '<input type="hidden" value="'.$post->name.'" name="item_name['.$post->viId.']">'.$post->name,
-                $pId                = $post->pId,
+                $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
                 $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
                 $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
-                $button
+                $button,
+                $checkType               = $post->checkType
             );
             $i++;
 
@@ -387,14 +389,14 @@ class VoucherController extends Controller
 
     public function draftView(Request $request){
         $vouchers = Voucher::whereIn('id', $request->vId)->get();
-        $check_id = $request->check_id?$request->check_id:'';
-        return view('voucher.draft',['vouchers'=>$vouchers,'check_id'=>$check_id]);
+        return view('voucher.draft',['vouchers'=>$vouchers]);
     }
 
     public function draftToConfirmStore(Request $request){
         $vouchersId = $request->voucher_id;
         $vouchers_amount = $request->voucher_amount;
-        $check_id = $request->check_id?$request->check_id:'';
+        $cash_check_id = array();
+        $account_pay_check_id = array();
         if ($vouchersId){
             foreach ($vouchersId as $voucherId){
                 /** @var Voucher $voucher */
@@ -410,6 +412,12 @@ class VoucherController extends Controller
                         $voucherItem->status=1;
                         $voucherItem->save();
 
+                        if(isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='ACCOUNT_PAY'){
+                            $account_pay_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
+                        }elseif (isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='CASH'){
+                            $cash_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
+                        }
+
                     }
                 }
 
@@ -419,7 +427,7 @@ class VoucherController extends Controller
 
                 $arrayData= array(
                     'transaction_type'=>'DR',
-                    'transaction_via'=>$check_id?'VOUCHER_CHECK_ACCOUNT_PAY':'VOUCHER',
+                    'transaction_via'=>isset($account_pay_check_id[$voucher->id])?'VOUCHER_CHECK_ACCOUNT_PAY':'VOUCHER',
                     'transaction_via_ref_id'=>$voucher->id,
                     'amount'=>$voucher->total_amount,
                     'company_id'=>$voucher->VoucherItems[0]->project->company->id,
@@ -431,11 +439,17 @@ class VoucherController extends Controller
                 CashTransaction::insertData($arrayData);
 
             }
-            if($check_id){
-                $checkRegistry = CheckRegistry::find($check_id);
+            $check_id = array_merge_recursive($account_pay_check_id,$cash_check_id);
 
-                $checkRegistry->ref_id = json_encode($vouchersId);
-                $checkRegistry->save();
+            if(sizeof($check_id)>0){
+
+                foreach ($check_id as $value){
+                    foreach ($value as $item){
+                        $checkRegistry = CheckRegistry::find($item['check_id']);
+                        $checkRegistry->ref_id = $item['voucher_id'];
+                        $checkRegistry->save();
+                    }
+                }
             }
             return redirect()->route('voucher_index')->with('success', 'Voucher has been successfully created');
         }

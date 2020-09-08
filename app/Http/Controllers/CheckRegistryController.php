@@ -9,6 +9,7 @@ use App\CheckRegistry;
 use App\Company;
 use App\Project;
 use App\User;
+use App\VoucherItems;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -60,9 +61,11 @@ class CheckRegistryController extends Controller
             'check_date' => ['required'],
             'bank_account_id' => ['required'],
             'company_id' => ['required'],
+            'project_id' => ['required'],
             'bank_id' => ['required'],
             'branch_id' => ['required'],
             'check_amount' => ['required'],
+            'check_description' => ['required'],
         ]);
 
         $checkRegistry = new CheckRegistry();
@@ -109,6 +112,16 @@ class CheckRegistryController extends Controller
 
             $checkRegistry->cash_transaction_id = $cashTransaction;
             $checkRegistry->save();
+        }
+
+        if($checkRegistry->id){
+            $voucherItem= new VoucherItems();
+            $voucherItem->item_name= $request->check_description;
+            $voucherItem->payment_amount= $checkRegistry->amount;
+            $voucherItem->voucher_amount= $checkRegistry->amount;
+            $voucherItem->check_registry_id= $checkRegistry->id;
+            $voucherItem->project_id = $checkRegistry->project_id?$checkRegistry->project_id:null;
+            $voucherItem->save();
         }
 
         if($checkRegistry->id){
@@ -232,7 +245,7 @@ class CheckRegistryController extends Controller
 
             $button .='<li class="dropdown-item"><a href="/check/registry/details/'.$post->crId.'"><i class="feather icon-eye"></i>Details</a></li>';
             if($post->refId=='' && $post->refType=='EXPENSE' && $post->checkType=='ACCOUNT_PAY' && (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->can('voucher_create'))){
-                $button .='<li class="dropdown-item"><a href="'.route('voucher_index').'?check_id='.$post->crId.'"><i class="feather icon-eye"></i>Voucher Create</a></li>';
+//                $button .='<li class="dropdown-item"><a href="'.route('voucher_index').'?check_id='.$post->crId.'"><i class="feather icon-eye"></i>Voucher Create</a></li>';
             }
             $button.='</ul></div>';
 
