@@ -135,8 +135,8 @@ Like: www.facebook.com/terminalbd
 
                             @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO') || auth()->user()->can('loan-income-list'))
 
-                            <li class="nav-item {{ Request::is('loan/index') ? 'active' : ''}}"><a href="{{route('loan_index')}}" class="nav-link"><span class="pcoded-mtext">Loan</span></a></li>
-                            <li class="nav-item {{ Request::is('income/index') ? 'active' : ''}}"><a href="{{route('income_index')}}" class="nav-link"><span class="pcoded-mtext">Income</span></a></li>
+                            <li class="nav-item {{ Request::is('loan/index') ? 'active' : ''}}"><a href="{{route('loan_index')}}" class="nav-link"><span class="pcoded-mtext">Loan Voucher</span></a></li>
+                            <li class="nav-item {{ Request::is('income/index') ? 'active' : ''}}"><a href="{{route('income_index')}}" class="nav-link"><span class="pcoded-mtext">Income Voucher</span></a></li>
 
                             @endif
                         </ul>
