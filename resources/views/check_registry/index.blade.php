@@ -20,7 +20,7 @@
           </div>
 
            <div class="card-body">
-         <table class= "table table-bordered check_registry">
+         <table class= "table table-bordered check_registry display">
              <thead class="thead-dark">
                  <tr role="row" class="filter">
                      <td colspan="2">
@@ -56,6 +56,12 @@
                 <tbody>
 
                 </tbody>
+             <tfoot>
+             <tr>
+                 <th colspan="4" style="text-align:right">Total:</th>
+                 <th colspan="4"></th>
+             </tr>
+             </tfoot>
 
             </table>
 
