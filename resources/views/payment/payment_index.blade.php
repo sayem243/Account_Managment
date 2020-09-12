@@ -110,6 +110,12 @@
                   </thead>
                   <tbody>
                   </tbody>
+                  <tfoot>
+                  <tr>
+                      <th colspan="5" style="text-align:right">Total:</th>
+                      <th colspan="4"></th>
+                  </tr>
+                  </tfoot>
               </table>
         </div>
 
