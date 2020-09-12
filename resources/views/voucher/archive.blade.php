@@ -64,6 +64,12 @@
                             </thead>
                             <tbody>
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="6" style="text-align:right">Total:</th>
+                                <th colspan="2"></th>
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

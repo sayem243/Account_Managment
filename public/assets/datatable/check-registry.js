@@ -12,7 +12,7 @@ $(document).ready(function () {
             [10, 20, 50, 100, 150, -1],
             [10, 20, 50, 100, 150, "All"] // change per page values here
         ],
-        "pageLength": 20, // default record count per page
+        "pageLength": 50, // default record count per page
         "ajax": {
             "type"   : "POST",
             "cache": false,
