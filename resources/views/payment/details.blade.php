@@ -283,7 +283,7 @@
                             {{ csrf_field() }}
                             <div class="modal-body">
                                 <label for="settlement_amount">Amount: </label>
-                                <input id="settlement_amount" class="form-control" name="settlement_amount"
+                                <input id="settlement_amount" class="form-control settlement_amount" name="settlement_amount"
                                        type="number" min="1"
                                        max="{{$payment->total_paid_amount - $totalSettlementAmount}}"
                                        value="{{$payment->total_paid_amount - $totalSettlementAmount}}" required/>
@@ -404,7 +404,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="transfer_amount">Amount: </label>
-                                        <input id="transfer_amount" class="form-control" name="transfer_amount"
+                                        <input id="transfer_amount" class="form-control transfer_amount" name="transfer_amount"
                                                type="number" min="1"
                                                max="{{$payment->total_paid_amount - $totalSettlementAmount}}"
                                                value="{{$payment->total_paid_amount - $totalSettlementAmount}}"
@@ -496,17 +496,37 @@
             });
             $(document).on('click', '.payment_settlement_add', function() {
                 $(this).attr("disabled", true);
+                var settlement_amount = $('.settlement_amount').val();
+                var settlement_max_amount = $('.settlement_amount').attr('max');
+                if(settlement_amount>settlement_max_amount){
+                    alert('Maximum amount '+settlement_max_amount);
+                    $('.settlement_amount').val(settlement_max_amount);
+                    $(this).attr("disabled", false);
+                    return false;
+                }
+
                 $('#payment-settlement-form').submit();
             });
 
             $(document).on('click', '.retried-button', function() {
                 $(this).attr("disabled", true);
+
+                var transfer_amount = $('.transfer_amount').val();
+                var transfer_max_amount = $('.transfer_amount').attr('max');
+                if(transfer_amount>transfer_max_amount){
+                    alert('Maximum amount '+transfer_max_amount);
+                    $('.transfer_amount').val(transfer_max_amount);
+                    $(this).attr("disabled", false);
+                    return false;
+                }
+
                 $('#retried-form').submit();
             });
 
             $('.modal').on('hidden.bs.modal', function () {
                 $(this).find('form')[0].reset();
                 $('.payment_settlement_add').attr("disabled", false);
+                $('.retried-button').attr("disabled", false);
             });
         })
     </script>
