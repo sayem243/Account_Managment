@@ -498,7 +498,7 @@
                 $(this).attr("disabled", true);
                 var settlement_amount = $('.settlement_amount').val();
                 var settlement_max_amount = $('.settlement_amount').attr('max');
-                if(settlement_amount>settlement_max_amount){
+                if(parseFloat(settlement_amount)>parseFloat(settlement_max_amount)){
                     alert('Maximum amount '+settlement_max_amount);
                     $('.settlement_amount').val(settlement_max_amount);
                     $(this).attr("disabled", false);
@@ -513,7 +513,7 @@
 
                 var transfer_amount = $('.transfer_amount').val();
                 var transfer_max_amount = $('.transfer_amount').attr('max');
-                if(transfer_amount>transfer_max_amount){
+                if(parseFloat(transfer_amount)>parseFloat(transfer_max_amount)){
                     alert('Maximum amount '+transfer_max_amount);
                     $('.transfer_amount').val(transfer_max_amount);
                     $(this).attr("disabled", false);
