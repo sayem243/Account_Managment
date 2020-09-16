@@ -6,6 +6,7 @@ use App\CashTransaction;
 use App\CheckRegistry;
 use App\Client;
 use App\Company;
+use App\ExpenditureSector;
 use App\Income;
 use App\Loan;
 use App\Payment;
@@ -40,7 +41,9 @@ class LoanIncomeController extends Controller
         $projects = Project::orderBy('p_name', 'ASC')->get();
         $users = User::orderBy('name', 'ASC')->get();
         $clients = Client::orderBy('name', 'ASC')->get();
-        return view('loan_income.add',['companies'=>$arrayCompanies ,'projects'=>$projects, 'users'=>$users, 'clients'=>$clients]);
+        $expenditureSectors = ExpenditureSector::all()->sortBy('name');
+
+        return view('loan_income.add',['expenditureSectors'=>$expenditureSectors ,'companies'=>$arrayCompanies ,'projects'=>$projects, 'users'=>$users, 'clients'=>$clients]);
     }
 
 }

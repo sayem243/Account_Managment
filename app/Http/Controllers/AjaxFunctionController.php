@@ -82,7 +82,7 @@ class AjaxFunctionController
         $data= array();
         $query = $request->request->all();
         if($query['item_name']!='' && $query['project_id']!='' && $query['voucher_amount']!=''){
-            $expenditureSectors = ExpenditureSector::all();
+            $expenditureSectors = ExpenditureSector::all()->sortBy('name');
             $expArray= array();
             foreach ($expenditureSectors as $expenditureSector){
                 $expArray[]= array('id'=>$expenditureSector->id, 'name'=>$expenditureSector->name);
@@ -95,6 +95,12 @@ class AjaxFunctionController
             $voucherItem->project_id = $query['project_id'];
 
             $voucherItem->save();
+
+            if(isset($query['item_add_without_ajax']) && $query['item_add_without_ajax']==1){
+                return redirect()->route('loan_income_create')->with('success', 'Voucher item has been created');
+
+            }
+
             if($voucherItem){
                 $data=array(
                     'expenditure_sector'=>$expArray,

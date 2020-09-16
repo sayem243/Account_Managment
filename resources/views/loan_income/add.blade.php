@@ -77,6 +77,9 @@
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="cash-income-tab" data-toggle="tab" href="#cash_income" role="tab" aria-controls="Income" aria-selected="false">Income</a>
                                                         </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="cash-expense-tab" data-toggle="tab" href="#cash_expense" role="tab" aria-controls="Expense" aria-selected="false">Expense</a>
+                                                        </li>
                                                     </ul>
                                                 </div>
 
@@ -89,6 +92,11 @@
                                                     <div class="tab-pane fade p-3" id="cash_income" role="tabpanel" aria-labelledby="cash-income-tab">
 
                                                         @include('loan_income._content_cash_income')
+
+                                                    </div>
+                                                    <div class="tab-pane fade p-3" id="cash_expense" role="tabpanel" aria-labelledby="cash-expense-tab">
+
+                                                        @include('loan_income._content_cash_expense')
 
                                                     </div>
                                                 </div>
