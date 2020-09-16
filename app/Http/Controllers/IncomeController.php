@@ -6,6 +6,7 @@ use App\CashTransaction;
 use App\CheckRegistry;
 use App\Company;
 use App\Income;
+use App\IncomeDetails;
 use App\Loan;
 use App\Payment;
 use App\PaymentSettlement;
@@ -317,6 +318,7 @@ class IncomeController extends Controller
 
 
             $button .='<li class="dropdown-item"><a href="/income/details/'.$post->iId.'"><i class="feather icon-eye"></i>Details</a></li>';
+            $button .='<li class="dropdown-item"><a href="/income/details/'.$post->iId.'/create"><i class="feather icon-eye"></i>Create Details</a></li>';
 
             $button.='</ul></div>';
 
@@ -361,5 +363,59 @@ class IncomeController extends Controller
         $records["recordsFiltered"] = $iTotalRecords;
         return new JsonResponse($records);
     }
+
+
+//    income details section
+    public function createIncomeDetails($id){
+
+        $income = Income::find($id);
+        $incomeDetails = DB::table('income_details')->where('income_id', $income->id)->first();
+
+
+        return view('loan_income.income.income_details_create',['income'=>$income, 'incomeDetails'=>$incomeDetails]);
+
+    }
+
+    public function storeIncomeDetails(Request $request, $id){
+        $this->validate($request, [
+            'invoice_number' => ['required'],
+            'bill_amount' => ['required'],
+            'certifite_amount' => ['required'],
+            'check_amount' => ['required'],
+        ]);
+
+
+        $exIncomeDetails = DB::table('income_details')->where('income_id', $id)->first();
+        $message = '';
+        if($exIncomeDetails){
+            $message = 'updated';
+            $incomeDetails = IncomeDetails::find($exIncomeDetails->id);
+        }else{
+            $message='created';
+            $incomeDetails = new IncomeDetails();
+        }
+
+
+        $incomeDetails->bill_invoice_number = $request->invoice_number;
+        $incomeDetails->bill_amount = $request->bill_amount?$request->bill_amount:0;
+        $incomeDetails->certifite_amount = $request->certifite_amount?$request->certifite_amount:0;
+        $incomeDetails->check_amount = $request->check_amount?$request->check_amount:0;
+        $incomeDetails->sd_amount = $request->sd_amount?$request->sd_amount:0;
+        $incomeDetails->it_amount = $request->it_amount?$request->it_amount:0;
+        $incomeDetails->vat_amount = $request->vat_amount?$request->vat_amount:0;
+        $incomeDetails->others_amount = $request->others_amount?$request->others_amount:0;
+        $incomeDetails->income_id = $id;
+
+        $incomeDetails->save();
+
+        if ($incomeDetails->id){
+            return redirect()->route('income_index')->with('success', 'Income details has been '.$message.' successfully.');
+
+        }
+        return redirect()->route('income_index')->with('error', 'Error! This are not permitted.');
+
+    }
+
+
 
 }

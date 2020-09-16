@@ -120,6 +120,15 @@ $(document).ready(function () {
             },
             {
                 extend: 'all_payment',
+                text: 'Partial Settle',
+                className: 'buttons-alert payment_status btn-info',
+                attr:  {
+                    title: 'Partial Settle',
+                    'data-status': 5
+                }
+            },
+            {
+                extend: 'all_payment',
                 text: 'Archived',
                 className: 'buttons-alert payment_status btn-info',
                 attr:  {

@@ -295,6 +295,7 @@ Route::post('/check/registry/store','CheckRegistryController@store')->name('chec
 Route::post('/check/registry/datatable','CheckRegistryController@dataTable')->name('check_registry_datatable');
 Route::get('/check/registry/details/{id}','CheckRegistryController@details')->name('check_registry_details');
 Route::get('/check/registry/quick/view/{id}','CheckRegistryController@quickView')->name('check_registry_quick_view');
+Route::get('/check/registry/print/{id}','CheckRegistryController@checkRegistryPrint')->name('check_registry_print');
 
 
 Route::get('/daily/cash/balance','DailyCashBalanceController@dailyCashTransaction')->name('daily_cash_balance');
@@ -325,6 +326,9 @@ Route::get('/income/details/{id}','IncomeController@incomeDetailsView')->name('i
 Route::get('/income/quick/view/{id}','IncomeController@incomeQuickView')->name('income_quick_view');
 Route::post('/income/datatable','IncomeController@dataTable')->name('income_datatable');
 Route::get('/income/print/{id}','IncomeController@incomePrint')->name('income_print');
+
+Route::get('/income/details/{id}/create','IncomeController@createIncomeDetails')->name('income_details_create');
+Route::post('/income/details/store/{id}','IncomeController@storeIncomeDetails')->name('income_details_store');
 
 //Client section
 

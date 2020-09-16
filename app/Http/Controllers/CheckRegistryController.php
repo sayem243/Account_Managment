@@ -161,6 +161,15 @@ class CheckRegistryController extends Controller
         return response()->json( ['html'=>$returnHTML]);
     }
 
+    public function checkRegistryPrint($id){
+
+        $checkRegistry=CheckRegistry::find($id);
+        if(auth()->user()->can('check-registry-create')) {
+            return view('check_registry.print', ['checkRegistry' => $checkRegistry]);
+        }
+        return redirect()->route('check_registry_index')->with('error', 'Error! This are not permitted.');
+    }
+
     public function dataTable(Request $request)
     {
 

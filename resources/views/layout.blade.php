@@ -437,5 +437,12 @@ Like: www.facebook.com/terminalbd
         $('.pcoded-navbar').addClass(Cookies.set('productList', val));
         setTimeout(location.reload(), 1000);
     });
+
+    $(document).on("keypress keyup blur", ".only-number", function (e) {
+        $(this).val($(this).val().replace(/[^0-9\.]/g,''));
+        if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
 </script>
 </html>

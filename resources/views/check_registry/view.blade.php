@@ -11,6 +11,10 @@
                         <div class="card-header-right">
                             <div class="btn-group btn-group-lg" role="group"
                                  aria-label="Button group with nested dropdown">
+                                <a style="border-radius: .3rem" target="_blank"
+                                   href="{{route('check_registry_print',$checkRegistry->id)}}"
+                                   class="btn btn-info btn-lg hidden-print"><i class="fa fa-print fa-1x"></i> Print</a>
+
                                 <a href="{{route('check_registry_index')}}" class="btn btn-info"><i
                                             class="fa fa-angle-double-left"></i> Back</a>
                             </div>
