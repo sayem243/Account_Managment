@@ -97,7 +97,7 @@ class AjaxFunctionController
             $voucherItem->save();
 
             if(isset($query['item_add_without_ajax']) && $query['item_add_without_ajax']==1){
-                return redirect()->route('loan_income_create')->with('success', 'Voucher item has been created');
+                return redirect()->route('loan_income_create',http_build_query(['type'=>'expense']))->with('success', 'Voucher item has been created');
 
             }
 

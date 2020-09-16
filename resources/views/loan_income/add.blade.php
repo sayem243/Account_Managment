@@ -6,7 +6,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Loan & Income</h5>
+                        <h5>Loan, Income & Expense</h5>
                         <div class="card-header-right">
                             <div class="btn-group btn-group-lg" role="group"
                                  aria-label="Button group with nested dropdown">
@@ -36,13 +36,13 @@
                                                 <div class="card-header tab-card-header" style="padding-bottom: 0; padding-left: 10px">
                                                     <ul class="nav nav-tabs card-header-tabs" id="myTab1" role="tablist">
                                                         <li class="nav-item">
-                                                            <a class="nav-link active" id="check-loan-tab" data-toggle="tab" href="#check_loan" role="tab" aria-controls="Loan" aria-selected="true">Loan</a>
+                                                            <a class="nav-link {{$type=='loan'?'active':''}}" id="check-loan-tab" data-toggle="tab" href="#check_loan" role="tab" aria-controls="Loan" aria-selected="true">Loan</a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="check-income-tab" data-toggle="tab" href="#check_income" role="tab" aria-controls="Income" aria-selected="false">Income</a>
+                                                            <a class="nav-link {{$type=='income'?'active':''}}" id="check-income-tab" data-toggle="tab" href="#check_income" role="tab" aria-controls="Income" aria-selected="false">Income</a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="check-expense-tab" data-toggle="tab" href="#check_expense" role="tab" aria-controls="Expense" aria-selected="false">Expense</a>
+                                                            <a class="nav-link {{$type=='expense'?'active':''}}" id="check-expense-tab" data-toggle="tab" href="#check_expense" role="tab" aria-controls="Expense" aria-selected="false">Expense</a>
                                                         </li>
                                                     </ul>
                                                 </div>

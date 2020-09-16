@@ -28,7 +28,10 @@ class LoanIncomeController extends Controller
         $this->middleware('auth');
     }
 
-    public function createLoanAndIncome(){
+    public function createLoanAndIncome(Request $request){
+
+        $type = $request->request->get('type');
+
         $companies= Company::all();
         $arrayCompanies=array();
         foreach ($companies as $company){
@@ -43,7 +46,7 @@ class LoanIncomeController extends Controller
         $clients = Client::orderBy('name', 'ASC')->get();
         $expenditureSectors = ExpenditureSector::all()->sortBy('name');
 
-        return view('loan_income.add',['expenditureSectors'=>$expenditureSectors ,'companies'=>$arrayCompanies ,'projects'=>$projects, 'users'=>$users, 'clients'=>$clients]);
+        return view('loan_income.add',['expenditureSectors'=>$expenditureSectors ,'companies'=>$arrayCompanies ,'projects'=>$projects, 'users'=>$users, 'clients'=>$clients, 'type'=>$type]);
     }
 
 }
