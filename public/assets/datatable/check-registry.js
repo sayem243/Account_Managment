@@ -21,12 +21,22 @@ $(document).ready(function () {
 
                 var check_number = $('#check_number').val();
                 var company_id = $('#company_id').val();
+                var bank_id = $('.bank_id').val();
+                var branch_id = $('.branch_id').val();
+                var bank_account_id = $('.bank_account_id').val();
+                var from_date = $('#from_date').val();
+                var to_date = $('#to_date').val();
 
 
                 // Read values
                 data._token = CSRF_TOKEN;
                 data.check_number = check_number;
                 data.company_id = company_id;
+                data.bank_id = bank_id;
+                data.branch_id = branch_id;
+                data.bank_account_id = bank_account_id;
+                data.from_date = from_date;
+                data.to_date = to_date;
 
             }
         },
@@ -95,7 +105,21 @@ $(document).ready(function () {
         dataTable.draw();
     });
 
+    $('.bank_id').change(function(){
+        dataTable.draw();
+    });
 
+    $('.branch_id').change(function(){
+        dataTable.draw();
+    });
+
+    $('.bank_account_id').change(function(){
+        dataTable.draw();
+    });
+
+    $('.date_picker').change(function(){
+        dataTable.draw();
+    });
 
 });
 

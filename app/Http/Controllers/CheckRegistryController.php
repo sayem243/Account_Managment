@@ -37,7 +37,11 @@ class CheckRegistryController extends Controller
             return $element['name'];
         }, $arrayCompanies), SORT_ASC, $arrayCompanies);
 
-        return view('check_registry.index',['companies'=>$arrayCompanies ]);
+        $banks = DB::table('bank_and_branches')->orderBy('name')->where('type', 'BANK')->get();
+        $branches = DB::table('bank_and_branches')->orderBy('name')->where('type', 'BRANCH')->get();
+        $bankAccounts = DB::table('bank_accounts')->orderBy('account_number')->get();
+
+        return view('check_registry.index',['companies'=>$arrayCompanies, 'banks'=>$banks, 'branches'=>$branches, 'bankAccounts'=>$bankAccounts]);
     }
 
     public function create(){
@@ -190,6 +194,18 @@ class CheckRegistryController extends Controller
             $company_id = $query['company_id'];
             $countRecords->where('check_registries.company_id',$company_id);
         }
+        if(isset($query['bank_id'])){
+            $bank_id = $query['bank_id'];
+            $countRecords->where('check_registries.bank_id',$bank_id);
+        }
+        if(isset($query['branch_id'])){
+            $branch_id = $query['branch_id'];
+            $countRecords->where('check_registries.branch_id',$branch_id);
+        }
+        if(isset($query['bank_account_id'])){
+            $bank_account_id = $query['bank_account_id'];
+            $countRecords->where('check_registries.bank_account_id',$bank_account_id);
+        }
 
         if (isset($query['from_date']) && isset($query['to_date'])) {
             $from_date = $query['from_date'].' 00:00:00';
@@ -230,6 +246,18 @@ class CheckRegistryController extends Controller
         if(isset($query['company_id'])){
             $company_id = $query['company_id'];
             $rows->where('check_registries.company_id',$company_id);
+        }
+        if(isset($query['bank_id'])){
+            $bank_id = $query['bank_id'];
+            $rows->where('check_registries.bank_id',$bank_id);
+        }
+        if(isset($query['branch_id'])){
+            $branch_id = $query['branch_id'];
+            $rows->where('check_registries.branch_id',$branch_id);
+        }
+        if(isset($query['bank_account_id'])){
+            $bank_account_id = $query['bank_account_id'];
+            $rows->where('check_registries.bank_account_id',$bank_account_id);
         }
 
         if (isset($query['from_date']) && isset($query['to_date'])) {
