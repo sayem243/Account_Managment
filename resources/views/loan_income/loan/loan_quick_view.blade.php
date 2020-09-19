@@ -241,7 +241,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row in_word_area">
                         <div class="col-md-12">
                             <label style="font-weight: bold; font-size: 20px" class="col-md-12 col-form-label">In
                                 words: <span class="to_word">

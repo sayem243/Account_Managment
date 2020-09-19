@@ -245,3 +245,11 @@ table.dataTable thead .sorting_desc_disabled:after{
     background-color: yellow!important;
     color: #000;
 }
+.in_word_area{
+   position: absolute!important;
+    bottom: 15px;
+    left: 15px;
+    width: 100%;
+}
+
+

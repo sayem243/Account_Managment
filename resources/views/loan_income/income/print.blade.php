@@ -155,30 +155,38 @@
                                         </fieldset>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="vertical-align: top; border: none" colspan="2">
-                                        <div class="col-md-12">
-                                            <fieldset>
-                                                <label style="font-weight: bold; font-size: 20px" class="col-md-12 col-form-label">In
-                                                    words: <span class="to_word">
-                                    @php use App\CustomClass\NumberToWordConverter;
-                                    $amount = NumberToWordConverter::convert($income->amount);
-                                    @endphp
-                                                        {{$amount}}
-                                    </span>
-                                                </label>
-                                            </fieldset>
-                                        </div>
-                                    </td>
-                                </tr>
                             </table>
 
 
                         </div>
+                        <div class="row in_word_area">
+                            <fieldset>
+                                <label style="font-weight: bold; font-size: 20px" class="col-md-12 col-form-label">In
+                                    words: <span class="to_word">
+                                    @php use App\CustomClass\NumberToWordConverter;
+                                    $amount = NumberToWordConverter::convert($income->amount);
+                                    @endphp
+                                        {{$amount}}
+                                    </span>
+                                </label>
+                            </fieldset>
+                        </div>
+                        {{--<div class="row in_word_area">--}}
+                            {{--<fieldset>--}}
+                                {{--<label style="font-weight: bold; font-size: 20px" class="col-md-12 col-form-label">In--}}
+                                    {{--words: <span class="to_word">--}}
+                                    {{--@php use App\CustomClass\NumberToWordConverter;--}}
+                                    {{--$amount = NumberToWordConverter::convert($loan->amount);--}}
+                                    {{--@endphp--}}
+                                        {{--{{$amount}}--}}
+                                    {{--</span>--}}
+                                {{--</label>--}}
+                            {{--</fieldset>--}}
+                        {{--</div>--}}
 
                     </div>
                 </div>
-            </div>
+                </div>
 
         </div>
         <style>

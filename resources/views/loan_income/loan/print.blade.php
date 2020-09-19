@@ -251,21 +251,19 @@
                                         </fieldset>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="border: none" colspan="2">
-                                        <fieldset>
-                                            <label style="font-weight: bold; font-size: 20px" class="col-md-12 col-form-label">In
-                                                words: <span class="to_word">
+                            </table>
+                        </div>
+                        <div class="row in_word_area">
+                            <fieldset>
+                                <label style="font-weight: bold; font-size: 20px" class="col-md-12 col-form-label">In
+                                    words: <span class="to_word">
                                     @php use App\CustomClass\NumberToWordConverter;
                                     $amount = NumberToWordConverter::convert($loan->amount);
                                     @endphp
-                                                    {{$amount}}
+                                        {{$amount}}
                                     </span>
-                                            </label>
-                                        </fieldset>
-                                    </td>
-                                </tr>
-                            </table>
+                                </label>
+                            </fieldset>
                         </div>
 
                     </div>
@@ -310,8 +308,8 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            window.print();
-            setTimeout(function() { window.close(); }, 100);
+//            window.print();
+//            setTimeout(function() { window.close(); }, 100);
         });
 
     </script>
