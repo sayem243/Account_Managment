@@ -23,22 +23,52 @@
          <table class= "table table-bordered check_registry display">
              <thead class="thead-dark">
                  <tr role="row" class="filter">
-                     <td colspan="2">
-                         <input  type="text" class="form-control form-filter input-sm" name="check_number" id="check_number" placeholder="Check Number....">
-                     </td>
+                     <td colspan="9">
+                         <table class="table" style="margin-bottom: 0">
+                             <tr>
+                                 <td colspan="2">
+                                     <input  type="text" class="form-control form-filter input-sm" name="check_number" id="check_number" placeholder="Check Number....">
+                                 </td>
 
-                     <td colspan="2">
-                         <select class="form-control" name="company_id" id="company_id" aria-describedby="validationTooltipPackagePrepend" required>
-                             <option value="">All Company</option>
-                             @foreach($companies as $company)
-                                 <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
-                             @endforeach
-                         </select>
+                                 <td colspan="1">
+                                     <select class="form-control" name="company_id" id="company_id">
+                                         <option value="">All Company</option>
+                                         @foreach($companies as $company)
+                                             <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
+                                         @endforeach
+                                     </select>
+                                 </td>
+                                 <td>
+                                     <select class="form-control bank_id" name="bank_id" id="bank_id">
+                                         <option value="">All Bank</option>
+                                         @foreach($banks as $bank)
+                                             <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                                         @endforeach
+                                     </select>
+                                 </td>
+                                 <td>
+                                     <select class="form-control branch_id" name="branch_id" id="branch_id">
+                                         <option value="">All Branch</option>
+                                         @foreach($branches as $branch)
+                                             <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                         @endforeach
+                                     </select>
+                                 </td>
+                                 <td>
+                                     <select class="form-control bank_account_id" name="bank_account_id" id="bank_account_id">
+                                         <option value="">All Account</option>
+                                         @foreach($bankAccounts as $bankAccount)
+                                             <option value="{{ $bankAccount->id }}">{{ $bankAccount->account_number }}</option>
+                                         @endforeach
+                                     </select>
+                                 </td>
+                                 <td colspan="2">
+                                     From <input style="display: inline; width: auto;"  type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="from_date" id="from_date">
+                                     To <input style="display: inline; width: auto;" type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="to_date" id="to_date">
+                                 </td>
+                             </tr>
+                         </table>
                      </td>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                     <td></td>
                  </tr>
                  <tr>
                    <th style="width: 5%">SL</th>
@@ -48,7 +78,7 @@
                    <th>Amount</th>
                    <th>Check Type</th>
                    <th>Type</th>
-                   <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 5%;">
+                   <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 20px">
                             <i class="feather icon-settings"></i>
                    </th>
                </tr>

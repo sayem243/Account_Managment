@@ -355,6 +355,7 @@ p.text-muted {
   padding: 5px;
   color: #161111;
   font-size: 13px;
+  display: block;
 }
 .dropdown-menu > li > a i {
   font-size: 15px;
