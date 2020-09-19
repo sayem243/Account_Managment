@@ -90,7 +90,7 @@
                                     </td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',','):0}}</td>
+                                    <td style="color: #FFFFFF">{{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',','):0}}</td>
                                     <td>
                                         {{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',','):0}}
                                     </td>
