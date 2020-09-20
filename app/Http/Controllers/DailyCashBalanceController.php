@@ -56,7 +56,18 @@ class DailyCashBalanceController extends Controller
         if ($company_id!=''){
             $rows->where('company_id', $company_id);
         }
-//        $rows->where('cash_transactions.transaction_type','=', 'CR');
+        $rows->whereIn('cash_transactions.transaction_via',[
+            'CHECK_OUT',
+            'INCOME_CASH',
+            'INCOME_CHECK_CASH',
+            'LOAN_CASH',
+            'LOAN_CHECK_CASH',
+            'HAND_SLIP_SETTLE',
+            'HAND_SLIP_TRANSFER',
+            'HAND_SLIP_CASH_RETURN',
+            'HAND_SLIP_ISSUE',
+            'VOUCHER',
+        ]);
         $rows->whereBetween('created_at', [$from_date, $to_date]);
         $result = $rows->get();
         $returnArray = array();
