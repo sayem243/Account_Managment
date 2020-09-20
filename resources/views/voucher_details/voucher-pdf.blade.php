@@ -19,7 +19,7 @@
                             <table cellpadding="4" width="100%" class="">
                                 <tr>
                                     <td>
-                                        <label for="">Employe Name: </label>
+                                        <label for="">Employee Name: </label>
                                         {{$details->user->UserProfile['fname'].' '.$details->user->UserProfile['lname']}}
                                     </td>
 
