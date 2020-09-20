@@ -4,6 +4,7 @@ $(document).ready(function () {
         className: 'buttons-alert payment_status',
 
     };
+    var payment_table_element = $('.payment_table');
     var dataTable= $('.table').DataTable( {
 
         loadingMessage: 'Loading...',
@@ -32,6 +33,8 @@ $(document).ready(function () {
                 var to_date = $('#to_date').val();
 
                 var payment_status = $('.payment_table').find('.active').attr('data-status');
+                var payment_date_age_to = payment_table_element.find('.date_range_active').attr('data-date-range-to');
+                var payment_date_age_from = payment_table_element.find('.date_range_active').attr('data-date-range-from');
                 // Append to data
                 data._token = CSRF_TOKEN;
                 data.payment_id = payment_id;
@@ -42,6 +45,8 @@ $(document).ready(function () {
                 data.from_date = from_date;
                 data.to_date = to_date;
                 data.item_search = item_search;
+                data.payment_date_age_to = payment_date_age_to;
+                data.payment_date_age_from = payment_date_age_from;
             }
         },
         'columns': [
@@ -144,6 +149,40 @@ $(document).ready(function () {
                     title: 'Park',
                     'data-status': 7
                 }
+            },
+            {
+                extend: 'collection',
+                text: 'Age of HS',
+                className: 'buttons-alert payment_date_range btn-info',
+                buttons: [
+                    {
+                        text: '0-30 days',
+                        className: 'payment_date_age payment_date_age_30',
+                        attr:  {
+                            title: '0-30 days',
+                            'data-date-range-to': calculateDate('current'),
+                            'data-date-range-from': calculateDate('past_30')
+                        }
+                    },
+                    {
+                        text: '30-60 days',
+                        className: 'payment_date_age payment_date_age_60',
+                        attr:  {
+                            title: '30-60 days',
+                            'data-date-range-to': calculateDate('past_30'),
+                            'data-date-range-from': calculateDate('past_60')
+                        }
+                    },
+                    {
+                        text: '60-90 days',
+                        className: 'payment_date_age payment_date_age_90',
+                        attr:  {
+                            title: '60-90 days',
+                            'data-date-range-to': calculateDate('past_60'),
+                            'data-date-range-from': calculateDate('past_90')
+                        }
+                    }
+                ]
             }
         ],
         "footerCallback": function ( row, data, start, end, display ) {
@@ -224,11 +263,19 @@ $(document).ready(function () {
     });
 
     $('.payment_status').on('click', function(){
+        payment_table_element.find('.payment_date_age').removeClass('date_range_active');
         $('.payment_status').removeClass('active');
         $(this).addClass('active');
         dataTable.draw();
     });
 
+    payment_table_element.on('click', '.payment_date_age', function(){
+        payment_table_element.find('.payment_status').removeClass('active');
+        payment_table_element.find('.payment_date_age').removeClass('date_range_active');
+        $(this).addClass('date_range_active');
+
+        dataTable.draw();
+    });
 
     $("#csvBtn").on("click", function() {
         dataTable.button( '.buttons-csv' ).trigger();
@@ -326,6 +373,34 @@ $(document).ready(function () {
             });
         }
     });
+
+
+
+    function calculateDate(dateType) {
+
+        var today = new Date();
+
+        if(dateType==='current'){
+            return today.toISOString().substring(0, 10);
+        }
+
+        if(dateType==='past_30'){
+            today.setDate(today.getDate() - 30);
+            return today.toISOString().split('T')[0];
+        }
+
+        if(dateType==='past_60'){
+            today.setDate(today.getDate() - 60);
+            return today.toISOString().split('T')[0];
+        }
+
+        if(dateType==='past_90'){
+            today.setDate(today.getDate() - 90);
+            return today.toISOString().split('T')[0];
+        }
+
+    }
+
 
 
 

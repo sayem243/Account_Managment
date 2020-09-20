@@ -663,6 +663,14 @@ class PaymentController extends Controller
             $to_date = $query['to_date'].' 23:59:59';
             $countRecords->whereBetween('payments.created_at', [$from_date, $to_date]);
         }
+
+        if (isset($query['payment_date_age_from']) && isset($query['payment_date_age_to'])) {
+
+            $countRecords->whereIn('payments.status',[4,5]);
+            $from_date = $query['payment_date_age_from'].' 00:00:00';
+            $to_date = $query['payment_date_age_to'].' 23:59:59';
+            $countRecords->whereBetween('payments.created_at', [$from_date, $to_date]);
+        }
         $countRecords->groupBy('payment_details.payment_id');
 
         $result = $countRecords->get();
@@ -743,6 +751,13 @@ class PaymentController extends Controller
             $from_date = $query['from_date'].' 00:00:00';
             $to_date = $query['to_date'].' 23:59:59';
             $rows->whereBetween('payments.created_at', [$from_date, $to_date]);
+        }
+        if (isset($query['payment_date_age_from']) && isset($query['payment_date_age_to'])) {
+            $rows->whereIn('payments.status',[4,5]);
+            $payment_date_age_from = $query['payment_date_age_from'].' 00:00:00';
+            $payment_date_age_to = $query['payment_date_age_to'].' 23:59:59';
+            $rows->whereBetween('payments.created_at', [$payment_date_age_from, $payment_date_age_to]);
+
         }
 
         $rows->offset($iDisplayStart);

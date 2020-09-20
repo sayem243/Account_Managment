@@ -210,6 +210,12 @@ table.dataTable thead .sorting_desc_disabled:after{
     min-width: 80px;
     border-radius: 0.25rem!important;
 }
+.payment_table button.payment_date_range{
+    -webkit-transform: scale(1);
+    margin-right: 10px;
+    min-width: 80px;
+    border-radius: 0.25rem!important;
+}
 .payment_table button.voucher_status{
     -webkit-transform: scale(1);
     margin-right: 10px;
