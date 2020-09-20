@@ -18,10 +18,10 @@
                      <form action="">
                          <table class="table" style="margin: 0">
                              <tr>
-                                 <td colspan="1">
+                                 <td style="width: 50%" colspan="1">
                                      <div class="form-group row" style="margin: 0">
                                          <label for="filter_company_id" class="col-sm-2 col-form-label">Company</label>
-                                         <div class="col-sm-7">
+                                         <div class="col-sm-10">
                                              <select name="filter_company_id" id="filter_company_id" class="form-control">
                                                  <option value="">All</option>
                                                  @foreach($companies as $key=>$value)
@@ -32,15 +32,15 @@
                                      </div>
 
                                  </td>
-                                 <td colspan="1">
+                                 <td style="width: 35%" colspan="1">
                                      <div class="form-group row" style="margin: 0">
                                          <label for="filter_date" class="col-sm-2 col-form-label">Date</label>
-                                         <div class="col-sm-7">
+                                         <div class="col-sm-10">
                                              <input type="date" id="filter_date" name="filter_date" value="{{isset($_GET['filter_date'])?$_GET['filter_date']:''}}" class="form-control">
                                          </div>
                                      </div>
                                  </td>
-                                 <td>
+                                 <td style="width: 15%">
                                      <button type="submit" class="btn btn-primary" >Filter</button>
                                  </td>
                              </tr>
@@ -61,8 +61,8 @@
                         <table class="table table-bordered" style="margin: 0">
                             <thead>
                             <tr style="background-color: red; color: #FFFFFF; font-weight: bold; font-size: large">
-                                <td style="text-align: center" colspan="3">Total Opening Balance</td>
-                                <td>{{number_format($openingBalanceTotal, 0,'.',',')}}</td>
+                                <td style="text-align: left" colspan="3">Total Opening Balance</td>
+                                <td></td>
                                 <td>{{number_format($openingBalanceTotal, 0,'.',',')}}</td>
                             </tr>
                             </thead>
@@ -78,14 +78,14 @@
                                     <td style="background-color: darkgrey; color: #FFFFFF;font-weight: bold; font-size: medium" align="center" colspan="5">{{$value}}</td>
                                 </tr>
                                 <tr style="color: #FFFFFF; background-color: darkblue; font-weight: bold">
-                                    <th style="width: 20%">Transaction Type</th>
+                                    <th style="width: 20%;">Transaction Type</th>
                                     <th style="width: 30%">Description</th>
                                     <th style="width: 15%">Debit (TK.)</th>
                                     <th style="width: 15%">Credit (TK.)</th>
                                     <th style="width: 20%">Balance</th>
                                 </tr>
-                                <tr>
-                                    <td>
+                                <tr style="color: red; font-weight: bold">
+                                    <td style="color: black">
                                         Opening Balance
                                     </td>
                                     <td></td>
@@ -115,7 +115,7 @@
                                                 @endphp
                                                 @php $checkOut++ @endphp
                                                 @if ($checkOut==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>Credit</td>
                                                         <td></td>
                                                         <td></td>
@@ -149,7 +149,7 @@
                                                 @endphp
                                                 @php $incomeCr++ @endphp
                                                 @if ($incomeCr==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>Income</td>
                                                         <td></td>
                                                         <td></td>
@@ -176,7 +176,7 @@
                                                 @endphp
                                                 @php $incomeCr++ @endphp
                                                 @if ($incomeCr==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>Income</td>
                                                         <td></td>
                                                         <td></td>
@@ -212,7 +212,7 @@
                                                 @endphp
                                                 @php $loanCr++ @endphp
                                                 @if ($loanCr==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>Loan (Credit)</td>
                                                         <td></td>
                                                         <td></td>
@@ -241,7 +241,7 @@
                                                 @endphp
                                                 @php $loanCr++ @endphp
                                                 @if ($loanCr==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>Loan (Credit)</td>
                                                         <td></td>
                                                         <td></td>
@@ -277,7 +277,7 @@
                                                 @endphp
                                                 @php $hsSettle++ @endphp
                                                 @if ($hsSettle==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>H/S Settle</td>
                                                         <td></td>
                                                         <td></td>
@@ -315,7 +315,7 @@
                                                 @endphp
                                                 @php $loanDr++ @endphp
                                                 @if ($loanDr==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>Loan (Debit)</td>
                                                         <td></td>
                                                         <td></td>
@@ -344,7 +344,7 @@
                                                 @endphp
                                                 @php $loanDr++ @endphp
                                                 @if ($loanDr==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>Loan (Debit)</td>
                                                         <td></td>
                                                         <td></td>
@@ -382,7 +382,7 @@
                                                 @endphp
                                                 @php $hsIssue++ @endphp
                                                 @if ($hsIssue==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>H/S Issued</td>
                                                         <td></td>
                                                         <td></td>
@@ -419,7 +419,7 @@
                                                 @endphp
                                                 @php $vIndex++ @endphp
                                                 @if ($vIndex==1)
-                                                    <tr>
+                                                    <tr style="color: black; font-weight: bold">
                                                         <td>Voucher</td>
                                                         <td></td>
                                                         <td></td>
@@ -452,8 +452,8 @@
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <tr style="font-weight: bold">
-                                    <td>Closing Balance</td>
+                                <tr style="color: red; font-weight: bold; margin-bottom: 15px">
+                                    <td style="color: black;">Closing Balance</td>
                                     <td></td>
                                     <td>{{number_format($drTotal,'0','',',')}}</td>
                                     <td>{{number_format($crTotal,'0','',',')}}</td>
@@ -463,7 +463,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="5" style="height: 15px"></td>
+                                    <td colspan="5" style="height: 0px; border-left: none; border-right: none; padding: 0">
+                                        <hr style="margin: 0 0 2px; border: 2px solid #f0f0f0">
+                                    </td>
                                 </tr>
 
                                 @php
