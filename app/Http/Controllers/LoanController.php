@@ -25,6 +25,7 @@ class LoanController extends Controller
     function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:loan-income-create', ['only' => ['index','checkLoanStore','cashLoanStore']]);
     }
 
     public function index(){

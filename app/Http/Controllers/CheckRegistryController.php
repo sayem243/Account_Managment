@@ -24,7 +24,7 @@ class CheckRegistryController extends Controller
     function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:check-registry-create', ['only' => ['create','store']]);
+        $this->middleware('permission:check-registry-create', ['only' => ['create','store','index']]);
     }
 
     public function index(){

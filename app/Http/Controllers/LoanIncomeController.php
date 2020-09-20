@@ -26,6 +26,7 @@ class LoanIncomeController extends Controller
     function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:loan-income-create', ['only' => ['createLoanAndIncome']]);
     }
 
     public function createLoanAndIncome(Request $request){

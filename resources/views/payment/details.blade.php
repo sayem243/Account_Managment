@@ -132,12 +132,12 @@
                                     <button style="border-radius: .3rem; margin: 0" data-id-id="{{$payment->id}}" type="button"
                                             class="btn btn-lg btn-info payment_paid">Disburse
                                     </button>
-                                        @else
-                                        <button disabled style="border-radius: .3rem; margin: 0" type="button"
-                                                class="btn btn-lg btn-info">Disburse
-                                        </button>
+                                    @else
+                                    <button disabled style="border-radius: .3rem; margin: 0" type="button"
+                                            class="btn btn-lg btn-info">Disburse
+                                    </button>
 
-                                        @endif
+                                    @endif
                                 @endif
                                 @if($payment->status>3 && $payment->status!=7 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
                                     <button style="border-radius: .3rem; margin: 0" id="addTag" class="btn btn-green btn-lg"
@@ -145,7 +145,7 @@
                                         Settlement
                                     </button>
                                 @endif
-                                @if(($payment->status==4 || $payment->status==5) && $payment->total_paid_amount > $totalSettlementAmount)
+                                @if(($payment->status==4 || $payment->status==5) && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
                                     <button style="border-radius: .3rem; margin: 0" id="addRetried" class="btn btn-danger btn-lg"
                                             data-toggle="modal" data-target="#retriedModalForm">
                                         Retrie
