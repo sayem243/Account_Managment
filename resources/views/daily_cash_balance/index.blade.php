@@ -74,6 +74,13 @@
                             @endphp
                             @foreach($company as $step1Key=>$value)
 
+                                @php
+                                    $balance = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->opening_balance:0;
+                                    $crTotal = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->opening_balance:0;
+                                    $drTotal = 0;
+                                @endphp
+
+                                @if(isset($cashTransactions[$step1Key]) || $openingBalance[$step1Key]->opening_balance > 0)
                                 <tr>
                                     <td style="background-color: darkgrey; color: #FFFFFF;font-weight: bold; font-size: medium" align="center" colspan="5">{{$value}}</td>
                                 </tr>
@@ -95,12 +102,6 @@
                                         {{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',','):0}}
                                     </td>
                                 </tr>
-
-                                @php
-                                    $balance = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->opening_balance:0;
-                                    $crTotal = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->opening_balance:0;
-                                    $drTotal = 0;
-                                @endphp
 
                                 @if(isset($cashTransactions[$step1Key]))
 
@@ -467,7 +468,7 @@
                                         <hr style="margin: 0 0 2px; border: 2px solid #f0f0f0">
                                     </td>
                                 </tr>
-
+                                @endif
                                 @php
                                     $grandDrTotal = $grandDrTotal+$drTotal;
                                     $grandCrTotal = $grandCrTotal+$crTotal;
