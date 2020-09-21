@@ -42,6 +42,7 @@ $(document).ready(function () {
             { "name": 'projectName' },
             { "name": 'amount' },
             { "name": '' },
+            { "name": '' },
         ],
         "order": [
             [1, "desc"]
@@ -53,6 +54,10 @@ $(document).ready(function () {
             },
             {
                 "targets": 7,
+                "orderable": false
+            },
+            {
+                "targets": 8,
                 "orderable": false
             }],
         "footerCallback": function ( row, data, start, end, display ) {
@@ -83,7 +88,7 @@ $(document).ready(function () {
                 }, 0 );
 
             // Update footer
-            $( api.column( 6 ).footer() ).html( parseFloat(pageTotal).toFixed(2) );
+            $( api.column( 7 ).footer() ).html( parseFloat(pageTotal).toFixed(2) );
         }
     });
     $('#voucher_id').keyup(function(){

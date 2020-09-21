@@ -145,9 +145,9 @@ Like: www.facebook.com/terminalbd
                 @if(auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO') || auth()->user()->can('check-registry-create'))
 
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('check/registry/*') ? 'pcoded-trigger' : ''}}">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Check Registry</span></a>
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Cheque Registry</span></a>
                         <ul class="pcoded-submenu {{ Request::is('check/registry/*') ? 'active' : ''}}">
-                            <li class="nav-item {{ Request::is('check/registry/index') ? 'active' : ''}}"><a href="{{route('check_registry_index')}}" class="nav-link"><span class="pcoded-mtext">Check Registry</span></a></li>
+                            <li class="nav-item {{ Request::is('check/registry/index') ? 'active' : ''}}"><a href="{{route('check_registry_index')}}" class="nav-link"><span class="pcoded-mtext">Cheque Registry</span></a></li>
                         </ul>
                     </li>
                 @endif

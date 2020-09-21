@@ -239,10 +239,12 @@ class VoucherController extends Controller
 
         $rows = DB::table('vouchers');
 
-        $rows->select('vouchers.id as id', 'vouchers.voucher_generate_id as vId', 'vouchers.total_amount as amount', 'vouchers.created_at as createdAt');
+        $rows->select('vouchers.id as id', 'vouchers.voucher_generate_id as vId', 'vouchers.total_amount as amount', 'vouchers.created_at as createdAt', 'vouchers.status as vStatus');
         $rows->addSelect( 'voucher_items.item_name as name', 'voucher_items.voucher_id as voucherId');
         $rows->addSelect('projects.p_name as projectName');
         $rows->addSelect('companies.name as companyName');
+        $rows->addSelect('companies.deleted_at as companyDeletedAt');
+        $rows->addSelect('projects.deleted_at as projectDeletedAt');
         $rows->addSelect('expenditure_sectors.name as expenseName');
         $rows->addSelect('payments.payment_id as pId');
 
@@ -293,6 +295,28 @@ class VoucherController extends Controller
             }
             $button.='</ul></div>';
 
+            $action='';
+
+            if ($post->companyDeletedAt==null && $post->projectDeletedAt==null){
+                if($post->vStatus==1 && auth()->user()->can('voucher_approved')){
+                    $action.='<button data-id="'.$post->id.'" data-status="2" type="button" class="btn btn-sm  btn-primary voucher_approved" style="min-width: 75px;-webkit-transform: scale(1);">Approve </button>';
+                }elseif($post->vStatus==3){
+                    if (auth()->user()->can('voucher_seen')){
+                        $action.='<button data-id="'.$post->id.'" data-status="1" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Question</button>';
+                    }
+                }
+                elseif($post->vStatus==2){
+                    if (auth()->user()->can('voucher_seen')){
+                        $action.='<button data-id-id="'.$post->id.'" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Seen </button>';
+                    }
+                    if (auth()->user()->can('voucher_seen')){
+                        $action.='<button data-id="'.$post->id.'" data-status="1" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Question</button>';
+                    }
+
+                }
+            }
+
+
             $records["data"][] = array(
                 $id                 = $i,
                 $createdAt               = $post->createdAt,
@@ -301,6 +325,7 @@ class VoucherController extends Controller
                 $companyName        = $post->companyName?$post->companyName:'',
                 $projectName        = $post->projectName?$post->projectName:'',
                 $amount             = $post->amount,
+                $action,
                 $button
             );
             $i++;
@@ -349,8 +374,6 @@ class VoucherController extends Controller
                 }
             }
         }
-
-//        var_dump($arrayData);die;
 
         if ($arrayData){
             $returnArray = array();
@@ -425,6 +448,38 @@ class VoucherController extends Controller
                 $voucher->total_amount=$voucher->getTotalAmount();
                 $this->GenerateVoucherId($voucher);
 
+            }
+            return redirect()->route('voucher_index')->with('success', 'Voucher has been successfully created');
+        }
+        return redirect()->route('voucher_index')->with('error','Error! Ops something error.');
+    }
+
+    public function voucherApproved($id){
+        if ($id){
+//            foreach ($vouchersId as $voucherId){
+
+            $cash_check_id = array();
+            $account_pay_check_id = array();
+                $voucher = Voucher::find($id);
+
+
+                    /** @var VoucherItems $voucherItem */
+                    foreach ($voucher->VoucherItems as $voucherItem){
+                        $voucherItem->status=1;
+                        $voucherItem->save();
+
+                        if(isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='ACCOUNT_PAY'){
+                            $account_pay_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
+                        }elseif (isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='CASH'){
+                            $cash_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
+                        }
+
+                    }
+
+                $voucher->status=2;
+                $voucher->total_amount=$voucher->getTotalAmount();
+                $this->GenerateVoucherId($voucher);
+
                 $arrayData= array(
                     'transaction_type'=>'DR',
                     'transaction_via'=>isset($account_pay_check_id[$voucher->id])?'VOUCHER_CHECK_ACCOUNT_PAY':'VOUCHER',
@@ -438,7 +493,7 @@ class VoucherController extends Controller
 
                 CashTransaction::insertData($arrayData);
 
-            }
+//            }
             $check_id = array_merge_recursive($account_pay_check_id,$cash_check_id);
 
             if(sizeof($check_id)>0){
@@ -453,7 +508,6 @@ class VoucherController extends Controller
             }
             return redirect()->route('voucher_index')->with('success', 'Voucher has been successfully created');
         }
-        return redirect()->route('voucher_index')->with('error','Error! Ops something error.');
     }
 
     public function details($id){

@@ -22,7 +22,7 @@
                                     <div class="card-header tab-card-header" style="padding-bottom: 0; padding-left: 10px">
                                         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link active" id="check-tab" data-toggle="tab" href="#check" role="tab" aria-controls="One" aria-selected="true">Check</a>
+                                                <a class="nav-link active" id="check-tab" data-toggle="tab" href="#check" role="tab" aria-controls="One" aria-selected="true">Cheque</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" id="cash-tab" data-toggle="tab" href="#cash" role="tab" aria-controls="Two" aria-selected="false">Cash</a>

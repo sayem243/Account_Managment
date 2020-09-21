@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','Check Registry List')
+@section('title','Cheque Registry List')
 @section('template')
 
 
@@ -8,7 +8,7 @@
     <div class="col-sm-12">
        <div class="card">
           <div class="card-header">
-              <h5>Check Registry </h5>
+              <h5>Cheque Registry </h5>
               {{--<div class="card-header-right">
                   @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin') || auth()->user()->can('check-registry-create'))
                   <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested">
@@ -27,7 +27,7 @@
                          <table class="table" style="margin-bottom: 0">
                              <tr>
                                  <td colspan="2">
-                                     <input  type="text" class="form-control form-filter input-sm" name="check_number" id="check_number" placeholder="Check Number....">
+                                     <input  type="text" class="form-control form-filter input-sm" name="check_number" id="check_number" placeholder="Cheque Number....">
                                  </td>
 
                                  <td colspan="1">
@@ -73,10 +73,10 @@
                  <tr>
                    <th style="width: 5%">SL</th>
                    <th>Number</th>
-                   <th>Check Date</th>
+                   <th>Cheque Date</th>
                    <th>Company</th>
                    <th>Amount</th>
-                   <th>Check Type</th>
+                   <th>Cheque Type</th>
                    <th>Type</th>
                    <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 20px">
                             <i class="feather icon-settings"></i>
@@ -112,7 +112,7 @@
          <div class="modal-content">
              <div class="modal-header" style="display: block">
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                 <h4 class="modal-title" id="myModalLabel">Check Registry Details</h4>
+                 <h4 class="modal-title" id="myModalLabel">Cheque Registry Details</h4>
              </div>
 
              <div class="modal-body">

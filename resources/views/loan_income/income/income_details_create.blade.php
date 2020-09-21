@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="check_amount">Check Amount <span class="required">*</span></label>
+                                    <label for="check_amount">Cheque Amount <span class="required">*</span></label>
                                     <input type="text" class="form-control only-number" id="check_amount" name="check_amount" placeholder="Enter check amount" value="{{$incomeDetails?$incomeDetails->check_amount:''}}">
                                 </div>
                             </div>

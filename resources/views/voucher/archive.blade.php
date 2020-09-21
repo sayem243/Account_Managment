@@ -35,7 +35,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     <select class="form-control" name="project_id" id="project_id">
                                         <option value="">All Project</option>
                                         @foreach($projects as $project)
@@ -46,7 +46,7 @@
                                 <td colspan="1">
                                     From <input style="display: inline; width: auto;"  type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="from_date" id="from_date">
                                 </td>
-                                <td colspan="2">
+                                <td colspan="3">
                                     To <input style="display: inline; width: auto;" type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="to_date" id="to_date">
                                 </td>
                             </tr>
@@ -58,6 +58,7 @@
                                 <th style="width: 150px" width="" scope="col">Company</th>
                                 <th style="width: 150px" width="" scope="col">Project</th>
                                 <th style="width: 100px" width="" scope="col">Amount</th>
+                                <th style="width: 80px" width="" scope="col">Action</th>
                                 <th scope="col text-center"><i class="feather icon-settings"></i></th>
                             </tr>
 
@@ -68,6 +69,7 @@
                             <tr>
                                 <th colspan="6" style="text-align:right">Total:</th>
                                 <th colspan="2"></th>
+                                <th colspan="1"></th>
                             </tr>
                             </tfoot>
                         </table>

@@ -47,7 +47,7 @@
                  <tr>
                      <th style="width: 5%">SL</th>
                      <th>Number</th>
-                     <th>Check Date</th>
+                     <th>Cheque Date</th>
                      <th>Type</th>
                      <th>Company</th>
                      <th>From</th>

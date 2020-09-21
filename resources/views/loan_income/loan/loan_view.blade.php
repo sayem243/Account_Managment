@@ -111,13 +111,13 @@
 
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <label class="col-md-12 col-form-label" for="check_number">Check
+                                                    <label class="col-md-12 col-form-label" for="check_number">Cheque
                                                         Number: {{$loan->checkRegistryLoanTo->check_number}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <label class="col-md-12 col-form-label" for="check_number">Check
+                                                    <label class="col-md-12 col-form-label" for="check_number">Cheque
                                                         Date: {{ date('d-m-Y', strtotime($loan->checkRegistryLoanTo->check_date))}}</label>
                                                 </div>
                                             </div>
@@ -130,13 +130,13 @@
                                         @elseif($loan->payment_mode=='CHECK' && $loan->loan_to!='COMPANY' && $loan->loan_from=='COMPANY')
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <label class="col-md-12 col-form-label" for="check_number">Check
+                                                    <label class="col-md-12 col-form-label" for="check_number">Cheque
                                                         Number: {{$loan->checkRegistryLoanFrom->check_number}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <label class="col-md-12 col-form-label" for="check_number">Check
+                                                    <label class="col-md-12 col-form-label" for="check_number">Cheque
                                                         Date: {{ date('d-m-Y', strtotime($loan->checkRegistryLoanFrom->check_date))}}</label>
                                                 </div>
                                             </div>
@@ -149,13 +149,13 @@
                                         @elseif($loan->payment_mode=='CHECK' && $loan->loan_to=='COMPANY' && $loan->loan_from=='COMPANY')
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <label class="col-md-12 col-form-label" for="check_number">Check
+                                                    <label class="col-md-12 col-form-label" for="check_number">Cheque
                                                         Number: {{$loan->checkRegistryLoanTo->check_number}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <label class="col-md-12 col-form-label" for="check_number">Check
+                                                    <label class="col-md-12 col-form-label" for="check_number">Cheque
                                                         Date: {{ date('d-m-Y', strtotime($loan->checkRegistryLoanTo->check_date))}}</label>
                                                 </div>
                                             </div>
@@ -183,7 +183,7 @@
                             @if($loan->payment_mode=='CHECK' && $loan->loan_from=='COMPANY')
                                 <div class="col-md-4">
                                     <fieldset style="margin-bottom: 10px">
-                                        <legend>Check Information</legend>
+                                        <legend>Cheque Information</legend>
 
                                         <div class="row">
                                             <div class="col-md-12">

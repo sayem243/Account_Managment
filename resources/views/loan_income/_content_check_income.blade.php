@@ -81,7 +81,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <label class="col-form-label" for="check_number">Check Number <span
+                <label class="col-form-label" for="check_number">Cheque Number <span
                             class="required">*</span></label>
                 <div class="col-form-label">
                     <input type="text" class="form-control" id="check_number" name="check_number" placeholder="Enter check number...">
@@ -90,7 +90,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label class="col-form-label" for="check_date">Check Date <span
+                <label class="col-form-label" for="check_date">Cheque Date <span
                             class="required">*</span></label>
                 <div class="col-form-label">
                     <input type="date" id="check_date" name="check_date" class="form-control">
@@ -100,14 +100,14 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label class="col-form-label" for="check_type">Check Type <span
+                <label class="col-form-label" for="check_type">Cheque Type <span
                             class="required">*</span></label>
                 <div class="col-form-label">
                     <label class="radio-inline" style="margin-right: 15px">
-                        <input required type="radio" name="check_type" value="ACCOUNT_PAY" id="check_type_ac_pay"> A/C Pay Check
+                        <input required type="radio" name="check_type" value="ACCOUNT_PAY" id="check_type_ac_pay"> A/C Pay Cheque
                     </label>
                     <label class="radio-inline">
-                        <input required checked type="radio" name="check_type" value="CASH" id="check_type_cash"> Cash Check
+                        <input required checked type="radio" name="check_type" value="CASH" id="check_type_cash"> Cash Cheque
                     </label>
                 </div>
             </div>

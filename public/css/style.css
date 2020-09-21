@@ -207,7 +207,7 @@ table.dataTable thead .sorting_desc_disabled:after{
 .payment_table button.payment_status{
     -webkit-transform: scale(1);
     margin-right: 10px;
-    min-width: 80px;
+    min-width: 90px;
     border-radius: 0.25rem!important;
 }
 .payment_table button.payment_date_range{
