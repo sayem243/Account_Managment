@@ -468,6 +468,12 @@ class LoanController extends Controller
             $countRecords->where('loans.loan_to','like','COMPANY');
         }
 
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
+            $countRecords->whereBetween('loans.created_at', [$from_date, $to_date]);
+        }
+
 
         $result = $countRecords->get();
         $tCount = count($result);
@@ -503,6 +509,11 @@ class LoanController extends Controller
             $rows->where('loans.loan_to','like','COMPANY');
         }
 
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
+            $rows->whereBetween('loans.created_at', [$from_date, $to_date]);
+        }
 
 
         $rows->offset($iDisplayStart);

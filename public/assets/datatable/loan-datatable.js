@@ -23,12 +23,17 @@ $(document).ready(function () {
                 var from_company_id = $('#from_company_id').val();
                 var to_company_id = $('#to_company_id').val();
 
+                var from_date = $('#from_date').val();
+                var to_date = $('#to_date').val();
+
 
                 // Read values
                 data._token = CSRF_TOKEN;
                 data.loan_generate_id = loan_generate_id;
                 data.from_company_id = from_company_id;
                 data.to_company_id = to_company_id;
+                data.from_date = from_date;
+                data.to_date = to_date;
             }
         },
         'columns': [
@@ -96,6 +101,9 @@ $(document).ready(function () {
         dataTable.draw();
     });
     $('#to_company_id').change(function(){
+        dataTable.draw();
+    });
+    $('.date_picker').change(function(){
         dataTable.draw();
     });
 

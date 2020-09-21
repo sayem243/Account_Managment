@@ -274,6 +274,12 @@ class IncomeController extends Controller
             $countRecords->where('incomes.company_id',$company_id);
         }
 
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
+            $countRecords->whereBetween('incomes.created_at', [$from_date, $to_date]);
+        }
+
         $result = $countRecords->get();
         $tCount = count($result);
         $iTotalRecords = $tCount;
@@ -302,6 +308,12 @@ class IncomeController extends Controller
         if(isset($query['company_id'])){
             $company_id = $query['company_id'];
             $rows->where('incomes.company_id',$company_id);
+        }
+
+        if (isset($query['from_date']) && isset($query['to_date'])) {
+            $from_date = $query['from_date'].' 00:00:00';
+            $to_date = $query['to_date'].' 23:59:59';
+            $rows->whereBetween('incomes.created_at', [$from_date, $to_date]);
         }
 
         $rows->offset($iDisplayStart);

@@ -34,7 +34,7 @@
                              @endforeach
                          </select>
                      </td>
-                     <td colspan="2">To
+                     <td colspan="1">To
                          <select style="width: auto;display: inline" class="form-control" name="to_company_id" id="to_company_id" aria-describedby="validationTooltipPackagePrepend" required>
                              <option value="">All Company</option>
                              @foreach($companies as $company)
@@ -42,8 +42,12 @@
                              @endforeach
                          </select>
                      </td>
-                     <td></td>
-                     <td></td>
+                     <td colspan="1">
+                         From <input style="display: inline; width: auto;"  type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="from_date" id="from_date">
+                     </td>
+                     <td colspan="2">
+                         To <input style="display: inline; width: auto;" type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="to_date" id="to_date">
+                     </td>
                  </tr>
                  <tr>
                      <th style="width: 5%">SL</th>
