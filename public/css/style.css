@@ -225,10 +225,15 @@ table.dataTable thead .sorting_desc_disabled:after{
 .payment_table .btn-group{
     width: 100%;
 }
+.payment_table .btn-group .btn-group{
+    text-align: right;
+    float: right;
+    display: block;
+}
 .payment_table .btn-group button.park_button{
     position: absolute;
     right: 0;
-    margin-right: 0;
+    margin-right: 110px;
 }
 .deleted_item{
     background-color: red;
