@@ -48,17 +48,17 @@
                                                 </div>
 
                                                 <div style="padding: 0 5px" class="tab-content" id="myTabContent1">
-                                                    <div class="tab-pane fade show active p-3" id="check_loan" role="tabpanel" aria-labelledby="check-loan-tab">
+                                                    <div class="tab-pane fade {{$type=='loan'?'show active':''}} p-3" id="check_loan" role="tabpanel" aria-labelledby="check-loan-tab">
 
                                                         @include('loan_income._content_check_loan')
 
                                                     </div>
-                                                    <div class="tab-pane fade p-3" id="check_income" role="tabpanel" aria-labelledby="check-income-tab">
+                                                    <div class="tab-pane fade {{$type=='income'?'show active':''}} p-3" id="check_income" role="tabpanel" aria-labelledby="check-income-tab">
 
                                                         @include('loan_income._content_check_income')
 
                                                     </div>
-                                                    <div class="tab-pane fade p-3" id="check_expense" role="tabpanel" aria-labelledby="check-expense-tab">
+                                                    <div class="tab-pane fade {{$type=='expense'?'show active':''}} p-3" id="check_expense" role="tabpanel" aria-labelledby="check-expense-tab">
 
                                                         @include('loan_income._content_check_expense')
 

@@ -302,15 +302,15 @@ class VoucherController extends Controller
                     $action.='<button data-id="'.$post->id.'" data-status="2" type="button" class="btn btn-sm  btn-primary voucher_approved" style="min-width: 75px;-webkit-transform: scale(1);">Approve </button>';
                 }elseif($post->vStatus==3){
                     if (auth()->user()->can('voucher_seen')){
-                        $action.='<button data-id="'.$post->id.'" data-status="1" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Question</button>';
+                        $action.='<button data-id="'.$post->id.'" data-status="4" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Seen</button>';
                     }
                 }
                 elseif($post->vStatus==2){
                     if (auth()->user()->can('voucher_seen')){
-                        $action.='<button data-id-id="'.$post->id.'" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Seen </button>';
+                        $action.='<button data-id-id="'.$post->id.'" data-status="4" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Seen </button>';
                     }
                     if (auth()->user()->can('voucher_seen')){
-                        $action.='<button data-id="'.$post->id.'" data-status="1" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Question</button>';
+                        $action.='<button data-id="'.$post->id.'" data-status="3" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Question</button>';
                     }
 
                 }
@@ -435,11 +435,11 @@ class VoucherController extends Controller
                         $voucherItem->status=1;
                         $voucherItem->save();
 
-                        if(isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='ACCOUNT_PAY'){
+                       /* if(isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='ACCOUNT_PAY'){
                             $account_pay_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
                         }elseif (isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='CASH'){
                             $cash_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
-                        }
+                        }*/
 
                     }
                 }
@@ -455,59 +455,65 @@ class VoucherController extends Controller
     }
 
     public function voucherApproved($id){
-        if ($id){
-//            foreach ($vouchersId as $voucherId){
+        $user = auth()->user();
 
+        if ($id){
             $cash_check_id = array();
             $account_pay_check_id = array();
-                $voucher = Voucher::find($id);
+            $voucher = Voucher::find($id);
+            if($voucher->status==1){
 
+                /** @var VoucherItems $voucherItem */
+                foreach ($voucher->VoucherItems as $voucherItem){
+                    $voucherItem->status=1;
+                    $voucherItem->save();
 
-                    /** @var VoucherItems $voucherItem */
-                    foreach ($voucher->VoucherItems as $voucherItem){
-                        $voucherItem->status=1;
-                        $voucherItem->save();
-
-                        if(isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='ACCOUNT_PAY'){
-                            $account_pay_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
-                        }elseif (isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='CASH'){
-                            $cash_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
-                        }
-
+                    if(isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='ACCOUNT_PAY'){
+                        $account_pay_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
+                    }elseif (isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='CASH'){
+                        $cash_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
                     }
 
+                }
+                $voucher->approved_by = $user->id;
+                $voucher->approved_at = new \DateTime();
                 $voucher->status=2;
-                $voucher->total_amount=$voucher->getTotalAmount();
-                $this->GenerateVoucherId($voucher);
+                $voucher->save();
 
-                $arrayData= array(
-                    'transaction_type'=>'DR',
-                    'transaction_via'=>isset($account_pay_check_id[$voucher->id])?'VOUCHER_CHECK_ACCOUNT_PAY':'VOUCHER',
-                    'transaction_via_ref_id'=>$voucher->id,
-                    'amount'=>$voucher->total_amount,
-                    'company_id'=>$voucher->VoucherItems[0]->project->company->id,
-                    'project_id'=>$voucher->VoucherItems[0]->project?$voucher->VoucherItems[0]->project->id:null,
-                    'created_by'=>auth()->id(),
-                    'created_at'=>new \DateTime(),
-                );
+                if($voucher->status==2){
 
-                CashTransaction::insertData($arrayData);
+                    $arrayData= array(
+                        'transaction_type'=>'DR',
+                        'transaction_via'=>isset($account_pay_check_id[$voucher->id])?'VOUCHER_CHECK_ACCOUNT_PAY':'VOUCHER',
+                        'transaction_via_ref_id'=>$voucher->id,
+                        'amount'=>$voucher->total_amount,
+                        'company_id'=>$voucher->VoucherItems[0]->project->company->id,
+                        'project_id'=>$voucher->VoucherItems[0]->project?$voucher->VoucherItems[0]->project->id:null,
+                        'created_by'=>auth()->id(),
+                        'created_at'=>new \DateTime(),
+                    );
 
-//            }
-            $check_id = array_merge_recursive($account_pay_check_id,$cash_check_id);
+                    CashTransaction::insertData($arrayData);
 
-            if(sizeof($check_id)>0){
+                    $check_id = array_merge_recursive($account_pay_check_id,$cash_check_id);
 
-                foreach ($check_id as $value){
-                    foreach ($value as $item){
-                        $checkRegistry = CheckRegistry::find($item['check_id']);
-                        $checkRegistry->ref_id = $item['voucher_id'];
-                        $checkRegistry->save();
+                    if(sizeof($check_id)>0){
+
+                        foreach ($check_id as $value){
+                            foreach ($value as $item){
+                                $checkRegistry = CheckRegistry::find($item['check_id']);
+                                $checkRegistry->ref_id = $item['voucher_id'];
+                                $checkRegistry->save();
+                            }
+                        }
                     }
                 }
+
+                return response()->json(['message' => 'Voucher has been successfully approved.', 'status' => 200]);
             }
-            return redirect()->route('voucher_index')->with('success', 'Voucher has been successfully created');
+
         }
+        return response()->json(['message'=>'Error! Something wrong.','status'=>301]);
     }
 
     public function details($id){

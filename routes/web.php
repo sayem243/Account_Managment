@@ -217,7 +217,7 @@ Route::get('/voucher/pdf/{id}','VoucherController@voucherPdf')->name('voucher_pd
 Route::get('/voucher/print/{id}','VoucherController@voucherPrint')->name('voucher_print');
 Route::get('/voucher/quick/view/{id}','VoucherController@quickView')->name('voucher_quick_view');
 Route::get('/ajax/voucher/delete/{id}' ,'VoucherController@delete')->name('voucher_delete');
-Route::get('/ajax/voucher/approved/{id}' ,'VoucherController@voucherApproved')->name('voucher_approved');
+Route::post('/ajax/voucher/approved/{id}' ,'VoucherController@voucherApproved')->name('voucher_approved');
 
 //Reports
 
