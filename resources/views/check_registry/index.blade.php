@@ -31,7 +31,7 @@
                                  </td>
 
                                  <td colspan="1">
-                                     <select class="form-control" name="company_id" id="company_id">
+                                     <select class="form-control company_id" name="company_id" id="company_id">
                                          <option value="">All Company</option>
                                          @foreach($companies as $company)
                                              <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
@@ -140,6 +140,7 @@
 @endsection
 @section('footer.scripts')
     <script src="{{ asset("assets/datatable/check-registry.js") }}" ></script>
+    <script src="{{ asset("assets/js/check-registry.js") }}" ></script>
 
     <script type="text/javascript">
         jQuery(document).ready(function(){

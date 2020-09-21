@@ -4,6 +4,13 @@ jQuery(document).ready(function () {
         if(companyId===0||companyId===''){
             var dataOption='<option value="">Select Bank</option>';
             jQuery('#bank_id').html(dataOption);
+
+            var dataOptionBranch='<option value="">Select Branch</option>';
+            jQuery('#branch_id').html(dataOptionBranch);
+
+            var dataOptionAccount='<option value="">Select Account</option>';
+            jQuery('#bank_account_id').html(dataOptionAccount);
+
             return false;
         }
         jQuery.ajax({
@@ -17,6 +24,12 @@ jQuery(document).ready(function () {
                     dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
                 });
                 jQuery('#bank_id').html(dataOption);
+
+                var dataOptionBranch='<option value="">Select Branch</option>';
+                jQuery('#branch_id').html(dataOptionBranch);
+
+                var dataOptionAccount='<option value="">Select Account</option>';
+                jQuery('#bank_account_id').html(dataOptionAccount);
             }
         });
 
@@ -28,6 +41,10 @@ jQuery(document).ready(function () {
         if(companyId===0||companyId===''||bankId===0||bankId===''){
             var dataOption='<option value="">Select Branch</option>';
             jQuery('#branch_id').html(dataOption);
+
+            var dataOptionAccount='<option value="">Select Account</option>';
+            jQuery('#bank_account_id').html(dataOptionAccount);
+
             return false;
         }
         jQuery.ajax({
@@ -41,6 +58,9 @@ jQuery(document).ready(function () {
                     dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
                 });
                 jQuery('#branch_id').html(dataOption);
+
+                var dataOptionAccount='<option value="">Select Account</option>';
+                jQuery('#bank_account_id').html(dataOptionAccount);
             }
         });
 
