@@ -139,8 +139,8 @@
  </style>
 @endsection
 @section('footer.scripts')
-    <script src="{{ asset("assets/datatable/check-registry.js") }}" ></script>
     <script src="{{ asset("assets/js/check-registry.js") }}" ></script>
+    <script src="{{ asset("assets/datatable/check-registry.js") }}" ></script>
 
     <script type="text/javascript">
         jQuery(document).ready(function(){
