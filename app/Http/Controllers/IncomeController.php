@@ -49,6 +49,8 @@ class IncomeController extends Controller
             'check_number' => ['required'],
             'check_date' => ['required'],
             'check_amount' => ['required'],
+            'check_income_company_id' => ['required'],
+            'check_income_project_id' => ['required'],
         ]);
 
         $income = new Income();
@@ -146,6 +148,8 @@ class IncomeController extends Controller
     public function cashIncomeStore(Request $request){
         $this->validate($request, [
             'cash_amount' => ['required'],
+            'cash_income_company_id' => ['required'],
+            'cash_income_project_id' => ['required'],
         ]);
 
         $income = new Income();

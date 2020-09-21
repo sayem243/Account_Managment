@@ -30,10 +30,11 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label class="col-form-label" for="cash_income_project_id">Project Name
+                <label class="col-form-label" for="cash_income_project_id">Project Name <span
+                            class="required">*</span>
                     </label>
                 <div class="col-form-label">
-                    <select id="cash_income_project_id" name="cash_income_project_id" class="form-control cash_income_project_id">
+                    <select id="cash_income_project_id" name="cash_income_project_id" class="form-control cash_income_project_id" required>
                         <option value="">Select Project</option>
                     </select>
                 </div>
