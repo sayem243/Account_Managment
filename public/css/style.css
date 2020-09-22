@@ -229,11 +229,13 @@ table.dataTable thead .sorting_desc_disabled:after{
     text-align: right;
     float: right;
     display: block;
+    z-index: 1;
 }
 .payment_table .btn-group button.park_button{
     position: absolute;
     right: 0;
     margin-right: 110px;
+    z-index: 999;
 }
 .deleted_item{
     background-color: red;

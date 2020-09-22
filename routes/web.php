@@ -218,6 +218,7 @@ Route::get('/voucher/print/{id}','VoucherController@voucherPrint')->name('vouche
 Route::get('/voucher/quick/view/{id}','VoucherController@quickView')->name('voucher_quick_view');
 Route::get('/ajax/voucher/delete/{id}' ,'VoucherController@delete')->name('voucher_delete');
 Route::post('/ajax/voucher/approved/{id}' ,'VoucherController@voucherApproved')->name('voucher_approved');
+Route::post('/ajax/voucher/seen/unseen/{id}' ,'VoucherController@voucherSeenUnseen')->name('voucher_seen_unseen');
 
 //Reports
 

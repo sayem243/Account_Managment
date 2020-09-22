@@ -299,18 +299,18 @@ class VoucherController extends Controller
 
             if ($post->companyDeletedAt==null && $post->projectDeletedAt==null){
                 if($post->vStatus==1 && auth()->user()->can('voucher_approved')){
-                    $action.='<button data-id="'.$post->id.'" data-status="2" type="button" class="btn btn-sm  btn-primary voucher_approved" style="min-width: 75px;-webkit-transform: scale(1);">Approve </button>';
+                    $action.='<button data-id="'.$post->id.'" data-status="2" type="button" class="btn btn-sm  btn-primary voucher_approved" title="Approve" style="min-width: 75px;-webkit-transform: scale(1);">Approve </button>';
                 }elseif($post->vStatus==3){
                     if (auth()->user()->can('voucher_seen')){
-                        $action.='<button data-id="'.$post->id.'" data-status="4" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Seen</button>';
+                        $action.='<button data-id="'.$post->id.'" data-status="4" type="button" title="Seen" class="btn btn-sm  btn-primary voucher_seen_unseen" style="-webkit-transform: scale(1);"><i class="fa fa-eye" aria-hidden="true"></i></button>';
                     }
                 }
                 elseif($post->vStatus==2){
                     if (auth()->user()->can('voucher_seen')){
-                        $action.='<button data-id-id="'.$post->id.'" data-status="4" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Seen </button>';
+                        $action.='<button data-id="'.$post->id.'" data-status="4" type="button" title="Seen" class="btn btn-sm  btn-primary voucher_seen_unseen" style="-webkit-transform: scale(1);"><i class="fa fa-eye" aria-hidden="true"></i></button>';
                     }
                     if (auth()->user()->can('voucher_seen')){
-                        $action.='<button data-id="'.$post->id.'" data-status="3" type="button" class="btn btn-sm  btn-primary voucher_approved" style="-webkit-transform: scale(1);">Question</button>';
+                        $action.='<button data-id="'.$post->id.'" data-status="3" type="button" title="Question" class="btn btn-sm  btn-primary voucher_seen_unseen" style="-webkit-transform: scale(1);"><i class="fa fa-question-circle" aria-hidden="true"></i></button>';
                     }
 
                 }
@@ -510,6 +510,28 @@ class VoucherController extends Controller
                 }
 
                 return response()->json(['message' => 'Voucher has been successfully approved.', 'status' => 200]);
+            }
+
+        }
+        return response()->json(['message'=>'Error! Something wrong.','status'=>301]);
+    }
+
+    public function voucherSeenUnseen(Request $request, $id){
+        $paymentStatus = $request->request->get('voucher_status');
+        $message='';
+        if($paymentStatus==3){
+            $message='question';
+        }elseif ($paymentStatus==4){
+            $message='seen';
+        }
+
+        if ($id && $paymentStatus){
+            $voucher = Voucher::find($id);
+            if($voucher->status==2||$voucher->status==3){
+                $voucher->status=$paymentStatus;
+                $voucher->save();
+
+                return response()->json(['message' => 'Voucher has been successfully '.$message.'.', 'status' => 200]);
             }
 
         }

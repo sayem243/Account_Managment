@@ -137,5 +137,36 @@ $(document).ready(function () {
         }
     });
 
+    jQuery("body").on("click",".voucher_seen_unseen",function(e){
+        var element = e.target;
+        e.preventDefault();
+        var id = jQuery(this).attr('data-id');
+        var voucher_status = jQuery(this).attr('data-status');
+        if(id===''){
+            return false;
+        }
+        if (confirm("Are you sure ?")) {
+            jQuery.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/ajax/voucher/seen/unseen/' + id,
+                data: {
+                    voucher_status:voucher_status
+                },
+                success: function (data) {
+                    if (data.status == 200) {
+                        jQuery('.alert').addClass('alert-success').show();
+                        jQuery('.alert').find('.message').html(data.message);
+                        dataTable.draw();
+                    }else{
+                        jQuery('.alert').addClass('alert-danger').show();
+                        jQuery('.alert').find('.message').html(data.message);
+                        dataTable.draw();
+                    }
+                }
+            });
+        }
+    });
+
 });
 
