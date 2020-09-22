@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <h5>Daily Opening Balance Session Start </h5>
                         <div class="card-header-right">
-                            @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('daily-cash-balance-session'))
+                            @if((auth()->user()->hasRole('superadmin') || auth()->user()->can('daily-cash-balance-session'))&& $previousSessionOpen)
                                 <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested">
                                     <form action="{{route('opening_balance_start')}}" method="post">
                                         {{ csrf_field() }}

@@ -55,9 +55,11 @@
             <tr>
                 <td colspan="5">
                     @if(sizeof($openingBalance)>0)
-
+                        @if($getPreviousCurrentSessionClose)
                     <form action="{{route('closing_balance_update')}}" method="post">
+
                         {{ csrf_field() }}
+                        @endif
                         <table class="table table-bordered" style="margin: 0">
                             <thead>
                             <tr style="background-color: red; color: #FFFFFF; font-weight: bold; font-size: large">
@@ -80,7 +82,7 @@
                                     $drTotal = 0;
                                 @endphp
 
-                                @if(isset($cashTransactions[$step1Key]) || $openingBalance[$step1Key]->opening_balance > 0)
+                                @if(isset($cashTransactions[$step1Key]) || (isset($openingBalance[$step1Key]) && $openingBalance[$step1Key]->opening_balance > 0) )
                                 <tr>
                                     <td style="background-color: darkgrey; color: #FFFFFF;font-weight: bold; font-size: medium" align="center" colspan="5">{{$value}}</td>
                                 </tr>
@@ -486,6 +488,7 @@
                             </tr>
                             </tfoot>
                         </table>
+                        @if($getPreviousCurrentSessionClose)
                         <div class="line aligncenter" style="float: right">
                             <div class="form-group row">
                                 <div style="padding-right: 3px"
@@ -498,6 +501,7 @@
                             </div>
                         </div>
                     </form>
+                        @endif
 
                         @else
                         <p style="text-align: center">No record found.</p>

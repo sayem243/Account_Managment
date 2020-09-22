@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 class DailyCashBalanceSessionController extends Controller
 {
     public function index(){
+
+        $previousSessionOpen = $this->getSessionOpen();
+
         $rows = DB::table('cash_daily_balance_sessions');
         $rows->select('cash_daily_balance_sessions.id as sId','cash_daily_balance_sessions.created_at as createdDate', DB::raw('SUM(cash_daily_balance_sessions.opening_balance) as totalOpeningBalance'), DB::raw('SUM(cash_daily_balance_sessions.closing_balance) as totalClosingBalance'));
         $rows->groupBy('created_at');
@@ -19,7 +22,7 @@ class DailyCashBalanceSessionController extends Controller
         $result = $rows->get();
 
 
-            return view('daily_cash_balance_session.index',['cashBalanceSessions'=>$result]);
+            return view('daily_cash_balance_session.index',['cashBalanceSessions'=>$result, 'previousSessionOpen'=>$previousSessionOpen]);
 //        return view('layout');
     }
 
@@ -141,7 +144,7 @@ class DailyCashBalanceSessionController extends Controller
 
     public function closingBalanceUpdate(Request $request){
         $submit = $request->closing_update;
-        $cash_balance_session_id = $request->cash_balance_session_id;
+        $cash_balance_session_id = $request->cash_balance_session_id?$request->cash_balance_session_id:array();
         $selected_date = $request->selected_date;
         $date = isset($selected_date)?$selected_date: date('Y-m-d');
         $companies = Company::all();
@@ -157,14 +160,15 @@ class DailyCashBalanceSessionController extends Controller
 
 
                 if (isset($exResult[0])){
+                    $dailyCashBalanceSession = CashDailyBalanceSession::find($exResult[0]->id);
                     if(array_key_exists($exResult[0]->id, $cash_balance_session_id)){
-                        $dailyCashBalanceSession = CashDailyBalanceSession::find($exResult[0]->id);
                         $dailyCashBalanceSession->closing_balance = isset($cash_balance_session_id[$dailyCashBalanceSession->id])?$cash_balance_session_id[$dailyCashBalanceSession->id]:$dailyCashBalanceSession->opening_balance;
-                        $dailyCashBalanceSession->updated_at = new \DateTime();
-                        $dailyCashBalanceSession->status = 2;
-                        $dailyCashBalanceSession->save();
-                        $insertId[]= $dailyCashBalanceSession->id;
+
                     }
+                    $dailyCashBalanceSession->updated_at = new \DateTime();
+                    $dailyCashBalanceSession->status = 2;
+                    $dailyCashBalanceSession->save();
+                    $insertId[]= $dailyCashBalanceSession->id;
                 }
             }
         }
@@ -173,6 +177,18 @@ class DailyCashBalanceSessionController extends Controller
 
         }
         return redirect()->route('opening_balance_session_list');
+    }
+
+    public function getSessionOpen(){
+        $cash_daily_balance_sessions = DB::table('cash_daily_balance_sessions')
+            ->select('id')
+            ->where('status',1)
+            ->whereDate('created_at', '<=', date('Y-m-d'))
+            ->get();
+        if(sizeof($cash_daily_balance_sessions)>0){
+            return false;
+        }
+        return true;
     }
 
     public function __construct()

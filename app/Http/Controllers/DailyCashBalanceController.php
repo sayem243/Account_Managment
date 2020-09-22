@@ -83,7 +83,9 @@ class DailyCashBalanceController extends Controller
         foreach ($result as $cashTransaction){
             $returnArray[$cashTransaction->company_id][$cashTransaction->transaction_type][]=$cashTransaction;
         }
-        return view('daily_cash_balance.index',['openingBalance'=>$openingBalance, 'openingBalanceTotal'=>$openingBalanceTotal, 'cashTransactions'=>$returnArray, 'companies'=>$returnAllCompanies,  'company'=>$returnCompany, 'user'=>$returnUser, 'selected_date'=>$date?$date:date('Y-m-d')]);
+        $getPreviousCurrentSessionClose = $this->getPreviousCurrentSessionClose($date?$date:date('Y-m-d'));
+
+        return view('daily_cash_balance.index',['openingBalance'=>$openingBalance, 'openingBalanceTotal'=>$openingBalanceTotal, 'cashTransactions'=>$returnArray, 'companies'=>$returnAllCompanies,  'company'=>$returnCompany, 'user'=>$returnUser, 'getPreviousCurrentSessionClose'=>$getPreviousCurrentSessionClose, 'selected_date'=>$date?$date:date('Y-m-d')]);
 
 
     }
@@ -102,6 +104,19 @@ class DailyCashBalanceController extends Controller
             $returnData[$value->company_id]=$value;
         }
         return $returnData;
+    }
+
+    public function getPreviousCurrentSessionClose($date){
+        $cash_daily_balance_sessions = DB::table('cash_daily_balance_sessions')
+            ->select('id')
+            ->where('status',2)
+            ->whereDate('created_at', '=', $date)
+            ->get();
+
+        if(sizeof($cash_daily_balance_sessions)>0){
+            return false;
+        }
+        return true;
     }
 
 }
