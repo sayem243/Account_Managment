@@ -220,6 +220,15 @@ class VoucherController extends Controller
             $countRecords->whereBetween('vouchers.created_at', [$from_date, $to_date]);
         }
 
+        if (isset($query['voucher_status'])){
+            $status = $query['voucher_status'];
+            if($status=='all'){
+                $countRecords->whereIn('vouchers.status',[1,2,3]);
+            }else{
+                $countRecords->where('vouchers.status','=', $status);
+            }
+        }
+
         $countRecords->groupBy('totalVouchers');
         $result = $countRecords->get();
         $tcount = count($result);
@@ -273,6 +282,15 @@ class VoucherController extends Controller
             $from_date = $query['from_date'].' 00:00:00';
             $to_date = $query['to_date'].' 23:59:59';
             $rows->whereBetween('vouchers.created_at', [$from_date, $to_date]);
+        }
+
+        if (isset($query['voucher_status'])){
+            $status = $query['voucher_status'];
+            if($status=='all'){
+                $rows->whereIn('vouchers.status',[1,2,3]);
+            }else{
+                $rows->where('vouchers.status','=', $status);
+            }
         }
 
         $rows->groupBy('voucherId');

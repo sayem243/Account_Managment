@@ -1,6 +1,10 @@
 $(document).ready(function () {
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
+    $.fn.dataTable.ext.buttons.all_voucher = {
+        className: 'buttons-alert voucher_status',
+    };
+
     var dataTable= $('#voucher_table').DataTable( {
 
         loadingMessage: 'Loading...',
@@ -25,12 +29,16 @@ $(document).ready(function () {
                 var from_date = $('#from_date').val();
                 var to_date = $('#to_date').val();
 
+                var voucher_status = $('.payment_table').find('.active').attr('data-status');
+
+
                 data._token = CSRF_TOKEN;
                 data.voucher_id = voucher_id;
                 data.project_id = project_id;
                 data.company_id = company_id;
                 data.from_date = from_date;
                 data.to_date = to_date;
+                data.voucher_status = voucher_status?voucher_status:'all';
             }
         },
         'columns': [
@@ -60,6 +68,54 @@ $(document).ready(function () {
                 "targets": 8,
                 "orderable": false
             }],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'all_voucher',
+                text: 'All',
+                className: 'buttons-alert voucher_status btn-info',
+                attr:  {
+                    title: 'All',
+                    'data-status': 'all'
+                }
+            },
+            {
+                extend: 'all_voucher',
+                text: 'Created',
+                className: 'buttons-alert voucher_status btn-info',
+                attr:  {
+                    title: 'Created',
+                    'data-status': 1
+                }
+            },
+            {
+                extend: 'all_voucher',
+                text: 'Approved',
+                className: 'buttons-alert voucher_status btn-info',
+                attr:  {
+                    title: 'Approved',
+                    'data-status': 2
+                }
+            },
+            {
+                extend: 'all_voucher',
+                text: 'Question',
+                className: 'buttons-alert voucher_status btn-info',
+                attr:  {
+                    title: 'Question',
+                    'data-status': 3
+                }
+            },
+            {
+                extend: 'all_voucher',
+                text: 'Archived',
+                className: 'buttons-alert voucher_status btn-info',
+                attr:  {
+                    title: 'Archived',
+                    'data-status': 4
+                }
+            }
+        ],
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
 
@@ -102,6 +158,12 @@ $(document).ready(function () {
     });
 
     $('.date_picker').change(function(){
+        dataTable.draw();
+    });
+
+    $('.voucher_status').on('click', function(){
+        $('.voucher_status').removeClass('active');
+        $(this).addClass('active');
         dataTable.draw();
     });
 
