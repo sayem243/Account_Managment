@@ -36,7 +36,7 @@
                                     </select>
                                 </td>
                                 <td colspan="2">
-                                    <select class="form-control" name="project_id" id="project_id">
+                                    <select class="form-control select2" name="project_id" id="project_id">
                                         <option value="">All Project</option>
                                         @foreach($projects as $project)
                                             <option value="{{ $project->id }}">{{ $project->p_name }}</option>
