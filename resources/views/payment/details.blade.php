@@ -298,7 +298,7 @@
                             </div>
                         </form>
                     @else
-                        <p>This payment is not permission</p>
+                        <p>This payment is not permitted</p>
                     @endif
                 </div>
 
