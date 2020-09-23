@@ -34,38 +34,7 @@
                                 <div class="col-md-12">
                                     <fieldset style="margin-bottom: 10px">
                                         <legend>Deposit Information</legend>
-                                        <div class="row">
-                                            @php
-                                                $chequeRegistry = array();
-                                            @endphp
-                                            @foreach($voucher->VoucherItems as $voucherItem)
 
-                                                @if(isset($voucherItem->checkRegistry))
-                                                    @php
-                                                        $chequeRegistry[] = $voucherItem->checkRegistry;
-                                                    @endphp
-                                                @endif
-
-                                            @endforeach
-
-                                            @if(sizeof($chequeRegistry)>0)
-
-                                                @foreach($chequeRegistry as $items)
-
-
-                                                    <div class="row">
-                                                        <fieldset style="margin-bottom: 10px">
-                                                        <div class="col-md-12">  <h6>Bank: {{$items->bank->name}}</h6></div>
-                                                        <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
-                                                        <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
-                                                        </div>
-
-                                                    </div>
-
-
-                                                @endforeach
-                                            @endif
-                                        </div>
                                     </fieldset>
                                 </div>
                             </div>
@@ -128,6 +97,41 @@
                                     <p style="color: #ff3737; padding: 10px 5px; margin-bottom: 5px"><strong style="font-weight: bold">Write in
                                             words: </strong>{{$amount}} only</p>
                                 </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                @php
+                                    $chequeRegistry = array();
+                                @endphp
+                                @foreach($voucher->VoucherItems as $voucherItem)
+
+                                    @if(isset($voucherItem->checkRegistry))
+                                        @php
+                                            $chequeRegistry[] = $voucherItem->checkRegistry;
+                                        @endphp
+                                    @endif
+
+                                @endforeach
+
+                                @if(sizeof($chequeRegistry)>0)
+
+                                    @foreach($chequeRegistry as $items)
+
+
+                                        <div class="row">
+                                            <fieldset style="margin-bottom: 10px">
+                                                <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
+                                                <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
+                                                <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
+                                                </div>
+
+                                        </div>
+
+
+                                    @endforeach
+                                @endif
                             </div>
 
 
