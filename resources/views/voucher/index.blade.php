@@ -22,8 +22,8 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>
-                                    <select name="item_expenditure_sector" class="form-control item_expenditure_sector">
+                                <td width="200px">
+                                    <select name="item_expenditure_sector" class="form-control item_expenditure_sector select2">
                                         <option value="">Select Type</option>
                                         @foreach ($expenditureSectors as $expenditureSector)
                                             <option value="{{$expenditureSector->id}}">{{$expenditureSector->name}}</option>
@@ -31,8 +31,8 @@
 
                                     </select>
                                 </td>
-                                <td>
-                                    <select class="form-control item_project_id" name="item_project" id="item_project_id">
+                                <td width="200px">
+                                    <select class="form-control item_project_id select2" name="item_project" id="item_project_id">
                                         <option value="">All Project</option>
                                         @foreach($projects as $project)
                                             <option value="{{ $project->id }}">{{ $project->p_name }}</option>
@@ -79,7 +79,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" name="project_id" id="project_id">
+                                        <select class="form-control select2" name="project_id" id="project_id">
                                             <option value="">All Project</option>
                                             @foreach($projects as $project)
                                                 <option value="{{ $project->id }}">{{ $project->p_name }}</option>

@@ -117,10 +117,10 @@ button.btn, a.btn {
     right: 1px;
   width: 20px;
 }
-.select2-container {
+/*.select2-container {
     width: auto;
    height: 50px;
-}
+}*/
 
 /*.button {*/
 /*    background-color: #4caf50; !* Green *!*/
@@ -265,4 +265,14 @@ table.dataTable thead .sorting_desc_disabled:after{
     width: 100%;
 }
 
+.select2-container {
+    width: auto;
+}
+.select2-container {
+    width: auto !important;
+}
+
+.select2-container--bootstrap4 .select2-dropdown--below, .select2-container--bootstrap4 .select2-dropdown--above{
+    min-width: 250px!important;
+}
 

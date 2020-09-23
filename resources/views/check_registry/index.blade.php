@@ -55,7 +55,7 @@
                                      </select>
                                  </td>
                                  <td>
-                                     <select class="form-control bank_account_id" name="bank_account_id" id="bank_account_id">
+                                     <select class="form-control bank_account_id select2" name="bank_account_id" id="bank_account_id">
                                          <option value="">All Account</option>
                                          @foreach($bankAccounts as $bankAccount)
                                              <option value="{{ $bankAccount->id }}">{{ $bankAccount->account_number }}</option>

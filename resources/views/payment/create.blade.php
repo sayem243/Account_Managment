@@ -50,7 +50,7 @@
 
                           <div class="form-group">
                               <label for="exampleInputEmail1">Paid To:</label>
-                              <select style="{{$paymentUser?'pointer-events: none; background-color: #e7e7e7;':''}}" class="form-control" name="user_id" id="user_id" required>
+                              <select style="{{$paymentUser?'pointer-events: none; background-color: #e7e7e7;':''}}" class="form-control select2" name="user_id" id="user_id" required>
 
                                   <option value="">Select User</option>
                                   @if($users)

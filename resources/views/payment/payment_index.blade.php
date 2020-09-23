@@ -71,7 +71,7 @@
                           </select>
                       </td>
                       <td colspan="1">
-                          <select class="form-control" name="project_id" id="project_id">
+                          <select class="form-control select2" name="project_id" id="project_id">
                               <option value="">All Project</option>
                               @foreach($projects as $project)
                                   <option value="{{ $project->id }}">{{ $project->p_name }}</option>
@@ -81,7 +81,7 @@
 
 
                       <td colspan="1">
-                          <select class="form-control" name="user_id" id="user_id" >
+                          <select class="form-control select2" name="user_id" id="user_id" >
                               <option value="">All User</option>
                               @foreach($users as $user)
                                   <option value="{{ $user['id'] }}">{{ $user['name'] }}</option>
@@ -101,8 +101,8 @@
                       <th width="100px" scope="col">HS ID</th>
                       <th width="150px" scope="col">Name</th>
                       <th width="150px" scope="col">Company</th>
-                      <th width="150px" scope="col">Amount</th>
-                      <th width="200px" scope="col">Status</th>
+                      <th width="200px" scope="col">Amount</th>
+                      <th width="150px" scope="col">Status</th>
                       <th width="170px" scope="col text-center">Action</th>
                       <th scope="col text-center"><i class="feather icon-settings"></i></th>
                   </tr>

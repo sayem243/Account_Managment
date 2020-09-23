@@ -53,7 +53,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="user_id">Paid To:</label>
-                                        <select style="pointer-events: none;" class="form-control" name="user_id" id="edit_user_id" required>
+                                        <select style="pointer-events: none;" class="form-control select2" name="user_id" id="edit_user_id" required>
 
                                             <option value="">Select User</option>
                                             @foreach($users as $user)

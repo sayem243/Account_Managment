@@ -150,7 +150,7 @@ class VoucherController extends Controller
 
         foreach ($result as $post):
 
-            $dropdown='<select name="expenditure_sector['.$post->viId.']" class="form-control">
+            $dropdown='<select name="expenditure_sector['.$post->viId.']" class="form-control select2">
             <option value="">Select Type</option>';
             foreach ($expenditureSectors as $expenditureSector){
                 $dropdown.= '<option value="'.$expenditureSector->id.'">'.$expenditureSector->name.'</option>';

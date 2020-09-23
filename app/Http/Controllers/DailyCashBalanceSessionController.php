@@ -185,7 +185,12 @@ class DailyCashBalanceSessionController extends Controller
             ->where('status',1)
             ->whereDate('created_at', '<=', date('Y-m-d'))
             ->get();
-        if(sizeof($cash_daily_balance_sessions)>0){
+        $cash_daily_balance_sessions_open = DB::table('cash_daily_balance_sessions')
+            ->select('id')
+            ->where('status',2)
+            ->whereDate('created_at', '=', date('Y-m-d'))
+            ->get();
+        if(sizeof($cash_daily_balance_sessions)>0||sizeof($cash_daily_balance_sessions_open)>0){
             return false;
         }
         return true;
