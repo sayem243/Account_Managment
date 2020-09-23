@@ -401,6 +401,10 @@ class IncomeController extends Controller
             'check_amount' => ['required'],
         ]);
 
+        if($request->certifite_amount!=($request->check_amount+$request->sd_amount+$request->it_amount+$request->vat_amount+$request->others_amount)){
+            return redirect()->route('income_details_create',$id)->with('error', 'Certifite amount is not valid.');
+        }
+
 
         $exIncomeDetails = DB::table('income_details')->where('income_id', $id)->first();
         $message = '';

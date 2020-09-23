@@ -9,7 +9,7 @@
                     <h5>Income Details</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
-                            <a href="{{route('loan_index')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
+                            <a href="{{route('income_index')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="check_amount">Cheque Amount <span class="required">*</span></label>
-                                    <input type="text" class="form-control only-number" id="check_amount" name="check_amount" placeholder="Enter check amount" value="{{$incomeDetails?$incomeDetails->check_amount:''}}">
+                                    <p class="form-control">{{$income?$income->amount:''}}</p>
+                                    <input type="hidden" class="form-control only-number" id="check_amount" name="check_amount" style="pointer-events: none" placeholder="Enter check amount" value="{{$income?$income->amount:''}}">
                                 </div>
                             </div>
                         </div>
