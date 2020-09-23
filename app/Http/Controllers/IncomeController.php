@@ -334,8 +334,8 @@ class IncomeController extends Controller
                     <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
 
 
-            $button .='<li class="dropdown-item"><a href="/income/details/'.$post->iId.'"><i class="feather icon-eye"></i>Details</a></li>';
-            $button .='<li class="dropdown-item"><a href="/income/details/'.$post->iId.'/create"><i class="feather icon-eye"></i>Create Details</a></li>';
+            $button .='<li class="dropdown-item"><a href="/income/details/'.$post->iId.'"><i class="feather icon-eye"></i>Transaction Details</a></li>';
+            $button .='<li class="dropdown-item"><a href="/income/details/'.$post->iId.'/create"><i class="feather icon-eye"></i>Income Details</a></li>';
 
             $button.='</ul></div>';
 
