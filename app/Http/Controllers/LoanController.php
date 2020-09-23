@@ -232,8 +232,8 @@ class LoanController extends Controller
             $checkRegistryIn->created_by = auth()->id();
             $checkRegistryIn->description = $request->check_description;
             $checkRegistryIn->cash_transaction_id = $cashTransactionTo;
-            $checkRegistry->ref_type = 'LOAN';
-            $checkRegistry->ref_id = $loan->id;
+            $checkRegistryIn->ref_type = 'LOAN';
+            $checkRegistryIn->ref_id = $loan->id;
             $checkRegistryIn->save();
 
             $loan->check_registry_id_for_loan_to=$checkRegistryIn->id;
