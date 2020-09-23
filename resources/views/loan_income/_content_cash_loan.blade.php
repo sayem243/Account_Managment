@@ -24,7 +24,7 @@
                         <select id="cash_loan_from" name="cash_loan_from" class="form-control cash_loan_from" required>
                             <option value="USER">User</option>
                             <option value="COMPANY">Company</option>
-                            <option value="PROJECT">Project</option>
+                            {{--<option value="PROJECT">Project</option>--}}
                             <option value="OTHERS">Others</option>
                         </select>
                     </div>
@@ -61,7 +61,7 @@
                     </div>
 
                 </div>
-                <div class="cash_loan_project_section" style="display: none">
+                {{--<div class="cash_loan_project_section" style="display: none">
                     <div class="form-group">
                         <label for="cash_loan_from_value_project" class="col-form-label">Project <span
                                     class="required">*</span></label>
@@ -74,7 +74,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <div class="cash_loan_other_section" style="display: none">
                     <div class="form-group">
                         <label for="cash_loan_from_value_other" class="col-form-label">Provider Name <span
