@@ -17,6 +17,53 @@
                         <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$voucher->VoucherItems[0]->project['p_name']}}</h4>
 
                         {{--<hr style="margin-top: 1px; margin-bottom: 5px">--}}
+
+                        <hr style="margin-top: 1px; margin-bottom: 10px">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset style="margin-bottom: 10px">
+                                    <legend>Deposit Information</legend>
+                                    <div class="row">
+                                        @php
+                                            $chequeRegistry = array();
+                                        @endphp
+                                        @foreach($voucher->VoucherItems as $voucherItem)
+
+                                            @if(isset($voucherItem->checkRegistry))
+                                                @php
+                                                    $chequeRegistry[] = $voucherItem->checkRegistry;
+                                                @endphp
+                                            @endif
+
+                                        @endforeach
+
+                                        @if(sizeof($chequeRegistry)>0)
+
+                                            @foreach($chequeRegistry as $items)
+
+
+                                                <div class="row">
+                                                    <fieldset style="margin-bottom: 10px">
+
+                                                    <div class="col-md-12">  <h3>Bank: {{$items->bank->name}}</h3></div>
+                                                    <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
+                                                    <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
+                                                    </div>
+
+                                                </div>
+
+
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <hr style="margin-top: 1px; margin-bottom: 10px">
+
+
+
                         <table class="table" style="margin-bottom: 5px">
                             <tr style="font-size: 20px">
                                 <th style="text-align: left; border: none">Account: {{$voucher->expenditureSector->name}}</th>
@@ -34,7 +81,16 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @php
+                                $chequeRegistry = array();
+                            @endphp
+
                             @foreach($voucher->VoucherItems as $voucherItem)
+                                @if(isset($voucherItem->checkRegistry))
+                                    @php
+                                        $chequeRegistry[] = $voucherItem->checkRegistry;
+                                    @endphp
+                                @endif
                                 <tr>
                                     <td style="padding: 5px 10px">{{$voucherItem->item_name}}</td>
                                     <td style="text-align: right; padding-right: 15px">{{number_format($voucherItem->voucher_amount,0,'.',',')}}</td>
@@ -60,6 +116,27 @@
                                         words: </strong>{{$amount}} only</p>
                             </div>
                         </div>
+
+                        {{--@if(sizeof($chequeRegistry)>0)--}}
+                            {{--@foreach($chequeRegistry as $items)--}}
+
+
+                                {{--<div class="row">--}}
+                                    {{--<div class="col-md-12">  <h6>Bank: {{$items->bank->name}}</h6></div>--}}
+                                    {{--<div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>--}}
+                                    {{--<div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>--}}
+                                    {{--</div>--}}
+
+                                {{--</div>--}}
+
+
+                            {{--@endforeach--}}
+                        {{--@endif--}}
+
+
+
+
+
                     </div>
 
                 </div>

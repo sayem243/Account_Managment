@@ -12,6 +12,10 @@
         </div>
     @endif
 
+
+
+
+
     <div class="row">
         <input type="hidden" name="item_add_without_ajax" value="1">
         <div class="col-md-12">

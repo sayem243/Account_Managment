@@ -83,9 +83,16 @@ class DailyCashBalanceController extends Controller
         foreach ($result as $cashTransaction){
             $returnArray[$cashTransaction->company_id][$cashTransaction->transaction_type][]=$cashTransaction;
         }
+
+//        EOD method
         $getPreviousCurrentSessionClose = $this->getPreviousCurrentSessionClose($date?$date:date('Y-m-d'));
 
-        return view('daily_cash_balance.index',['openingBalance'=>$openingBalance, 'openingBalanceTotal'=>$openingBalanceTotal, 'cashTransactions'=>$returnArray, 'companies'=>$returnAllCompanies,  'company'=>$returnCompany, 'user'=>$returnUser, 'getPreviousCurrentSessionClose'=>$getPreviousCurrentSessionClose, 'selected_date'=>$date?$date:date('Y-m-d')]);
+        return view('daily_cash_balance.index',
+            ['openingBalance'=>$openingBalance, 'openingBalanceTotal'=>$openingBalanceTotal,
+                'cashTransactions'=>$returnArray, 'companies'=>$returnAllCompanies,
+                'company'=>$returnCompany, 'user'=>$returnUser,
+                'getPreviousCurrentSessionClose'=>$getPreviousCurrentSessionClose,
+                'selected_date'=>$date?$date:date('Y-m-d')]);
 
 
     }

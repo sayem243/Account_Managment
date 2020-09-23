@@ -6,6 +6,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
+
+
                     {{--Advance Payment Information--}}
 
                     <div class="card-body"
@@ -17,6 +19,53 @@
                         <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$voucher->VoucherItems[0]->project['p_name']}}</h4>
 
                         {{--<hr style="margin-top: 1px; margin-bottom: 5px">--}}
+
+                        <hr style="margin-top: 1px; margin-bottom: 10px">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset style="margin-bottom: 10px">
+                                    <legend>Deposit Information</legend>
+                                    <div class="row">
+                                        @php
+                                            $chequeRegistry = array();
+                                        @endphp
+                                        @foreach($voucher->VoucherItems as $voucherItem)
+
+                                            @if(isset($voucherItem->checkRegistry))
+                                                @php
+                                                    $chequeRegistry[] = $voucherItem->checkRegistry;
+                                                @endphp
+                                            @endif
+
+                                        @endforeach
+
+                                        @if(sizeof($chequeRegistry)>0)
+
+                                            @foreach($chequeRegistry as $items)
+
+
+                                                <div class="row">
+                                                    <fieldset style="margin-bottom: 10px">
+                                                    <div class="col-md-12">  <h6>Bank: {{$items->bank->name}}</h6></div>
+                                                    <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
+                                                    <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
+                                                    </div>
+
+                                                </div>
+
+
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <hr style="margin-top: 1px; margin-bottom: 10px">
+
+
+
+
                         <table class="table" style="margin-bottom: 5px">
                             <tr style="font-size: 20px">
                                 <th style="text-align: left; border: none">Account: {{$voucher->expenditureSector->name}}</th>
@@ -33,8 +82,18 @@
                                 <th style="border: 1px solid #000000" style="text-align: center!important; padding-right: 15px" align="center" width="20%">Amount (TK.)</th>
                             </tr>
                             </thead>
-                            <tbody>
+
+
+                            @php
+                                $chequeRegistry = array();
+                            @endphp
                             @foreach($voucher->VoucherItems as $voucherItem)
+                                @if(isset($voucherItem->checkRegistry))
+                                    @php
+                                        $chequeRegistry[] = $voucherItem->checkRegistry;
+                                    @endphp
+                                @endif
+
                                 <tr>
                                     <td style="padding: 5px 10px">{{$voucherItem->item_name}}</td>
                                     <td style="text-align: right; padding-right: 15px">{{$voucherItem->voucher_amount}}</td>
@@ -51,15 +110,22 @@
                             </tfoot>
 
                         </table>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @php use App\CustomClass\NumberToWordConverter;
-                               $amount = NumberToWordConverter::convert($voucher->total_amount);
-                                @endphp
-                                <p style="color: red; padding: 10px 5px; margin-bottom: 5px"><strong style="font-weight: bold">Write in
-                                        words: </strong>{{$amount}} only</p>
-                            </div>
-                        </div>
+
+
+
+                        {{--new test section--}}
+
+
+
+
+
+
+
+
+                        {{--end new section--}}
+
+
+
                     </div>
 
                 </div>
