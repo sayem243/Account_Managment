@@ -128,16 +128,11 @@
                                                 </div>
                                             </div>
                                         @elseif($loan->payment_mode=='CHECK' && $loan->loan_to!='COMPANY' && $loan->loan_from=='COMPANY')
+
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="check_number">Cheque
-                                                        Number: {{$loan->checkRegistryLoanFrom->check_number}}</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <label class="col-md-12 col-form-label" for="check_number">Cheque
-                                                        Number: {{$loan->checkRegistryLoanFrom->check_number}}</label>
+                                                        Number: <a href="{{route('check_registry_details',$loan->checkRegistryLoanFrom['id'])}}">{{$loan->checkRegistryLoanFrom->check_number}}</a></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -156,7 +151,7 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="check_number">Cheque
-                                                        Number: <a href="{{route('check_registry_details',$loan['id'])}}">{{$loan->checkRegistryLoanTo->check_number}}</a></label>
+                                                        Number: <a href="{{route('check_registry_details',$loan->checkRegistryLoanTo['id'])}}">{{$loan->checkRegistryLoanTo->check_number}}</a></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -395,7 +390,7 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="check_number">Cheque
-                                                        Number: {{$loan->checkRegistryLoanFrom->check_number}}</label>
+                                                        Number:<a href="{{route('check_registry_details',$loan->checkRegistryLoanFrom['id'])}}"> {{$loan->checkRegistryLoanFrom->check_number}}</a></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -414,7 +409,7 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="check_number">Cheque
-                                                        Number: {{$loan->checkRegistryLoanTo->check_number}}</label>
+                                                        Number: <a href="{{route('check_registry_details',$loan->checkRegistryLoanTo['id'])}}">{{$loan->checkRegistryLoanTo->check_number}}</a></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
