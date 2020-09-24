@@ -89,7 +89,7 @@ class DailyCashBalanceSessionController extends Controller
 
     public function quickView(Request $request){
 
-        $companies = Company::all();
+        $companies = Company::all()->sortBy('name');
         $returnCompany = array();
         foreach ($companies as $company){
             $returnCompany[$company->id]= $company->name;
@@ -111,21 +111,33 @@ class DailyCashBalanceSessionController extends Controller
         if ($company_id!=''){
             $rows->where('company_id', $company_id);
         }
+        $rows->whereIn('cash_transactions.transaction_via',[
+            'CHECK_OUT',
+            'INCOME_CASH',
+            'INCOME_CHECK_CASH',
+            'LOAN_CASH',
+            'LOAN_CHECK_CASH',
+            'HAND_SLIP_SETTLE',
+            'HAND_SLIP_TRANSFER',
+            'HAND_SLIP_CASH_RETURN',
+            'HAND_SLIP_ISSUE',
+            'VOUCHER',
+        ]);
         $rows->whereBetween('created_at', [$from_date, $to_date]);
         $result = $rows->get();
         $returnArray = array();
 
-        $openingBalance=$this->getDailyOpeningBalance($from_date,$to_date,$company_id);
+        $openingBalance=$this->getDailyOpeningClosingBalance($from_date,$to_date,$company_id);
 
         foreach ($result as $cashTransaction){
-            $returnArray[$cashTransaction->company_id][$cashTransaction->transaction_type][]=$cashTransaction;
+            $returnArray[$cashTransaction->company_id][$cashTransaction->transaction_type][]=$cashTransaction->amount;
         }
 
-        $returnHTML = view('daily_cash_balance_session.quick-view',['openingBalance'=>$openingBalance, 'cashTransactions'=>$returnArray, 'company'=>$returnCompany, 'user'=>$returnUser, 'selected_date'=>$date])->render();
+        $returnHTML = view('daily_cash_balance_session.quick-view',['openingClosingBalance'=>$openingBalance, 'cashTransactions'=>$returnArray, 'companies'=>$returnCompany, 'user'=>$returnUser, 'selected_date'=>$date])->render();
         return response()->json( ['html'=>$returnHTML]);
     }
 
-    public function getDailyOpeningBalance($from_date,$to_date, $company_id){
+    public function getDailyOpeningClosingBalance($from_date,$to_date, $company_id){
         $rows = DB::table('cash_daily_balance_sessions');
         if ($company_id!=''){
             $rows->where('company_id', $company_id);
