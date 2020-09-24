@@ -7,20 +7,72 @@
   <div class="row">
     <div class="col-sm-12">
        <div class="card">
-          <div class="card-header">
-              <h5>Client List </h5>
-              <div class="card-header-right">
-                  <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested">
-                      <a style="-webkit-transform: scale(0.9);" href="{{route('client_create')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
-                  </div>
-              </div>
+           <div class="card-header">
+               <h5>Client List </h5>
+           </div>
+            <div class="card-body" style="padding-bottom: 0; padding-right: 15px;">
+               <form class="form-horizontal" action="{{ route('client_store')}}" method="post"
+                     enctype="multipart/form-data">
+                   {{ csrf_field() }}
+                   {{--error showing --}}
+                   @if ($errors->any())
+                       <div class="alert alert-danger">
+                           <ul>
+                               @foreach ($errors->all() as $error)
+                                   <li>{{ $error }}</li>
+                               @endforeach
+                           </ul>
+                       </div>
+                   @endif
 
-                </div>
-      <div class="card-body">
-         <table class= "table table-bordered">
+                   <div class="row">
+                       <div class="col-md-4">
+                           <div class="form-group">
+                               <label class="col-form-label" for="name">Name <span
+                                           class="required">*</span></label>
+                               <div class="col-form-label">
+                                   <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="col-md-3">
+                           <div class="form-group">
+                               <label class="col-form-label" for="phone">Phone</label>
+                               <div class="col-form-label">
+                                   <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone Number">
+                               </div>
+                           </div>
+                       </div>
+                       <div class="col-md-4">
+                           <div class="form-group">
+                               <label class="col-form-label" for="address">Address</label>
+                               <div class="col-form-label">
+                                                <textarea type="text" class="form-control" rows="1" name="address"
+                                                          id="address"></textarea>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="col-md-1">
+                           <div class="form-group">
+                               <label class="col-form-label" for="address"></label>
+                               <div class="col-form-label btn-group-lg">
+                                   <button style="margin-right: 0; float: right; margin-top: 7px; padding: .4rem .5rem;" type="submit" class="btn btn-info"><i
+                                               class="feather icon-save"></i> Save
+                                   </button>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+
+
+               </form>
+           </div>
+            <div class="card-body" style="padding-top: 0">
+            <table class= "table table-bordered">
              <thead class="thead-dark">
            <tr>
-            <th>SL</th>
+                           <th>SL</th>
              <th>Name</th>
           <th>Mobile Number</th>
           <th>Address</th>

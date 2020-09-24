@@ -75,7 +75,7 @@
 
 
 
-                        {{--new test section--}}
+                        {{-- Deposit information section--}}
 
 
                         <div class="row">
@@ -114,6 +114,8 @@
                         </div>
                         </div>
 
+                        {{--end depinfo--}}
+
 
                         <div class="row">
                             <div class="col-md-12">
@@ -125,7 +127,6 @@
                             </div>
                         </div>
 
-                        {{--end new section--}}
 
 
 

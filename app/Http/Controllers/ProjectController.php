@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 use App\Company;
 use Illuminate\Support\Facades\DB;
@@ -41,9 +42,9 @@ class ProjectController extends Controller
     public function create(){
 
         $companies=Company::all();
-        $projects=Project::all();
+        $users=User::all()->sortBy('name');
 
-        return view('project.project_create',['companies'=>$companies,'project'=>$projects]);
+        return view('project.project_create',['companies'=>$companies,'users'=>$users]);
 
     }
 
@@ -56,7 +57,11 @@ class ProjectController extends Controller
         $project->address=$request->address;
         $project->save();
 
-        return redirect()->route('project');
+        $user = User::find($request->project_users);
+        $project->users()->attach($user);
+
+        return redirect()->route('project')
+            ->with('success','Project create successfully');
 
     }
 
@@ -64,7 +69,8 @@ class ProjectController extends Controller
 
         $project=Project::find($id);
         $companies=Company::all();
-        return view('project.project_edit',['project'=>$project ,'companies'=>$companies ]);
+        $users=User::all()->sortBy('name');
+        return view('project.project_edit',['users'=>$users ,'project'=>$project ,'companies'=>$companies ]);
 
     }
 
@@ -79,8 +85,9 @@ class ProjectController extends Controller
 
         $project->save();
 
-
-        return redirect()->route('project');
+        $project->users()->sync($request->project_users);
+        return redirect()->route('project')
+            ->with('success','Project Update successfully');
 
 
     }
