@@ -49,7 +49,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="address">Description</label>
-                                <textarea type="text" class="form-control" rows="5" id="address" name="address" aria-describedby="name" placeholder="Enter project address">{{$project->address}}</textarea>
+                                <textarea type="text" class="form-control" rows="5" id="address" name="address" aria-describedby="name" placeholder="Enter description">{{$project->address}}</textarea>
                             </div>
                         </div>
                     </div>

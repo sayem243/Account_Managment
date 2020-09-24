@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned()->nullable();
             $table->string('p_name');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->timestamps();
         });
 

@@ -7,15 +7,9 @@
   <div class="row">
     <div class="col-sm-12">
        <div class="card">
-          <div class="card-header">
-              <h5>Client List </h5>
-              {{--<div class="card-header-right">
-                  <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested">
-                      <a style="-webkit-transform: scale(0.9);" href="{{route('client_create')}}" class="btn btn-sm  btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Create New</a>
-                  </div>
-              </div>--}}
-
-                </div>
+           <div class="card-header">
+               <h5>Client List </h5>
+           </div>
             <div class="card-body" style="padding-bottom: 0; padding-right: 15px;">
                <form class="form-horizontal" action="{{ route('client_store')}}" method="post"
                      enctype="multipart/form-data">
@@ -73,10 +67,9 @@
 
 
                </form>
-
            </div>
             <div class="card-body" style="padding-top: 0">
-         <table class= "table table-bordered">
+            <table class= "table table-bordered">
              <thead class="thead-dark">
            <tr>
                            <th>SL</th>
