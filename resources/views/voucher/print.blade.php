@@ -20,15 +20,8 @@
 
                         <hr style="margin-top: 1px; margin-bottom: 10px">
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <fieldset style="margin-bottom: 10px">
-                                    <legend>Deposit Information</legend>
 
-                                </fieldset>
-                            </div>
-                        </div>
-                        <hr style="margin-top: 1px; margin-bottom: 10px">
+
 
 
 
@@ -75,6 +68,48 @@
                             </tfoot>
 
                         </table>
+
+
+                        <div class="row">
+                            @php
+                                $chequeRegistry = array();
+                            @endphp
+                            @foreach($voucher->VoucherItems as $voucherItem)
+
+                                @if(isset($voucherItem->checkRegistry))
+                                    @php
+                                        $chequeRegistry[] = $voucherItem->checkRegistry;
+                                    @endphp
+                                @endif
+
+                            @endforeach
+
+                            @if(sizeof($chequeRegistry)>0)
+
+                                @foreach($chequeRegistry as $items)
+
+
+                                    <div class="row">
+                                        <fieldset style="margin-bottom: 10px">
+                                            <div class="col-md-12">  <h4>Deposit Information</h4></div>
+                                            <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
+                                            <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
+                                            <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
+                                            </div>
+                                            <div class="col-md-12"><h6>Check Number:{{$items['check_number']}}</a> </h6>
+                                            </div>
+
+
+
+
+                                @endforeach
+                            @endif
+
+                        </div>
+
+
+
+
                         <div class="row">
                             <div class="col-md-12">
                                 @php use App\CustomClass\NumberToWordConverter;
@@ -102,39 +137,7 @@
                         {{--@endif--}}
 
 
-                        <div class="row">
-                            @php
-                                $chequeRegistry = array();
-                            @endphp
-                            @foreach($voucher->VoucherItems as $voucherItem)
 
-                                @if(isset($voucherItem->checkRegistry))
-                                    @php
-                                        $chequeRegistry[] = $voucherItem->checkRegistry;
-                                    @endphp
-                                @endif
-
-                            @endforeach
-
-                            @if(sizeof($chequeRegistry)>0)
-
-                                @foreach($chequeRegistry as $items)
-
-
-                                    <div class="row">
-                                        <fieldset style="margin-bottom: 10px">
-
-                                            <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
-                                            <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
-                                            <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
-                                            </div>
-
-                                    </div>
-
-
-                                @endforeach
-                            @endif
-                        </div>
 
 
 

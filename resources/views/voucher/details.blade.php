@@ -36,13 +36,10 @@
                             <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$voucher->VoucherItems[0]->project['p_name']}}</h4>
                             <hr style="margin-top: 1px; margin-bottom: 10px">
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <fieldset style="margin-bottom: 10px">
-                                        <legend>Deposit Information</legend>
 
 
-                            <hr style="margin-top: 1px; margin-bottom: 10px">
+
+
                             <div class="row">
                                 <div class="col-md-9"><h4>Account: {{$voucher->expenditureSector->name}}</h4></div>
                                 <div class="col-md-3"><h5>Date: {{ date('d-m-Y', strtotime($voucher->created_at))}}</h5></div>
@@ -75,6 +72,45 @@
 
                             </table>
 
+                                        <div class="row">
+                                            @php
+                                                $chequeRegistry = array();
+                                            @endphp
+                                            @foreach($voucher->VoucherItems as $voucherItem)
+
+                                                @if(isset($voucherItem->checkRegistry))
+                                                    @php
+                                                        $chequeRegistry[] = $voucherItem->checkRegistry;
+                                                    @endphp
+                                                @endif
+
+                                            @endforeach
+
+                                            @if(sizeof($chequeRegistry)>0)
+
+                                                @foreach($chequeRegistry as $items)
+
+
+                                                    <div class="row">
+                                                        <fieldset style="margin-bottom: 10px">
+                                                            <div class="col-md-12">  <h4>Deposit Information</h4></div>
+                                                            <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
+                                                            <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
+                                                            <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
+                                                            </div>
+                                                            <div class="col-md-12"><h6>Check Number: <a href="{{route('check_registry_details',$items['id'])}}">{{$items['check_number']}}</a> </h6>
+
+                                                            </div>
+
+
+
+
+                                                        @endforeach
+                                                        @endif
+                                                    </div>
+
+                                        </div>
+
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -88,48 +124,7 @@
 
 
 
-                            <div class="row">
-                                @php
-                                    $chequeRegistry = array();
-                                @endphp
-                                @foreach($voucher->VoucherItems as $voucherItem)
 
-                                    @if(isset($voucherItem->checkRegistry))
-                                        @php
-                                            $chequeRegistry[] = $voucherItem->checkRegistry;
-                                        @endphp
-                                    @endif
-
-                                @endforeach
-
-                                @if(sizeof($chequeRegistry)>0)
-
-                                    @foreach($chequeRegistry as $items)
-
-
-                                        <div class="row">
-                                            <fieldset style="margin-bottom: 10px">
-                                                <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
-                                                <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
-                                                <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
-                                                </div>
-                                                <div class="col-md-12"><h6>Check Number: <a href="{{route('check_registry_details',$items['id'])}}">{{$items['check_number']}}</a> </h6>
-
-                                                </div>
-
-
-
-
-                                    @endforeach
-                                @endif
-                            </div>
-
-
-
-
-
-
-                    </div>
 
 
 

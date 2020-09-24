@@ -296,6 +296,10 @@ Route::get('/check/registry/create','CheckRegistryController@create')->name('che
 Route::post('/check/registry/store','CheckRegistryController@store')->name('check_registry_store');
 Route::post('/check/registry/datatable','CheckRegistryController@dataTable')->name('check_registry_datatable');
 Route::get('/check/registry/details/{id}','CheckRegistryController@details')->name('check_registry_details');
+<<<<<<< HEAD
+
+=======
+>>>>>>> d2e75b63ba9d1a91f596927e69a48fcdf1615b38
 Route::get('/check/registry/quick/view/{id}','CheckRegistryController@quickView')->name('check_registry_quick_view');
 Route::get('/check/registry/print/{id}','CheckRegistryController@checkRegistryPrint')->name('check_registry_print');
 
