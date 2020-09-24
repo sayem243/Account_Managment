@@ -126,6 +126,8 @@
                                                 <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
                                                 <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
                                                 </div>
+                                                <div class="col-md-12"><h6>Check Number: <a href="{{route('check_registry_details',$items['id'])}}">{{$items['check_number']}}</a> </h6>
+                                                </div>
 
                                         </div>
 
@@ -133,6 +135,7 @@
                                     @endforeach
                                 @endif
                             </div>
+
 
 
 

@@ -41,9 +41,7 @@
                                     <fieldset style="margin-bottom: 10px">
                                         <legend>Deposit Information</legend>
 
-                                    </fieldset>
-                                </div>
-                            </div>
+
                             <hr style="margin-top: 1px; margin-bottom: 10px">
                             <div class="row">
                                 <div class="col-md-9"><h4>Account: {{$voucher->expenditureSector->name}}</h4></div>
@@ -57,16 +55,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php
-                                    $chequeRegistry = array();
-                                @endphp
+
                                 @foreach($voucher->VoucherItems as $voucherItem)
 
-                                    @if(isset($voucherItem->checkRegistry))
-                                        @php
-                                            $chequeRegistry[] = $voucherItem->checkRegistry;
-                                        @endphp
-                                    @endif
+
                                     <tr>
                                         <td>{{$voucherItem->item_name}}</td>
                                         <td style="text-align: right; padding-right: 15px">{{number_format($voucherItem->voucher_amount,0,'.',',')}}</td>
@@ -121,8 +113,11 @@
                                                 <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
                                                 <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
                                                 </div>
+                                                <div class="col-md-12"><h6>Check Number: <a href="{{route('check_registry_details',$items['id'])}}">{{$items['check_number']}}</a> </h6>
 
-                                        </div>
+                                                </div>
+
+
 
 
                                     @endforeach
@@ -130,7 +125,10 @@
                             </div>
 
 
-                        </div>
+
+
+
+
                     </div>
 
 

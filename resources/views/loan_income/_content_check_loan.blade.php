@@ -25,7 +25,7 @@
                         <select id="check_loan_from" name="loan_from" class="form-control check_loan_from" required>
                             <option value="USER">User</option>
                             <option value="COMPANY">Company</option>
-                            <option value="PROJECT">Project</option>
+                            {{--<option value="PROJECT">Project</option>--}}
                             <option value="OTHERS">Others</option>
                         </select>
                     </div>
@@ -62,7 +62,7 @@
                     </div>
 
                 </div>
-                <div class="check_loan_project_section" style="display: none">
+                {{--<div class="check_loan_project_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_from_value_project" class="col-form-label">Project <span
                                     class="required">*</span></label>
@@ -75,7 +75,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <div class="check_loan_other_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_from_value_other" class="col-form-label">Provider Name <span
@@ -134,7 +134,7 @@
                         <select id="loan_to" name="loan_to" class="form-control loan_to" required>
                             <option value="USER">User</option>
                             <option value="COMPANY">Company</option>
-                            <option value="PROJECT">Project</option>
+                            {{--<option value="PROJECT">Project</option>--}}
                             <option value="OTHERS">Others</option>
                         </select>
                     </div>
@@ -170,7 +170,7 @@
                     </div>
 
                 </div>
-                <div class="to_project_section" style="display: none">
+                {{--<div class="to_project_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_to_value_project" class="col-form-label">Project <span
                                     class="required">*</span></label>
@@ -183,7 +183,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <div class="to_other_section" style="display: none">
                     <div class="form-group">
                         <label for="loan_to_value_other" class="col-form-label">Provider Name <span
@@ -291,10 +291,9 @@
 
     <div class="line aligncenter" style="float: right">
         <div class="form-group row">
-            <div style="padding-right: 3px"
-                 class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
-                <button style="margin-right: 0" type="submit" class="btn btn-info"><i
-                            class="feather icon-save"></i> Save
+            <div style="padding-right: 3px" class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
+                <button style="margin-right: 0" type="submit" class="btn btn-info">
+                    <i class="feather icon-save"></i> Save
                 </button>
             </div>
         </div>
