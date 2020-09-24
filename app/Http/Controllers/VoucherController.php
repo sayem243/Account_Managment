@@ -148,32 +148,93 @@ class VoucherController extends Controller
 
         $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
 
-        foreach ($result as $post):
 
-            $dropdown='<select name="expenditure_sector['.$post->viId.']" class="form-control select2">
-            <option value="">Select Type</option>';
-            foreach ($expenditureSectors as $expenditureSector){
-                $dropdown.= '<option value="'.$expenditureSector->id.'">'.$expenditureSector->name.'</option>';
-            }
+        if(isset($query['voucher_type'])&&$query['voucher_type']=='cash_cheque'){
 
-            $dropdown .='</select>';
+            foreach ($result as $post):
+                if($post->checkType=='CASH'){
+                $dropdown='<select name="expenditure_sector['.$post->viId.']" class="form-control select2">
+                <option value="">Select Type</option>';
+                foreach ($expenditureSectors as $expenditureSector){
+                    $dropdown.= '<option value="'.$expenditureSector->id.'">'.$expenditureSector->name.'</option>';
+                }
 
-            $checkbox = '<input type="checkbox" class="voucher_item" name="voucher_item[]" value="'.$post->viId.'">';
-            $button = '<button type="button" data-id="'.$post->viId.'" class="btn btn-danger remove_row">X</button>';
+                $dropdown .='</select>';
 
-            $records["data"][] = array(
-                $checkbox,
-                $dropdown,
-                $name               = '<input type="hidden" value="'.$post->name.'" name="item_name['.$post->viId.']">'.$post->name,
-                $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
-                $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
-                $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
-                $button,
-                $checkType               = $post->checkType
-            );
-            $i++;
+                $checkbox = '<input type="checkbox" class="voucher_item" name="voucher_item[]" value="'.$post->viId.'">';
+                $button = '<button type="button" data-id="'.$post->viId.'" class="btn btn-danger remove_row">X</button>';
 
-        endforeach;
+                $records["data"][] = array(
+                    $checkbox,
+                    $dropdown,
+                    $name               = '<input type="hidden" value="'.$post->name.'" name="item_name['.$post->viId.']">'.$post->name,
+                    $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
+                    $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
+                    $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
+                    $button,
+                    $checkType               = $post->checkType
+                );
+                $i++;
+                }
+            endforeach;
+        }elseif (isset($query['voucher_type'])&&$query['voucher_type']=='account_pay_cheque'){
+
+            foreach ($result as $post):
+                if($post->checkType=='ACCOUNT_PAY'){
+                $dropdown='<select name="expenditure_sector['.$post->viId.']" class="form-control select2">
+                <option value="">Select Type</option>';
+                foreach ($expenditureSectors as $expenditureSector){
+                    $dropdown.= '<option value="'.$expenditureSector->id.'">'.$expenditureSector->name.'</option>';
+                }
+
+                $dropdown .='</select>';
+
+                $checkbox = '<input type="checkbox" class="voucher_item" name="voucher_item[]" value="'.$post->viId.'">';
+                $button = '<button type="button" data-id="'.$post->viId.'" class="btn btn-danger remove_row">X</button>';
+
+                $records["data"][] = array(
+                    $checkbox,
+                    $dropdown,
+                    $name               = '<input type="hidden" value="'.$post->name.'" name="item_name['.$post->viId.']">'.$post->name,
+                    $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
+                    $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
+                    $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
+                    $button,
+                    $checkType               = $post->checkType
+                );
+                $i++;
+                }
+            endforeach;
+        }else{
+            foreach ($result as $post):
+                if($post->checkType != 'CASH'&& $post->checkType != 'ACCOUNT_PAY') {
+                    $dropdown = '<select name="expenditure_sector[' . $post->viId . ']" class="form-control select2">
+                    <option value="">Select Type</option>';
+                    foreach ($expenditureSectors as $expenditureSector) {
+                        $dropdown .= '<option value="' . $expenditureSector->id . '">' . $expenditureSector->name . '</option>';
+                    }
+
+                    $dropdown .= '</select>';
+
+                    $checkbox = '<input type="checkbox" class="voucher_item" name="voucher_item[]" value="' . $post->viId . '">';
+                    $button = '<button type="button" data-id="' . $post->viId . '" class="btn btn-danger remove_row">X</button>';
+
+                    $records["data"][] = array(
+                        $checkbox,
+                        $dropdown,
+                        $name = '<input type="hidden" value="' . $post->name . '" name="item_name[' . $post->viId . ']">' . $post->name,
+                        $pId = $post->pId ? $post->pId : $post->checkNumber . '<input type="hidden" value="' . $post->crId . '" name="check_id[' . $post->viId . ']">',
+                        $projectName = $post->projectName ? '<input type="hidden" value="' . $post->projectId . '" name="project_id[' . $post->viId . ']">' . $post->projectName : '',
+                        $amount = '<input type="hidden" value="' . $post->amount . '" name="voucher_amount[' . $post->viId . ']">' . $post->amount,
+                        $button,
+                        $checkType = $post->checkType
+                    );
+                    $i++;
+                }
+            endforeach;
+        }
+
+
         if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
             $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
             $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)

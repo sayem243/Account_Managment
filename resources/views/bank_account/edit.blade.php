@@ -75,6 +75,7 @@
                                                 <option value="CURRENT" {{$account->account_type=='CURRENT'?'selected="selected"':''}}>Current Account</option>
                                                 <option value="SAVINGS" {{$account->account_type=='SAVINGS'?'selected="selected"':''}}>Savings Account</option>
                                                 <option value="SALARY" {{$account->account_type=='SALARY'?'selected="selected"':''}}>Salary Account</option>
+                                                <option value="SOD" {{$account->account_type=='SOD'?'selected="selected"':''}}>SOD Account</option>
                                             </select>
                                         </div>
                                     </div>

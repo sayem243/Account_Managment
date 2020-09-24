@@ -74,6 +74,7 @@
                                                 <option value="CURRENT">Current Account</option>
                                                 <option value="SAVINGS">Savings Account</option>
                                                 <option value="SALARY">Salary Account</option>
+                                                <option value="SOD">SOD Account</option>
                                             </select>
                                         </div>
                                     </div>

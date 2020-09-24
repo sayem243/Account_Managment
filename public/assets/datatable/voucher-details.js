@@ -1,6 +1,8 @@
 $(document).ready(function () {
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
+    $.fn.dataTable.ext.buttons.all_voucher_item = {
+        className: 'buttons-alert voucher_type',
+    };
     var dataTable= $('#voucher_item_table').DataTable( {
 
         loadingMessage: 'Loading...',
@@ -8,6 +10,8 @@ $(document).ready(function () {
         "serverSide": true,
         "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
         'searching': false,
+        "bPaginate": false,
+        "bInfo": false,
         "lengthChange": false,
         "lengthMenu": [
             [10, 20, 50, 100, 150, -1],
@@ -23,11 +27,13 @@ $(document).ready(function () {
                 var project_id = $('#project_id').val();
                 var payment_id = $('#payment_id').val();
                 var company_id = $('#company_id').val();
+                var voucher_type = $('.voucher_item_table').find('.active').attr('data-status');
 
                 data._token = CSRF_TOKEN;
                 data.payment_id = payment_id;
                 data.project_id = project_id;
                 data.company_id = company_id;
+                data.voucher_type = voucher_type;
             }
         },
         'columns': [
@@ -55,8 +61,37 @@ $(document).ready(function () {
                 "targets": 6,
                 "orderable": false
             }],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'all_voucher_item',
+                text: 'Cash',
+                className: 'buttons-alert payment_status voucher_type btn-info',
+                attr:  {
+                    title: 'Cash',
+                    'data-status': 'cash'
+                }
+            },
+            {
+                extend: 'all_voucher_item',
+                text: 'Cash Cheque',
+                className: 'buttons-alert payment_status voucher_type btn-info',
+                attr:  {
+                    title: 'Cash Cheque',
+                    'data-status': 'cash_cheque'
+                }
+            },
+            {
+                extend: 'all_voucher_item',
+                text: 'A/C Pay Cheque',
+                className: 'buttons-alert payment_status voucher_type btn-info',
+                attr:  {
+                    title: 'A/C Pay Cheque',
+                    'data-status': 'account_pay_cheque'
+                }
+            },
+        ],
         rowCallback: function (row, data) {
-            console.log(data[7]);
             if(data[7]==='CASH'){
                 $(row).addClass('cash_check_voucher_item');
             }
@@ -74,6 +109,11 @@ $(document).ready(function () {
     });
 
     $('#project_id').change(function(){
+        dataTable.draw();
+    });
+    $('.voucher_type').on('click', function(){
+        $('.voucher_type').removeClass('active');
+        $(this).addClass('active');
         dataTable.draw();
     });
 

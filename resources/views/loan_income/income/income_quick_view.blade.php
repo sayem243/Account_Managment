@@ -76,7 +76,7 @@
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <label class="col-md-12 col-form-label" for="check_number">Cheque
-                                                    Number: {{$income->checkRegistry->check_number}}</label>
+                                                    Number: <a href="{{route('check_registry_details',$income->checkRegistry->id)}}">{{$income->checkRegistry->check_number}}</a> </label>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
