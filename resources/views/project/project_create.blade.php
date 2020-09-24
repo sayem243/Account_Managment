@@ -1,4 +1,7 @@
 @extends('layout')
+@section('header.styles')
+    {!! Html::style('/assets/css/multi-select.css') !!}
+@endsection
 @section('title','Project Create')
 @section('template')
     <div class="col-sm-12">
@@ -50,13 +53,25 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="address">Address</label>
+                                <label for="address">Description</label>
                                 <textarea type="text" class="form-control" rows="5" id="address" name="address" aria-describedby="name" placeholder="Enter project address"></textarea>
                             </div>
                         </div>
-
-
                     </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="project_users">Users</label>
+                                    <select id="project_users" class="form-control multi_select" name="project_users[]" multiple>
+                                        <option value="">Select User</option>
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}"> {{$user->name}} </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="line aligncenter" style="float: right">
                             <div class="form-group row">
                                 <div style="padding-right: 3px" class="col-sm-12 col-form-label btn-group btn-group-lg" align="right">
@@ -75,4 +90,12 @@
         </div>
     </div>
     </div>
+@endsection
+
+@section('footer.scripts')
+    {!! Html::script('/assets/js/jquery.multi-select.js') !!}
+
+    <script type="text/javascript">
+        jQuery('.multi_select').multiSelect();
+    </script>
 @endsection
