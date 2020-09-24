@@ -22,15 +22,8 @@
 
                         <hr style="margin-top: 1px; margin-bottom: 10px">
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <fieldset style="margin-bottom: 10px">
-                                    <legend>Deposit Information</legend>
 
-                                </fieldset>
-                            </div>
-                        </div>
-                        <hr style="margin-top: 1px; margin-bottom: 10px">
+
 
 
 
@@ -106,28 +99,37 @@
 
                                     <div class="row">
                                         <fieldset style="margin-bottom: 10px">
+                                            <div class="col-md-12">  <h4>Deposit Information</h4></div>
+
                                             <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
                                             <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
                                             <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
                                             </div>
-
-                                    </div>
+                                            <div class="col-md-12"><h6>Check Number:{{$items['check_number']}}</a> </h6>
+                                            </div>
 
 
                                 @endforeach
                             @endif
                         </div>
+                        </div>
 
 
-
+                        <div class="row">
+                            <div class="col-md-12">
+                                @php use App\CustomClass\NumberToWordConverter;
+                               $amount = NumberToWordConverter::convert($voucher->total_amount);
+                                @endphp
+                                <p style="color: red; padding: 10px 5px; margin-bottom: 5px"><strong style="font-weight: bold">Write in
+                                        words: </strong>{{$amount}} only</p>
+                            </div>
+                        </div>
 
                         {{--end new section--}}
 
 
 
                     </div>
-
-                </div>
             </div>
 
         </div>
