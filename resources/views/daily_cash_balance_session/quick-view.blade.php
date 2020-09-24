@@ -2,10 +2,11 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" style="padding-top: 5px">
+                    <h3 style="text-align: center">Date: {{ date('d-m-Y', strtotime($selected_date))}}</h3>
                     <table class= "table">
                         <thead>
-                        <tr>
+                        <tr style="font-weight: bold">
                             <td>Company Name</td>
                             <td>Opening Balance</td>
                             <td>Debit</td>
