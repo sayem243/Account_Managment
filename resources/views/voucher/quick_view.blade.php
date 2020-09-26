@@ -102,7 +102,7 @@
 
 
                                         <div class="row">
-                                            <fieldset style="margin-bottom: 5px">
+                                            <fieldset style="margin-bottom: 1px">
                                                 <div class="col-md-12">  <h4>Deposit Information</h4></div>
 
                                                 <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
@@ -126,7 +126,7 @@
 
                             <div class="row in_word_area_expense">
                             <div class="row">
-                                <fieldset style="margin-bottom: 1px">
+                                <fieldset style="margin-bottom: -8px">
                                 <div class="col-md-12">
                                     @php use App\CustomClass\NumberToWordConverter;
                                $amount = NumberToWordConverter::convert($voucher->total_amount);
