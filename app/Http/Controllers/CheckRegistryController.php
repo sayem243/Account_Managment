@@ -101,9 +101,17 @@ class CheckRegistryController extends Controller
         $checkRegistry->save();
 
         if($checkRegistry->check_mode==='OUT'){
+            $transactionVia='';
+            if($checkRegistry->check_type==='CASH'){
+                $transactionVia='CHECK_OUT';
+            }elseif ($checkRegistry->check_type==='ACCOUNT_TRANSFER'){
+                $transactionVia='CHECK_OUT_ACCOUNT_TRANSFER';
+            }else{
+                $transactionVia='CHECK_OUT_ACCOUNT_PAY';
+            }
             $arrayData= array(
                 'transaction_type'=>'CR',
-                'transaction_via'=> $checkRegistry->check_type==='CASH'?'CHECK_OUT':'CHECK_OUT_ACCOUNT_PAY',
+                'transaction_via'=> $transactionVia,
                 'transaction_via_ref_id'=>$checkRegistry->id,
                 'amount'=>$checkRegistry->amount,
                 'company_id'=>$checkRegistry->company_id,

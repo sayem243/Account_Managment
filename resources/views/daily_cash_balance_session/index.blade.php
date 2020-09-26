@@ -28,7 +28,7 @@
                                 <th>{{'Date'}}</th>
                                 <th>{{'Opening Balance'}}</th>
                                 <th>{{'Closing Balance'}}</th>
-                                <th>{{'Summery'}}</th>
+                                <th>{{'Summary'}}</th>
                                 <th>{{'Status'}}</th>
                             </tr>
                             </thead>
@@ -39,7 +39,7 @@
                                     <td><a href="{{route('daily_cash_balance', ['filter_date' => date('Y-m-d', strtotime($cashBalanceSession->createdDate))])}}">{{ date('d-m-Y', strtotime($cashBalanceSession->createdDate))}}</a></td>
                                     <td>{{$cashBalanceSession->totalOpeningBalance}}</td>
                                     <td>{{$cashBalanceSession->totalClosingBalance}}</td>
-                                    <td><a  data-toggle="modal" data-target="#myModal" href="javascript:void(0)" class="btn btn-sm btn-primary" data-target-date="{{ date('Y-m-d', strtotime($cashBalanceSession->createdDate))}}">Summery</a></td>
+                                    <td><a  data-toggle="modal" data-target="#myModal" href="javascript:void(0)" class="btn btn-sm btn-primary" data-target-date="{{ date('Y-m-d', strtotime($cashBalanceSession->createdDate))}}">Summary</a></td>
                                     <td></td>
                                 </tr>
 

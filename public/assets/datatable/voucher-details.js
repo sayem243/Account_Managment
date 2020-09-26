@@ -90,12 +90,24 @@ $(document).ready(function () {
                     'data-status': 'account_pay_cheque'
                 }
             },
+            {
+                extend: 'all_voucher_item',
+                text: 'A/C Transfer',
+                className: 'buttons-alert payment_status voucher_type btn-info',
+                attr:  {
+                    title: 'A/C Transfer',
+                    'data-status': 'account_transfer_cheque'
+                }
+            },
         ],
         rowCallback: function (row, data) {
             if(data[7]==='CASH'){
                 $(row).addClass('cash_check_voucher_item');
             }
             if(data[7]==='ACCOUNT_PAY'){
+                $(row).addClass('account_pay_check_voucher_item');
+            }
+            if(data[7]==='ACCOUNT_TRANSFER'){
                 $(row).addClass('account_pay_check_voucher_item');
             }
         }
