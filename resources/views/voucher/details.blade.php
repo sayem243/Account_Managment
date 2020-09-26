@@ -92,7 +92,7 @@
 
 
                                                     <div class="row">
-                                                        <fieldset style="margin-bottom: 10px">
+                                                        <fieldset style="margin-bottom: 17px">
                                                             <div class="col-md-12">  <h4>Deposit Information</h4></div>
                                                             <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
                                                             <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
@@ -101,18 +101,21 @@
                                                             <div class="col-md-12"><h6>Check Number: <a href="{{route('check_registry_details',$items['id'])}}">{{$items['check_number']}}</a> </h6>
 
                                                             </div>
+                                                        </fieldset>
 
-
-
+                                                     </div>
 
                                                         @endforeach
                                                         @endif
-                                                    </div>
+
 
                                         </div>
 
 
+
+                            <div class="row in_word_area_expense">
                             <div class="row">
+                                <fieldset style="margin-bottom: 1px">
                                 <div class="col-md-12">
                                     @php use App\CustomClass\NumberToWordConverter;
                                $amount = NumberToWordConverter::convert($voucher->total_amount);
@@ -120,7 +123,10 @@
                                     <p style="color: #ff3737; padding: 10px 5px; margin-bottom: 5px"><strong style="font-weight: bold">Write in
                                             words: </strong>{{$amount}} only</p>
                                 </div>
+                                </fieldset>
                             </div>
+                            </div>
+
 
 
 
@@ -134,4 +140,16 @@
         </div>
     </div>
 
+            <style>
+                fieldset {
+                    min-width: 0;
+                    padding: 10px 17px;
+                    margin: 0;
+                    border: none;
+                }
+            </style>
+        </div>
+
 @endsection
+
+

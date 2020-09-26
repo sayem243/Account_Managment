@@ -30,7 +30,7 @@
         <tr>
             <th>No</th>
             <th>Name</th>
-            <th>Action</th>
+            <th>Permissions</th>
             <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                 <i class="feather icon-settings"></i>
 

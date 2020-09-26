@@ -100,7 +100,8 @@
                                             </div>
 
 
-
+</fieldset>
+                                    </div>
 
                                 @endforeach
                             @endif
