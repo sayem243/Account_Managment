@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ammendment;
+use App\CashDailyBalanceSession;
 use App\CashTransaction;
 use App\Documents;
 use App\Payment_details;
@@ -24,6 +25,9 @@ use PDF;
 
 class PaymentController extends Controller
 {
+    protected $dailyCashSession;
+    protected $dailyCashTransaction;
+
     /**
      * Display a listing of the resource.
      *
@@ -40,6 +44,9 @@ class PaymentController extends Controller
         $this->middleware('permission:payment-delete',['only'=>['delete']]);
         $this->middleware('permission:payment-paid',['only'=>['payment_paid']]);
         $this->middleware('permission:payment-unpark',['only'=>['unPark']]);
+
+        $this->dailyCashSession = new CashDailyBalanceSession();
+        $this->dailyCashTransaction = new CashTransaction();
     }
 
 
@@ -539,27 +546,33 @@ class PaymentController extends Controller
         }
         return response()->json(['message'=>'Error! This are not permitted.','status'=>301]);
     }
-    public function payment_paid($id){
+    public function payment_paid(Request $request, $id){
         $user = auth()->user();
+
+        $isOld= $request->request->get('is_old');
+
         $payment=Payment::find($id);
         //$payment->status=1;
         if($payment->status==3 && $this->checkAuthUserProjects($payment)) {
             $payment->disbursed_by = $user->id;
             $payment->disbursed_at = new \DateTime();
             $payment->status = 4;
+            $payment->is_old = $isOld?$isOld:0;
             $payment->save();
 
-            $arrayData= array(
-                'transaction_type'=>'DR',
-                'transaction_via'=>'HAND_SLIP_ISSUE',
-                'transaction_via_ref_id'=>$payment->id,
-                'amount'=>$payment->total_paid_amount,
-                'company_id'=>$payment->company_id,
-                'project_id'=>$payment->project_id?$payment->project_id:null,
-                'created_by'=>auth()->id(),
-                'created_at'=>new \DateTime(),
-            );
-            CashTransaction::insertData($arrayData);
+            if($payment->is_old==false){
+                $arrayData= array(
+                    'transaction_type'=>'DR',
+                    'transaction_via'=>'HAND_SLIP_ISSUE',
+                    'transaction_via_ref_id'=>$payment->id,
+                    'amount'=>$payment->total_paid_amount,
+                    'company_id'=>$payment->company_id,
+                    'project_id'=>$payment->project_id?$payment->project_id:null,
+                    'created_by'=>auth()->id(),
+                    'created_at'=>new \DateTime(),
+                );
+                CashTransaction::insertData($arrayData);
+            }
 
             return response()->json(['success' => 'Payment has been successfully disbursed.', 'status' => 200]);
         }
@@ -570,8 +583,13 @@ class PaymentController extends Controller
 
         $payment=Payment::find($id);
         if ($this->checkAuthUserProjects($payment)){
+            $date = date('Y-m-d');
+            $from_date = $date? $date.' 00:00:00': '';
+            $to_date = $date? $date.' 23:59:59': '';
+            $openingBalance=$this->dailyCashSession->getDailyOpeningClosingBalance($from_date,$to_date, $payment->company->id);
+            $dailyCashTransaction = $this->dailyCashTransaction->getDailyBalanceTransaction($date, $payment->company->id);
             $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
-            return view('payment.details',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount]);
+            return view('payment.details',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount, 'openingBalance'=>$openingBalance]);
         }
         return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
     }

@@ -129,9 +129,16 @@
                                  && !$payment->project->trashed())
 
                                     @if(date("Y-m-d", strtotime("now"))>=date("Y-m-d", strtotime($payment->disbursed_schedule_date)))
-                                    <button style="border-radius: .3rem; margin: 0" data-id-id="{{$payment->id}}" type="button"
-                                            class="btn btn-lg btn-info payment_paid">Disburse
-                                    </button>
+                                        @if(isset($openingBalance[$payment->company['id']])&&$openingBalance[$payment->company['id']]->opening_balance>0)
+                                        <div class=" btn-group-lg disbursed_area_button">
+                                                <input type="checkbox" id="is_old_hand_slip" name="is_old" class="is_old_hand_slip" value="1">
+                                                <label class="form-check-label" for="is_old_hand_slip">Is Old</label>
+                                            <button style="border-radius: .3rem; margin: 0" data-id-id="{{$payment->id}}" type="button"
+                                                    class="btn btn-lg btn-info payment_paid">Disburse
+                                            </button>
+                                        </div>
+
+                                        @endif
                                     @else
                                     <button disabled style="border-radius: .3rem; margin: 0" type="button"
                                             class="btn btn-lg btn-info">Disburse
@@ -446,6 +453,7 @@
             jQuery(document).on("click", ".payment_paid", function (a) {
                 var elements = a.target;
                 a.preventDefault();
+                var is_old = $(this).closest('.disbursed_area_button').find("input[name='is_old']:checked").val();
                 var id = jQuery(this).attr('data-id-id');
                 if (confirm("Do You want to Payment Disbursed?")) {
 
@@ -453,7 +461,7 @@
                         type: 'POST',
                         dataType: 'json',
                         url: '/payment/status/paid/' + id,
-                        data: {},
+                        data: {is_old:is_old},
                         success: function (data) {
 
                             if (data.status == 200) {

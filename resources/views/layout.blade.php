@@ -175,7 +175,7 @@ Like: www.facebook.com/terminalbd
                             @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin'))
                                 <li class="nav-item {{ Request::is('account/index') ? 'active' : ''}}"><a href="{{route('account_index')}}" class="nav-link"><span class="pcoded-mtext">Bank Account</span></a></li>
                             @endif
-                            @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin')|| auth()->user()->hasRole('CEO'))
+                            @if(auth()->user()->hasRole('superadmin') || auth()->user()->can('superadmin')|| auth()->user()->hasRole('CEO') || auth()->user()->can('expenditure-sector-list'))
                                 <li class="nav-item {{ Request::is('client/index') ? 'active' : ''}}"><a href="{{route('client_index')}}" class="nav-link"><span class="pcoded-mtext">Client</span></a></li>
                             @endif
                             {{--<li class="nav-item"><a href="{{route('usertype_create')}}" class="nav-link"><span class="pcoded-mtext">Add New</span></a></li>--}}
