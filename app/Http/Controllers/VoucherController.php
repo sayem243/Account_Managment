@@ -205,9 +205,37 @@ class VoucherController extends Controller
                 $i++;
                 }
             endforeach;
+        }elseif (isset($query['voucher_type'])&&$query['voucher_type']=='account_transfer_cheque'){
+
+            foreach ($result as $post):
+                if($post->checkType=='ACCOUNT_TRANSFER'){
+                $dropdown='<select name="expenditure_sector['.$post->viId.']" class="form-control select2">
+                <option value="">Select Type</option>';
+                foreach ($expenditureSectors as $expenditureSector){
+                    $dropdown.= '<option value="'.$expenditureSector->id.'">'.$expenditureSector->name.'</option>';
+                }
+
+                $dropdown .='</select>';
+
+                $checkbox = '<input type="checkbox" class="voucher_item" name="voucher_item[]" value="'.$post->viId.'">';
+                $button = '<button type="button" data-id="'.$post->viId.'" class="btn btn-danger remove_row">X</button>';
+
+                $records["data"][] = array(
+                    $checkbox,
+                    $dropdown,
+                    $name               = '<input type="hidden" value="'.$post->name.'" name="item_name['.$post->viId.']">'.$post->name,
+                    $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
+                    $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
+                    $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
+                    $button,
+                    $checkType               = $post->checkType
+                );
+                $i++;
+                }
+            endforeach;
         }else{
             foreach ($result as $post):
-                if($post->checkType != 'CASH'&& $post->checkType != 'ACCOUNT_PAY') {
+                if($post->checkType != 'CASH' && $post->checkType != 'ACCOUNT_PAY' && $post->checkType != 'ACCOUNT_TRANSFER') {
                     $dropdown = '<select name="expenditure_sector[' . $post->viId . ']" class="form-control select2">
                     <option value="">Select Type</option>';
                     foreach ($expenditureSectors as $expenditureSector) {

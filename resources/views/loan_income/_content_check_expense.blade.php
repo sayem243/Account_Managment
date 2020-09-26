@@ -85,7 +85,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
                 <label class="col-form-label" for="check_date">Cheque Date <span
                             class="required">*</span></label>
@@ -95,13 +95,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="form-group">
                 <label class="col-form-label" for="check_type">Cheque Type <span
                             class="required">*</span></label>
                 <div class="col-form-label">
                     <label class="radio-inline" style="margin-right: 15px">
                         <input required type="radio" name="check_type" value="ACCOUNT_PAY" id="check_type_ac_pay"> A/C Pay Cheque
+                    </label>
+                    <label class="radio-inline" style="margin-right: 15px">
+                        <input required type="radio" name="check_type" value="ACCOUNT_TRANSFER" id="check_type_ac_transfer"> A/C Transfer
                     </label>
                     <label class="radio-inline">
                         <input required checked type="radio" name="check_type" value="CASH" id="check_type_cash"> Cash Cheque
