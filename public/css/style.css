@@ -265,6 +265,13 @@ table.dataTable thead .sorting_desc_disabled:after{
     width: 100%;
 }
 
+.in_word_area_expense{
+    position: absolute!important;
+    bottom: 10px;
+    left: 15px;
+    width: 100%;
+}
+
 .select2-container {
     width: auto;
 }

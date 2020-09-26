@@ -98,7 +98,7 @@
 
 
                                     <div class="row">
-                                        <fieldset style="margin-bottom: 10px">
+                                        <fieldset style="margin-bottom: 5px">
                                             <div class="col-md-12">  <h4>Deposit Information</h4></div>
 
                                             <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
@@ -108,10 +108,12 @@
                                             <div class="col-md-12"><h6>Check Number:{{$items['check_number']}}</a> </h6>
                                             </div>
 
+                                        </fieldset>
 
+                                        </div>
                                 @endforeach
                             @endif
-                        </div>
+
                         </div>
 
                         {{--end depinfo--}}
@@ -134,6 +136,17 @@
             </div>
 
         </div>
+        </div>
+
+                <style>
+                    fieldset {
+                        min-width: 0;
+                        padding: 10px 13px;
+                        margin: 0;
+                        border: none;
+                    }
+                </style>
+
     </div>
 
 @endsection
