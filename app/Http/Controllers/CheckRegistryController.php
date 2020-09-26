@@ -284,6 +284,8 @@ class CheckRegistryController extends Controller
             if($post->refId=='' && $post->refType=='EXPENSE' && $post->checkType=='ACCOUNT_PAY' && (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->can('voucher_create'))){
 //                $button .='<li class="dropdown-item"><a href="'.route('voucher_index').'?check_id='.$post->crId.'"><i class="feather icon-eye"></i>Voucher Create</a></li>';
             }
+            if($post->refId!='' && $post->refType==='INCOME' && (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->can('loan-income-create'))){
+                $button .='<li class="dropdown-item"><a href="/income/details/'.$post->refId.'/create"><i class="feather icon-eye"></i>Income Details</a></li>';            }
             $button.='</ul></div>';
 
             $records["data"][] = array(
