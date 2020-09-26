@@ -50,21 +50,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Employe type</label>
 
-                                <select class="form-control" name="user_types_id">
-                                    <option value=""> Type </option>
-                                    @foreach($usertypes as $usertype)
-                                        <option value="{{$usertype->id}}" {{$usertype->id==$users->user_types_id?'selected="selected"':''}}>{{$usertype->u_title}} </option>
-                                    @endforeach
+                        {{--<div class="col-md-6">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label for="exampleFormControlSelect1">Employe type</label>--}}
 
-                                </select>
+                                {{--<select class="form-control" name="user_types_id">--}}
+                                    {{--<option value=""> Type </option>--}}
+                                    {{--@foreach($usertypes as $usertype)--}}
+                                        {{--<option value="{{$usertype->id}}" {{$usertype->id==$users->user_types_id?'selected="selected"':''}}>{{$usertype->u_title}} </option>--}}
+                                    {{--@endforeach--}}
 
-                            </div>
-                        </div>
+                                {{--</select>--}}
+
+                            {{--</div>--}}
+                        {{--</div>--}}
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Select company</label>
@@ -77,7 +77,7 @@
 
                             </div>
                         </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -106,17 +106,17 @@
                                     <input type="text" class="form-control" name="fname" placeholder="First Name" value="{{$users->UserProfile->fname}}">
                                 </div>
 
-                                <div class="form-group">
-                                    <label>Fathers Name</label>
-                                    <input type="text" class="form-control" name="fathername" placeholder="Fathers Name" value="{{$users->UserProfile->fathername}}" >
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<label>Fathers Name</label>--}}
+                                    {{--<input type="text" class="form-control" name="fathername" placeholder="Fathers Name" value="{{$users->UserProfile->fathername}}" >--}}
+                                {{--</div>--}}
 
 
 
-                                <div class="form-group">
-                                    <label>Present Address</label>
-                                    <input type="text" class="form-control" name="p_address" placeholder="Present Address" value="{{$users->UserProfile->p_address}}">
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<label>Present Address</label>--}}
+                                    {{--<input type="text" class="form-control" name="p_address" placeholder="Present Address" value="{{$users->UserProfile->p_address}}">--}}
+                                {{--</div>--}}
 
                                 <div class="form-group">
                                     <label>Mobile Number</label>
@@ -125,10 +125,10 @@
 
 
 
-                                <div class="form-group">
-                                    <label>NID</label>
-                                    <input type="number" class="form-control" name="nid" placeholder="National ID" value="{{$users->UserProfile->nid}}">
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<label>NID</label>--}}
+                                    {{--<input type="number" class="form-control" name="nid" placeholder="National ID" value="{{$users->UserProfile->nid}}">--}}
+                                {{--</div>--}}
 
                             </div>
 
@@ -142,20 +142,20 @@
 
 
 
-                                <div class="form-group">
-                                    <label>Mothers Name</label>
-                                    <input type="text" class="form-control" name="mothername" placeholder="Mothers Name" value="{{$users->UserProfile->mothername}}">
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<label>Mothers Name</label>--}}
+                                    {{--<input type="text" class="form-control" name="mothername" placeholder="Mothers Name" value="{{$users->UserProfile->mothername}}">--}}
+                                {{--</div>--}}
 
-                                <div class="form-group">
-                                    <label>Permanent Address</label>
-                                    <input type="text" class="form-control" name="address" placeholder="Permanent Address"  value="{{$users->UserProfile->address}}">
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<label>Permanent Address</label>--}}
+                                    {{--<input type="text" class="form-control" name="address" placeholder="Permanent Address"  value="{{$users->UserProfile->address}}">--}}
+                                {{--</div>--}}
 
-                                <div class="form-group">
-                                    <label>Joining Date</label>
-                                    <input type="date" class="form-control" name="joindate" placeholder="Joining Date" value="{{$users->UserProfile->joindate}}">
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<label>Joining Date</label>--}}
+                                    {{--<input type="date" class="form-control" name="joindate" placeholder="Joining Date" value="{{$users->UserProfile->joindate}}">--}}
+                                {{--</div>--}}
 
 
                             </div>
