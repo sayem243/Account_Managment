@@ -240,7 +240,7 @@ class CheckRegistryController extends Controller
 
         $rows = DB::table('check_registries');
         $rows->join('companies', 'check_registries.company_id', '=', 'companies.id');
-        $rows->select('check_registries.id as crId', 'check_registries.check_number as name', 'check_registries.amount as amount', 'check_registries.check_date as checkDate', 'check_registries.check_mode as checkMode', 'check_registries.check_type as checkType', 'check_registries.ref_type as refType', 'check_registries.ref_id as refId');
+        $rows->select('check_registries.id as crId', 'check_registries.check_number as name', 'check_registries.amount as amount', 'check_registries.check_date as checkDate', 'check_registries.created_at as createdAtForSort', 'check_registries.check_mode as checkMode', 'check_registries.check_type as checkType', 'check_registries.ref_type as refType', 'check_registries.ref_id as refId');
         $rows->addSelect('companies.name as companyName');
 
 //        $rows->where('check_registries.status','!=', 0);
@@ -300,6 +300,7 @@ class CheckRegistryController extends Controller
                 $id                 = $i,
                 $name               = '<a data-toggle="modal" data-target-id="'.$post->crId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
                 $checkDate          = date('d-m-Y',strtotime($post->checkDate)),
+                $createdAtForSort          = $post->createdAtForSort,
                 $companyName        = $post->companyName?$post->companyName:'',
                 $amount             = $post->amount,
                 $checkType          = $post->checkType,

@@ -74,6 +74,7 @@
                    <th style="width: 5%">SL</th>
                    <th>Number</th>
                    <th>Cheque Date</th>
+                   <th>Created Date</th>
                    <th>Company</th>
                    <th>Amount</th>
                    <th>Cheque Type</th>
@@ -88,7 +89,7 @@
                 </tbody>
              <tfoot>
              <tr>
-                 <th colspan="4" style="text-align:right">Total:</th>
+                 <th colspan="5" style="text-align:right">Total:</th>
                  <th colspan="4"></th>
              </tr>
              </tfoot>

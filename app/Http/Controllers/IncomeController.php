@@ -328,7 +328,7 @@ class IncomeController extends Controller
 
         $rows = DB::table('incomes');
         $rows->join('companies', 'incomes.company_id', '=', 'companies.id');
-        $rows->select('incomes.id as iId', 'incomes.income_generate_id as name', 'incomes.amount as amount', 'incomes.payment_mode as pMode', 'incomes.income_from as incomeFrom', 'incomes.income_from_ref_id as incomeFromRefId', 'incomes.created_at as incomeDate');
+        $rows->select('incomes.id as iId', 'incomes.income_generate_id as name', 'incomes.amount as amount', 'incomes.payment_mode as pMode', 'incomes.income_from as incomeFrom', 'incomes.income_from_ref_id as incomeFromRefId', 'incomes.created_at as incomeDate', 'incomes.created_at as incomeDateForSort');
         $rows->addSelect('companies.name as companyName');
 //        $rows->where('check_registries.status','!=', 0);
         if (isset($query['income_generate_id'])) {
@@ -389,13 +389,14 @@ class IncomeController extends Controller
 
 
             $records["data"][] = array(
-                $id                 = $i,
-                $name               = '<a data-toggle="modal" data-target-income-id="'.$post->iId.'" data-target="#myModalIncome" href="javascript:void(0)">'.$post->name.'</a>',
+                $id                  = $i,
+                $name                = '<a data-toggle="modal" data-target-income-id="'.$post->iId.'" data-target="#myModalIncome" href="javascript:void(0)">'.$post->name.'</a>',
                 $incomeDate          = date('d-m-Y',strtotime($post->incomeDate)),
-                $pMode          = $post->pMode,
-                $companyName        = $post->companyName,
-                $incomeFromRefId        = $incomeFrom,
-                $amount             = $post->amount,
+                $incomeDateForSort   = $post->incomeDateForSort,
+                $pMode               = $post->pMode,
+                $companyName         = $post->companyName,
+                $incomeFromRefId     = $incomeFrom,
+                $amount              = $post->amount,
 
                 $button);
             $i++;

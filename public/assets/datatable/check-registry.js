@@ -44,6 +44,7 @@ $(document).ready(function () {
             { "name": 'id' },
             { "name": 'name' },
             { "name": 'checkDate' },
+            { "name": 'createdAtForSort' },
             { "name": 'companyName' },
             { "name": 'amount' },
             { "name": 'checkType' },
@@ -51,7 +52,7 @@ $(document).ready(function () {
             { "name": '' },
         ],
         "order": [
-            [2, "desc"]
+            [3, "desc"]
         ],// set first column as a default sort by asc
         "columnDefs": [
             {
@@ -59,7 +60,11 @@ $(document).ready(function () {
                 "orderable": false
             },
             {
-                "targets": 6,
+                "targets": [ 3 ],
+                "visible": false
+            },
+            {
+                "targets": 8,
                 "orderable": false
             }
             ],
@@ -76,7 +81,7 @@ $(document).ready(function () {
 
             // Total over all pages
             total = api
-                .column( 4 )
+                .column( 5 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -84,14 +89,14 @@ $(document).ready(function () {
 
             // Total over this page
             pageTotal = api
-                .column( 4, { page: 'current'} )
+                .column( 5, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
 
             // Update footer
-            $( api.column( 4 ).footer() ).html( parseFloat(pageTotal).toFixed(2) );
+            $( api.column( 5 ).footer() ).html( parseFloat(pageTotal).toFixed(2) );
         }
 
     });

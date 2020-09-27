@@ -549,7 +549,7 @@ class LoanController extends Controller
         $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 
         $rows = DB::table('loans');
-        $rows->select('loans.id as lId', 'loans.loan_generate_id as name', 'loans.amount as amount', 'loans.payment_mode as pMode', 'loans.loan_from as loanFrom', 'loans.loan_from_ref_id as loanFromRefId', 'loans.loan_to as loanTo', 'loans.loan_to_ref_id as loanToRefId', 'loans.created_at as loanDate');
+        $rows->select('loans.id as lId', 'loans.loan_generate_id as name', 'loans.amount as amount', 'loans.payment_mode as pMode', 'loans.loan_from as loanFrom', 'loans.loan_from_ref_id as loanFromRefId', 'loans.loan_to as loanTo', 'loans.loan_to_ref_id as loanToRefId', 'loans.created_at as loanDate', 'loans.created_at as createdDate');
 
         if (isset($query['loan_generate_id'])) {
             $name = $query['loan_generate_id'];
@@ -622,9 +622,10 @@ class LoanController extends Controller
             $records["data"][] = array(
                 $id                 = $i,
                 $name               = '<a data-toggle="modal" data-target-loan-id="'.$post->lId.'" data-target="#myModalLoan" href="javascript:void(0)">'.$post->name.'</a>',
-                $loanDate          = date('d-m-Y',strtotime($post->loanDate)),
-                $pMode          = $post->pMode,
-                $loanFromRefId        = $loanFrom,
+                $loanDate           = date('d-m-Y',strtotime($post->loanDate)),
+                $createdDate        = $post->createdDate,
+                $pMode              = $post->pMode,
+                $loanFromRefId      = $loanFrom,
                 $loanToRefId        = $loanTo,
                 $amount             = $post->amount,
 

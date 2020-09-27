@@ -40,6 +40,7 @@ $(document).ready(function () {
             { "name": 'id' },
             { "name": 'name' },
             { "name": 'loanDate' },
+            { "name": 'createdDate' },
             { "name": 'pMode' },
             { "name": 'loanFromRefId' },
             { "name": 'loanToRefId' },
@@ -47,12 +48,16 @@ $(document).ready(function () {
             { "name": '' },
         ],
         "order": [
-            [1, "asc"]
+            [3, "desc"]
         ],// set first column as a default sort by asc
         "columnDefs": [
             {
                 "targets": 0,
                 "orderable": false
+            },
+            {
+                "targets": [ 3 ],
+                "visible": false
             },
             {
                 "targets": 7,
@@ -72,7 +77,7 @@ $(document).ready(function () {
 
             // Total over all pages
             total = api
-                .column( 6 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -80,14 +85,14 @@ $(document).ready(function () {
 
             // Total over this page
             pageTotal = api
-                .column( 6, { page: 'current'} )
+                .column( 7, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
 
             // Update footer
-            $( api.column( 6 ).footer() ).html( parseFloat(pageTotal).toFixed(2) );
+            $( api.column( 7 ).footer() ).html( parseFloat(pageTotal).toFixed(2) );
         }
 
     });
