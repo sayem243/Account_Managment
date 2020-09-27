@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CashDailyBalanceSession;
 use App\CashTransaction;
 use App\CheckRegistry;
 use App\Company;
@@ -21,6 +22,9 @@ use PDF;
 
 class VoucherController extends Controller
 {
+    protected $dailyCashSession;
+    protected $dailyCashTransaction;
+
     function __construct()
     {
         $this->middleware('auth');
@@ -29,6 +33,8 @@ class VoucherController extends Controller
         $this->middleware('permission:voucher_create', ['only' => ['index','store','voucherPdf','voucherPrint','archivedList']]);
         $this->middleware('permission:superadmin', ['only' => ['delete']]);
 
+        $this->dailyCashSession = new CashDailyBalanceSession();
+        $this->dailyCashTransaction = new CashTransaction();
 
     }
 
@@ -570,6 +576,22 @@ class VoucherController extends Controller
             $voucher = Voucher::find($id);
             if($voucher->status==1){
 
+                $date = date('Y-m-d');
+                $from_date = $date? $date.' 00:00:00': '';
+                $to_date = $date? $date.' 23:59:59': '';
+                $openingBalance=$this->dailyCashSession->getDailyOpeningClosingBalance($from_date,$to_date, $voucher->VoucherItems[0]->project->company->id);
+                $cashTransactions = $this->dailyCashTransaction->getDailyBalanceTransaction($date, $voucher->VoucherItems[0]->project->company->id);
+
+                $openingBalance= isset($openingBalance[$voucher->VoucherItems[0]->project->company->id])?$openingBalance[$voucher->VoucherItems[0]->project->company->id]->opening_balance:0;
+
+                $dailyDr=isset($cashTransactions[$voucher->VoucherItems[0]->project->company->id]['DR'])?array_sum($cashTransactions[$voucher->VoucherItems[0]->project->company->id]['DR']):0;
+
+                $dailyCr = isset($cashTransactions[$voucher->VoucherItems[0]->project->company->id]['CR'])?array_sum($cashTransactions[$voucher->VoucherItems[0]->project->company->id]['CR']):0;
+
+                if(($openingBalance+$dailyCr-$dailyDr)<$voucher->total_amount){
+                    return response()->json(['message'=>'Error! In sufficient balance.','status'=>301]);
+                }
+
                 /** @var VoucherItems $voucherItem */
                 foreach ($voucher->VoucherItems as $voucherItem){
                     $voucherItem->status=1;
@@ -594,7 +616,7 @@ class VoucherController extends Controller
                         'transaction_via'=>isset($account_pay_check_id[$voucher->id])?'VOUCHER_CHECK_ACCOUNT_PAY':'VOUCHER',
                         'transaction_via_ref_id'=>$voucher->id,
                         'amount'=>$voucher->total_amount,
-                        'company_id'=>$voucher->VoucherItems[0]->project->company->id,
+                        'company_id'=>$voucher->VoucherItems[0]->project?$voucher->VoucherItems[0]->project->company->id:null,
                         'project_id'=>$voucher->VoucherItems[0]->project?$voucher->VoucherItems[0]->project->id:null,
                         'created_by'=>auth()->id(),
                         'created_at'=>new \DateTime(),

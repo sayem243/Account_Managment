@@ -146,10 +146,10 @@
                     <div class="col-md-6">
                         <div class="to_user_section">
                             <div class="form-group">
-                                <label for="loan_to_value_user" class="col-form-label">User <span
+                                <label for="check_loan_to_value_user" class="col-form-label">User <span
                                             class="required">*</span></label>
                                 <div class="col-form-label">
-                                    <select id="loan_to_value_user" name="loan_to_value_user" class="form-control select2 loan_to_value_user">
+                                    <select id="check_loan_to_value_user" name="loan_to_value_user" class="form-control select2 loan_to_value_user">
                                         <option value="">Select User</option>
                                         @foreach($users as $user)
                                             <option value="{{$user['id']}}">{{$user['name']}}</option>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CashDailyBalanceSession;
 use App\CashTransaction;
 use App\CheckRegistry;
 use App\Company;
@@ -22,10 +23,16 @@ class LoanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $dailyCashSession;
+    protected $dailyCashTransaction;
+
     function __construct()
     {
         $this->middleware('auth');
         $this->middleware('permission:loan-income-create', ['only' => ['index','checkLoanStore','cashLoanStore']]);
+
+        $this->dailyCashSession = new CashDailyBalanceSession();
+        $this->dailyCashTransaction = new CashTransaction();
     }
 
     public function index(){
@@ -90,6 +97,23 @@ class LoanController extends Controller
             ]);
         }
 
+        if($request->loan_from=='COMPANY'){
+            $date = date('Y-m-d');
+            $from_date = $date? $date.' 00:00:00': '';
+            $to_date = $date? $date.' 23:59:59': '';
+            $openingBalance=$this->dailyCashSession->getDailyOpeningClosingBalance($from_date,$to_date, $request->loan_from_value_company);
+            $cashTransactions = $this->dailyCashTransaction->getDailyBalanceTransaction($date, $request->loan_from_value_company);
+
+            $openingBalance= isset($openingBalance[$request->loan_from_value_company])?$openingBalance[$request->loan_from_value_company]->opening_balance:0;
+
+            $dailyCr = isset($cashTransactions[$request->loan_from_value_company]['CR'])?array_sum($cashTransactions[$request->loan_from_value_company]['CR']):0;
+
+            $dailyDr=isset($cashTransactions[$request->loan_from_value_company]['DR'])?array_sum($cashTransactions[$request->loan_from_value_company]['DR']):0;
+
+            if(($openingBalance+$dailyCr-$dailyDr)<$request->check_amount){
+                return redirect()->route('loan_income_create')->with('error','Error! In sufficient balance.');
+            }
+        }
 
         $loan = new Loan();
         $loan->payment_mode = "CHECK";
@@ -276,6 +300,24 @@ class LoanController extends Controller
         $this->validate($request, [
             'cash_amount' => ['required'],
         ]);
+
+        if($request->cash_loan_from=='COMPANY'){
+            $date = date('Y-m-d');
+            $from_date = $date? $date.' 00:00:00': '';
+            $to_date = $date? $date.' 23:59:59': '';
+            $openingBalance=$this->dailyCashSession->getDailyOpeningClosingBalance($from_date,$to_date, $request->loan_from_value_company);
+            $cashTransactions = $this->dailyCashTransaction->getDailyBalanceTransaction($date, $request->loan_from_value_company);
+
+            $openingBalance= isset($openingBalance[$request->loan_from_value_company])?$openingBalance[$request->loan_from_value_company]->opening_balance:0;
+            $dailyCr = isset($cashTransactions[$request->loan_from_value_company]['CR'])?array_sum($cashTransactions[$request->loan_from_value_company]['CR']):0;
+
+            $dailyDr=isset($cashTransactions[$request->loan_from_value_company]['DR'])?array_sum($cashTransactions[$request->loan_from_value_company]['DR']):0;
+
+
+            if(($openingBalance+$dailyCr-$dailyDr)<$request->check_amount){
+                return redirect()->route('loan_income_create')->with('error','Error! In sufficient balance.');
+            }
+        }
 
         $loan = new Loan();
         $loan->payment_mode = "CASH";

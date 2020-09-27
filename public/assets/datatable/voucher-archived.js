@@ -186,11 +186,11 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     if (data.status == 200) {
-                        jQuery('.alert').addClass('alert-success').show();
+                        jQuery('.alert').removeClass('alert-danger').addClass('alert-success').show();
                         jQuery('.alert').find('.message').html(data.message);
                         dataTable.draw();
                     }else{
-                        jQuery('.alert').addClass('alert-danger').show();
+                        jQuery('.alert').removeClass('alert-success').addClass('alert-danger').show();
                         jQuery('.alert').find('.message').html(data.message);
                         dataTable.draw();
                     }

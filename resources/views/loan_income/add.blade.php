@@ -149,4 +149,17 @@
     <script src="{{ asset("assets/js/income.js") }}" ></script>
     <script src="{{ asset("assets/js/income-cash.js") }}" ></script>
     <script src="{{ asset("assets/js/expense.js") }}" ></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                changeSelect()
+            });
+
+            function changeSelect() {
+                $(".select2").select2({
+                    tags: true
+                })
+            }
+        })
+    </script>
 @endsection
