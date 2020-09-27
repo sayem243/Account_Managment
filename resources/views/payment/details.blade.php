@@ -139,7 +139,7 @@
 
                                         @endphp
 
-                                        @if(($openingBalance+$dailyCr-$dailyDr)>0)
+                                        @if(($openingBalance+$dailyCr-$dailyDr)>=$payment->total_paid_amount)
                                         <div class=" btn-group-lg disbursed_area_button">
                                                 <input type="checkbox" id="is_old_hand_slip" name="is_old" class="is_old_hand_slip" value="1">
                                                 <label class="form-check-label" for="is_old_hand_slip">Is Old</label>
