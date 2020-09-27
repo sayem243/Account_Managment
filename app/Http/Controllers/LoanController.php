@@ -47,7 +47,7 @@ class LoanController extends Controller
             return redirect()->route('loan_income_create')->with('error','Error! Ops somethings wrong.');
         }
 
-        if ($request->loan_from=='COMPANY'){
+        if ($request->loan_from=='COMPANY' && $request->loan_to=='COMPANY'){
             $this->validate($request, [
                 'check_number' => ['required'],
                 'check_date' => ['required'],
@@ -56,8 +56,13 @@ class LoanController extends Controller
                 'loan_from_bank_id' => ['required'],
                 'loan_from_branch_id' => ['required'],
                 'loan_from_bank_account_id' => ['required'],
+
+                'loan_to_value_company' => ['required'],
+                'loan_to_bank_id' => ['required'],
+                'loan_to_branch_id' => ['required'],
+                'loan_to_bank_account_id' => ['required'],
             ]);
-        }elseif ($request->loan_to=='COMPANY'){
+        }elseif ($request->loan_from!='COMPANY' && $request->loan_to=='COMPANY'){
             $this->validate($request, [
                 'check_number' => ['required'],
                 'check_date' => ['required'],
@@ -66,6 +71,16 @@ class LoanController extends Controller
                 'loan_to_bank_id' => ['required'],
                 'loan_to_branch_id' => ['required'],
                 'loan_to_bank_account_id' => ['required'],
+            ]);
+        }elseif ($request->loan_from=='COMPANY' && $request->loan_to!='COMPANY'){
+            $this->validate($request, [
+                'check_number' => ['required'],
+                'check_date' => ['required'],
+                'check_amount' => ['required'],
+                'loan_from_value_company' => ['required'],
+                'loan_from_bank_id' => ['required'],
+                'loan_from_branch_id' => ['required'],
+                'loan_from_bank_account_id' => ['required'],
             ]);
         }else{
             $this->validate($request, [

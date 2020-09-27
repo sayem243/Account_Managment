@@ -18,7 +18,7 @@
                     <h5 style="position: absolute; left: 25px; top: 15px">
                         Date: {{ date('d-m-Y', strtotime($checkRegistry->created_at))}}</h5>
                     <h5 style="text-align: center; margin-bottom: 5px; font-size: 20px">Expenses Voucher</h5>
-                    <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$checkRegistry->company->name}}</h4>
+                    <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$checkRegistry->company?$checkRegistry->company->name:''}}</h4>
                     @if($checkRegistry->project)
                         <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$checkRegistry->project?$checkRegistry->project->p_name:''}}</h4>
                     @endif
@@ -42,28 +42,28 @@
                                                     @php
                                                         $user= \App\User::find($checkRegistry->from_to_value)
                                                     @endphp
-                                                    {{$user->name}}
+                                                    {{$user?$user->name:''}}
 
                                                 @endif
                                                 @if($checkRegistry->from_to_type=='COMPANY')
                                                     @php
                                                         $company= \App\Company::find($checkRegistry->from_to_value)
                                                     @endphp
-                                                    {{$company->name}}
+                                                    {{$company?$company->name:''}}
 
                                                 @endif
                                                 @if($checkRegistry->from_to_type=='PROJECT')
                                                     @php
                                                         $project= \App\Project::find($checkRegistry->from_to_value)
                                                     @endphp
-                                                    {{$project->p_name}}
+                                                    {{$project?$project->p_name:''}}
 
                                                 @endif
                                                 @if($checkRegistry->from_to_type=='CLIENT')
                                                     @php
                                                         $client= \App\Client::find($checkRegistry->from_to_value)
                                                     @endphp
-                                                    {{$client->name}}
+                                                    {{$client?$client->name:''}}
 
                                                 @endif
                                                 @if($checkRegistry->from_to_type=='OTHERS')
@@ -105,17 +105,17 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <label class="col-md-12 col-form-label" for="company_id">Bank Name : {{$checkRegistry->bank->name}}</label>
+                                            <label class="col-md-12 col-form-label" for="company_id">Bank Name : {{$checkRegistry->bank?$checkRegistry->bank->name:''}}</label>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <label class="col-md-12 col-form-label" for="company_id">Branch Name : {{$checkRegistry->branch->name}}</label>
+                                            <label class="col-md-12 col-form-label" for="company_id">Branch Name : {{$checkRegistry->branch?$checkRegistry->branch->name:''}}</label>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <label class="col-md-12 col-form-label" for="company_id">A/C Number : {{$checkRegistry->bankAccount->account_number}}</label>
+                                            <label class="col-md-12 col-form-label" for="company_id">A/C Number : {{$checkRegistry->bankAccount?$checkRegistry->bankAccount->account_number:''}}</label>
                                         </div>
                                     </div>
                                 </div>
