@@ -161,6 +161,7 @@ Route::get('/register/edit/{id}','UserController@userprofileEdit')->name('userpr
 Route::post('/register/update{id}','UserController@userprofileUpdate')->name('userprofileUpdate');
 Route::get('/user/delete/{id}','UserController@delete')->name('User_delete');
 Route::get('/user/restore/{id}','UserController@userRestore')->name('user_restore');
+Route::post('/user/datatable','UserController@dataTableUser')->name('user_data_table');
 
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');

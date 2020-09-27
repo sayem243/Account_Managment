@@ -238,7 +238,7 @@ table.dataTable thead .sorting_desc_disabled:after{
     z-index: 999;
 }
 .deleted_item{
-    background-color: red;
+    background-color: red!important;
     color: #FFFFFF;
 }
 .table tbody tr.account_pay_check_voucher_item{
