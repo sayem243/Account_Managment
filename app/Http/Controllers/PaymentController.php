@@ -552,30 +552,51 @@ class PaymentController extends Controller
         $isOld= $request->request->get('is_old');
 
         $payment=Payment::find($id);
-        //$payment->status=1;
-        if($payment->status==3 && $this->checkAuthUserProjects($payment)) {
-            $payment->disbursed_by = $user->id;
-            $payment->disbursed_at = new \DateTime();
-            $payment->status = 4;
-            $payment->is_old = $isOld?$isOld:0;
-            $payment->save();
 
-            if($payment->is_old==false){
-                $arrayData= array(
-                    'transaction_type'=>'DR',
-                    'transaction_via'=>'HAND_SLIP_ISSUE',
-                    'transaction_via_ref_id'=>$payment->id,
-                    'amount'=>$payment->total_paid_amount,
-                    'company_id'=>$payment->company_id,
-                    'project_id'=>$payment->project_id?$payment->project_id:null,
-                    'created_by'=>auth()->id(),
-                    'created_at'=>new \DateTime(),
-                );
-                CashTransaction::insertData($arrayData);
+        $date = date('Y-m-d');
+        $from_date = $date? $date.' 00:00:00': '';
+        $to_date = $date? $date.' 23:59:59': '';
+        $openingBalance=$this->dailyCashSession->getDailyOpeningClosingBalance($from_date,$to_date, $payment->company->id);
+        $cashTransactions = $this->dailyCashTransaction->getDailyBalanceTransaction($date, $payment->company->id);
+
+        $openingBalance= isset($openingBalance[$payment->company['id']])?$openingBalance[$payment->company['id']]->opening_balance:0;
+
+        $dailyDr=isset($cashTransactions[$payment->company['id']]['DR'])?array_sum($cashTransactions[$payment->company['id']]['DR']):0;
+
+        $dailyCr = isset($cashTransactions[$payment->company['id']]['CR'])?array_sum($cashTransactions[$payment->company['id']]['CR']):0;
+
+        if(($openingBalance+$dailyCr-$dailyDr)<$payment->total_paid_amount){
+            return response()->json(['message'=>'Error! In sufficient balance.','status'=>301]);
+        }else{
+
+            if($payment->status==3 && $this->checkAuthUserProjects($payment)) {
+                $payment->disbursed_by = $user->id;
+                $payment->disbursed_at = new \DateTime();
+                $payment->status = 4;
+                $payment->is_old = $isOld?$isOld:0;
+                $payment->save();
+
+                if($payment->is_old==false){
+                    $arrayData= array(
+                        'transaction_type'=>'DR',
+                        'transaction_via'=>'HAND_SLIP_ISSUE',
+                        'transaction_via_ref_id'=>$payment->id,
+                        'amount'=>$payment->total_paid_amount,
+                        'company_id'=>$payment->company_id,
+                        'project_id'=>$payment->project_id?$payment->project_id:null,
+                        'created_by'=>auth()->id(),
+                        'created_at'=>new \DateTime(),
+                    );
+                    CashTransaction::insertData($arrayData);
+                }
+
+                return response()->json(['success' => 'Payment has been successfully disbursed.', 'status' => 200]);
             }
-
-            return response()->json(['success' => 'Payment has been successfully disbursed.', 'status' => 200]);
         }
+
+
+        //$payment->status=1;
+
         return response()->json(['message'=>'Error! This are not permitted.','status'=>301]);
     }
 

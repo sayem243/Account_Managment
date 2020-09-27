@@ -148,6 +148,11 @@
                                             </button>
                                         </div>
 
+                                            @else
+                                            <div class=" btn-group-lg disbursed_area_button">
+                                            <p style="color: red;padding-right:15px;font-size: 18px">In sufficient balance.</p>
+                                            </div>
+
                                         @endif
                                     @else
                                     <button disabled style="border-radius: .3rem; margin: 0" type="button"

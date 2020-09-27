@@ -190,13 +190,13 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="loan_to_bank_id">Bank
-                                                        Name: {{$loan->checkRegistryLoanFrom->bank->name}}</label>
+                                                        Name: {{$loan->checkRegistryLoanFrom->bank?$loan->checkRegistryLoanFrom->bank->name:''}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="loan_to_branch_id">Branch
-                                                        Name: {{$loan->checkRegistryLoanFrom->branch->name}}</label>
+                                                        Name: {{$loan->checkRegistryLoanFrom->branch?$loan->checkRegistryLoanFrom->branch->name:''}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -221,20 +221,20 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="loan_to_bank_id">Bank
-                                                        Name: {{$loan->checkRegistryLoanTo->bank->name}}</label>
+                                                        Name: {{$loan->checkRegistryLoanTo->bank?$loan->checkRegistryLoanTo->bank->name:''}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="loan_to_branch_id">Branch
-                                                        Name: {{$loan->checkRegistryLoanTo->branch->name}}</label>
+                                                        Name: {{$loan->checkRegistryLoanTo->branch?$loan->checkRegistryLoanTo->branch->name:''}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label"
                                                            for="loan_to_bank_account_id">A/C
-                                                        Number: {{$loan->checkRegistryLoanTo->bankAccount->account_number}}</label>
+                                                        Number: {{$loan->checkRegistryLoanTo->bankAccount?$loan->checkRegistryLoanTo->bankAccount->account_number:''}}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -276,7 +276,7 @@
 
                     </div>
 
-{{--DR Voucher start--}}
+                    {{--DR Voucher start--}}
 
 
                     <div class="card-body"
@@ -448,13 +448,13 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="loan_to_bank_id">Bank
-                                                        Name: {{$loan->checkRegistryLoanFrom->bank->name}}</label>
+                                                        Name: {{$loan->checkRegistryLoanFrom->bank?$loan->checkRegistryLoanFrom->bank->name:''}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="loan_to_branch_id">Branch
-                                                        Name: {{$loan->checkRegistryLoanFrom->branch->name}}</label>
+                                                        Name: {{$loan->checkRegistryLoanFrom->branch?$loan->checkRegistryLoanFrom->branch->name:''}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -479,13 +479,13 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="loan_to_bank_id">Bank
-                                                        Name: {{$loan->checkRegistryLoanTo->bank->name}}</label>
+                                                        Name: {{$loan->checkRegistryLoanTo->bank?$loan->checkRegistryLoanTo->bank->name:''}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <label class="col-md-12 col-form-label" for="loan_to_branch_id">Branch
-                                                        Name: {{$loan->checkRegistryLoanTo->branch->name}}</label>
+                                                        Name: {{$loan->checkRegistryLoanTo->branch?$loan->checkRegistryLoanTo->branch->name:''}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
