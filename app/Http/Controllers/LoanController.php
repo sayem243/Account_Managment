@@ -314,7 +314,7 @@ class LoanController extends Controller
             $dailyDr=isset($cashTransactions[$request->loan_from_value_company]['DR'])?array_sum($cashTransactions[$request->loan_from_value_company]['DR']):0;
 
 
-            if(($openingBalance+$dailyCr-$dailyDr)<$request->check_amount){
+            if(($openingBalance+$dailyCr-$dailyDr)<$request->cash_amount){
                 return redirect()->route('loan_income_create')->with('error','Error! In sufficient balance.');
             }
         }
