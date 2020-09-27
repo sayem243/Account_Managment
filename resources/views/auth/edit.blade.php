@@ -65,18 +65,7 @@
 
                             {{--</div>--}}
                         {{--</div>--}}
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Select company</label>
-                                <select class="form-control" name="company_id" >
-                                    <option value="">Select Company</option>
-                                    @foreach($companies as $company)
-                                        <option value="{{$company->id}}" {{$users->UserProfile->company_id==$company->id?'selected="selected"':''}} > {{$company->name}} </option>
-                                    @endforeach
-                                </select>
 
-                            </div>
-                        </div>
                     </div>
 
                     <div class="row">
@@ -107,30 +96,6 @@
                                     <input type="text" class="form-control" name="fname" placeholder="First Name" value="{{$users->UserProfile->fname}}">
                                 </div>
 
-                                {{--<div class="form-group">--}}
-                                    {{--<label>Fathers Name</label>--}}
-                                    {{--<input type="text" class="form-control" name="fathername" placeholder="Fathers Name" value="{{$users->UserProfile->fathername}}" >--}}
-                                {{--</div>--}}
-
-
-
-                                {{--<div class="form-group">--}}
-                                    {{--<label>Present Address</label>--}}
-                                    {{--<input type="text" class="form-control" name="p_address" placeholder="Present Address" value="{{$users->UserProfile->p_address}}">--}}
-                                {{--</div>--}}
-
-                                <div class="form-group">
-                                    <label>Mobile Number</label>
-                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number" value="{{$users->UserProfile->mobile}}" >
-                                </div>
-
-
-
-                                {{--<div class="form-group">--}}
-                                    {{--<label>NID</label>--}}
-                                    {{--<input type="number" class="form-control" name="nid" placeholder="National ID" value="{{$users->UserProfile->nid}}">--}}
-                                {{--</div>--}}
-
                             </div>
 
 
@@ -141,24 +106,25 @@
                                     <input type="text" class="form-control" name="lname" placeholder="Last Name" value="{{$users->UserProfile->lname}}" >
                                 </div>
 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Select company</label>
+                                    <select class="form-control" name="company_id" >
+                                        <option value="">Select Company</option>
+                                        @foreach($companies as $company)
+                                            <option value="{{$company->id}}" {{$users->UserProfile->company_id==$company->id?'selected="selected"':''}} > {{$company->name}} </option>
+                                        @endforeach
+                                    </select>
 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
 
-                                {{--<div class="form-group">--}}
-                                    {{--<label>Mothers Name</label>--}}
-                                    {{--<input type="text" class="form-control" name="mothername" placeholder="Mothers Name" value="{{$users->UserProfile->mothername}}">--}}
-                                {{--</div>--}}
-
-                                {{--<div class="form-group">--}}
-                                    {{--<label>Permanent Address</label>--}}
-                                    {{--<input type="text" class="form-control" name="address" placeholder="Permanent Address"  value="{{$users->UserProfile->address}}">--}}
-                                {{--</div>--}}
-
-                                {{--<div class="form-group">--}}
-                                    {{--<label>Joining Date</label>--}}
-                                    {{--<input type="date" class="form-control" name="joindate" placeholder="Joining Date" value="{{$users->UserProfile->joindate}}">--}}
-                                {{--</div>--}}
-
-
+                                <div class="form-group">
+                                    <label>Mobile Number</label>
+                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number" value="{{$users->UserProfile->mobile}}" >
+                                </div>
                             </div>
 
                         </div>
