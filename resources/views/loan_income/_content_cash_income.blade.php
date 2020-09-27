@@ -51,7 +51,7 @@
                     <select id="cash_income_from_to_type" name="cash_income_from_to_type" class="form-control cash_income_from_to_type" required>
                         <option value="USER">User</option>
                         <option value="COMPANY">Company</option>
-                        <option value="PROJECT">Project</option>
+                        {{--<option value="PROJECT">Project</option>--}}
                         <option value="CLIENT">Client</option>
                         <option value="OTHERS">Others</option>
                     </select>
@@ -89,7 +89,7 @@
                 </div>
 
             </div>
-            <div class="cash_income_project_section" style="display: none">
+            {{--<div class="cash_income_project_section" style="display: none">
                 <div class="form-group">
                     <label for="from_to_value_project" class="col-form-label">Project <span
                                 class="required">*</span></label>
@@ -102,7 +102,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div>--}}
             <div class="cash_income_client_section" style="display: none">
                 <div class="form-group">
                     <label for="from_to_value_client" class="col-form-label">Client <span
