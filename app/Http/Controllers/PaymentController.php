@@ -589,7 +589,7 @@ class PaymentController extends Controller
             $openingBalance=$this->dailyCashSession->getDailyOpeningClosingBalance($from_date,$to_date, $payment->company->id);
             $dailyCashTransaction = $this->dailyCashTransaction->getDailyBalanceTransaction($date, $payment->company->id);
             $totalSettlementAmount = $this->getTotalSettlementAmount($payment);
-            return view('payment.details',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount, 'openingBalance'=>$openingBalance]);
+            return view('payment.details',['payment'=>$payment, 'totalSettlementAmount'=>$totalSettlementAmount, 'openingBalance'=>$openingBalance, 'cashTransactions'=>$dailyCashTransaction]);
         }
         return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
     }

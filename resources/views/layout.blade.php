@@ -88,7 +88,7 @@ Like: www.facebook.com/terminalbd
 </div>
 <!-- [ Pre-loader ] End -->
 <!-- [ navigation menu ] start -->
-<nav class="pcoded-navbar navbar-collapsed">
+<nav class="pcoded-navbar navbar-collapsed hidden-print">
     <div class="navbar-wrapper">
         <div class="navbar-brand header-logo">
             <a href="" class="b-brand">

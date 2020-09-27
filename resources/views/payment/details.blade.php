@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header hidden-print">
                         <h5> Payment Details </h5>
 
                         <div class="card-header-right">
@@ -129,7 +129,17 @@
                                  && !$payment->project->trashed())
 
                                     @if(date("Y-m-d", strtotime("now"))>=date("Y-m-d", strtotime($payment->disbursed_schedule_date)))
-                                        @if(isset($openingBalance[$payment->company['id']])&&$openingBalance[$payment->company['id']]->opening_balance>0)
+
+                                        @php
+                                            $openingBalance= isset($openingBalance[$payment->company['id']])?$openingBalance[$payment->company['id']]->opening_balance:0;
+
+                                            $dailyDr=isset($cashTransactions[$payment->company['id']]['DR'])?array_sum($cashTransactions[$payment->company['id']]['DR']):0;
+
+                                            $dailyCr = isset($cashTransactions[$payment->company['id']]['CR'])?array_sum($cashTransactions[$payment->company['id']]['CR']):0;
+
+                                        @endphp
+
+                                        @if(($openingBalance+$dailyCr-$dailyDr)>0)
                                         <div class=" btn-group-lg disbursed_area_button">
                                                 <input type="checkbox" id="is_old_hand_slip" name="is_old" class="is_old_hand_slip" value="1">
                                                 <label class="form-check-label" for="is_old_hand_slip">Is Old</label>

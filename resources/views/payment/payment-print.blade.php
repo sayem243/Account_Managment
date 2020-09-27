@@ -28,7 +28,7 @@
                             </table>
 
                         </div>
-                        <hr style="margin-top: 1px; margin-bottom: 10px">
+                        {{--<hr style="margin-top: 1px; margin-bottom: 10px">--}}
                         <div class="row" style="position: relative">
                             <table class="table">
                                 <thead>
