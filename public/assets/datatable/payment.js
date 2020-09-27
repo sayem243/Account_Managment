@@ -181,6 +181,15 @@ $(document).ready(function () {
                             'data-date-range-to': calculateDate('past_60'),
                             'data-date-range-from': calculateDate('past_90')
                         }
+                    },
+                    {
+                        text: '90+ days',
+                        className: 'payment_date_age payment_date_age_90',
+                        attr:  {
+                            title: '90+ days',
+                            'data-date-range-to': calculateDate('past_90'),
+                            'data-date-range-from': '2020-01-01'
+                        }
                     }
                 ]
             }
