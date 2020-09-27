@@ -102,15 +102,13 @@
 
 
                                         <div class="row">
-                                            <fieldset style="margin-bottom: 1px">
+                                            <fieldset style="margin-bottom: 17px">
                                                 <div class="col-md-12">  <h4>Deposit Information</h4></div>
 
                                                 <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
                                                 <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
-                                                <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
-                                                </div>
-                                                <div class="col-md-12"><h6>Check Number: <a href="{{route('check_registry_details',$items['id'])}}">{{$items['check_number']}}</a> </h6>
-                                                </div>
+                                                <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6></div>
+                                                <div class="col-md-12"><h6>Check Number: <a href="{{route('check_registry_details',$items['id'])}}">{{$items['check_number']}}</a> </h6></div>
                                             </fieldset>
 
                                         </div>
