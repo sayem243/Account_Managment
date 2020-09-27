@@ -20,6 +20,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 use Hash;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class UserController extends Controller
@@ -37,14 +38,117 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
+        $companies = Company::all()->sortBy('name');
         if(auth()->user()->can('users')){
-            $data = User::withTrashed()->orderBy('id','DESC')->paginate(20);
-            return view('users.index',compact('data'))
-                ->with('i', ($request->input('page', 1) - 1) * 20);
+            return view('users.index',['companies'=>$companies]);
         }
         return redirect()->route('payment')->with('error', 'Error! This are not permitted.');
 
 
+    }
+
+    public function dataTableUser(Request $request)
+    {
+
+        $query = $request->request->all();
+
+        $countRecords = DB::table('users');
+        $countRecords->select('users.id as totalUser');
+        $countRecords->join('user_profiles', 'users.id', '=', 'user_profiles.user_id');
+        $countRecords->join('companies', 'user_profiles.company_id', '=', 'companies.id');
+
+        if (isset($query['user_name'])) {
+            $name = $query['user_name'];
+            $countRecords->where('users.name', 'like', "%{$name}%");
+        }
+
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $countRecords->where('user_profiles.company_id',$company_id);
+        }
+        $result = $countRecords->get();
+        $tcount = count($result);
+        $iTotalRecords = $tcount;
+        $iDisplayLength = intval($_REQUEST['length']);
+        $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+        $iDisplayStart = intval($_REQUEST['start']);
+        $sEcho = intval($_REQUEST['draw']);
+        $records = array();
+        $records["data"] = array();
+        $end = $iDisplayStart + $iDisplayLength;
+        $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+
+        $rows = DB::table('users');
+        $rows->select('users.id as uId','users.name as name','users.email as email','users.deleted_at as userDeletedAt');
+        $rows->join('user_profiles', 'users.id', '=', 'user_profiles.user_id');
+        $rows->join('companies', 'user_profiles.company_id', '=', 'companies.id');
+        $rows->addSelect('companies.name as companyName');
+
+        if (isset($query['user_name'])) {
+            $name = $query['user_name'];
+            $rows->where('users.name', 'like', "%{$name}%");
+        }
+
+        if(isset($query['company_id'])){
+            $company_id = $query['company_id'];
+            $rows->where('user_profiles.company_id',$company_id);
+        }
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName, $columnSortOrder);
+        $result = $rows->get();
+
+        $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
+
+        foreach ($result as $post):
+
+            $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                    <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end">';
+
+            $button .= '<li class="dropdown-item"><a href="/userprofile/show/'.$post->uId.'"><i class="feather icon-eye"></i>Details</a></li>';
+
+            $button .= '<li class="dropdown-item"><a href="users/'.$post->uId .'"><i class="feather icon-eye"></i>Role-Show</a></li>';
+        if(!$post->userDeletedAt && auth()->user()->hasRole('superadmin')){
+            $button .='<li class="dropdown-item"><a href="/register/edit/'.$post->uId .'"><i class="feather icon-edit"></i>Edit</a></li>';
+            $button .='<li class="dropdown-item"><a href="/user/delete/'.$post->uId .'"><i class="feather icon-trash-2"></i>Remove</a></li>';
+
+        }
+
+        if( $post->userDeletedAt && auth()->user()->hasRole('superadmin')){
+            $button .='<li class="dropdown-item"><a href="/user/restore/'.$post->uId .'"><i class="fa fa-undo" aria-hidden="true"></i>Restore</a></li>';
+        }
+        if( !$post->userDeletedAt && auth()->user()->hasRole('superadmin') || auth()->user()->id == $post->uId){
+            $button .='<li class="dropdown-item"><a href="password/change/'.$post->uId .'"><i class="feather icon-edit"></i>Password Change</a></li>';
+        }
+
+
+            $button.='</ul></div>';
+
+
+            $records["data"][] = array(
+                $id                 = $i,
+                $name               = $post->name,
+                $companyName               = $post->companyName,
+                $email               = $post->email,
+                $button,
+                $status               = $post->userDeletedAt,
+            );
+            $i++;
+
+        endforeach;
+        if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+        }
+
+        $records["draw"] = $sEcho;
+        $records["recordsTotal"] = $iTotalRecords;
+        $records["recordsFiltered"] = $iTotalRecords;
+        return new JsonResponse($records);
     }
 
 
