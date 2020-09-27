@@ -34,6 +34,14 @@
                              @endforeach
                          </select>
                      </td>
+                     <td colspan="1">
+                         <select class="form-control project_id select2" name="project_id" id="project_id">
+                             <option value="">All Project</option>
+                             @foreach($projects as $project)
+                                 <option value="{{ $project->id }}">{{ $project->p_name }}</option>
+                             @endforeach
+                         </select>
+                     </td>
 
                      <td colspan="1">
                          From <input style="display: inline; width: auto;"  type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="from_date" id="from_date">
@@ -41,7 +49,6 @@
                      <td colspan="1">
                          To <input style="display: inline; width: auto;" type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="to_date" id="to_date">
                      </td>
-                     <td></td>
                      <td></td>
                  </tr>
                  <tr>
@@ -116,6 +123,28 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function(){
+
+            jQuery('body').on('change','#company_id', function () {
+                var companyId= jQuery(this).val();
+                if(companyId===0||companyId===''){
+                    companyId = 0
+                }
+                jQuery.ajax({
+                    type:'GET',
+                    dataType : 'json',
+                    url:'{{ url("/ajax/project/company") }}/'+companyId,
+                    data:{},
+                    success:function(data){
+                        console.log(data);
+                        var dataOption='<option value>All Project</option>';
+                        jQuery.each(data, function(i, item) {
+                            dataOption += '<option value="'+item.id+'">'+item.name+'</option>';
+                        });
+                        jQuery('#project_id').html(dataOption);
+                    }
+                });
+
+            });
 
             jQuery("#myModalIncome").on("show.bs.modal", function(e) {
                 var id = jQuery(e.relatedTarget).data('target-income-id');

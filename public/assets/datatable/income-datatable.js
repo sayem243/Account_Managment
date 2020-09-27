@@ -21,6 +21,7 @@ $(document).ready(function () {
 
                 var income_generate_id = $('#income_generate_id').val();
                 var company_id = $('#company_id').val();
+                var project_id = $('#project_id').val();
 
                 var from_date = $('#from_date').val();
                 var to_date = $('#to_date').val();
@@ -29,6 +30,7 @@ $(document).ready(function () {
                 data._token = CSRF_TOKEN;
                 data.income_generate_id = income_generate_id;
                 data.company_id = company_id;
+                data.project_id = project_id;
                 data.from_date = from_date;
                 data.to_date = to_date;
 
@@ -96,6 +98,9 @@ $(document).ready(function () {
     });
 
     $('#company_id').change(function(){
+        dataTable.draw();
+    });
+    $('#project_id').change(function(){
         dataTable.draw();
     });
     $('.date_picker').change(function(){
