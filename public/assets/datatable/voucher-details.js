@@ -8,7 +8,7 @@ $(document).ready(function () {
         loadingMessage: 'Loading...',
         "processing": false,
         "serverSide": true,
-        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+        "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
         'searching': false,
         "bPaginate": false,
         "bInfo": false,
@@ -40,13 +40,14 @@ $(document).ready(function () {
             { "name": '' },
             { "name": '' },
             { "name": 'name' },
+            { "name": 'createdDate' },
             { "name": 'pId' },
             { "name": 'projectName' },
             { "name": 'amount' },
             { "name": '' },
         ],
         "order": [
-            [2, "asc"]
+            [3, "desc"]
         ],// set first column as a default sort by asc
         "columnDefs": [
             {
@@ -58,7 +59,11 @@ $(document).ready(function () {
                 "orderable": false
             },
             {
-                "targets": 6,
+                "targets": [3],
+                "visible": false
+            },
+            {
+                "targets": 7,
                 "orderable": false
             }],
         dom: 'Bfrtip',
@@ -101,13 +106,13 @@ $(document).ready(function () {
             },
         ],
         rowCallback: function (row, data) {
-            if(data[7]==='CASH'){
+            if(data[8]==='CASH'){
                 $(row).addClass('cash_check_voucher_item');
             }
-            if(data[7]==='ACCOUNT_PAY'){
+            if(data[8]==='ACCOUNT_PAY'){
                 $(row).addClass('account_pay_check_voucher_item');
             }
-            if(data[7]==='ACCOUNT_TRANSFER'){
+            if(data[8]==='ACCOUNT_TRANSFER'){
                 $(row).addClass('account_pay_check_voucher_item');
             }
         }

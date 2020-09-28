@@ -60,7 +60,7 @@
                      <th style="width: 5%">SL</th>
                      <th>Number</th>
                      <th>Cheque Date</th>
-                     <th>Cheque Datey</th>
+                     <th>Created Date</th>
                      <th>Type</th>
                      <th>Company</th>
                      <th>From</th>
