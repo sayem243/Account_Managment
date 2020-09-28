@@ -38,11 +38,21 @@
         </tr>
     </thead>
         <tbody>
+
         @foreach ($roles as $key => $role)
+            @if(!empty($rolePermissions))
+                @foreach($rolePermissions as $v)
+
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $role->name }}</td>
                 <td>
+
+
+
+                            {{ $v->name }}
+
+
 
                     {{--@can('role-delete')--}}
                         {{--{!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}--}}
@@ -82,7 +92,10 @@
                     </div>
                 </td>
             </tr>
+                @endforeach
+            @endif
         @endforeach
+
         </tbody>
 
     </table>

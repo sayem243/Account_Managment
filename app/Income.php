@@ -11,6 +11,10 @@ class Income extends Model
 
         return $this->belongsTo('App\Company','company_id')->withTrashed();
     }
+    public function project(){
+
+        return $this->belongsTo('App\Project','project_id')->withTrashed();
+    }
     public function checkRegistry(){
         return $this->belongsTo('App\CheckRegistry','check_registry_id');
     }
