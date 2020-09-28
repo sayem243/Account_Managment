@@ -52,30 +52,38 @@ $(document).ready(function () {
         'columns': [
             { "name": 'id' },
             { "name": 'created_at' },
+            { "name": 'updated_at' },
             { "name": 'name' },
             { "name": 'companyName' },
             { "name": 'amount' },
             { "name": 'pStatus' },
+            { "name": '' },
+            { "name": '' },
+            { "name": '' },
         ],
         "order": [
-            [1, "desc"]
+            [2, "desc"]
         ],// set first column as a default sort by asc
         "columnDefs": [ {
             "targets": 8,
             "orderable": false
+        },{
+            "targets": 9,
+            "orderable": false
         },
-            {
-                "targets": 7,
-                "orderable": false
-            },
-            {
-                "targets": 6,
-                "orderable": false
-            },
-            {
-                "targets": 0,
-                "orderable": false
-            }],
+        {
+            "targets": 7,
+            "orderable": false
+        },
+        {
+            "targets": [2],
+            "visible": false
+        },
+        {
+            "targets": 0,
+            "orderable": false
+        }
+            ],
         dom: 'Bfrtip',
         buttons: [
             {
@@ -207,7 +215,7 @@ $(document).ready(function () {
 
             // Total over all pages
             total = api
-                .column( 5 )
+                .column( 6 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -215,14 +223,14 @@ $(document).ready(function () {
 
             // Total over this page
             pageTotal = api
-                .column( 5, { page: 'current'} )
+                .column( 6, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
 
             // Update footer
-            $( api.column( 5 ).footer() ).html( parseFloat(pageTotal).toLocaleString());
+            $( api.column( 6 ).footer() ).html( parseFloat(pageTotal).toLocaleString());
         }
         /*"buttons": [
             {
