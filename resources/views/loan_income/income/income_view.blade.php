@@ -29,6 +29,7 @@
                         <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$income->company->name}}</h4>
                         <p style="text-align: center;margin-bottom: 5px">{{$income->company->c_address}}</p>
 
+
                         <div style="padding: 0 10px; clear: both">
                             <hr style="margin-top: 1px; margin-bottom: 10px; border-color: #000000">
                         </div>

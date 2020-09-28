@@ -30,7 +30,7 @@
         <tr>
             <th>No</th>
             <th>Name</th>
-            <th>Permissions</th>
+            <th> Permissions</th>
             <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                 <i class="feather icon-settings"></i>
 
@@ -38,19 +38,22 @@
         </tr>
     </thead>
         <tbody>
-
+{{--    {{print_r(permissions)}}--}}
         @foreach ($roles as $key => $role)
-            @if(!empty($rolePermissions))
-                @foreach($rolePermissions as $v)
+            {{--@if(!empty($rolePermissions))--}}
+            {{--@foreach ($rolePermissions as $key =>$v)--}}
 
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $role->name }}</td>
+
                 <td>
-
-
-
-                            {{ $v->name }}
+                    @if(isset($permissions[$role->id]))
+                        @foreach($permissions[$role->id] as $permission)
+                                {{$permission}},<br>
+                            @endforeach
+                    @endif
+                </td>
 
 
 
@@ -60,7 +63,7 @@
                         {{--{!! Form::close() !!}--}}
                     {{--@endcan--}}
 
-                </td>
+
                 <td>
                     <div class="btn-group card-option">
                         <a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
@@ -92,9 +95,11 @@
                     </div>
                 </td>
             </tr>
-                @endforeach
-            @endif
+                {{--@endforeach--}}
+
+
         @endforeach
+
 
         </tbody>
 

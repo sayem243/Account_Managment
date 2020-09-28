@@ -36,7 +36,16 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $roles = Role::orderBy('id','DESC')->paginate(20);
-        return view('roles.index',compact('roles'))
+
+        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
+            ->get();
+
+        $permissions=array();
+        foreach ($rolePermissions as $permission){
+            $permissions[$permission->role_id][]=$permission->name;
+        }
+
+        return view('roles.index',compact('roles','permissions'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
