@@ -260,7 +260,7 @@
                                     @php use App\CustomClass\NumberToWordConverter;
                                     $amount = NumberToWordConverter::convert($loan->amount);
                                     @endphp
-                                        {{$amount}}
+                                        {{$amount}} only.
                                     </span>
                                 </label>
                             </fieldset>
