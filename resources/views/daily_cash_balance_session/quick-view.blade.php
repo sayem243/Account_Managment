@@ -32,6 +32,8 @@
                                 $closingBalance= isset($openingClosingBalance[$companyId])?$openingClosingBalance[$companyId]->closing_balance:0;
                                 $totalClosingBalance = $totalClosingBalance+$closingBalance;
                             @endphp
+
+                            @if($openingBalance>0 || $dailyCr>0)
                             <tr>
                                 <td>{{$company}}</td>
                                 <td>{{number_format($openingBalance,'0','.',',')}}</td>
@@ -39,6 +41,7 @@
                                 <td>{{number_format($dailyCr,'0','.',',')}}</td>
                                 <td>{{number_format($closingBalance,'0','.',',')}}</td>
                             </tr>
+                            @endif
 
                         @endforeach
                         </tbody>
