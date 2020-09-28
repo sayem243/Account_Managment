@@ -140,7 +140,7 @@
                                     @php use App\CustomClass\NumberToWordConverter;
                                $amount = NumberToWordConverter::convert($voucher->total_amount);
                                     @endphp
-                                    <p style="color: #ff3737; padding: 10px 5px; margin-bottom: 5px"><strong style="font-weight: bold">Write in
+                                    <p style="color: #ff3737; padding: 10px 5px; margin-bottom: 5px"><strong style="font-weight: bold">In
                                             words: </strong>{{$amount}} only</p>
                                 </div>
                                 </fieldset>
