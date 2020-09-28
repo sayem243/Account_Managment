@@ -37,7 +37,6 @@
             <th> Permissions</th>
             <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                 <i class="feather icon-settings"></i>
-
             </th>
         </tr>
     </thead>
@@ -52,8 +51,6 @@
                 <td>{{ $role->name }}</td>
 
                 <td>
-
-
                     @if(isset($permissions[$role->id]))
                         @foreach($permissions[$role->id] as $permission)
                                 {{$permission}},<br>
@@ -93,10 +90,7 @@
                                 <i class="feather icon-trash-2"> {!! Form::submit('Delete') !!}     </i>
                                 {!! Form::close() !!}
                                 @endcan
-
                             </li>
-
-
                         </ul>
                     </div>
                 </td>
