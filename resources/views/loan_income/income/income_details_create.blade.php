@@ -33,10 +33,10 @@
                 <div class="card-body">
 
                     <div class="row mb-4">
-                        <h5 class="col-md-12 col-form-label" for="company_id">Company Name : {{$income->company->name}}</h5>
+                        <h5 class="col-md-12 col-form-label" for="company_id"> <span style="font-weight:bold">Company Name : </span>{{$income->company->name}}</h5>
 
 
-                        <h6 class="col-md-12 col-form-label" for="company_id">Project Name : {{$income->project['p_name']}}</h6>
+                        <h6 class="col-md-12 col-form-label" for="company_id"><span style="font-weight:bold">Project Name : </span>{{$income->project['p_name']}}</h6>
 
                     </div>
 

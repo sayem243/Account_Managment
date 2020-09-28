@@ -509,7 +509,7 @@
 
                                         $amount = NumberToWordConverter::convert($loan->amount);
                                     @endphp
-                                    {{$amount}}
+                                    {{$amount}} only.
                                     </span>
                             </label>
                         </div>

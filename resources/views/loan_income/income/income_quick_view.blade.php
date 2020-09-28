@@ -13,6 +13,8 @@
                     <h5 style="text-align: center; margin-bottom: 5px; font-size: 20px">Income Voucher</h5>
                     <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$income->company->name}}</h4>
                     <p style="text-align: center;margin-bottom: 5px">{{$income->company->c_address}}</p>
+                    <h4 style="text-align: center; margin-bottom: 5px">{{$income->project['p_name']}}</h4>
+
 
 
 
@@ -156,7 +158,7 @@
                                     @php use App\CustomClass\NumberToWordConverter;
                                     $amount = NumberToWordConverter::convert($income->amount);
                                     @endphp
-                                    {{$amount}}
+                                    {{$amount}} only.
                                     </span>
                             </label>
                         </div>

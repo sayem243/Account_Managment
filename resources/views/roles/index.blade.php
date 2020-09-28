@@ -3,6 +3,9 @@
 @section('template')
 {{--@section('content')--}}
 
+
+
+
 <div class="col-sm-12">
     <div class="row">
         <div class="col-sm-12">
@@ -26,6 +29,7 @@
     <div class="card-body">
 
     <table class="table table-striped table-bordered dataTable no-footer">
+
     <thead class="thead-dark">
         <tr>
             <th>No</th>
@@ -48,6 +52,8 @@
                 <td>{{ $role->name }}</td>
 
                 <td>
+
+
                     @if(isset($permissions[$role->id]))
                         @foreach($permissions[$role->id] as $permission)
                                 {{$permission}},<br>
@@ -116,6 +122,9 @@
     </div>
 </div>
 </div>
+
+
+
 
 
     {{--{!! $roles->render() !!}--}}
