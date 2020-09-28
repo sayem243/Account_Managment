@@ -6,12 +6,18 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
+
                     <h5>Income Details</h5>
-                    <div class="card-header-right">
+
+
+
+
+
+                        <div class="card-header-right">
                         <div class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
                             <a href="{{route('income_index')}}" class="btn btn-sm  btn-info"><i class="fas fa-angle-double-left"></i> Back</a>
-                        </div>
                     </div>
+                </div>
                 </div>
 
                 @if ($errors->any())
@@ -25,6 +31,15 @@
                 @endif
 
                 <div class="card-body">
+
+                    <div class="row mb-4">
+                        <h5 class="col-md-12 col-form-label" for="company_id">Company Name : {{$income->company->name}}</h5>
+
+
+                        <h6 class="col-md-12 col-form-label" for="company_id">Project Name : {{$income->project['p_name']}}</h6>
+
+                    </div>
+
                     <form class="form-horizontal" action="{{ route('income_details_store',$income->id)}}" method="post">
 
                         {{ csrf_field() }}
