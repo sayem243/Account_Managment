@@ -53,7 +53,7 @@
                   <thead class="thead-dark">
                   <tr role="row" class="filter">
                       <td colspan="5"></td>
-                      <td colspan="4">
+                      <td colspan="5">
                           <input type="text" id="item_search" class="form-control item_search" placeholder="Search item name ....">
                       </td>
                   </tr>
@@ -62,7 +62,7 @@
                           <input  type="text" class="form-control form-filter input-sm" name="payment_id" id="payment_id" placeholder="Payment Id">
                       </td>
 
-                      <td colspan="2">
+                      <td colspan="3">
                           <select class="form-control" name="company_id" id="company_id" aria-describedby="validationTooltipPackagePrepend" required>
                               <option value="">All Company</option>
                               @foreach($companies as $company)
@@ -98,6 +98,7 @@
                   <tr>
                       <th scope="col">S/N</th>
                       <th width="80px" scope="col">Date</th>
+                      <th width="150px" scope="col">Updated at</th>
                       <th width="100px" scope="col">HS ID</th>
                       <th width="150px" scope="col">Name</th>
                       <th width="150px" scope="col">Company</th>
@@ -112,7 +113,7 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                      <th colspan="5" style="text-align:right">Total:</th>
+                      <th colspan="6" style="text-align:right">Total:</th>
                       <th colspan="4"></th>
                   </tr>
                   </tfoot>
