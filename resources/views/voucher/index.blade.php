@@ -92,6 +92,7 @@
                                     <th style="vertical-align: middle; width: 20px" scope="col"><input type="checkbox" class="form-control all_item"></th>
                                     <th style="width: 200px" scope="col">Expenses Type</th>
                                     <th style="width: 350px" scope="col">Item Name</th>
+                                    <th>created date</th>
                                     <th style="width: 120px" width="" scope="col">HS ID/Check Number</th>
                                     <th style="width: 150px" width="" scope="col">Project</th>
                                     <th style="width: 100px" width="" scope="col">Amount</th>

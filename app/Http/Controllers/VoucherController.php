@@ -128,7 +128,7 @@ class VoucherController extends Controller
         $rows->join('companies', 'projects.company_id', '=', 'companies.id');
         $rows->leftJoin('payments', 'voucher_items.payment_id', '=', 'payments.id');
         $rows->leftJoin('check_registries', 'voucher_items.check_registry_id', '=', 'check_registries.id');
-        $rows->select('voucher_items.id as viId', 'voucher_items.item_name as name', 'voucher_items.voucher_amount as amount');
+        $rows->select('voucher_items.id as viId', 'voucher_items.item_name as name', 'voucher_items.voucher_amount as amount', 'voucher_items.created_at as createdDate');
         $rows->addSelect('projects.p_name as projectName','projects.id as projectId');
         $rows->addSelect('payments.payment_id as pId');
         $rows->addSelect('check_registries.id as crId','check_registries.check_number as checkNumber','check_registries.check_type as checkType');
@@ -174,6 +174,7 @@ class VoucherController extends Controller
                     $checkbox,
                     $dropdown,
                     $name               = '<input type="hidden" value="'.$post->name.'" name="item_name['.$post->viId.']">'.$post->name,
+                    $createdDate          = $post->createdDate,
                     $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
                     $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
                     $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
@@ -202,6 +203,7 @@ class VoucherController extends Controller
                     $checkbox,
                     $dropdown,
                     $name               = '<input type="hidden" value="'.$post->name.'" name="item_name['.$post->viId.']">'.$post->name,
+                    $createdDate          = $post->createdDate,
                     $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
                     $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
                     $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
@@ -230,6 +232,7 @@ class VoucherController extends Controller
                     $checkbox,
                     $dropdown,
                     $name               = '<input type="hidden" value="'.$post->name.'" name="item_name['.$post->viId.']">'.$post->name,
+                    $createdDate          = $post->createdDate,
                     $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
                     $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
                     $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
@@ -257,6 +260,7 @@ class VoucherController extends Controller
                         $checkbox,
                         $dropdown,
                         $name = '<input type="hidden" value="' . $post->name . '" name="item_name[' . $post->viId . ']">' . $post->name,
+                        $createdDate          = $post->createdDate,
                         $pId = $post->pId ? $post->pId : $post->checkNumber . '<input type="hidden" value="' . $post->crId . '" name="check_id[' . $post->viId . ']">',
                         $projectName = $post->projectName ? '<input type="hidden" value="' . $post->projectId . '" name="project_id[' . $post->viId . ']">' . $post->projectName : '',
                         $amount = '<input type="hidden" value="' . $post->amount . '" name="voucher_amount[' . $post->viId . ']">' . $post->amount,
