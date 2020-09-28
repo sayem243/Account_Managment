@@ -123,7 +123,7 @@
                     <select id="check_income_from_to_type" name="income_from" class="form-control check_income_from_to_type" required>
                         <option value="USER">User</option>
                         <option value="COMPANY">Company</option>
-                        <option value="PROJECT">Project</option>
+                        {{--<option value="PROJECT">Project</option>--}}
                         <option value="CLIENT">Client</option>
                         <option value="OTHERS">Others</option>
                     </select>
@@ -134,10 +134,10 @@
         <div class="col-md-3">
             <div class="check_income_user_section">
                 <div class="form-group">
-                    <label for="from_to_value_user" class="col-form-label">User <span
+                    <label for="check_from_to_value_user" class="col-form-label">User <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="from_to_value_user" name="income_from_value_user" class="form-control">
+                        <select id="check_from_to_value_user" name="income_from_value_user" class="form-control select2">
                             <option value="">Select User</option>
                             @foreach($users as $user)
                                 <option value="{{$user['id']}}">{{$user['name']}}</option>
@@ -161,12 +161,12 @@
                 </div>
 
             </div>
-            <div class="check_income_project_section" style="display: none">
+            {{--<div class="check_income_project_section" style="display: none">
                 <div class="form-group">
                     <label for="from_to_value_project" class="col-form-label">Project <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="from_to_value_project" name="income_from_value_project" class="form-control from_to_value_project">
+                        <select id="from_to_value_project" name="income_from_value_project" class="form-control select2 from_to_value_project">
                             <option value="">Select Project</option>
                             @foreach($projects as $project)
                                 <option value="{{$project['id']}}">{{$project['p_name']}}</option>
@@ -174,13 +174,13 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div>--}}
             <div class="check_income_client_section" style="display: none">
                 <div class="form-group">
-                    <label for="from_to_value_client" class="col-form-label">Client <span
+                    <label for="check_from_to_value_client" class="col-form-label">Client <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="from_to_value_client" name="income_from_value_client" class="form-control from_to_value_client">
+                        <select id="check_from_to_value_client" name="income_from_value_client" class="form-control from_to_value_client select2">
                             <option value="">Select Client</option>
                             @foreach($clients as $client)
                                 <option value="{{$client['id']}}">{{$client['name']}}</option>

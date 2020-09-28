@@ -135,7 +135,7 @@
                     <select id="from_to_type" name="from_to_type" class="form-control from_to_type" required>
                         <option value="USER">User</option>
                         <option value="COMPANY">Company</option>
-                        <option value="PROJECT">Project</option>
+                        {{--<option value="PROJECT">Project</option>--}}
                         <option value="OTHERS">Others</option>
                     </select>
                 </div>
@@ -145,10 +145,10 @@
         <div class="col-md-3">
             <div class="user_section">
                 <div class="form-group">
-                    <label for="from_to_value_user" class="col-form-label">User <span
+                    <label for="expense_from_to_value_user" class="col-form-label">User <span
                                 class="required">*</span></label>
                     <div class="col-form-label">
-                        <select id="from_to_value_user" name="from_to_value_user" class="form-control">
+                        <select id="expense_from_to_value_user" name="from_to_value_user" class="form-control select2">
                             <option value="">Select User</option>
                             @foreach($users as $user)
                                 <option value="{{$user['id']}}">{{$user['name']}}</option>
@@ -172,7 +172,7 @@
                 </div>
 
             </div>
-            <div class="project_section" style="display: none">
+            {{--<div class="project_section" style="display: none">
                 <div class="form-group">
                     <label for="from_to_value_project" class="col-form-label">Project <span
                                 class="required">*</span></label>
@@ -185,7 +185,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div>--}}
             <div class="other_section" style="display: none">
                 <div class="form-group">
                     <label for="from_to_value_other" class="col-form-label">Provider Name <span

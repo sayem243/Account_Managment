@@ -21,37 +21,44 @@
       <div class="card-body">
          <table class= "table table-bordered loan_table">
              <thead class="thead-dark">
-                 <tr role="row" class="filter">
-                     <td colspan="2">
-                         <input  type="text" class="form-control form-filter input-sm loan_generate_id" name="loan_generate_id" id="loan_generate_id" placeholder="Loan Voucher Id">
-                     </td>
+                 <tr>
+                     <td colspan="9">
+                         <table class="table" style="margin-bottom: 0;padding: 0;border: 0">
+                             <tr role="row" class="filter">
+                                 <td colspan="2">
+                                     <input  type="text" class="form-control form-filter input-sm loan_generate_id" name="loan_generate_id" id="loan_generate_id" placeholder="Loan Voucher Id">
+                                 </td>
 
-                     <td colspan="2">From
-                         <select style="width: auto;display: inline" class="form-control" name="from_company_id" id="from_company_id" aria-describedby="validationTooltipPackagePrepend" required>
-                             <option value="">All Company</option>
-                             @foreach($companies as $company)
-                                 <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
-                             @endforeach
-                         </select>
-                     </td>
-                     <td colspan="1">To
-                         <select style="width: auto;display: inline" class="form-control" name="to_company_id" id="to_company_id" aria-describedby="validationTooltipPackagePrepend" required>
-                             <option value="">All Company</option>
-                             @foreach($companies as $company)
-                                 <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
-                             @endforeach
-                         </select>
-                     </td>
-                     <td colspan="1">
-                         From <input style="display: inline; width: auto;"  type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="from_date" id="from_date">
-                     </td>
-                     <td colspan="2">
-                         To <input style="display: inline; width: auto;" type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="to_date" id="to_date">
+                                 <td colspan="2">From
+                                     <select style="width: auto;display: inline" class="form-control" name="from_company_id" id="from_company_id" aria-describedby="validationTooltipPackagePrepend" required>
+                                         <option value="">All Company</option>
+                                         @foreach($companies as $company)
+                                             <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
+                                         @endforeach
+                                     </select>
+                                 </td>
+                                 <td colspan="2">To
+                                     <select style="width: auto;display: inline" class="form-control" name="to_company_id" id="to_company_id" aria-describedby="validationTooltipPackagePrepend" required>
+                                         <option value="">All Company</option>
+                                         @foreach($companies as $company)
+                                             <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
+                                         @endforeach
+                                     </select>
+                                 </td>
+                                 <td colspan="1">
+                                     From <input style="display: inline; width: auto;"  type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="from_date" id="from_date">
+                                 </td>
+                                 <td colspan="2">
+                                     To <input style="display: inline; width: auto;" type="date" data-date="" data-date-format="DD-MM-YYYY" value="" class="form-control date_picker" name="to_date" id="to_date">
+                                 </td>
+                             </tr>
+                         </table>
                      </td>
                  </tr>
                  <tr>
                      <th style="width: 5%">SL</th>
                      <th>Invoice Id</th>
+                     <th>Date</th>
                      <th>Date</th>
                      <th>Type</th>
                      <th>From</th>
@@ -67,7 +74,7 @@
                 </tbody>
              <tfoot>
              <tr>
-                 <th colspan="6" style="text-align:right">Total:</th>
+                 <th colspan="7" style="text-align:right">Total:</th>
                  <th colspan="2"></th>
              </tr>
              </tfoot>

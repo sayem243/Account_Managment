@@ -31,16 +31,37 @@ class IncomeController extends Controller
     }
 
     public function index(){
-        $companies= Company::all();
+        /*$companies= Company::all();
         $arrayCompanies=array();
         foreach ($companies as $company){
             $arrayCompanies[]=array('id'=>$company->id,'name'=>$company->name);
         }
         array_multisort(array_map(function($element) {
             return $element['name'];
-        }, $arrayCompanies), SORT_ASC, $arrayCompanies);
+        }, $arrayCompanies), SORT_ASC, $arrayCompanies);*/
 
-        return view('loan_income.income.index_income',['companies'=>$arrayCompanies ]);
+        $user = auth()->user();
+        $projects=$user->projects;
+        $pUser= array();
+        foreach ($projects as $project){
+            foreach ($project->users as $user){
+                $pUser[$user->id]= array('id'=>$user->id,'name'=>$user->name);
+            }
+        }
+
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= array('id'=>$project->company->id,'name'=>$project->company->name);
+        }
+
+        array_multisort(array_map(function($element) {
+            return $element['name'];
+        }, $userProjectCompany), SORT_ASC, $userProjectCompany);
+
+        $companies=$userProjectCompany;
+
+
+        return view('loan_income.income.index_income',['companies'=>$companies,'projects'=>$projects ]);
     }
 
 
@@ -278,6 +299,11 @@ class IncomeController extends Controller
             $countRecords->where('incomes.company_id',$company_id);
         }
 
+        if(isset($query['project_id'])){
+            $project_id = $query['project_id'];
+            $countRecords->where('incomes.project_id',$project_id);
+        }
+
         if (isset($query['from_date']) && isset($query['to_date'])) {
             $from_date = $query['from_date'].' 00:00:00';
             $to_date = $query['to_date'].' 23:59:59';
@@ -302,7 +328,7 @@ class IncomeController extends Controller
 
         $rows = DB::table('incomes');
         $rows->join('companies', 'incomes.company_id', '=', 'companies.id');
-        $rows->select('incomes.id as iId', 'incomes.income_generate_id as name', 'incomes.amount as amount', 'incomes.payment_mode as pMode', 'incomes.income_from as incomeFrom', 'incomes.income_from_ref_id as incomeFromRefId', 'incomes.created_at as incomeDate');
+        $rows->select('incomes.id as iId', 'incomes.income_generate_id as name', 'incomes.amount as amount', 'incomes.payment_mode as pMode', 'incomes.income_from as incomeFrom', 'incomes.income_from_ref_id as incomeFromRefId', 'incomes.created_at as incomeDate', 'incomes.created_at as incomeDateForSort');
         $rows->addSelect('companies.name as companyName');
 //        $rows->where('check_registries.status','!=', 0);
         if (isset($query['income_generate_id'])) {
@@ -312,6 +338,11 @@ class IncomeController extends Controller
         if(isset($query['company_id'])){
             $company_id = $query['company_id'];
             $rows->where('incomes.company_id',$company_id);
+        }
+
+        if(isset($query['project_id'])){
+            $project_id = $query['project_id'];
+            $rows->where('incomes.project_id',$project_id);
         }
 
         if (isset($query['from_date']) && isset($query['to_date'])) {
@@ -358,13 +389,14 @@ class IncomeController extends Controller
 
 
             $records["data"][] = array(
-                $id                 = $i,
-                $name               = '<a data-toggle="modal" data-target-income-id="'.$post->iId.'" data-target="#myModalIncome" href="javascript:void(0)">'.$post->name.'</a>',
+                $id                  = $i,
+                $name                = '<a data-toggle="modal" data-target-income-id="'.$post->iId.'" data-target="#myModalIncome" href="javascript:void(0)">'.$post->name.'</a>',
                 $incomeDate          = date('d-m-Y',strtotime($post->incomeDate)),
-                $pMode          = $post->pMode,
-                $companyName        = $post->companyName,
-                $incomeFromRefId        = $incomeFrom,
-                $amount             = $post->amount,
+                $incomeDateForSort   = $post->incomeDateForSort,
+                $pMode               = $post->pMode,
+                $companyName         = $post->companyName,
+                $incomeFromRefId     = $incomeFrom,
+                $amount              = $post->amount,
 
                 $button);
             $i++;

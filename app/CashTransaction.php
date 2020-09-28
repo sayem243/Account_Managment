@@ -42,5 +42,6 @@ class CashTransaction extends Model
         foreach ($result as $cashTransaction){
             $returnArray[$cashTransaction->company_id][$cashTransaction->transaction_type][]=$cashTransaction->amount;
         }
+        return $returnArray;
     }
 }

@@ -559,11 +559,11 @@ class PaymentController extends Controller
         $openingBalance=$this->dailyCashSession->getDailyOpeningClosingBalance($from_date,$to_date, $payment->company->id);
         $cashTransactions = $this->dailyCashTransaction->getDailyBalanceTransaction($date, $payment->company->id);
 
-        $openingBalance= isset($openingBalance[$payment->company['id']])?$openingBalance[$payment->company['id']]->opening_balance:0;
+        $openingBalance= isset($openingBalance[$payment->company->id])?$openingBalance[$payment->company->id]->opening_balance:0;
 
-        $dailyDr=isset($cashTransactions[$payment->company['id']]['DR'])?array_sum($cashTransactions[$payment->company['id']]['DR']):0;
+        $dailyDr=isset($cashTransactions[$payment->company->id]['DR'])?array_sum($cashTransactions[$payment->company->id]['DR']):0;
 
-        $dailyCr = isset($cashTransactions[$payment->company['id']]['CR'])?array_sum($cashTransactions[$payment->company['id']]['CR']):0;
+        $dailyCr = isset($cashTransactions[$payment->company->id]['CR'])?array_sum($cashTransactions[$payment->company->id]['CR']):0;
 
         if(($openingBalance+$dailyCr-$dailyDr)<$payment->total_paid_amount){
             return response()->json(['message'=>'Error! In sufficient balance.','status'=>301]);
