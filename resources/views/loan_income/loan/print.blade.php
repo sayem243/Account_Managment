@@ -525,10 +525,10 @@
                             <fieldset>
                                 <label style="font-weight: bold; font-size: 20px" class="col-md-12 col-form-label">In
                                     words: <span class="to_word">
-                                    {{--@php use App\CustomClass\NumberToWordConverter;--}}
-                                    $amount = NumberToWordConverter::convert($loan->amount);
+                                    @php
+                                        $amount = NumberToWordConverter::convert($loan->amount);
                                     @endphp
-                                        {{$amount}}
+                                        {{$amount}} only
                                     </span>
                                 </label>
                             </fieldset>
@@ -581,8 +581,8 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
-//            window.print();
-//            setTimeout(function() { window.close(); }, 100);
+           window.print();
+           setTimeout(function() { window.close(); }, 100);
         });
 
     </script>
