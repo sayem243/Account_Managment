@@ -112,7 +112,7 @@ tr {
 
 .in_word_area{
     position: absolute!important;
-    bottom: 15px;
+    bottom: 5px;
     left: 15px;
     width: 100%;
 }

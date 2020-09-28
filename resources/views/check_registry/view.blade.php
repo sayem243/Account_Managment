@@ -7,7 +7,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Check Registry</h5>
+                        <h5>Cheque Registry Details</h5>
                         <div class="card-header-right">
                             <div class="btn-group btn-group-lg" role="group"
                                  aria-label="Button group with nested dropdown">
@@ -32,7 +32,7 @@
                         @endif
                         <h5 style="position: absolute; left: 25px; top: 15px">
                             Date: {{ date('d-m-Y', strtotime($checkRegistry->created_at))}}</h5>
-                        <h5 style="text-align: center; margin-bottom: 5px; font-size: 20px">Expenses Voucher</h5>
+                        <h5 style="text-align: center; margin-bottom: 5px; font-size: 20px">Cheque Registry Details</h5>
                         <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$checkRegistry->company?$checkRegistry->company->name:''}}</h4>
                         @if($checkRegistry->project)
                             <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$checkRegistry->project?$checkRegistry->project->p_name:''}}</h4>

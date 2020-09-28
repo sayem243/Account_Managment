@@ -6,14 +6,41 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
+                    @php
+                        $chequeRegistry = array();
+                    @endphp
+                    @foreach($voucher->VoucherItems as $voucherItem)
 
+                        @if(isset($voucherItem->checkRegistry))
+                            @php
+                                $chequeRegistry[] = $voucherItem->checkRegistry;
+                            @endphp
+                        @endif
+
+                    @endforeach
+
+                    @if(sizeof($chequeRegistry)>0)
+                        @if($chequeRegistry[0]->check_type=='ACCOUNT_TRANSFER')
+                            @php
+                                $voucherType= '(EFT)';
+                            @endphp
+                        @else
+                            @php
+                                $voucherType= '(Check)';
+                            @endphp
+                        @endif
+                    @else
+                        @php
+                            $voucherType= '(Cash)';
+                        @endphp
+                    @endif
 
                     {{--Advance Payment Information--}}
 
                     <div class="card-body"
                          style="border: 1px solid #000; margin-bottom: 5px; position: relative; min-height: 430px; padding: 15px">
                         <h5 style="position: absolute; right: 10px; top: 10px">Dr. No. {{$voucher->voucher_generate_id}}</h5>
-                        <h5 style="text-align: center; margin-bottom: 0px; font-size: 18px">Voucher</h5>
+                        <h5 style="text-align: center; margin-bottom: 0px; font-size: 18px">Expense Voucher {{$voucherType}}</h5>
                         <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px;margin-top: 0px;">{{$voucher->VoucherItems[0]->project->company['name']}}</h4>
                         <p style="text-align: center;margin-bottom: 5px">{{$voucher->VoucherItems[0]->project->company['c_address']}}</p>
                         <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$voucher->VoucherItems[0]->project['p_name']}}</h4>
@@ -21,12 +48,6 @@
                         {{--<hr style="margin-top: 1px; margin-bottom: 5px">--}}
 
                         <hr style="margin-top: 1px; margin-bottom: 10px">
-
-
-
-
-
-
 
                         <table class="table" style="margin-bottom: 5px">
                             <tr style="font-size: 20px">
@@ -45,16 +66,8 @@
                             </tr>
                             </thead>
 
-
-                            @php
-                                $chequeRegistry = array();
-                            @endphp
+                            <tbody>
                             @foreach($voucher->VoucherItems as $voucherItem)
-                                @if(isset($voucherItem->checkRegistry))
-                                    @php
-                                        $chequeRegistry[] = $voucherItem->checkRegistry;
-                                    @endphp
-                                @endif
 
                                 <tr>
                                     <td style="padding: 5px 10px">{{$voucherItem->item_name}}</td>
@@ -73,24 +86,9 @@
 
                         </table>
 
-
-
                         {{-- Deposit information section--}}
 
-
                         <div class="row">
-                            @php
-                                $chequeRegistry = array();
-                            @endphp
-                            @foreach($voucher->VoucherItems as $voucherItem)
-
-                                @if(isset($voucherItem->checkRegistry))
-                                    @php
-                                        $chequeRegistry[] = $voucherItem->checkRegistry;
-                                    @endphp
-                                @endif
-
-                            @endforeach
 
                             @if(sizeof($chequeRegistry)>0)
 
@@ -98,19 +96,12 @@
 
 
                                     <div class="row">
-                                        <fieldset style="margin-bottom: 5px">
-                                            <div class="col-md-12">  <h4>Deposit Information</h4></div>
-
-                                            <div class="col-md-12">  <h5>Bank: {{$items->bank->name}}</h5></div>
-                                            <div class="col-md-12"> <h6>Branch: {{$items->branch->name}}</h6></div>
-                                            <div class="col-md-12"><h6>Account Number: {{$items->bankAccount->account_number}}</h6>
-                                            </div>
-                                            <div class="col-md-12"><h6>Check Number:{{$items['check_number']}}</a> </h6>
-                                            </div>
-
-                                        </fieldset>
-
-                                        </div>
+                                            <h4>Deposit Information</h4>
+                                            <h5>Bank: {{$items->bank->name}}</h5>
+                                            <h5>Branch: {{$items->branch->name}}</h5>
+                                            <h5>Account Number: {{$items->bankAccount->account_number}}</h5>
+                                            <h5>Check Number: {{$items['check_number']}}</h5>
+                                    </div>
                                 @endforeach
                             @endif
 
@@ -124,13 +115,10 @@
                                 @php use App\CustomClass\NumberToWordConverter;
                                $amount = NumberToWordConverter::convert($voucher->total_amount);
                                 @endphp
-                                <p style="color: red; padding: 10px 5px; margin-bottom: 5px"><strong style="font-weight: bold">Write in
+                                <p style="color: red; padding: 10px 5px 10px 0; margin-bottom: 5px"><strong style="font-weight: bold">In
                                         words: </strong>{{$amount}} only</p>
                             </div>
                         </div>
-
-
-
 
                     </div>
             </div>
