@@ -16,7 +16,6 @@
     </div>
 
 
-
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -44,34 +43,40 @@
 
             <div class="form-group">
 
-<div class="row ">
-                <div class="col-md-6">
-                <h5>Permission: </h5>
-                </div>
-                <div class="col-md-6">
-                <h5>Description: </h5>
-                </div>
-</div>
 
-            </br>
-                <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td><h5>Permission</h5></td>
+                    <td><h5>Description</h5></td>
+                </tr>
+                </thead>
+                <tbody>
                 @foreach($permission as $value)
-                    <div class="col-md-6">
-                    <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
-                        {{ $value->name }}</label></div>
-<div class="col-md-6">
-                    <label>
+                <tr>
+
+                    <td>
+
+                        {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
+                            {{ $value->name }}
+
+                    </td>
+
+                    <td>
                         {{ $value->description }}
-                    </label>
-</div>
 
-            </br>
+                    </td>
 
-
+                </tr>
                 @endforeach
 
-</div>
+                </tbody>
+
+            </table>
+
+            {{--end test--}}
             </div>
+
         </div>
     </div>
          <div class="line aligncenter" style="float: right">
@@ -83,45 +88,19 @@
              </div>
          </div>
   </div>
+
+
+
     {!! Form::close() !!}
 
-                    {{--testing--}}
-
-                    {{--<div class="container">--}}
-                        {{--<div class="row">--}}
-                            {{--<div class="col-12">--}}
-                                {{--<table class="table table-bordered">--}}
-                                    {{--<thead>--}}
-                                    {{--<tr>--}}
-                                        {{--<th scope="col">Permissions</th>--}}
-                                        {{--<th scope="col">Description</th>--}}
-
-                                    {{--</tr>--}}
-                                    {{--</thead>--}}
-                                    {{--<tbody>--}}
-                                    {{--<tr>--}}
-                                    {{--</br>--}}
-                                        {{--@foreach($permission as $value)--}}
-                                        {{--<td>--}}
-                                            {{--<div class="custom-control custom-checkbox">--}}
-                                                {{--<label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}--}}
-                                                    {{--{{ $value->name }}</label>--}}
-                                            {{--</div>--}}
-                                        {{--</td>--}}
-                                        {{--<td> {{ $value->description }}</td>--}}
-
-                                       {{--@endforeach--}}
-                                    {{--</br>--}}
-                                    {{--</tr>--}}
-
-                                    {{--</tbody>--}}
-                                {{--</table>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
 
 
-                    {{--endtesting--}}
+
+
+
+
+
+
 
 
 
