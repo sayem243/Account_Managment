@@ -123,7 +123,7 @@ Like: www.facebook.com/terminalbd
 
                 @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('CEO') || auth()->user()->can('voucher_create') || auth()->user()->can('loan-income-list'))
 
-                    <li dThose who have this permission can create and edit handslip but till a certain stage. It depends on their specific roles.ata-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('voucher/*') ? 'pcoded-trigger' : ''}}{{ Request::is('loanOrIncome/*') ? 'pcoded-trigger' : ''}} {{ Request::is('loan/*') ? 'pcoded-trigger' : ''}} {{ Request::is('income/*') ? 'pcoded-trigger' : ''}}">
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('voucher/*') ? 'pcoded-trigger' : ''}}{{ Request::is('loanOrIncome/*') ? 'pcoded-trigger' : ''}} {{ Request::is('loan/*') ? 'pcoded-trigger' : ''}} {{ Request::is('income/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-credit-card"></i></span><span class="pcoded-mtext">Vouchers</span></a>
                         <ul class="pcoded-submenu {{ Request::is('voucher/*') ? 'active' : ''}}{{ Request::is('loanOrIncome/*') ? 'active' : ''}}{{ Request::is('loan/*') ? 'active' : ''}}{{ Request::is('income/*') ? 'active' : ''}}">
 
