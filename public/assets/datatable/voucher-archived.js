@@ -23,6 +23,7 @@ $(document).ready(function () {
             "url": '/voucher/archived/datatable', // ajax source
             'data': function(data){
                 // Read values
+                var item_expenditure_sector = $('.item_expenditure_sector').val();
                 var project_id = $('#project_id').val();
                 var voucher_id = $('#voucher_id').val();
                 var company_id = $('#company_id').val();
@@ -34,6 +35,7 @@ $(document).ready(function () {
 
                 data._token = CSRF_TOKEN;
                 data.voucher_id = voucher_id;
+                data.expenditure_sector = item_expenditure_sector;
                 data.project_id = project_id;
                 data.company_id = company_id;
                 data.from_date = from_date;
@@ -44,6 +46,7 @@ $(document).ready(function () {
         'columns': [
             { "name": 'id' },
             { "name": 'createdAt' },
+            { "name": 'createdAtForSort' },
             { "name": 'name' },
             { "name": 'pId' },
             { "name": 'companyName' },
@@ -53,7 +56,7 @@ $(document).ready(function () {
             { "name": '' },
         ],
         "order": [
-            [1, "desc"]
+            [2, "desc"]
         ],// set first column as a default sort by asc
         "columnDefs": [
             {
@@ -61,11 +64,15 @@ $(document).ready(function () {
                 "orderable": false
             },
             {
-                "targets": 7,
-                "orderable": false
+                "targets": [2],
+                "visible": false
             },
             {
                 "targets": 8,
+                "orderable": false
+            },
+            {
+                "targets": 9,
                 "orderable": false
             }],
         dom: 'Bfrtip',
@@ -129,7 +136,7 @@ $(document).ready(function () {
 
             // Total over all pages
             total = api
-                .column( 6 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -137,7 +144,7 @@ $(document).ready(function () {
 
             // Total over this page
             pageTotal = api
-                .column( 6, { page: 'current'} )
+                .column( 7, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -154,6 +161,10 @@ $(document).ready(function () {
         dataTable.draw();
     });
     $('#project_id').change(function(){
+        dataTable.draw();
+    });
+
+    $('.item_expenditure_sector').change(function(){
         dataTable.draw();
     });
 

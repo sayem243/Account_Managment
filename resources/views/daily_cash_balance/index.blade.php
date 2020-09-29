@@ -78,7 +78,7 @@
 
                                 @php
                                     $balance = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->opening_balance:0;
-                                    $crTotal = isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->opening_balance:0;
+                                    $crTotal = 0;
                                     $drTotal = 0;
                                 @endphp
 
