@@ -24,7 +24,7 @@ class DailyCashBalanceController extends Controller
 
     public function dailyCashTransaction(Request $request){
 
-
+        $user = auth()->user();
         $date = $request->input('filter_date');
         $company_id = $request->input('filter_company_id');
         $companies = Company::all();
@@ -32,9 +32,13 @@ class DailyCashBalanceController extends Controller
         if ($company_id){
             $companies = DB::table('companies')->where('id', $company_id)->get();
         }
+        $projects=$user->projects;
         $returnCompany = array();
-        foreach ($companies as $company){
+        /*foreach ($companies as $company){
             $returnCompany[$company->id]= $company->name;
+        }*/
+        foreach ($projects as $project){
+            $returnCompany[$project->company->id]= $project->company->name;
         }
 
         $returnAllCompanies = array();
