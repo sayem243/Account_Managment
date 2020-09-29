@@ -333,6 +333,15 @@ class VoucherController extends Controller
             }
         }
 
+        if(!auth()->user()->can('superadmin')||!auth()->user()->hasRole('Admin')){
+            $projects= auth()->user()->projects;
+            $projectId=array();
+            foreach ($projects as $project){
+                $projectId[]=$project->id;
+            }
+            $countRecords->whereIn('voucher_items.project_id', $projectId);
+        }
+
         $countRecords->groupBy('totalVouchers');
         $result = $countRecords->get();
         $tcount = count($result);
@@ -399,6 +408,16 @@ class VoucherController extends Controller
             }else{
                 $rows->where('vouchers.status','=', $status);
             }
+        }
+
+
+        if(!auth()->user()->can('superadmin')||!auth()->user()->hasRole('Admin')){
+            $projects= auth()->user()->projects;
+            $projectId=array();
+            foreach ($projects as $project){
+                $projectId[]=$project->id;
+            }
+            $rows->whereIn('voucher_items.project_id', $projectId);
         }
 
         $rows->groupBy('voucherId');

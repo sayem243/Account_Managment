@@ -35,7 +35,7 @@
                 <label for="check_amount" class="col-form-label">Project <span
                             class="required">*</span></label>
                 <div class="col-form-label">
-                    <select class="form-control item_project_id" name="project_id" id="item_project_id" required>
+                    <select class="form-control item_project_id select2" name="project_id" id="item_project_id" required>
                         <option value="">All Project</option>
                         @foreach($projects as $project)
                             <option value="{{$project['id']}}">{{$project['p_name']}}</option>
