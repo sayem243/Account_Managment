@@ -28,14 +28,33 @@ class CheckRegistryController extends Controller
     }
 
     public function index(){
+
+        $user = auth()->user();
+        $projects=$user->projects;
+
         $companies= Company::all();
         $arrayCompanies=array();
-        foreach ($companies as $company){
-            $arrayCompanies[]=array('id'=>$company->id,'name'=>$company->name);
+
+        if(!$user->can('superadmin')||!$user->hasRole('Admin')) {
+
+            foreach ($projects as $project) {
+                $arrayCompanies[$project->company->id] = array('id' => $project->company->id, 'name' => $project->company->name);
+            }
+
+            array_multisort(array_map(function ($element) {
+                return $element['name'];
+            }, $arrayCompanies), SORT_ASC, $arrayCompanies);
+
+        }else{
+
+            foreach ($companies as $company){
+                $arrayCompanies[]=array('id'=>$company->id,'name'=>$company->name);
+            }
+            array_multisort(array_map(function($element) {
+                return $element['name'];
+            }, $arrayCompanies), SORT_ASC, $arrayCompanies);
+
         }
-        array_multisort(array_map(function($element) {
-            return $element['name'];
-        }, $arrayCompanies), SORT_ASC, $arrayCompanies);
 
         $banks = DB::table('bank_and_branches')->orderBy('name')->where('type', 'BANK')->get();
         $branches = DB::table('bank_and_branches')->orderBy('name')->where('type', 'BRANCH')->get();
@@ -184,7 +203,12 @@ class CheckRegistryController extends Controller
 
     public function dataTable(Request $request)
     {
-
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company->id;
+        }
         $query = $request->request->all();
 
         $countRecords = DB::table('check_registries');
@@ -221,6 +245,10 @@ class CheckRegistryController extends Controller
             $countRecords->whereBetween('check_registries.created_at', [$from_date, $to_date]);
         }
 //        $countRecords->groupBy('payment_details.payment_id');
+
+        if(!$user->can('superadmin')||!$user->hasRole('Admin')){
+            $countRecords->whereIn('check_registries.company_id', $userProjectCompany);
+        }
 
         $result = $countRecords->get();
         $tCount = count($result);
@@ -272,6 +300,9 @@ class CheckRegistryController extends Controller
             $from_date = $query['from_date'].' 00:00:00';
             $to_date = $query['to_date'].' 23:59:59';
             $rows->whereBetween('check_registries.created_at', [$from_date, $to_date]);
+        }
+        if(!$user->can('superadmin')||!$user->hasRole('Admin')){
+            $rows->whereIn('check_registries.company_id', $userProjectCompany);
         }
 
         $rows->offset($iDisplayStart);
