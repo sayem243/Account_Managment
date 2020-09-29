@@ -73,7 +73,8 @@ class VoucherController extends Controller
         }, $userProjectCompany), SORT_ASC, $userProjectCompany);
 
         $companies=$userProjectCompany;
-        return  view('voucher.archive',['auth_plain_pass'=>$auth_plain_pass, 'projects'=>$projects, 'companies'=>$companies]);
+        $expenditureSectors = ExpenditureSector::all()->sortBy('name');
+        return  view('voucher.archive',['auth_plain_pass'=>$auth_plain_pass, 'projects'=>$projects, 'companies'=>$companies,'expenditureSectors'=>$expenditureSectors]);
     }
 
     public function dataTable(Request $request)
@@ -313,6 +314,10 @@ class VoucherController extends Controller
             $company_id = $query['company_id'];
             $countRecords->where('companies.id',$company_id);
         }
+        if(isset($query['expenditure_sector'])){
+            $expenditure_sector = $query['expenditure_sector'];
+            $countRecords->where('expenditure_sectors.id',$expenditure_sector);
+        }
         if (isset($query['from_date']) && isset($query['to_date'])) {
             $from_date = $query['from_date'].' 00:00:00';
             $to_date = $query['to_date'].' 23:59:59';
@@ -347,7 +352,7 @@ class VoucherController extends Controller
 
         $rows = DB::table('vouchers');
 
-        $rows->select('vouchers.id as id', 'vouchers.voucher_generate_id as vId', 'vouchers.total_amount as amount', 'vouchers.created_at as createdAt', 'vouchers.status as vStatus');
+        $rows->select('vouchers.id as id', 'vouchers.voucher_generate_id as vId', 'vouchers.total_amount as amount', 'vouchers.created_at as createdAt', 'vouchers.created_at as createdAtForSort', 'vouchers.status as vStatus');
         $rows->addSelect( 'voucher_items.item_name as name', 'voucher_items.voucher_id as voucherId');
         $rows->addSelect('projects.p_name as projectName');
         $rows->addSelect('companies.name as companyName');
@@ -376,6 +381,10 @@ class VoucherController extends Controller
         if(isset($query['company_id'])){
             $company_id = $query['company_id'];
             $rows->where('companies.id',$company_id);
+        }
+        if(isset($query['expenditure_sector'])){
+            $expenditure_sector = $query['expenditure_sector'];
+            $rows->where('expenditure_sectors.id',$expenditure_sector);
         }
         if (isset($query['from_date']) && isset($query['to_date'])) {
             $from_date = $query['from_date'].' 00:00:00';
@@ -436,7 +445,8 @@ class VoucherController extends Controller
 
             $records["data"][] = array(
                 $id                 = $i,
-                $createdAt               = $post->createdAt,
+                $createdAt          = date('d-m-Y',strtotime($post->createdAt)),
+                $createdAtForSort   = $post->createdAtForSort,
                 $name               = $post->expenseName,
                 $pId                = '<a data-toggle="modal" data-target-id="'.$post->id.'" data-target="#myModal" href="">'.$post->vId.'</a>',
                 $companyName        = $post->companyName?$post->companyName:'',

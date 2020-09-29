@@ -27,6 +27,15 @@
                                 <td colspan="2">
                                     <input  type="text" class="form-control form-filter input-sm" name="voucher_id" id="voucher_id" placeholder="Voucher Id">
                                 </td>
+                                <td colspan="2">
+                                    <select name="item_expenditure_sector" class="form-control item_expenditure_sector select2">
+                                        <option value="">Select Type</option>
+                                        @foreach ($expenditureSectors as $expenditureSector)
+                                            <option value="{{$expenditureSector->id}}">{{$expenditureSector->name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                </td>
                                 <td colspan="1">
                                     <select class="form-control" name="company_id" id="company_id" aria-describedby="validationTooltipPackagePrepend" required>
                                         <option value="">All Company</option>
@@ -35,7 +44,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td colspan="2">
+                                <td colspan="1">
                                     <select class="form-control select2" name="project_id" id="project_id">
                                         <option value="">All Project</option>
                                         @foreach($projects as $project)
@@ -53,6 +62,7 @@
                             <tr>
                                 <th style="width: 30px" scope="col">SL.</th>
                                 <th style="width: 100px" width="" scope="col">Date</th>
+                                <th style="width: 100px" width="" scope="col">Created Date</th>
                                 <th style="width: 250px" scope="col">Expenses Type</th>
                                 <th style="width: 150px" scope="col">Voucher Id</th>
                                 <th style="width: 150px" width="" scope="col">Company</th>
@@ -67,9 +77,9 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th colspan="6" style="text-align:right">Total:</th>
-                                <th colspan="2"></th>
                                 <th colspan="1"></th>
+                                <th colspan="6" style="text-align:right">Total: </th>
+                                <th colspan="3"></th>
                             </tr>
                             </tfoot>
                         </table>
