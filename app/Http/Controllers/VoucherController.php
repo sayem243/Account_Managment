@@ -105,6 +105,14 @@ class VoucherController extends Controller
             $company_id = $query['company_id'];
             $countRecords->where('companies.id',$company_id);
         }
+        if(!auth()->user()->can('superadmin')||!auth()->user()->hasRole('Admin')){
+            $projects= auth()->user()->projects;
+            $projectId=array();
+            foreach ($projects as $project){
+                $projectId[]=$project->id;
+            }
+            $countRecords->whereIn('voucher_items.project_id', $projectId);
+        }
 
         $result = $countRecords->get();
         $tcount = count($result);
@@ -145,6 +153,14 @@ class VoucherController extends Controller
         if(isset($query['company_id'])){
             $company_id = $query['company_id'];
             $rows->where('companies.id',$company_id);
+        }
+        if(!auth()->user()->can('superadmin')||!auth()->user()->hasRole('Admin')){
+            $projects= auth()->user()->projects;
+            $projectId=array();
+            foreach ($projects as $project){
+                $projectId[]=$project->id;
+            }
+            $rows->whereIn('voucher_items.project_id', $projectId);
         }
 
         $rows->offset($iDisplayStart);
