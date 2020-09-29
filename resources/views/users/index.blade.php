@@ -60,6 +60,8 @@
 
 
 
+
+
 @endsection
 
 @section('footer.scripts')

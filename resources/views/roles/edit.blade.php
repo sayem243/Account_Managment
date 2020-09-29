@@ -34,20 +34,43 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Name:</strong>
+                <h4>Name:</h4>
                 {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
             </div>
         </div>
 
+
         <div class="col-xs-12 col-sm-12 col-md-12">
+
             <div class="form-group">
-                <strong>Permission:</strong>
-                <br/>
+
+<div class="row ">
+                <div class="col-md-6">
+                <h5>Permission: </h5>
+                </div>
+                <div class="col-md-6">
+                <h5>Description: </h5>
+                </div>
+</div>
+
+            </br>
+                <div class="row">
                 @foreach($permission as $value)
+                    <div class="col-md-6">
                     <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
-                        {{ $value->name }}</label>
-                    <br/>
+                        {{ $value->name }}</label></div>
+<div class="col-md-6">
+                    <label>
+                        {{ $value->description }}
+                    </label>
+</div>
+
+            </br>
+
+
                 @endforeach
+
+</div>
             </div>
         </div>
     </div>
@@ -61,6 +84,49 @@
          </div>
   </div>
     {!! Form::close() !!}
+
+                    {{--testing--}}
+
+                    {{--<div class="container">--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-12">--}}
+                                {{--<table class="table table-bordered">--}}
+                                    {{--<thead>--}}
+                                    {{--<tr>--}}
+                                        {{--<th scope="col">Permissions</th>--}}
+                                        {{--<th scope="col">Description</th>--}}
+
+                                    {{--</tr>--}}
+                                    {{--</thead>--}}
+                                    {{--<tbody>--}}
+                                    {{--<tr>--}}
+                                    {{--</br>--}}
+                                        {{--@foreach($permission as $value)--}}
+                                        {{--<td>--}}
+                                            {{--<div class="custom-control custom-checkbox">--}}
+                                                {{--<label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}--}}
+                                                    {{--{{ $value->name }}</label>--}}
+                                            {{--</div>--}}
+                                        {{--</td>--}}
+                                        {{--<td> {{ $value->description }}</td>--}}
+
+                                       {{--@endforeach--}}
+                                    {{--</br>--}}
+                                    {{--</tr>--}}
+
+                                    {{--</tbody>--}}
+                                {{--</table>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+
+                    {{--endtesting--}}
+
+
+
+
+
                     <p class="text-center text-primary"><small>Right Brain Solution Limited.All Rights Reserved</small></p>
                 </div>
             </div>

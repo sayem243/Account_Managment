@@ -32,20 +32,46 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Name:</strong>
+                <h4>Name:</h4>
                 {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Permission:</strong>
-                <br/>
 
-                @foreach($permission as $value)
+                <div class="row ">
+                    <div class="col-md-5">
+                        <h5>Permission: </h5>
+                    </div>
+                    <div class="col-md-7">
+                        <h5>Description: </h5>
+                    </div>
+                </div>
+
+                <br/>
+                <div class="row">
+                    @foreach($permission as $value)
+
+                    <div class="col-md-5">
+
                     <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
                         {{ $value->name }}</label>
-                    <br/>
+
+                </div>
+
+                    <div class="col-md-7">
+
+                    <label>
+                        {{ $value->description }}
+                    </label>
+                    </div>
+                </br>
                 @endforeach
+
+                </div>
+
+
+
 
             </div>
         </div>
