@@ -10,7 +10,7 @@
                         <h5> Daily Opening Balance Session </h5>
 
                         <div class="card-header-right">
-                            Date: {{isset($_GET[''])?$_GET['']:''}}
+                            Date: {{isset($requestDate)?$requestDate:''}}
                         </div>
                     </div>
 
@@ -19,7 +19,7 @@
                         {{ csrf_field() }}
 
                         {{--Advance Payment Information--}}
-                        <div class="card-body" style="border: 1px solid #000; margin-bottom: 5px;">
+                        <div class="card-body" style="border: 1px solid #000; margin-bottom: 5px; padding-bottom: 0">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -52,7 +52,7 @@
 
                             </table>
 
-                            <div class="line aligncenter" style="float: right">
+                            <div class="line aligncenter">
                                 <div class="form-group">
                                     <div style="padding-right: 1px" class="col-sm-12 col-form-label btn-group-lg"
                                          align="right">

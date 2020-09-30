@@ -151,7 +151,7 @@
                             <div class="col-md-6">
                                 <div class="">
                                     <label class="col-md-12 col-form-label"
-                                           for="check_number">Description: {{$checkRegistry->remarks}}</label>
+                                           for="check_number">Description: {{$checkRegistry->description}}</label>
 
                                 </div>
                             </div>
