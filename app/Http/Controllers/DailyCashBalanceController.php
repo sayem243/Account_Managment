@@ -34,12 +34,16 @@ class DailyCashBalanceController extends Controller
         }
         $projects=$user->projects;
         $returnCompany = array();
-        /*foreach ($companies as $company){
+        if($user->can('superadmin')||$user->hasRole('Admin')){
+            foreach ($companies as $company){
             $returnCompany[$company->id]= $company->name;
-        }*/
-        foreach ($projects as $project){
-            $returnCompany[$project->company->id]= $project->company->name;
+            }
+        }else{
+            foreach ($projects as $project){
+                $returnCompany[$project->company->id]= $project->company->name;
+            }
         }
+
 
         $returnAllCompanies = array();
         foreach ($allCompanies as $company){
