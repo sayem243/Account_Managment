@@ -444,5 +444,9 @@ Like: www.facebook.com/terminalbd
             event.preventDefault();
         }
     });
+
+    $(".modal").on("hidden.bs.modal", function(){
+        $(".modal-body").html("");
+    });
 </script>
 </html>
