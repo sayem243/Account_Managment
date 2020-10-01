@@ -622,6 +622,7 @@ class VoucherController extends Controller
         if ($id){
             $cash_check_id = array();
             $account_pay_check_id = array();
+            $account_transfer_check_id = array();
             $voucher = Voucher::find($id);
             if($voucher->status==1){
 
@@ -648,6 +649,8 @@ class VoucherController extends Controller
 
                     if(isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='ACCOUNT_PAY'){
                         $account_pay_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
+                    }elseif (isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='ACCOUNT_TRANSFER'){
+                        $account_transfer_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
                     }elseif (isset($voucherItem->checkRegistry) && $voucherItem->checkRegistry->check_type=='CASH'){
                         $cash_check_id[$voucher->id][]= array('voucher_id'=>$voucher->id, 'check_id'=>$voucherItem->check_registry_id);
                     }
@@ -659,10 +662,18 @@ class VoucherController extends Controller
                 $voucher->save();
 
                 if($voucher->status==2){
+                    $transactionVia='';
+                    if(isset($account_pay_check_id[$voucher->id]) && sizeof(  $account_pay_check_id[$voucher->id])>0){
+                        $transactionVia='VOUCHER_CHECK_ACCOUNT_PAY';
+                    }elseif ( isset($account_transfer_check_id[$voucher->id]) && sizeof( $account_transfer_check_id[$voucher->id])>0){
+                        $transactionVia='VOUCHER_CHECK_ACCOUNT_TRANSFER';
+                    }else{
+                        $transactionVia='VOUCHER';
+                    }
 
                     $arrayData= array(
                         'transaction_type'=>'DR',
-                        'transaction_via'=>isset($account_pay_check_id[$voucher->id])?'VOUCHER_CHECK_ACCOUNT_PAY':'VOUCHER',
+                        'transaction_via'=>$transactionVia,
                         'transaction_via_ref_id'=>$voucher->id,
                         'amount'=>$voucher->total_amount,
                         'company_id'=>$voucher->VoucherItems[0]->project?$voucher->VoucherItems[0]->project->company->id:null,
@@ -673,7 +684,7 @@ class VoucherController extends Controller
 
                     CashTransaction::insertData($arrayData);
 
-                    $check_id = array_merge_recursive($account_pay_check_id,$cash_check_id);
+                    $check_id = array_merge_recursive($account_pay_check_id,$cash_check_id,$account_transfer_check_id);
 
                     if(sizeof($check_id)>0){
 
