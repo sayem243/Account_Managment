@@ -505,6 +505,13 @@ class LoanController extends Controller
 
     public function dataTable(Request $request)
     {
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company->id;
+        }
+
         $query = $request->request->all();
 
         $countRecords = DB::table('loans');
@@ -530,7 +537,12 @@ class LoanController extends Controller
             $to_date = $query['to_date'].' 23:59:59';
             $countRecords->whereBetween('loans.created_at', [$from_date, $to_date]);
         }
-
+        if(!$user->can('superadmin')||!$user->hasRole('Admin')){
+            $countRecords->whereIn('loans.loan_from_ref_id', $userProjectCompany);
+            $countRecords->where('loans.loan_from','like','COMPANY');
+            $countRecords->orWhereIn('loans.loan_to_ref_id', $userProjectCompany);
+            $countRecords->where('loans.loan_to','like','COMPANY');
+        }
 
         $result = $countRecords->get();
         $tCount = count($result);
@@ -555,23 +567,57 @@ class LoanController extends Controller
             $name = $query['loan_generate_id'];
             $rows->where('loans.loan_generate_id', 'like', "{$name}%");
         }
-        if(isset($query['from_company_id'])){
-            $from_company_id = $query['from_company_id'];
-            $rows->where('loans.loan_from_ref_id',$from_company_id);
-            $rows->where('loans.loan_from','like','COMPANY');
-        }
-        if(isset($query['to_company_id'])){
-            $to_company_id = $query['to_company_id'];
-            $rows->where('loans.loan_to_ref_id',$to_company_id);
-            $rows->where('loans.loan_to','like','COMPANY');
-        }
 
         if (isset($query['from_date']) && isset($query['to_date'])) {
             $from_date = $query['from_date'].' 00:00:00';
             $to_date = $query['to_date'].' 23:59:59';
             $rows->whereBetween('loans.created_at', [$from_date, $to_date]);
         }
+        if(!$user->can('superadmin')||!$user->hasRole('Admin')){
+            if(isset($query['from_company_id'])&&!isset($query['to_company_id'])){
+                $from_company_id = $query['from_company_id'];
+                $rows->where('loans.loan_from_ref_id',$from_company_id);
+                $rows->where('loans.loan_from','like','COMPANY');
+                $rows->whereIn('loans.loan_from_ref_id', $userProjectCompany);
+            }
+            if(!isset($query['from_company_id']) && isset($query['to_company_id'])){
+                $to_company_id = $query['to_company_id'];
+                $rows->where('loans.loan_to_ref_id',$to_company_id);
+                $rows->where('loans.loan_to','like','COMPANY');
+                $rows->whereIn('loans.loan_to_ref_id', $userProjectCompany);
+            }
+            if(!isset($query['from_company_id'])&&!isset($query['to_company_id'])){
+                $rows->whereIn('loans.loan_from_ref_id', $userProjectCompany);
+                $rows->where('loans.loan_from','like','COMPANY');
+                $rows->orWhereIn('loans.loan_to_ref_id', $userProjectCompany);
+                $rows->where('loans.loan_to','like','COMPANY');
+            }
+            if(isset($query['from_company_id'])&&isset($query['to_company_id'])){
+                $from_company_id = $query['from_company_id'];
+                $rows->where('loans.loan_from_ref_id',$from_company_id);
+                $rows->where('loans.loan_from','like','COMPANY');
+                $to_company_id = $query['to_company_id'];
+                $rows->where('loans.loan_to_ref_id',$to_company_id);
+                $rows->where('loans.loan_to','like','COMPANY');
+                $rows->where(function($query) use ($userProjectCompany){
+                    $query->whereIn('loans.loan_from_ref_id',$userProjectCompany)
+                        ->orWhereIn('loans.loan_to_ref_id',$userProjectCompany);
+                });
 
+//                $rows->OrWhereIn('loans.loan_from_ref_id', $userProjectCompany)->OrWhereIn('loans.loan_to_ref_id', $userProjectCompany);
+            }
+        }else{
+            if(isset($query['from_company_id'])){
+                $from_company_id = $query['from_company_id'];
+                $rows->where('loans.loan_from_ref_id',$from_company_id);
+                $rows->where('loans.loan_from','like','COMPANY');
+            }
+            if(isset($query['to_company_id'])){
+                $to_company_id = $query['to_company_id'];
+                $rows->where('loans.loan_to_ref_id',$to_company_id);
+                $rows->where('loans.loan_to','like','COMPANY');
+            }
+        }
 
         $rows->offset($iDisplayStart);
         $rows->limit($iDisplayLength);

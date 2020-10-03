@@ -10,12 +10,28 @@ use Illuminate\Support\Facades\DB;
 
 class DailyCashBalanceSessionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:daily-cash-balance-session', ['only' => ['index','generate','draftToConfirmStore','draftView','closingBalanceUpdate']]);
+
+    }
+
     public function index(){
+
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company->id;
+        }
 
         $previousSessionOpen = $this->getSessionOpen();
 
         $rows = DB::table('cash_daily_balance_sessions');
         $rows->select('cash_daily_balance_sessions.id as sId','cash_daily_balance_sessions.created_at as createdDate', DB::raw('SUM(cash_daily_balance_sessions.opening_balance) as totalOpeningBalance'), DB::raw('SUM(cash_daily_balance_sessions.closing_balance) as totalClosingBalance'));
+        $rows->whereIn('company_id', $userProjectCompany);
         $rows->groupBy('created_at');
         $rows->orderBy('created_at', 'ASC');
 
@@ -30,8 +46,14 @@ class DailyCashBalanceSessionController extends Controller
         $submit = $request->generate;
 //        $from_date =  date('Y-m-d').' 00:00:00';
         $date =  date('Y-m-d');
-
-        $companies = Company::all();
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company;
+        }
+//        $companies = Company::all();
+        $companies = $userProjectCompany;
         $insertId = array();
         if(isset($submit)){
             foreach ($companies as $company){
@@ -68,9 +90,15 @@ class DailyCashBalanceSessionController extends Controller
     }
 
     public function draftView(Request $request){
-        $cashDailyBalanceSession = CashDailyBalanceSession::where('created_at','=', $request->date)->get();
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company->id;
+        }
+        $cashDailyBalanceSession = CashDailyBalanceSession::where('created_at','=', $request->date)->whereIn('company_id',$userProjectCompany)->get();
 
-        return view('daily_cash_balance_session.draft',['cashDailyBalanceSessions'=>$cashDailyBalanceSession]);
+        return view('daily_cash_balance_session.draft',['cashDailyBalanceSessions'=>$cashDailyBalanceSession, 'requestDate'=>$request->date]);
 
     }
     public function draftToConfirmStore(Request $request)
@@ -89,19 +117,14 @@ class DailyCashBalanceSessionController extends Controller
 
     public function quickView(Request $request){
 
-        $companies = Company::all()->sortBy('name');
+//        $companies = Company::all()->sortBy('name');
+        $user = auth()->user();
+        $projects=$user->projects;
         $returnCompany = array();
-        foreach ($companies as $company){
-            $returnCompany[$company->id]= $company->name;
+        foreach ($projects as $project){
+            $returnCompany[$project->company->id]= $project->company->name;
         }
 
-        $users = User::all();
-
-        $returnUser = array();
-
-        foreach ($users as $user){
-            $returnUser[$user->id]= $user->name;
-        }
         $date = $request->input('filter_date');
         $company_id = $request->input('filter_company_id');
 
@@ -133,7 +156,7 @@ class DailyCashBalanceSessionController extends Controller
             $returnArray[$cashTransaction->company_id][$cashTransaction->transaction_type][]=$cashTransaction->amount;
         }
 
-        $returnHTML = view('daily_cash_balance_session.quick-view',['openingClosingBalance'=>$openingBalance, 'cashTransactions'=>$returnArray, 'companies'=>$returnCompany, 'user'=>$returnUser, 'selected_date'=>$date])->render();
+        $returnHTML = view('daily_cash_balance_session.quick-view',['openingClosingBalance'=>$openingBalance, 'cashTransactions'=>$returnArray, 'companies'=>$returnCompany, 'selected_date'=>$date])->render();
         return response()->json( ['html'=>$returnHTML]);
     }
 
@@ -159,7 +182,15 @@ class DailyCashBalanceSessionController extends Controller
         $cash_balance_session_id = $request->cash_balance_session_id?$request->cash_balance_session_id:array();
         $selected_date = $request->selected_date;
         $date = isset($selected_date)?$selected_date: date('Y-m-d');
-        $companies = Company::all();
+
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company;
+        }
+//        $companies = Company::all();
+        $companies = $userProjectCompany;
         $insertId = array();
         if(isset($submit)){
             foreach ($companies as $company){
@@ -192,26 +223,30 @@ class DailyCashBalanceSessionController extends Controller
     }
 
     public function getSessionOpen(){
+
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company->id;
+        }
+
         $cash_daily_balance_sessions = DB::table('cash_daily_balance_sessions')
             ->select('id')
             ->where('status',1)
             ->whereDate('created_at', '<=', date('Y-m-d'))
+            ->whereIn('company_id', $userProjectCompany)
             ->get();
         $cash_daily_balance_sessions_open = DB::table('cash_daily_balance_sessions')
             ->select('id')
             ->where('status',2)
             ->whereDate('created_at', '=', date('Y-m-d'))
+            ->whereIn('company_id', $userProjectCompany)
             ->get();
         if(sizeof($cash_daily_balance_sessions)>0||sizeof($cash_daily_balance_sessions_open)>0){
             return false;
         }
         return true;
     }
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
 
 }

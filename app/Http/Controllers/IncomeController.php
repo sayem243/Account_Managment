@@ -31,23 +31,9 @@ class IncomeController extends Controller
     }
 
     public function index(){
-        /*$companies= Company::all();
-        $arrayCompanies=array();
-        foreach ($companies as $company){
-            $arrayCompanies[]=array('id'=>$company->id,'name'=>$company->name);
-        }
-        array_multisort(array_map(function($element) {
-            return $element['name'];
-        }, $arrayCompanies), SORT_ASC, $arrayCompanies);*/
 
         $user = auth()->user();
         $projects=$user->projects;
-        $pUser= array();
-        foreach ($projects as $project){
-            foreach ($project->users as $user){
-                $pUser[$user->id]= array('id'=>$user->id,'name'=>$user->name);
-            }
-        }
 
         $userProjectCompany = array();
         foreach ($projects as $project){
@@ -285,6 +271,12 @@ class IncomeController extends Controller
 
     public function dataTable(Request $request)
     {
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company->id;
+        }
         $query = $request->request->all();
         $countRecords = DB::table('incomes');
         $countRecords->select('incomes.id as totalIncome');
@@ -308,6 +300,9 @@ class IncomeController extends Controller
             $from_date = $query['from_date'].' 00:00:00';
             $to_date = $query['to_date'].' 23:59:59';
             $countRecords->whereBetween('incomes.created_at', [$from_date, $to_date]);
+        }
+        if(!$user->can('superadmin')||!$user->hasRole('Admin')){
+            $countRecords->whereIn('incomes.company_id', $userProjectCompany);
         }
 
         $result = $countRecords->get();
@@ -349,6 +344,9 @@ class IncomeController extends Controller
             $from_date = $query['from_date'].' 00:00:00';
             $to_date = $query['to_date'].' 23:59:59';
             $rows->whereBetween('incomes.created_at', [$from_date, $to_date]);
+        }
+        if(!$user->can('superadmin')||!$user->hasRole('Admin')){
+            $rows->whereIn('incomes.company_id', $userProjectCompany);
         }
 
         $rows->offset($iDisplayStart);

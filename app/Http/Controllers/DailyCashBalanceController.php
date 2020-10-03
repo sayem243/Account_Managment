@@ -34,12 +34,16 @@ class DailyCashBalanceController extends Controller
         }
         $projects=$user->projects;
         $returnCompany = array();
-        /*foreach ($companies as $company){
+        if($user->can('superadmin')||$user->hasRole('Admin')){
+            foreach ($companies as $company){
             $returnCompany[$company->id]= $company->name;
-        }*/
-        foreach ($projects as $project){
-            $returnCompany[$project->company->id]= $project->company->name;
+            }
+        }else{
+            foreach ($projects as $project){
+                $returnCompany[$project->company->id]= $project->company->name;
+            }
         }
+
 
         $returnAllCompanies = array();
         foreach ($allCompanies as $company){
@@ -102,11 +106,19 @@ class DailyCashBalanceController extends Controller
     }
 
     public function getDailyOpeningBalance($from_date,$to_date, $company_id){
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company->id;
+        }
         $rows = DB::table('cash_daily_balance_sessions');
         if ($company_id!=''){
             $rows->where('company_id', $company_id);
         }
         $rows->whereBetween('created_at', [$from_date, $to_date]);
+        $rows->whereIn('company_id', $userProjectCompany);
+
         $rows->orderBy('id', 'ASC');
         $result = $rows->get();
         $returnData = array();
@@ -118,10 +130,18 @@ class DailyCashBalanceController extends Controller
     }
 
     public function getPreviousCurrentSessionClose($date){
+        $user = auth()->user();
+        $projects=$user->projects;
+        $userProjectCompany = array();
+        foreach ($projects as $project){
+            $userProjectCompany[$project->company->id]= $project->company->id;
+        }
+
         $cash_daily_balance_sessions = DB::table('cash_daily_balance_sessions')
             ->select('id')
             ->where('status',2)
             ->whereDate('created_at', '=', $date)
+            ->whereIn('company_id',$userProjectCompany)
             ->get();
 
         if(sizeof($cash_daily_balance_sessions)>0){

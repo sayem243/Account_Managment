@@ -74,7 +74,7 @@
                 </tbody>
              <tfoot>
              <tr>
-                 <th colspan="7" style="text-align:right">Total:</th>
+                 <th colspan="7" style="text-align:right">Total: </th>
                  <th colspan="2"></th>
              </tr>
              </tfoot>

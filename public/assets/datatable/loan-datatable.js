@@ -60,7 +60,7 @@ $(document).ready(function () {
                 "visible": false
             },
             {
-                "targets": 7,
+                "targets": 8,
                 "orderable": false
             }
             ],

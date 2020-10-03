@@ -231,7 +231,13 @@ $(document).ready(function () {
 
             // Update footer
             $( api.column( 6 ).footer() ).html( parseFloat(pageTotal).toLocaleString());
+        },
+        rowCallback: function (row, data) {
+            console.log(data[10]);
+        if(data[10]===1){
+            $(row).addClass('cash_check_voucher_item');
         }
+    }
         /*"buttons": [
             {
                 extend: 'collection',

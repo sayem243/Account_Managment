@@ -734,7 +734,7 @@ class PaymentController extends Controller
         $rows->join('users as employee', 'payments.user_id', '=', 'employee.id');
         $rows->join('users as createdBy', 'payments.created_by', '=', 'createdBy.id');
         $rows->join('companies', 'payments.company_id', '=', 'companies.id');
-        $rows->select('payments.id as pId', 'payments.payment_id as name', 'payments.total_paid_amount as amount', 'payments.status as pStatus', 'payments.created_at as created_at', 'payments.updated_at as updated_at', 'payments.verified_at as paymentVerifyAt');
+        $rows->select('payments.id as pId', 'payments.payment_id as name', 'payments.total_paid_amount as amount', 'payments.status as pStatus', 'payments.created_at as created_at', 'payments.updated_at as updated_at', 'payments.verified_at as paymentVerifyAt', 'payments.is_old as isOld');
         $rows->addSelect('companies.name as companyName');
         $rows->addSelect('companies.deleted_at as companyDeletedAt');
         $rows->addSelect('projects.deleted_at as projectDeletedAt');
@@ -885,7 +885,9 @@ class PaymentController extends Controller
                 $pStatus            = $paymentStatus,
 
                 $action,
-                $button);
+                $button,
+                $isOld              = $post->isOld,
+                );
             $i++;
 
         endforeach;
