@@ -235,11 +235,38 @@ Like: www.facebook.com/terminalbd
         </ul>
         <ul class="navbar-nav ml-auto">
 
+
+
             <li>
                 <div class="dropdown drp-user">
+
+
+                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon feather icon-bell"></i>
+                    </a>
+
+<ul class="dropdown-menu" role="menu">
+    <li><a href="">new</a>
+        <a href="">old</a>
+        <a href="">current</a>
+    </li>
+
+</ul>
+                </div>
+            </li>
+
+
+
+
+            <li>
+                <div class="dropdown drp-user">
+
+
                     <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon feather icon-settings"></i>
                     </a>
+
+
                     <div class="dropdown-menu dropdown-menu-right profile-notification">
                         <div class="pro-head">
                             @if (Route::has('login'))
@@ -263,6 +290,11 @@ Like: www.facebook.com/terminalbd
                             @endif
                         </div>
                     </div>
+
+
+
+
+
                 </div>
             </li>
         </ul>
