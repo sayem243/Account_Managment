@@ -6,6 +6,7 @@ use App\Ammendment;
 use App\CashDailyBalanceSession;
 use App\CashTransaction;
 use App\Documents;
+use App\Notifications\HandSlipStatusNotification;
 use App\Payment_details;
 use App\PaymentComments;
 use App\PaymentSettlement;
@@ -248,6 +249,17 @@ class PaymentController extends Controller
                 $payment->status = 7;
             }
             $payment->save();
+
+            $paymentProjectUsers=$this->getUsersByProjectAndPermission($payment->project,'payment-verify');
+
+            foreach ($paymentProjectUsers as $projectUser){
+                $data = array(
+                    'payment_id' => $payment->id,
+                    'message' => 'New Hand Slip Created.',
+                    'amount' => $payment->total_paid_amount,
+                );
+                $projectUser->notify(new HandSlipStatusNotification($data));
+            }
 
             if($request->session()->get('reference_payment_id')){
                 $transferred = new PaymentTransfer();
@@ -509,6 +521,18 @@ class PaymentController extends Controller
             $payment->verified_at= new \DateTime();
             //$payment->status=2;
             $payment->save();
+
+            $paymentProjectUsers=$this->getUsersByProjectAndPermission($payment->project, 'payment-approve');
+
+            foreach ($paymentProjectUsers as $projectUser){
+                $data = array(
+                    'payment_id' => $payment->id,
+                    'message' => 'Hand Slip Verified.',
+                    'amount' => $payment->total_paid_amount,
+                );
+                $projectUser->notify(new HandSlipStatusNotification($data));
+            }
+
             return response()->json(['message'=>'Payment has been successfully '.$msg,'status'=>200]);
 
         }
@@ -542,6 +566,18 @@ class PaymentController extends Controller
             $payment->approved_at = new \DateTime();
             $payment->status = 3;
             $payment->save();
+
+            $paymentProjectUsers=$this->getUsersByProjectAndPermission($payment->project, 'payment-paid');
+
+            foreach ($paymentProjectUsers as $projectUser){
+                $data = array(
+                    'payment_id' => $payment->id,
+                    'message' => 'Hand Slip Approved.',
+                    'amount' => $payment->total_paid_amount,
+                );
+                $projectUser->notify(new HandSlipStatusNotification($data));
+            }
+
             return response()->json(['message' => 'Payment has been successfully approved.', 'status' => 200]);
         }
         return response()->json(['message'=>'Error! This are not permitted.','status'=>301]);
@@ -601,7 +637,6 @@ class PaymentController extends Controller
     }
 
     public function details($id){
-
         $payment=Payment::find($id);
         if ($this->checkAuthUserProjects($payment)){
             $date = date('Y-m-d');
@@ -924,6 +959,17 @@ class PaymentController extends Controller
             return false;
         }
         return true;
+    }
+
+    public function getUsersByProjectAndPermission($project, $permission)
+    {
+        $projectUsers = $project->users;
+        $data=array();
+        foreach ($projectUsers as $projectUser){
+            $data[]= $projectUser->id;
+        }
+        $users = User::permission($permission)->whereIn('id',$data)->get();
+        return $users;
     }
 
 }

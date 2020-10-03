@@ -348,3 +348,8 @@ Route::get('/client/edit/{id}','ClientController@edit')->name('client_edit');
 Route::post('/client/update/{id}','ClientController@update')->name('client_update');
 Route::get('/client/delete/{id}','ClientController@delete')->name('client_delete');
 Route::get('/client/restore/{id}','ClientController@clientRestore')->name('client_restore');
+
+
+
+Route::get('/notification/marksAsRead','NotificationController@markAsRead')->name('marks_as_read');
+Route::post('/notification/marksAsRead/{id}','NotificationController@markAsReadById')->name('marks_as_read_by_id');
