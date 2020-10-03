@@ -254,7 +254,7 @@
                                                 @endif
                                                 <tr>
                                                     <td></td>
-                                                    <td>{{'Loan through check # '}} @php
+                                                    <td>{{'Loan received through # '}} @php
                                                             $loan= \App\Loan::find($data->transaction_via_ref_id)
                                                         @endphp
                                                         <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
@@ -358,7 +358,7 @@
                                                 <tr>
                                                     <td></td>
                                                     <td>
-                                                        {{'Loan through check # '}} @php
+                                                        {{'Loan disbursed through # '}} @php
                                                             $loan= \App\Loan::find($data->transaction_via_ref_id)
                                                         @endphp
                                                         <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
