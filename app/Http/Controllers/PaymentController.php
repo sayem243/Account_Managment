@@ -689,7 +689,7 @@ class PaymentController extends Controller
         if (isset($query['payment_status'])) {
             $status = $query['payment_status'];
             if($status=='all'){
-                $countRecords->where('payments.status','!=', 6);
+//                $countRecords->where('payments.status','!=', 6);
                 $countRecords->where('payments.status','!=', 7);
             }else{
                 $countRecords->where('payments.status','=', $status);
@@ -781,7 +781,7 @@ class PaymentController extends Controller
         if (isset($query['payment_status'])) {
             $status = $query['payment_status'];
             if($status=='all'){
-                $rows->where('payments.status','!=', 6);
+//                $rows->where('payments.status','!=', 6);
                 $rows->where('payments.status','!=', 7);
             }else{
                 $rows->where('payments.status','=', $status);
