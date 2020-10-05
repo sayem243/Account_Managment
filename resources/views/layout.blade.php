@@ -156,7 +156,7 @@ Like: www.facebook.com/terminalbd
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu {{ Request::is('account/*') ? 'pcoded-trigger' : ''}}{{ Request::is('bank/*') ? 'pcoded-trigger' : ''}}{{ Request::is('expenditure_sector/*') ? 'pcoded-trigger' : ''}}{{ Request::is('company/*') ? 'pcoded-trigger' : ''}}{{ Request::is('project/*') ? 'pcoded-trigger' : ''}}{{ Request::is('usertype/*') ? 'pcoded-trigger' : ''}}{{ Request::is('client/*') ? 'pcoded-trigger' : ''}}">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Setting</span></a>
                         <ul class="pcoded-submenu {{ Request::is('client/*') ? 'active' : ''}}{{ Request::is('account/*') ? 'active' : ''}}{{ Request::is('bank/*') ? 'active' : ''}}{{ Request::is('expenditure_sector/*') ? 'active' : ''}}{{ Request::is('usertype/*') ? 'active' : ''}}{{ Request::is('company/*') ? 'active' : ''}}{{ Request::is('project/*') ? 'active' : ''}}">
-                            @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin')|| auth()->user()->hasRole('CEO')||auth()->user()->hasRole('Director'))
+                            @if(auth()->user()->can('comp_profile'))
                             <li class="nav-item {{ Request::is('company/index') ? 'active' : ''}}"><a href="{{route('comp_profile')}}" class="nav-link"><span class="pcoded-mtext">Company Profile</span></a></li>
                             @endif
                             @if(auth()->user()->can('projects'))
@@ -250,7 +250,29 @@ Like: www.facebook.com/terminalbd
 
             <li>
                 <div class="dropdown drp-user">
+          <a href="javascript:" class="notification" data-toggle="dropdown">
+                        <i class="fas fa-bell"></i>
+                        @if(auth()->user()->unreadNotifications->count())
+                        <span class="label label-danger badge">{{auth()->user()->unreadNotifications->count()}}</span>
+                            @endif
+                    </a>
+                    @if(auth()->user()->unreadNotifications->count())
+                    <ul class="dropdown-menu dropdown-menu-right profile-notification">
+                        <li>
+                            <a href="{{route('marks_as_read')}}">Mark all as read</a>
+                        </li>
+                        @foreach(auth()->user()->unreadNotifications as $notification)
+                        <li>
+                          <a data-notification-id="{{$notification->id}}" class="mark_as_read" href="{{route('details',$notification->data['payment_id'])}}">{{$notification->data['message'].'. HS ID: '.$notification->data['payment_id']}}</a>
+                        </li>
+                        @endforeach
 
+                    </ul>
+                    @endif
+                </div>
+            </li>
+            <li>
+                <div class="dropdown drp-user">
 
                     <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon feather icon-settings"></i>
@@ -427,26 +449,29 @@ Like: www.facebook.com/terminalbd
 
     //amendment approve
 
-    /*jQuery(".amendment_approved").click(function(a){
+    jQuery(".mark_as_read").click(function(a){
         var elements = a.target;
         a.preventDefault();
-        var id = jQuery(this).attr('data-id');
-        if(confirm("Do You want to Approve ?")) {
+        var id = jQuery(this).attr('data-notification-id');
+        var redirect = jQuery(this).attr('href');
+        if(id===''){
+            return false;
+        }
+
+        if(confirm("Do You want to read?")) {
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '/amendment/approved/' + id,
+                url: '/notification/marksAsRead/' + id,
                 data: {},
                 success: function (data) {
                     if (data.status == 200) {
-                        $(elements).closest('tr').find('td.status').find('span').removeClass('label-primary').addClass('label-success');
-                        $(elements).closest('tr').find('td.status').find('span').html('Approved');
-                        location.reload(true);
+                        window.location.href = redirect;
                     }
                 }
             });
         }
-    });*/
+    });
 
     // Report Date Filtering
 
