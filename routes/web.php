@@ -250,6 +250,8 @@ Route::get('/ajax/company/bank/branch/account/{cId}/{bId}/{brId}','AjaxFunctionC
 Route::post('/ajax/add/voucher_item/','AjaxFunctionController@addVoucherItem')->name('ajax_add_voucher_item');
 
 //report section
+Route::get('/report/income', 'Report\IncomeDetailReportController@incomeReport')->name('income_report');
+Route::post('/report/income/datatable', 'Report\IncomeDetailReportController@incomeReportDataTable')->name('income_report_datatable');
 
 Route::get('/report/payment', 'ReportController@paymentReport')->name('payment_report');
 Route::post('/report/payment/datatable', 'ReportController@dataTablePaymentReport')->name('payment_report_datatable');

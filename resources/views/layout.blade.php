@@ -205,6 +205,9 @@ Like: www.facebook.com/terminalbd
                             @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('CEO')|| auth()->user()->hasRole('Director')|| auth()->user()->hasRole('Manager'))
                             <li class="nav-item {{ Request::is('settlement/list') ? 'active' : ''}}"><a href="{{route('settlement_list')}}" class="nav-link"><span class="pcoded-mtext">Settlement Report</span></a></li>
                             @endif
+                            <li class="nav-item {{ Request::is('report/income') ? 'active' : ''}}"><a href="{{route('income_report')}}" class="nav-link"><i class="fa fa-bar-chart" aria-hidden="true"></i>Income Report</a></li>
+
+
                         </ul>
                     </li>
                 {{--@endif--}}
@@ -214,6 +217,9 @@ Like: www.facebook.com/terminalbd
     </div>
 </nav>
 <!-- [ navigation menu ] end -->
+
+
+
 
 <!-- [ Header ] start -->
 <header class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed header-purple">
@@ -235,9 +241,16 @@ Like: www.facebook.com/terminalbd
         </ul>
         <ul class="navbar-nav ml-auto">
 
+
+
+
+
+
+
+
             <li>
                 <div class="dropdown drp-user">
-                    <a href="javascript:" class="notification" data-toggle="dropdown">
+          <a href="javascript:" class="notification" data-toggle="dropdown">
                         <i class="fas fa-bell"></i>
                         @if(auth()->user()->unreadNotifications->count())
                         <span class="label label-danger badge notification_count">{{auth()->user()->unreadNotifications->count()}}</span>
@@ -260,9 +273,12 @@ Like: www.facebook.com/terminalbd
             </li>
             <li>
                 <div class="dropdown drp-user">
+
                     <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon feather icon-settings"></i>
                     </a>
+
+
                     <div class="dropdown-menu dropdown-menu-right profile-notification">
                         <div class="pro-head">
                             @if (Route::has('login'))
@@ -286,6 +302,11 @@ Like: www.facebook.com/terminalbd
                             @endif
                         </div>
                     </div>
+
+
+
+
+
                 </div>
             </li>
         </ul>
