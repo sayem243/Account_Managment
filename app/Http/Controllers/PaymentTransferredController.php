@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\CashTransaction;
+use App\Notifications\HandSlipStatusNotification;
 use App\Payment;
 use App\PaymentSettlement;
+use App\Service\SmsGateWay;
 use Illuminate\Http\Request;
 
 class PaymentTransferredController extends Controller
 {
+    protected $smsGateWay;
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +20,8 @@ class PaymentTransferredController extends Controller
     function __construct()
     {
         $this->middleware('auth');
+
+        $this->smsGateWay= new SmsGateWay();
     }
 
 
@@ -56,6 +61,21 @@ class PaymentTransferredController extends Controller
                 'created_at'=>new \DateTime(),
             );
             CashTransaction::insertData($arrayData);
+
+            $data = array(
+                'payment_id' => $payment->id,
+                'generate_payment_id' => $payment->payment_id,
+                'message' => 'Hand Slip settle by cash return.',
+                'amount' => $payment->total_paid_amount,
+            );
+
+            auth()->user()->notify(new HandSlipStatusNotification($data));
+
+            $payment->user->notify(new HandSlipStatusNotification(array('payment_id'=>$payment->id,'generate_payment_id' => $payment->payment_id,'message'=>'Your advance amount has been settle tk.'.$settlement->settlement_amount.' by cash return','amount' => $payment->total_paid_amount,)));
+            $phone = $payment->user->UserProfile?$payment->user->UserProfile->mobile:'';
+            if($phone){
+                $this->smsGateWay->send('আপনের #'.$payment->payment_id.' হ্যান্ডস্লিপের '.$settlement->settlement_amount.' টাকা সমন্বয় করা হলো।',$phone);
+            }
 
 
             return redirect()->route('details',$payment->id);

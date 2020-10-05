@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\CashTransaction;
+use App\Notifications\HandSlipStatusNotification;
 use App\Payment;
 use App\PaymentSettlement;
+use App\Service\SmsGateWay;
 use App\VoucherItems;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentSettlementController extends Controller
 {
+    protected $smsGateWay;
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +26,7 @@ class PaymentSettlementController extends Controller
         $this->middleware('permission:payment-settlement-list', ['only' => ['index']]);
         $this->middleware('permission:payment-settlement-create', ['only' => ['store']]);
         $this->middleware('permission:payment-settlement-delete',['only'=>['delete']]);
+        $this->smsGateWay= new SmsGateWay();
     }
 
 
@@ -192,6 +196,20 @@ class PaymentSettlementController extends Controller
         );
         CashTransaction::insertData($arrayData);
 
+        $data = array(
+            'payment_id' => $payment->id,
+            'generate_payment_id' => $payment->payment_id,
+            'message' => 'Hand Slip Settled.',
+            'amount' => $payment->total_paid_amount,
+        );
+
+        auth()->user()->notify(new HandSlipStatusNotification($data));
+
+        $payment->user->notify(new HandSlipStatusNotification(array('payment_id'=>$payment->id,'generate_payment_id' => $payment->payment_id,'message'=>'Your advance amount has been settle tk.'.$settlement->settlement_amount,'amount' => $payment->total_paid_amount,)));
+        $phone = $payment->user->UserProfile?$payment->user->UserProfile->mobile:'';
+        if($phone){
+            $this->smsGateWay->send('আপনের #'.$payment->payment_id.' হ্যান্ডস্লিপের '.$settlement->settlement_amount.' টাকা সমন্বয় করা হলো।', $phone);
+        }
 
         return redirect()->route('details',$payment->id)->with('success','Settlement has been successfully created.');
     }

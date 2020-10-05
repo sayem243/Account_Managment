@@ -12,6 +12,7 @@ use App\PaymentComments;
 use App\PaymentSettlement;
 use App\PaymentTransfer;
 use App\Project;
+use App\Service\SmsGateWay;
 use App\User;
 use App\UserProfile;
 use App\UserType;
@@ -28,6 +29,7 @@ class PaymentController extends Controller
 {
     protected $dailyCashSession;
     protected $dailyCashTransaction;
+    protected $smsGateWay;
 
     /**
      * Display a listing of the resource.
@@ -48,6 +50,7 @@ class PaymentController extends Controller
 
         $this->dailyCashSession = new CashDailyBalanceSession();
         $this->dailyCashTransaction = new CashTransaction();
+        $this->smsGateWay= new SmsGateWay();
     }
 
 
@@ -160,6 +163,18 @@ class PaymentController extends Controller
                 $paymentComment->comments = $request->comments;
                 $paymentComment->created_by = $user->id;
                 $payment->PaymentComments()->save($paymentComment);
+
+                $usersByProjectAndPermissions = $this->getUsersByProjectAndPermissions($payment->project, array('payment-create-other-user','payment-verify','payment-approve'));
+
+                foreach ($usersByProjectAndPermissions as $user){
+                    $data = array(
+                        'payment_id' => $payment->id,
+                        'generate_payment_id' => $payment->payment_id,
+                        'message' => $request->comments,
+                        'amount' => $payment->total_paid_amount,
+                    );
+                    $user->notify(new HandSlipStatusNotification($data));
+                }
             }
 
             $this->setTotalPaidAmount($payment);
@@ -187,6 +202,19 @@ class PaymentController extends Controller
             $paymentComment->comments = $request->comments;
             $paymentComment->created_by = auth()->user()->id;
             $payment->PaymentComments()->save($paymentComment);
+
+            $usersByProjectAndPermissions = $this->getUsersByProjectAndPermissions($payment->project, array('payment-create-other-user','payment-verify','payment-approve'));
+
+            foreach ($usersByProjectAndPermissions as $user){
+                $data = array(
+                    'payment_id' => $payment->id,
+                    'generate_payment_id' => $payment->payment_id,
+                    'message' => $request->comments,
+                    'amount' => $payment->total_paid_amount,
+                );
+                $user->notify(new HandSlipStatusNotification($data));
+            }
+
             return redirect()->route('details',$payment->id)->with('success','Comments has been successfully created.');
         }
         return redirect()->route('details',$payment->id)->with('error','Error! Ops something wrong.');
@@ -255,6 +283,7 @@ class PaymentController extends Controller
             foreach ($paymentProjectUsers as $projectUser){
                 $data = array(
                     'payment_id' => $payment->id,
+                    'generate_payment_id' => $payment->payment_id,
                     'message' => 'New Hand Slip Created.',
                     'amount' => $payment->total_paid_amount,
                 );
@@ -498,6 +527,18 @@ class PaymentController extends Controller
             $paymentComment->comments = $request->comments;
             $paymentComment->created_by = $user->id;
             $payment->PaymentComments()->save($paymentComment);
+
+            $usersByProjectAndPermissions = $this->getUsersByProjectAndPermissions($payment->project, array('payment-create-other-user','payment-verify','payment-approve'));
+
+            foreach ($usersByProjectAndPermissions as $user){
+                $data = array(
+                    'payment_id' => $payment->id,
+                    'generate_payment_id' => $payment->payment_id,
+                    'message' => $request->comments,
+                    'amount' => $payment->total_paid_amount,
+                );
+                $user->notify(new HandSlipStatusNotification($data));
+            }
         }
 
         $this->setTotalPaidAmount($payment);
@@ -527,6 +568,7 @@ class PaymentController extends Controller
             foreach ($paymentProjectUsers as $projectUser){
                 $data = array(
                     'payment_id' => $payment->id,
+                    'generate_payment_id' => $payment->payment_id,
                     'message' => 'Hand Slip Verified.',
                     'amount' => $payment->total_paid_amount,
                 );
@@ -572,6 +614,7 @@ class PaymentController extends Controller
             foreach ($paymentProjectUsers as $projectUser){
                 $data = array(
                     'payment_id' => $payment->id,
+                    'generate_payment_id' => $payment->payment_id,
                     'message' => 'Hand Slip Approved.',
                     'amount' => $payment->total_paid_amount,
                 );
@@ -626,6 +669,19 @@ class PaymentController extends Controller
                     CashTransaction::insertData($arrayData);
                 }
 
+                $data = array(
+                    'payment_id' => $payment->id,
+                    'generate_payment_id' => $payment->payment_id,
+                    'message' => 'Hand Slip Disbursed.',
+                    'amount' => $payment->total_paid_amount,
+                );
+                auth()->user()->notify(new HandSlipStatusNotification($data));
+
+                $payment->user->notify(new HandSlipStatusNotification(array('payment_id'=>$payment->id,'generate_payment_id' => $payment->payment_id,'message'=>'Your request amount tk.'.$payment->total_paid_amount.' paid.','amount' => $payment->total_paid_amount,)));
+                $phone = $payment->user->UserProfile?$payment->user->UserProfile->mobile:'';
+                if($phone){
+                    $this->smsGateWay->send('আপনেকে  #'.$payment->payment_id.' হ্যান্ডস্লিপের মাধ্যমে '.$payment->total_paid_amount.' টাকা দেয়া হলো।', $phone);
+                }
                 return response()->json(['success' => 'Payment has been successfully disbursed.', 'status' => 200]);
             }
         }
@@ -962,6 +1018,16 @@ class PaymentController extends Controller
     }
 
     public function getUsersByProjectAndPermission($project, $permission)
+    {
+        $projectUsers = $project->users;
+        $data=array();
+        foreach ($projectUsers as $projectUser){
+            $data[]= $projectUser->id;
+        }
+        $users = User::permission($permission)->whereIn('id',$data)->get();
+        return $users;
+    }
+    public function getUsersByProjectAndPermissions($project, $permission=array())
     {
         $projectUsers = $project->users;
         $data=array();

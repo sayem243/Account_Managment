@@ -332,6 +332,7 @@ $(document).ready(function () {
                         jQuery('.alert').addClass('alert-success').show();
                         jQuery('.alert').find('.message').html(data.message);
                         dataTable.draw();
+                        $(".notification_count").load("/notification/refresh");
                     }else{
                         jQuery('.alert').addClass('alert-danger').show();
                         jQuery('.alert').find('.message').html(data.message);
@@ -386,6 +387,7 @@ $(document).ready(function () {
                         jQuery('.alert').addClass('alert-success').show();
                         jQuery('.alert').find('.message').html(data.message);
                         dataTable.draw();
+                        $(".notification_count").load("/notification/refresh");
                     }else{
                         jQuery('.alert').addClass('alert-danger').show();
                         jQuery('.alert').find('.message').html(data.message);

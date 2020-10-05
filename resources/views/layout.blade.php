@@ -240,7 +240,7 @@ Like: www.facebook.com/terminalbd
                     <a href="javascript:" class="notification" data-toggle="dropdown">
                         <i class="fas fa-bell"></i>
                         @if(auth()->user()->unreadNotifications->count())
-                        <span class="label label-danger badge">{{auth()->user()->unreadNotifications->count()}}</span>
+                        <span class="label label-danger badge notification_count">{{auth()->user()->unreadNotifications->count()}}</span>
                             @endif
                     </a>
                     @if(auth()->user()->unreadNotifications->count())
@@ -250,7 +250,7 @@ Like: www.facebook.com/terminalbd
                         </li>
                         @foreach(auth()->user()->unreadNotifications as $notification)
                         <li>
-                          <a data-notification-id="{{$notification->id}}" class="mark_as_read" href="{{route('details',$notification->data['payment_id'])}}">{{$notification->data['message'].'. HS ID: '.$notification->data['payment_id']}}</a>
+                          <a data-notification-id="{{$notification->id}}" class="mark_as_read" href="{{route('details',$notification->data['payment_id'])}}">{{$notification->data['message'].' HS ID: '.$notification->data['generate_payment_id']}}</a>
                         </li>
                         @endforeach
 

@@ -351,5 +351,6 @@ Route::get('/client/restore/{id}','ClientController@clientRestore')->name('clien
 
 
 
+Route::get('/notification/refresh','NotificationController@refresh')->name('notify_refresh');
 Route::get('/notification/marksAsRead','NotificationController@markAsRead')->name('marks_as_read');
 Route::post('/notification/marksAsRead/{id}','NotificationController@markAsReadById')->name('marks_as_read_by_id');

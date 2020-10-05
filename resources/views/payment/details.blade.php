@@ -483,6 +483,7 @@
                                 jQuery('.alert').addClass('alert-success').show();
                                 jQuery('.alert').find('.message').html(data.message);
                                 jQuery(elements).remove();
+                                $(".notification_count").load("/notification/refresh");
                             } else {
                                 jQuery('.alert').addClass('alert-danger').show();
                                 jQuery('.alert').find('.message').html(data.message);
@@ -529,6 +530,8 @@
                 }
 
                 $('#payment-settlement-form').submit();
+
+                $(".notification_count").load("/notification/refresh");
             });
 
             $(document).on('click', '.retried-button', function() {
@@ -544,6 +547,7 @@
                 }
 
                 $('#retried-form').submit();
+                $(".notification_count").load("/notification/refresh");
             });
 
             $('.modal').on('hidden.bs.modal', function () {

@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+    public function refresh(){
+       $notifyCount = auth()->user()->unreadNotifications->count();
+        return view('notify',['notifyCount'=>$notifyCount]);
+    }
     public function markAsRead(){
         auth()->user()->unreadNotifications->markAsRead();
        return redirect()->back();
