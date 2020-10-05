@@ -240,14 +240,6 @@ Like: www.facebook.com/terminalbd
             <li><a href="javascript:" class="full-screen" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize"></i></a></li>
         </ul>
         <ul class="navbar-nav ml-auto">
-
-
-
-
-
-
-
-
             <li>
                 <div class="dropdown drp-user">
           <a href="javascript:" class="notification" data-toggle="dropdown">
