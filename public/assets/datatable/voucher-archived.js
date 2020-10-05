@@ -204,6 +204,7 @@ $(document).ready(function () {
                         jQuery('.alert').removeClass('alert-success').addClass('alert-danger').show();
                         jQuery('.alert').find('.message').html(data.message);
                         dataTable.draw();
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
                     }
                 }
             });

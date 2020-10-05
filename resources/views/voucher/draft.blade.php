@@ -52,7 +52,7 @@
                             <tr style="font-weight: bold; font-size: 18px; color: red;">
                                 <td style="text-align: right;padding-right: 10px">Total Taka = </td>
                                 <td class="total_amount" style="text-align: right; padding-right: 15px">{{number_format($voucher->total_amount,2,'.',',')}}</td>
-                            </tr>
+                            </tr>2
                             </tfoot>
 
                         </table>
@@ -94,13 +94,13 @@
 
 //iterate through each td based on class and add the values
             $('.total_amount').each(function() {
-                var sum = 0;
+                var sum = 0.00;
                 $(this).parents('table').find('.amount').each(function() {
                     var floted = parseFloat($(this).val());
                     if (!isNaN(floted)) sum += floted;
                 });
 
-                $(this).html(sum);
+                $(this).html(sum.toLocaleString());
             });
         }
 

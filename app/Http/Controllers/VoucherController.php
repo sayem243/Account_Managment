@@ -638,7 +638,10 @@ class VoucherController extends Controller
 
                 $dailyCr = isset($cashTransactions[$voucher->VoucherItems[0]->project->company->id]['CR'])?array_sum($cashTransactions[$voucher->VoucherItems[0]->project->company->id]['CR']):0;
 
-                if(($openingBalance+$dailyCr-$dailyDr)<$voucher->total_amount){
+                if(($openingBalance+$dailyCr-$dailyDr)<$voucher->total_amount && !isset($voucher->VoucherItems[0]->checkRegistry)){
+                    return response()->json(['message'=>'Error! In sufficient balance.','status'=>301]);
+                }elseif (($openingBalance+$dailyCr-$dailyDr)<$voucher->total_amount && isset($voucher->VoucherItems[0]->checkRegistry) &&
+                    $voucher->VoucherItems[0]->checkRegistry->check_type=='CASH'){
                     return response()->json(['message'=>'Error! In sufficient balance.','status'=>301]);
                 }
 
