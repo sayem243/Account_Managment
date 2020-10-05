@@ -125,7 +125,7 @@
 
                                 <div class="form-group">
                                     <label>Mobile Number</label>
-                                    <input type="number" class="form-control" name="mobile" placeholder="Mobile Number" value="{{$users->UserProfile->mobile}}" >
+                                    <input type="text" class="form-control" name="mobile" placeholder="Mobile Number" value="{{$users->UserProfile->mobile}}" >
                                 </div>
                             </div>
 

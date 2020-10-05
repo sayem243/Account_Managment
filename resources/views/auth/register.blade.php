@@ -151,7 +151,7 @@
 
                                     <div class="form-group">
                                         <label>Mobile Number</label>
-                                        <input type="number" class="form-control" name="mobile" placeholder="Mobile Number">
+                                        <input type="text" class="form-control" name="mobile" placeholder="Mobile Number">
                                     </div>
                                 </div>
                             </div>

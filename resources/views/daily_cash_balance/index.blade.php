@@ -65,7 +65,7 @@
                             <tr style="background-color: red; color: #FFFFFF; font-weight: bold; font-size: large">
                                 <td style="text-align: left" colspan="3">Total Opening Balance</td>
                                 <td></td>
-                                <td>{{number_format($openingBalanceTotal, 0,'.',',')}}</td>
+                                <td>{{number_format($openingBalanceTotal, 2,'.',',')}}</td>
                             </tr>
                             </thead>
                             <tbody>
@@ -99,9 +99,9 @@
                                     </td>
                                     <td></td>
                                     <td></td>
-                                    <td style="color: #FFFFFF">{{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',','):0}}</td>
+                                    <td style="color: #FFFFFF">{{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 2,'.',','):0}}</td>
                                     <td>
-                                        {{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 0,'.',','):0}}
+                                        {{isset($openingBalance[$step1Key])?number_format($openingBalance[$step1Key]->opening_balance, 2,'.',','):0}}
                                     </td>
                                 </tr>
 
@@ -133,8 +133,8 @@
                                                         @endphp
                                                         <a data-toggle="modal" data-target-check-registry-id="{{$checkRegistry->id}}" data-target="#myModalCheckRegistry" href="javascript:void(0)">{{$checkRegistry->check_number}}</a></td>
                                                     <td></td>
-                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -167,8 +167,8 @@
                                                         @endphp
                                                         <a data-toggle="modal" data-target-income-id="{{$income->id}}" data-target="#myModalIncome" href="javascript:void(0)">{{$income->income_generate_id}}</a></td>
                                                     <td></td>
-                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
 
@@ -194,8 +194,8 @@
                                                         @endphp
                                                         <a data-toggle="modal" data-target-income-id="{{$income->id}}" data-target="#myModalIncome" href="javascript:void(0)">{{$income->income_generate_id}}</a></td>
                                                     <td></td>
-                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -232,8 +232,8 @@
                                                         <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
                                                     </td>
                                                     <td></td>
-                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
 
@@ -260,8 +260,8 @@
                                                         <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
                                                     </td>
                                                     <td></td>
-                                                    <td>{{number_format($data->amount,0,'.',',')}}</td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -297,8 +297,8 @@
                                                         {{$payment->user->name}} (H/S # <a data-toggle="modal" data-target-id="{{$payment->id}}" data-target="#myModal" href="javascript:void(0)">{{$payment->payment_id}}</a>)
                                                     </td>
                                                     <td></td>
-                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -334,9 +334,9 @@
                                                         @endphp
                                                         <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
                                                     </td>
-                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
                                                     <td></td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
 
@@ -363,9 +363,9 @@
                                                         @endphp
                                                         <a data-toggle="modal" data-target-loan-id="{{$loan->id}}" data-target="#myModalLoan" href="javascript:void(0)">{{$loan->loan_generate_id}}</a>
                                                     </td>
-                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
                                                     <td></td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
 
@@ -401,9 +401,9 @@
                                                         @endphp
                                                         {{$payment->user->name}} (H/S # <a data-toggle="modal" data-target-id="{{$payment->id}}" data-target="#myModal" href="javascript:void(0)">{{$payment->payment_id}}</a>)
                                                     </td>
-                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
                                                     <td></td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
 
@@ -438,9 +438,9 @@
                                                         @endphp
                                                         {{$voucher->expenditureSector->name}} (Voucher # <a data-toggle="modal" data-target-voucher-id="{{$voucher->id}}" data-target="#myModalVoucher" href="">{{$voucher->voucher_generate_id}}</a>)
                                                     </td>
-                                                    <td>{{number_format($data->amount,'0','',',')}}</td>
+                                                    <td>{{number_format($data->amount,2,'.',',')}}</td>
                                                     <td></td>
-                                                    <td>{{number_format($balance,'0','',',')}}</td>
+                                                    <td>{{number_format($balance,2,'.',',')}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -458,10 +458,10 @@
                                 <tr style="color: red; font-weight: bold; margin-bottom: 15px">
                                     <td style="color: black;">Closing Balance</td>
                                     <td></td>
-                                    <td>{{number_format($drTotal,'0','',',')}}</td>
-                                    <td>{{number_format($crTotal,'0','',',')}}</td>
+                                    <td>{{number_format($drTotal,2,'.',',')}}</td>
+                                    <td>{{number_format($crTotal,2,'.',',')}}</td>
                                     <td>
-                                        {{number_format($balance,'0','',',')}}
+                                        {{number_format($balance,2,'.',',')}}
                                         <input type="hidden" name="cash_balance_session_id[{{isset($openingBalance[$step1Key])?$openingBalance[$step1Key]->id:null}}]" value="{{$balance}}">
                                     </td>
                                 </tr>
@@ -482,9 +482,9 @@
                             <tfoot>
                             <tr style="background-color: red; color: #FFFFFF; font-weight: bold; font-size: large">
                                 <td style="text-align: center" colspan="2">Total Closing Balance</td>
-                                <td>{{number_format($grandDrTotal, 0,'.',',')}}</td>
-                                <td>{{number_format($grandCrTotal, 0,'.',',')}}</td>
-                                <td>{{number_format($totalBalance, 0,'.',',')}}</td>
+                                <td>{{number_format($grandDrTotal, 2,'.',',')}}</td>
+                                <td>{{number_format($grandCrTotal, 2,'.',',')}}</td>
+                                <td>{{number_format($totalBalance, 2,'.',',')}}</td>
                             </tr>
                             </tfoot>
                         </table>

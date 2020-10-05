@@ -103,10 +103,9 @@
                             </div>
                         </div>
                         <div class="row hidden-print">
-                            <div style="padding-left: 3px"
-                                 class="col-sm-6 col-form-label btn-group btn-group-lg hidden-print">
-
-                                @if($payment->status<6)
+                            <div style="padding-left: 3px" class="col-sm-6 hidden-print">
+                                <div class="col-form-label btn-group btn-group-lg">
+                                    @if($payment->status<6)
                                         <button style="border-radius: .3rem" id="addAttachments" class="btn btn-info btn-lg"
                                                 data-toggle="modal" data-target="#modalAttachmentForm">
                                             Attachments
@@ -115,65 +114,69 @@
                                                 data-toggle="modal" data-target="#modalCommentForm">
                                             Comments
                                         </button>
-                                @endif
-
-
+                                    @endif
+                                </div>
                             </div>
-                            <div style="padding-right: 3px; float: right; text-align: right"
-                                 class="col-sm-6 col-form-label btn-group-lg card-header-right hidden-print">
-
-                                @if($payment->status==3
+                            <div style="padding-right: 3px; float: right; text-align: right" class="col-sm-6 hidden-print">
+                                <div class="col-form-label btn-group-lg card-header-right">
+                                    @if($payment->status==3
                                  && auth()->user()->can('payment-paid')
                                  && !$payment->user->trashed()
                                  && !$payment->company->trashed()
                                  && !$payment->project->trashed())
 
-                                    @if(date("Y-m-d", strtotime("now"))>=date("Y-m-d", strtotime($payment->disbursed_schedule_date)))
+                                        @if(date("Y-m-d", strtotime("now"))>=date("Y-m-d", strtotime($payment->disbursed_schedule_date)))
 
-                                        @php
-                                            $openingBalance= isset($openingBalance[$payment->company['id']])?$openingBalance[$payment->company['id']]->opening_balance:0;
+                                            @php
+                                                $openingBalance= isset($openingBalance[$payment->company['id']])?$openingBalance[$payment->company['id']]->opening_balance:0;
 
-                                            $dailyDr=isset($cashTransactions[$payment->company['id']]['DR'])?array_sum($cashTransactions[$payment->company['id']]['DR']):0;
+                                                $dailyDr=isset($cashTransactions[$payment->company['id']]['DR'])?array_sum($cashTransactions[$payment->company['id']]['DR']):0;
 
-                                            $dailyCr = isset($cashTransactions[$payment->company['id']]['CR'])?array_sum($cashTransactions[$payment->company['id']]['CR']):0;
+                                                $dailyCr = isset($cashTransactions[$payment->company['id']]['CR'])?array_sum($cashTransactions[$payment->company['id']]['CR']):0;
 
-                                        @endphp
+                                            @endphp
 
-                                        @if(($openingBalance+$dailyCr-$dailyDr)>=$payment->total_paid_amount)
-                                        <div class=" btn-group-lg disbursed_area_button">
-                                                <input type="checkbox" id="is_old_hand_slip" name="is_old" class="is_old_hand_slip" value="1">
-                                                <label class="form-check-label" for="is_old_hand_slip">Is Old</label>
-                                            <button style="border-radius: .3rem; margin: 0" data-id-id="{{$payment->id}}" type="button"
-                                                    class="btn btn-lg btn-info payment_paid">Disburse
-                                            </button>
-                                        </div>
 
-                                            @else
                                             <div class=" btn-group-lg disbursed_area_button">
-                                            <p style="color: red;padding-right:15px;font-size: 18px">In sufficient balance.</p>
+
+                                                @if(($openingBalance+$dailyCr-$dailyDr)>=$payment->total_paid_amount)
+                                                    <input type="checkbox" id="is_old_hand_slip" name="is_old" class="is_old_hand_slip" value="1">
+                                                    <label class="form-check-label" for="is_old_hand_slip">Is Old</label>
+                                                    <button style="border-radius: .3rem; margin: 0" data-id-id="{{$payment->id}}" type="button"
+                                                            class="btn btn-lg btn-info payment_paid">Disburse
+                                                    </button>
+
+                                                @else
+                                                    <input type="checkbox" id="is_old_hand_slip_less_sufficient_balance" name="is_old" class="is_old_hand_slip_less_sufficient_balance" value="1">
+                                                    <label class="form-check-label" for="is_old_hand_slip_less_sufficient_balance">Is Old</label>
+                                                    <button style="display: none;border-radius: .3rem; margin: 0" data-id-id="{{$payment->id}}" type="button"
+                                                            class="btn btn-lg btn-info payment_paid">Disburse
+                                                    </button>
+                                                    <p style="color: red;padding-right:15px;font-size: 18px">In sufficient balance.</p>
+                                                @endif
                                             </div>
 
+                                        @else
+                                            <button disabled style="border-radius: .3rem; margin: 0" type="button"
+                                                    class="btn btn-lg btn-info">Disburse
+                                            </button>
+
                                         @endif
-                                    @else
-                                    <button disabled style="border-radius: .3rem; margin: 0" type="button"
-                                            class="btn btn-lg btn-info">Disburse
-                                    </button>
-
                                     @endif
-                                @endif
-                                @if($payment->status>3 && $payment->status!=7 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
-                                    <button style="border-radius: .3rem; margin: 0" id="addTag" class="btn btn-green btn-lg"
-                                            data-toggle="modal" data-target="#modalForm">
-                                        Settlement
-                                    </button>
-                                @endif
-                                @if(($payment->status==4 || $payment->status==5) && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
-                                    <button style="border-radius: .3rem; margin: 0" id="addRetried" class="btn btn-danger btn-lg"
-                                            data-toggle="modal" data-target="#retriedModalForm">
-                                        Retrie
-                                    </button>
-                                @endif
+                                    @if($payment->status>3 && $payment->status!=7 && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
+                                        <button style="border-radius: .3rem; margin: 0" id="addTag" class="btn btn-green btn-lg"
+                                                data-toggle="modal" data-target="#modalForm">
+                                            Settlement
+                                        </button>
+                                    @endif
+                                    @if(($payment->status==4 || $payment->status==5) && auth()->user()->can('payment-settlement-create') && $payment->total_paid_amount > $totalSettlementAmount)
+                                        <button style="border-radius: .3rem; margin: 0" id="addRetried" class="btn btn-danger btn-lg"
+                                                data-toggle="modal" data-target="#retriedModalForm">
+                                            Retrie
+                                        </button>
+                                    @endif
 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -314,7 +317,7 @@
                                 <button style="border-radius: .3rem" type="button" class="btn btn-danger"
                                         data-dismiss="modal">Close
                                 </button>
-                                <button style="border-radius: .3rem" id="tag-form-submit" type="submit"
+                                <button style="border-radius: .3rem" id="tag-form-submit-settle" type="submit"
                                         class="btn btn-info payment_settlement_add">Save
                                 </button>
                             </div>
@@ -347,7 +350,7 @@
                                 <button style="border-radius: .3rem" type="button" class="btn btn-danger"
                                         data-dismiss="modal">Close
                                 </button>
-                                <button style="border-radius: .3rem" id="tag-form-submit" type="submit"
+                                <button style="border-radius: .3rem" id="tag-form-submit-comment" type="submit"
                                         class="btn btn-info">Save
                                 </button>
                             </div>
@@ -389,7 +392,7 @@
                                 <button style="border-radius: .3rem" type="button" class="btn btn-danger"
                                         data-dismiss="modal">Close
                                 </button>
-                                <button style="border-radius: .3rem" id="tag-form-submit" type="submit"
+                                <button style="border-radius: .3rem" id="tag-form-submit-attachment" type="submit"
                                         class="btn btn-info">Save
                                 </button>
                             </div>
@@ -445,7 +448,7 @@
                                 <button style="border-radius: .3rem" type="button" class="btn btn-danger"
                                         data-dismiss="modal">Close
                                 </button>
-                                <button style="border-radius: .3rem" id="tag-form-submit" type="submit"
+                                <button style="border-radius: .3rem" id="tag-form-submit-retried" type="submit"
                                         class="btn btn-info retried-button">Save
                                 </button>
                             </div>
@@ -554,6 +557,14 @@
                 $(this).find('form')[0].reset();
                 $('.payment_settlement_add').attr("disabled", false);
                 $('.retried-button').attr("disabled", false);
+            });
+
+            $('.is_old_hand_slip_less_sufficient_balance').click(function() {
+                if( $(this).is(':checked')) {
+                    $(".payment_paid").show();
+                } else {
+                    $(".payment_paid").hide();
+                }
             });
         })
     </script>

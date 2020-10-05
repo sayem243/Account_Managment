@@ -51,7 +51,7 @@
                             <tfoot>
                             <tr style="font-weight: bold; font-size: 18px; color: red;">
                                 <td style="text-align: right;padding-right: 10px">Total Taka = </td>
-                                <td class="total_amount" style="text-align: right; padding-right: 15px">{{$voucher->total_amount}}</td>
+                                <td class="total_amount" style="text-align: right; padding-right: 15px">{{number_format($voucher->total_amount,2,'.',',')}}</td>
                             </tr>
                             </tfoot>
 

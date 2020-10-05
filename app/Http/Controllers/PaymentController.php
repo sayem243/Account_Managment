@@ -644,7 +644,7 @@ class PaymentController extends Controller
 
         $dailyCr = isset($cashTransactions[$payment->company->id]['CR'])?array_sum($cashTransactions[$payment->company->id]['CR']):0;
 
-        if(($openingBalance+$dailyCr-$dailyDr)<$payment->total_paid_amount){
+        if(($openingBalance+$dailyCr-$dailyDr)<$payment->total_paid_amount && $isOld!=1){
             return response()->json(['message'=>'Error! In sufficient balance.','status'=>301]);
         }else{
 
@@ -679,7 +679,7 @@ class PaymentController extends Controller
 
                 $payment->user->notify(new HandSlipStatusNotification(array('payment_id'=>$payment->id,'generate_payment_id' => $payment->payment_id,'message'=>'Your request amount tk.'.$payment->total_paid_amount.' paid.','amount' => $payment->total_paid_amount,)));
                 $phone = $payment->user->UserProfile?$payment->user->UserProfile->mobile:'';
-                if($phone){
+                if($phone && $payment->is_old==false){
                     $this->smsGateWay->send('আপনেকে  #'.$payment->payment_id.' হ্যান্ডস্লিপের মাধ্যমে '.$payment->total_paid_amount.' টাকা দেয়া হলো।', $phone);
                 }
                 return response()->json(['success' => 'Payment has been successfully disbursed.', 'status' => 200]);
