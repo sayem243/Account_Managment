@@ -673,7 +673,7 @@ class LoanController extends Controller
                 $pMode              = $post->pMode,
                 $loanFromRefId      = $loanFrom,
                 $loanToRefId        = $loanTo,
-                $amount             = $post->amount,
+                $amount             = $post->amount?number_format($post->amount,2,'.',','):0.00,
 
                 $button);
             $i++;

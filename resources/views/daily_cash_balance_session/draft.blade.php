@@ -41,7 +41,7 @@
                                         <td>
                                             {{$cashDailyBalanceSession->company->name}}
                                         </td>
-                                        <td>{{$cashDailyBalanceSession->opening_balance}}
+                                        <td>{{number_format($cashDailyBalanceSession->opening_balance,2,'.',',')}}
                                             <input type="hidden" class="form-control" name="opening_balance[{{$cashDailyBalanceSession->id}}]" value="{{$cashDailyBalanceSession->opening_balance}}">
                                         </td>
                                     </tr>

@@ -333,7 +333,7 @@ class CheckRegistryController extends Controller
                 $checkDate          = date('d-m-Y',strtotime($post->checkDate)),
                 $createdAtForSort          = $post->createdAtForSort,
                 $companyName        = $post->companyName?$post->companyName:'',
-                $amount             = $post->amount,
+                $amount             = $post->amount?number_format($post->amount,2,'.',','):0.00,
                 $checkType          = $post->checkType,
                 $checkMode          = $post->checkMode=='IN'?'Credit':'Debit',
 

@@ -394,7 +394,7 @@ class IncomeController extends Controller
                 $pMode               = $post->pMode,
                 $companyName         = $post->companyName,
                 $incomeFromRefId     = $incomeFrom,
-                $amount              = $post->amount,
+                $amount              = $post->amount?number_format($post->amount,2,'.',','):0.00,
 
                 $button);
             $i++;

@@ -36,10 +36,10 @@
                             @if($openingBalance>0 || $dailyCr>0)
                             <tr>
                                 <td>{{$company}}</td>
-                                <td>{{number_format($openingBalance,'0','.',',')}}</td>
-                                <td>{{number_format($dailyDr,'0','.',',')}}</td>
-                                <td>{{number_format($dailyCr,'0','.',',')}}</td>
-                                <td>{{number_format($closingBalance,'0','.',',')}}</td>
+                                <td>{{number_format($openingBalance,2,'.',',')}}</td>
+                                <td>{{number_format($dailyDr,2,'.',',')}}</td>
+                                <td>{{number_format($dailyCr,2,'.',',')}}</td>
+                                <td>{{number_format($closingBalance,2,'.',',')}}</td>
                             </tr>
                             @endif
 
@@ -48,10 +48,10 @@
                         <tfoot>
                             <tr style="font-weight: bold">
                                 <td>Total</td>
-                                <td>{{number_format($totalOpeningBalance,'0','.',',')}}</td>
-                                <td>{{number_format($drTotal,'0','.',',')}}</td>
-                                <td>{{number_format($crTotal,'0','.',',')}}</td>
-                                <td>{{number_format($totalClosingBalance,'0','.',',')}}</td>
+                                <td>{{number_format($totalOpeningBalance,2,'.',',')}}</td>
+                                <td>{{number_format($drTotal,2,'.',',')}}</td>
+                                <td>{{number_format($crTotal,2,'.',',')}}</td>
+                                <td>{{number_format($totalClosingBalance,2,'.',',')}}</td>
                             </tr>
                         </tfoot>
 

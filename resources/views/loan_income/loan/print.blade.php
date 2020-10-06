@@ -241,7 +241,7 @@
                                     <td style="border: none">
                                         <fieldset>
                                             <label style="font-size: 18px; font-weight: bold" class="col-md-12 col-form-label"
-                                                   for="check_number">Amount: {{number_format($loan->amount,'0','.',',')}}</label>
+                                                   for="check_number">Amount: {{number_format($loan->amount,2,'.',',')}}</label>
                                         </fieldset>
                                     </td>
                                     <td style="border: none">
@@ -509,7 +509,7 @@
                                     <td style="border: none">
                                         <fieldset>
                                             <label style="font-size: 18px; font-weight: bold" class="col-md-12 col-form-label"
-                                                   for="check_number">Amount: {{number_format($loan->amount,'0','.',',')}}</label>
+                                                   for="check_number">Amount: {{number_format($loan->amount,2,'.',',')}}</label>
                                         </fieldset>
                                     </td>
                                     <td style="border: none">

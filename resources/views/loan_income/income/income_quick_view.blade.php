@@ -141,7 +141,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label style="font-size: 18px; font-weight: bold" class="col-md-12 col-form-label"
-                                   for="check_number">Amount: {{number_format($income->amount,'0','.',',')}}</label>
+                                   for="check_number">Amount: {{number_format($income->amount,2,'.',',')}}</label>
                         </div>
                         <div class="col-md-6">
                             <div class="">
