@@ -37,7 +37,7 @@
                                 <th>Name</th>
                                 <th>Company</th>
                                 <th>Email</th>
-                                {{--<th>Roles</th>--}}
+                                <th>Roles</th>
 
                                 <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                                     <i class="feather icon-settings"></i>

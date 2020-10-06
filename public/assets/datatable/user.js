@@ -32,6 +32,7 @@ $(document).ready(function () {
             { "name": 'companyName' },
             { "name": 'email' },
             { "name": '' },
+            { "name": '' },
         ],
         "order": [
             [1, "asc"]
@@ -44,10 +45,14 @@ $(document).ready(function () {
             {
                 "targets": 4,
                 "orderable": false
+            },
+            {
+                "targets": 5,
+                "orderable": false
             }
             ],
         rowCallback: function (row, data) {
-            if(data[5]){
+            if(data[6]){
                 $(row).addClass('deleted_item');
             }
         }
