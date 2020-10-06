@@ -55,7 +55,9 @@ class UserController extends Controller
         $countRecords = DB::table('users');
         $countRecords->select('users.id as totalUser');
         $countRecords->join('user_profiles', 'users.id', '=', 'user_profiles.user_id');
-        $countRecords->join('companies', 'user_profiles.company_id', '=', 'companies.id');
+        $countRecords->join('companies', 'user_profiles.company_id', '=', 'companies.id')
+            ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id');
 
         if (isset($query['user_name'])) {
             $name = $query['user_name'];
@@ -84,8 +86,11 @@ class UserController extends Controller
 
         $rows = DB::table('users');
         $rows->select('users.id as uId','users.name as name','users.email as email','users.deleted_at as userDeletedAt');
+        $rows->addSelect('roles.name as roleName');
         $rows->join('user_profiles', 'users.id', '=', 'user_profiles.user_id');
-        $rows->join('companies', 'user_profiles.company_id', '=', 'companies.id');
+        $rows->join('companies', 'user_profiles.company_id', '=', 'companies.id')
+            ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id');
         $rows->addSelect('companies.name as companyName');
 
         if (isset($query['user_name'])) {
@@ -103,7 +108,7 @@ class UserController extends Controller
         $result = $rows->get();
 
         $i = $iDisplayStart > 0 ? ($iDisplayStart + 1) : 1;
-
+        $aa='';
         foreach ($result as $post):
 
             $button = '<div class="btn-group card-option"><a href="javascript:"  class="btn btn-notify btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
@@ -127,15 +132,18 @@ class UserController extends Controller
 
 
             $button.='</ul></div>';
+        /*foreach ($post->roleName as $role){
+            $aa.=$role.', ';
+        }*/
 
 
             $records["data"][] = array(
                 $id                 = $i,
-                $name               = $post->name,
-                $companyName               = $post->companyName,
-                $email               = $post->email,
+                $name               = $post->name.'-'.$post->roleName,
+                $companyName        = $post->companyName,
+                $email              = $post->email,
                 $button,
-                $status               = $post->userDeletedAt,
+                $status             = $post->userDeletedAt,
             );
             $i++;
 
