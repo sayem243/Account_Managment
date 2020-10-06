@@ -97,7 +97,7 @@ class LoanController extends Controller
             ]);
         }
 
-        if($request->loan_from=='COMPANY'){
+        if($request->loan_from=='COMPANY' && $request->check_type=='CASH'){
             $date = date('Y-m-d');
             $from_date = $date? $date.' 00:00:00': '';
             $to_date = $date? $date.' 23:59:59': '';
@@ -111,7 +111,7 @@ class LoanController extends Controller
             $dailyDr=isset($cashTransactions[$request->loan_from_value_company]['DR'])?array_sum($cashTransactions[$request->loan_from_value_company]['DR']):0;
 
             if(($openingBalance+$dailyCr-$dailyDr)<$request->check_amount){
-                return redirect()->route('loan_income_create')->with('error','Error! In sufficient balance.');
+                return redirect()->route('loan_income_create',http_build_query(['type'=>'loan']))->with('error','Error! In sufficient balance.');
             }
         }
 
