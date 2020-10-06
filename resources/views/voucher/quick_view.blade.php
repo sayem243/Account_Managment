@@ -55,7 +55,7 @@
                             <h5 style="text-align: center; margin-bottom: 5px">Expense Voucher {{$voucherType}}</h5>
                             <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$voucher->VoucherItems[0]->project->company['name']}}</h4>
                             <p style="text-align: center;margin-bottom: 5px">{{$voucher->VoucherItems[0]->project->company['c_address']}}</p>
-                            <h4 style="text-align: center; font-weight: bold; margin-bottom: 5px">{{$voucher->VoucherItems[0]->project['p_name']}}</h4>
+                            <h4 style="text-align: left; font-weight: bold; margin-bottom: 5px">{{$voucher->VoucherItems[0]->project['p_name']}}</h4>
 
                             <hr style="margin-top: 1px; margin-bottom: 10px">
 
