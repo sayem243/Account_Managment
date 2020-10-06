@@ -194,7 +194,7 @@ class VoucherController extends Controller
                     $createdDate          = $post->createdDate,
                     $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
                     $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
-                    $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
+                    $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.number_format($post->amount,2,'.',','),
                     $button,
                     $checkType               = $post->checkType
                 );
@@ -223,7 +223,7 @@ class VoucherController extends Controller
                     $createdDate          = $post->createdDate,
                     $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
                     $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
-                    $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
+                    $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'. number_format($post->amount,2,'.',','),
                     $button,
                     $checkType               = $post->checkType
                 );
@@ -252,7 +252,7 @@ class VoucherController extends Controller
                     $createdDate          = $post->createdDate,
                     $pId                = $post->pId?$post->pId:$post->checkNumber.'<input type="hidden" value="'.$post->crId.'" name="check_id['.$post->viId.']">',
                     $projectName        = $post->projectName?'<input type="hidden" value="'.$post->projectId.'" name="project_id['.$post->viId.']">'.$post->projectName:'',
-                    $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'.$post->amount,
+                    $amount             = '<input type="hidden" value="'.$post->amount.'" name="voucher_amount['.$post->viId.']">'. number_format($post->amount,2,'.',','),
                     $button,
                     $checkType               = $post->checkType
                 );
@@ -280,7 +280,7 @@ class VoucherController extends Controller
                         $createdDate          = $post->createdDate,
                         $pId = $post->pId ? $post->pId : $post->checkNumber . '<input type="hidden" value="' . $post->crId . '" name="check_id[' . $post->viId . ']">',
                         $projectName = $post->projectName ? '<input type="hidden" value="' . $post->projectId . '" name="project_id[' . $post->viId . ']">' . $post->projectName : '',
-                        $amount = '<input type="hidden" value="' . $post->amount . '" name="voucher_amount[' . $post->viId . ']">' . $post->amount,
+                        $amount = '<input type="hidden" value="' . $post->amount . '" name="voucher_amount[' . $post->viId . ']">' . number_format($post->amount,2,'.',','),
                         $button,
                         $checkType = $post->checkType
                     );
@@ -486,7 +486,7 @@ class VoucherController extends Controller
                 $pId                = '<a data-toggle="modal" data-target-id="'.$post->id.'" data-target="#myModal" href="">'.$post->vId.'</a>',
                 $companyName        = $post->companyName?$post->companyName:'',
                 $projectName        = $post->projectName?$post->projectName:'',
-                $amount             = $post->amount,
+                $amount             = $post->amount?number_format($post->amount,2,'.',','):0.00,
                 $action,
                 $button
             );

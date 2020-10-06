@@ -971,7 +971,7 @@ class PaymentController extends Controller
                 $name               = '<a data-toggle="modal" data-target-id="'.$post->pId.'" data-target="#myModal" href="javascript:void(0)">'.$post->name.'</a>',
                 $employeeName       = $post->employeeName,
                 $companyName        = $post->companyName?$post->companyName:'',
-                $amount             = $post->amount,
+                $amount             = $post->amount?number_format($post->amount,2,'.',','):0.00,
 //                $creatorName        = $post->creatorName,
                 $pStatus            = $paymentStatus,
 

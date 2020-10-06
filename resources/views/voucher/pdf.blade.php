@@ -71,7 +71,7 @@
 
                                 <tr>
                                     <td style="padding: 5px 10px">{{$voucherItem->item_name}}</td>
-                                    <td style="text-align: right; padding-right: 15px">{{$voucherItem->voucher_amount}}</td>
+                                    <td style="text-align: right; padding-right: 15px">{{number_format($voucherItem->voucher_amount,2,'.',',')}}</td>
                                 </tr>
                             @endforeach
 
@@ -80,7 +80,7 @@
                             <tr style="font-weight: bold; font-size: 18px;">
                                 <td style="border: 1px solid #000000; padding: 5px 10px; text-align: right;padding-right: 10px; color: red;">Total Taka =</td>
                                 <td class="total_amount"
-                                    style="border: 1px solid #000000; text-align: right; padding-right: 15px; color: red;">{{$voucher->total_amount}}</td>
+                                    style="border: 1px solid #000000; text-align: right; padding-right: 15px; color: red;">{{number_format($voucher->total_amount,2,'.',',')}}</td>
                             </tr>
                             </tfoot>
 
